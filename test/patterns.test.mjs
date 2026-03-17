@@ -30,14 +30,20 @@ describe('Phase 4 — build integration', () => {
 });
 
 describe('New tokens', () => {
-  // Behavior 3
   it('--nerv-stripe-duration token exists on :root', () => {
     assert.match(css, /--nerv-stripe-duration\s*:/, 'missing --nerv-stripe-duration token');
   });
 
-  // Behavior 4
+  it('--nerv-stripe-width token exists on :root', () => {
+    assert.match(css, /--nerv-stripe-width\s*:/, 'missing --nerv-stripe-width token');
+  });
+
   it('--nerv-radar-duration token exists on :root', () => {
     assert.match(css, /--nerv-radar-duration\s*:/, 'missing --nerv-radar-duration token');
+  });
+
+  it('--nerv-primary-rgb meta-token exists on :root', () => {
+    assert.match(css, /--nerv-primary-rgb\s*:/, 'missing --nerv-primary-rgb meta-token');
   });
 });
 
@@ -53,9 +59,22 @@ describe('Stripe bar CSS', () => {
     assert.match(css, /\.nerv-stripe-vertical\b/, 'missing .nerv-stripe-vertical class');
   });
 
-  // Behavior 7
   it('.nerv-stripe-red class exists', () => {
     assert.match(css, /\.nerv-stripe-red\b/, 'missing .nerv-stripe-red class');
+  });
+
+  it('.nerv-stripe-transparent class exists', () => {
+    assert.match(css, /\.nerv-stripe-transparent\b/, 'missing .nerv-stripe-transparent class');
+  });
+
+  it('.nerv-stripe uses --nerv-stripe-color-rgb for customizable color', () => {
+    assert.match(css, /--nerv-stripe-color-rgb/, 'stripes should use --nerv-stripe-color-rgb');
+  });
+
+  it('.nerv-stripe uses --nerv-stripe-width for customizable band size', () => {
+    const stripeIdx = css.indexOf('.nerv-stripe');
+    const stripeSection = css.slice(stripeIdx, stripeIdx + 500);
+    assert.ok(stripeSection.includes('--nerv-stripe-width'), '.nerv-stripe should reference --nerv-stripe-width');
   });
 
   // Behavior 8

@@ -36,7 +36,7 @@
       z-index: 1;
       display: grid;
       grid-template-columns: 2rem 1fr 260px;
-      grid-template-rows: 1.5rem 1.5rem 1fr 1.5rem 1.5rem;
+      grid-template-rows: auto auto 1fr auto auto;
       width: 100%;
       height: 100%;
       gap: 2px;
@@ -46,11 +46,6 @@
     .ref-stripe-top-green {
       grid-column: 1 / -1;
       grid-row: 1;
-    }
-
-    .ref-stripe-top-red {
-      grid-column: 1 / -1;
-      grid-row: 2;
     }
 
     .ref-stripe-left {
@@ -63,9 +58,43 @@
       grid-row: 5;
     }
 
-    .ref-stripe-bottom-red {
+    /* === DANGER bar === */
+    .ref-danger-bar {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      position: relative;
+      height: 2.5rem;
+    }
+
+    .ref-danger-bar-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .ref-danger-bar-label {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .ref-danger-bar-label span {
+      padding: 0.3rem 2rem;
+      background: var(--nerv-void);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    .ref-danger-bar-bottom {
       grid-column: 1 / -1;
       grid-row: 4;
+      position: relative;
+      height: 2.5rem;
     }
 
     /* === Main center area === */
@@ -125,11 +154,21 @@
 
     <div class="ref-content">
 
-      <!-- === Top stripe pair === -->
+      <!-- === Top green stripe === -->
       <div class="ref-stripe-top-green nerv-stripe nerv-stripe-animated"
            style="height: auto;"></div>
-      <div class="ref-stripe-top-red nerv-stripe nerv-stripe-red nerv-stripe-animated"
-           style="height: auto; animation-direction: reverse;"></div>
+
+      <!-- === DANGER bar: transparent red stripes + centered label === -->
+      <div class="ref-danger-bar">
+        <div class="ref-danger-bar-bg nerv-stripe nerv-stripe-red nerv-stripe-transparent nerv-stripe-animated"
+             style="height: 100%;"></div>
+        <div class="ref-danger-bar-label">
+          <span class="nerv-glow-red nerv-blink"
+                style="color: var(--nerv-red); border: var(--nerv-border-width) solid var(--nerv-red);">
+            DANGER
+          </span>
+        </div>
+      </div>
 
       <!-- === Left vertical stripe === -->
       <div class="ref-stripe-left nerv-stripe-vertical"></div>
@@ -182,9 +221,19 @@
         </span>
       </div>
 
-      <!-- === Bottom stripe pair (mirror of top) === -->
-      <div class="ref-stripe-bottom-red nerv-stripe nerv-stripe-red nerv-stripe-animated"
-           style="height: auto; animation-direction: reverse;"></div>
+      <!-- === Bottom DANGER bar (mirror) === -->
+      <div class="ref-danger-bar-bottom">
+        <div class="ref-danger-bar-bg nerv-stripe nerv-stripe-red nerv-stripe-transparent nerv-stripe-animated"
+             style="height: 100%; animation-direction: reverse;"></div>
+        <div class="ref-danger-bar-label">
+          <span class="nerv-glow-red"
+                style="color: var(--nerv-red); border: var(--nerv-border-width) solid var(--nerv-red);">
+            EMERGENCY
+          </span>
+        </div>
+      </div>
+
+      <!-- === Bottom green stripe === -->
       <div class="ref-stripe-bottom-green nerv-stripe nerv-stripe-animated"
            style="height: auto;"></div>
 
