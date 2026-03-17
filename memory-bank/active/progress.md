@@ -33,3 +33,13 @@
 - Completeness gap fixed: added missing test cases for `.nerv-glow-drop` and `prefers-contrast` glow reduction
 - Innovation applied: SCSS `$nerv-colors` map as single source of truth for token + glow class generation
 - High-contrast glow handling added to `_glow.scss` implementation step
+
+## 2026-03-17 — Phase 1 Sub-run: Build Phase Complete
+
+- All 8 implementation steps completed in TDD order
+- Files created: package.json, .gitignore, .stylelintrc.json, src/_tokens.scss, src/_typography.scss, src/_glow.scss, src/nerv.scss, test/foundation.test.mjs, ref/ref-foundation.html
+- SCSS $nerv-colors map drives auto-generation of :root tokens + RGB companions + glow classes
+- 14/14 tests pass (build smoke + color map verification + glow class verification)
+- Stylelint passes (0 errors)
+- Shippori Mincho B1 includes curated CJK subsets (10 unicode-range blocks) covering common Japanese characters
+- No deviations from plan

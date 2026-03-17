@@ -231,6 +231,6 @@ This is a CSS design system. The behaviors that matter — "does it look right?"
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
 - [ ] QA
