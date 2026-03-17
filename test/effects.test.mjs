@@ -72,6 +72,14 @@ describe('Flicker classes', () => {
       'flicker durations should reference --nerv-flicker-duration or --nerv-animation-speed tokens'
     );
   });
+
+  it('flicker delays use --nerv-stagger-index custom property', () => {
+    assert.match(css, /--nerv-stagger-index/, 'missing --nerv-stagger-index in flicker delay');
+  });
+
+  it(':nth-child() rules set --nerv-stagger-index defaults', () => {
+    assert.match(css, /nth-child[\s\S]*?--nerv-stagger-index/, ':nth-child should set --nerv-stagger-index');
+  });
 });
 
 describe('Glitch effect', () => {
@@ -91,6 +99,14 @@ describe('Glitch effect', () => {
 
   it('@keyframes for glitch animation exists', () => {
     assert.match(css, /@keyframes\s+nerv-glitch/, 'missing @keyframes nerv-glitch');
+  });
+
+  it('glitch duration references --nerv-glitch-duration token', () => {
+    const glitchSection = css.slice(css.indexOf('.nerv-glitch'));
+    assert.ok(
+      glitchSection.includes('--nerv-glitch-duration'),
+      'glitch animation should reference --nerv-glitch-duration token'
+    );
   });
 });
 

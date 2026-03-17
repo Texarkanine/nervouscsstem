@@ -1,7 +1,0 @@
-PASS
-task: nerv-phase2-effects
-date: 2026-03-17
-findings:
-  - MINOR: Scanline band is ::after pseudo-element, not a separate class. Plan updated.
-advisory:
-  - Consider --nerv-stagger-index CSS custom property as future alternative to :nth-child() stagger delays.

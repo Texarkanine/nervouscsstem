@@ -6,7 +6,7 @@ The NERV design system is a layered SCSS library compiled to a single CSS file, 
 
 The architecture is five layers with strict upward dependency flow: **Foundation → Effects → Structure → Components → States**. Each layer's SCSS partials consume design tokens from Foundation's `_tokens.scss` via CSS custom properties. A meta-token (`--nerv-primary`) allows the entire color palette to shift via a single root class change (the alert cascade system).
 
-Reference HTML pages in `ref/` serve as visual test fixtures. Each page validates a cumulative subset of layers — page N assumes all pages 1 through N-1 still pass.
+Reference HTML pages in `ref/` serve as visual test fixtures. Each page shows only its own layer's features — no duplication of prior layers' content. Where a layer needs backdrop content to be visible (e.g., scanlines need text underneath), the page uses distinct text that is clearly not a copy of earlier pages.
 
 ## SCSS Module System
 
@@ -30,3 +30,8 @@ This distinction is load-bearing for the alert cascade system.
 - **`prefers-reduced-motion`** must be respected. All animations should be suppressed when this media query matches. The static state should still look recognizably NERV.
 - **`prefers-contrast`** — High-contrast mode should increase border widths and reduce reliance on glow/shadow for element distinction.
 - **Specificity discipline** — All selectors namespaced with `.nerv-` prefix to avoid collisions when overlaid on existing UIs (the entire point of the project).
+
+## Animation Patterns
+
+- **Token-driven durations** — Every animation whose speed a consumer might want to tune gets its own `--nerv-*-duration` token (e.g., `--nerv-flicker-duration`, `--nerv-glitch-duration`). Durations use `calc(var(--nerv-*-duration) * N / var(--nerv-animation-speed))` so the global speed multiplier and per-effect tokens compose.
+- **Stagger via `--nerv-stagger-index`** — Grouped animated elements use `animation-delay: calc(var(--nerv-stagger-index, 0) * Xs)`. `:nth-child()` rules set the index automatically; consumers or `nerv.js` can override per-element for finer control.

@@ -36,18 +36,6 @@
       align-items: baseline;
     }
 
-    .ref-swatch {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .ref-color-name {
-      font-size: 0.6rem;
-      font-family: 'IBM Plex Mono', monospace;
-      opacity: 0.5;
-    }
-
     .segment-wrapper {
       position: relative;
       display: inline-block;
@@ -72,32 +60,30 @@
   <div class="nerv-scanlines"></div>
 
   <!-- =============================================
-       Phase 1 Regression: Typography Classes
+       Backdrop: static text for scanline visibility
+       (uses foundation classes but distinct content)
        ============================================= -->
 
   <section>
-    <div class="ref-label">Typography — .nerv-type-display</div>
+    <div class="ref-label">Typography — Scanline Overlay</div>
     <p class="nerv-type-display" style="font-size: 2.5rem; color: var(--nerv-orange);">
-      NERV — 特務機関ネルフ
+      第壱中学校 — 第3新東京市
     </p>
   </section>
 
   <section>
-    <div class="ref-label">Typography — .nerv-type-hud</div>
     <p class="nerv-type-hud" style="font-size: 1.5rem; color: var(--nerv-amber);">
-      Evangelion Unit-01 Status: Active
+      Central Dogma — Terminal Level B-03
     </p>
   </section>
 
   <section>
-    <div class="ref-label">Typography — .nerv-type-data</div>
     <p class="nerv-type-data" style="font-size: 1.1rem; color: var(--nerv-green);">
-      SYNC_RATE: 41.3% &nbsp; CONTAMINATION: 0.03% &nbsp; A10_DEPTH: 128.7m
+      LCL_PRESSURE: 2.7atm &nbsp; PLUG_DEPTH: 44.2m &nbsp; NERVE_LINK: 97.1%
     </p>
   </section>
 
   <section>
-    <div class="ref-label">Typography — .nerv-type-segment</div>
     <div class="nerv-type-segment" style="font-size: 3rem; color: var(--nerv-amber);">
       <span class="segment-wrapper">
         <span class="segment-ghost">88:88:88:88</span>
@@ -135,84 +121,12 @@
     </script>
   </section>
 
-  <section>
-    <div class="ref-label">Typography — .nerv-type-mixed (JP/EN composite)</div>
-    <p class="nerv-type-mixed" style="font-size: 1.8rem; color: var(--nerv-amber);">
-      活動限界 ACTIVE TIME REMAINING
-    </p>
-  </section>
-
   <!-- =============================================
-       Phase 1 Regression: Color Tokens
+       Flicker Effects
        ============================================= -->
 
   <section>
-    <div class="ref-label">Color Tokens</div>
-    <div class="ref-row">
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-amber);">NERV AMBER</span>
-        <span class="ref-color-name">#ffaa00</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-amber-dark);">AMBER DARK</span>
-        <span class="ref-color-name">#f06800</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-orange);">NERV ORANGE</span>
-        <span class="ref-color-name">#ff9830</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-red);">ALERT RED</span>
-        <span class="ref-color-name">#ff2233</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-red-deep);">RED DEEP</span>
-        <span class="ref-color-name">#a00010</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-green);">DATA GREEN</span>
-        <span class="ref-color-name">#50ff50</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-cyan);">WIRE CYAN</span>
-        <span class="ref-color-name">#20f0ff</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-blue);">DATA BLUE</span>
-        <span class="ref-color-name">#4488ff</span>
-      </div>
-      <div class="ref-swatch">
-        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-steel);">STEEL</span>
-        <span class="ref-color-name">#e0e0d8</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- =============================================
-       Phase 1 Regression: Glow Effects
-       ============================================= -->
-
-  <section>
-    <div class="ref-label">Glow Effects — box-shadow (.nerv-glow-*)</div>
-    <div class="ref-row">
-      <div class="nerv-glow" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-amber);">
-        <span class="nerv-type-hud" style="color: var(--nerv-amber);">.nerv-glow</span>
-      </div>
-      <div class="nerv-glow-red" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-red);">
-        <span class="nerv-type-hud" style="color: var(--nerv-red);">.nerv-glow-red</span>
-      </div>
-      <div class="nerv-glow-cyan" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-cyan);">
-        <span class="nerv-type-hud" style="color: var(--nerv-cyan);">.nerv-glow-cyan</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- =============================================
-       Phase 2: Flicker Effects
-       ============================================= -->
-
-  <section>
-    <div class="ref-label">Flicker — .nerv-flicker (staccato on/off)</div>
+    <div class="ref-label">Flicker — .nerv-flicker (staccato on/off, auto-stagger via --nerv-stagger-index)</div>
     <div class="ref-row">
       <span class="nerv-type-hud nerv-flicker nerv-glow-text-amber" style="font-size: 1.4rem; color: var(--nerv-amber);">
         SYSTEM ACTIVE
@@ -253,7 +167,7 @@
   </section>
 
   <!-- =============================================
-       Phase 2: Glitch Effect
+       Glitch Effect
        ============================================= -->
 
   <section>
@@ -273,7 +187,7 @@
   </section>
 
   <!-- =============================================
-       Phase 2: Alert State Transition (timed demo)
+       Alert State Transition (timed demo)
        ============================================= -->
 
   <section>

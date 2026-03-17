@@ -63,7 +63,7 @@ describe('Color map output verification', () => {
   });
 
   it('defines utility tokens (glow-spread, glow-intensity, border-width, etc.)', () => {
-    for (const token of ['glow-spread', 'glow-intensity', 'scanline-opacity', 'flicker-duration', 'animation-speed', 'border-width']) {
+    for (const token of ['glow-spread', 'glow-intensity', 'scanline-opacity', 'flicker-duration', 'glitch-duration', 'animation-speed', 'border-width']) {
       const re = new RegExp(`--nerv-${token}\\s*:`);
       assert.ok(re.test(css), `missing utility token --nerv-${token}`);
     }

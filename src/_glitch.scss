@@ -3,12 +3,16 @@
 /// Text distortion via ::before/::after pseudo-elements with clip-path
 /// polygon slices and chromatic-aberration-like color offsets.
 ///
+/// The two slices run on deliberately coprime-ish durations (1x vs 1.7x)
+/// and step counts (5 vs 7) so they phase-drift and never fully sync.
+///
 /// Consumer contract: elements using .nerv-glitch must include a
 /// data-text attribute matching their text content:
 ///   <span class="nerv-glitch" data-text="EMERGENCY">EMERGENCY</span>
 ///
 /// Tokens consumed:
-///   --nerv-animation-speed (glitch cycle rate)
+///   --nerv-glitch-duration  (base cycle length, default 0.4s)
+///   --nerv-animation-speed  (global speed multiplier)
 
 .nerv-glitch {
   position: relative;
@@ -29,30 +33,33 @@
 .nerv-glitch::before {
   color: var(--nerv-cyan);
   clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-  animation: nerv-glitch-top calc(2s / var(--nerv-animation-speed)) steps(2) infinite;
+  animation: nerv-glitch-top calc(var(--nerv-glitch-duration) / var(--nerv-animation-speed)) steps(5) infinite;
 }
 
 .nerv-glitch::after {
   color: var(--nerv-red);
   clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-  animation: nerv-glitch-bottom calc(2.5s / var(--nerv-animation-speed)) steps(3) infinite;
+  animation: nerv-glitch-bottom calc(var(--nerv-glitch-duration) * 1.7 / var(--nerv-animation-speed)) steps(7) infinite;
 }
 
 @keyframes nerv-glitch-top {
   0%, 100% {
     transform: translate(0, 0);
   }
-  20% {
-    transform: translate(-3px, -1px) skewX(2deg);
+  10% {
+    transform: translate(-4px, -2px) skewX(4deg);
   }
-  40% {
-    transform: translate(2px, 1px) skewX(-1deg);
+  30% {
+    transform: translate(3px, 1px) skewX(-2deg);
   }
-  60% {
-    transform: translate(-1px, 0) skewX(0deg);
+  50% {
+    transform: translate(-2px, 0) skewX(0deg);
   }
-  80% {
-    transform: translate(3px, -1px) skewX(-2deg);
+  70% {
+    transform: translate(5px, -1px) skewX(-3deg);
+  }
+  90% {
+    transform: translate(-1px, 2px) skewX(1deg);
   }
 }
 
@@ -60,17 +67,23 @@
   0%, 100% {
     transform: translate(0, 0);
   }
-  15% {
-    transform: translate(2px, 1px) skewX(-3deg);
+  8% {
+    transform: translate(3px, 1px) skewX(-4deg);
   }
-  35% {
-    transform: translate(-3px, 0) skewX(1deg);
+  24% {
+    transform: translate(-5px, 0) skewX(2deg);
   }
-  55% {
-    transform: translate(1px, -1px) skewX(2deg);
+  42% {
+    transform: translate(2px, -2px) skewX(3deg);
   }
-  75% {
-    transform: translate(-2px, 1px) skewX(-1deg);
+  58% {
+    transform: translate(-3px, 1px) skewX(-1deg);
+  }
+  76% {
+    transform: translate(4px, -1px) skewX(-2deg);
+  }
+  92% {
+    transform: translate(-1px, 0) skewX(1deg);
   }
 }
 
