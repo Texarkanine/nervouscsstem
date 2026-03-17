@@ -35,13 +35,14 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 3rem 1fr 280px;
-      grid-template-rows: 1rem auto 1rem 1rem;
+      grid-template-columns: 2rem 1fr 260px;
+      grid-template-rows: 1.5rem 1.5rem 1fr 1.5rem 1.5rem;
       width: 100%;
       height: 100%;
+      gap: 2px;
     }
 
-    /* Top stripe bars — span full width */
+    /* === Stripe bars === */
     .ref-stripe-top-green {
       grid-column: 1 / -1;
       grid-row: 1;
@@ -49,43 +50,67 @@
 
     .ref-stripe-top-red {
       grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .ref-stripe-left {
+      grid-column: 1;
       grid-row: 3;
     }
 
-    /* Left vertical stripe */
-    .ref-stripe-left {
-      grid-column: 1;
-      grid-row: 2;
+    .ref-stripe-bottom-green {
+      grid-column: 1 / -1;
+      grid-row: 5;
     }
 
-    /* Main center area: radar */
+    .ref-stripe-bottom-red {
+      grid-column: 1 / -1;
+      grid-row: 4;
+    }
+
+    /* === Main center area === */
     .ref-center {
       grid-column: 2;
-      grid-row: 2;
+      grid-row: 3;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 2rem;
+      gap: 1.5rem;
     }
 
     .ref-radar-container {
-      width: min(320px, 60%);
+      width: min(280px, 50%);
     }
 
-    /* Right side: hex grid */
+    .ref-center-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      color: rgba(var(--nerv-primary-rgb), 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      text-align: center;
+    }
+
+    /* === Right: hex grid === */
     .ref-hex-area {
       grid-column: 3;
-      grid-row: 2;
+      grid-row: 3;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 1rem;
+      gap: 1rem;
     }
 
-    /* Bottom stripe pair */
-    .ref-stripe-bottom {
-      grid-column: 1 / -1;
-      grid-row: 4;
+    .ref-hex-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      color: rgba(var(--nerv-primary-rgb), 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
     }
   </style>
 </head>
@@ -100,23 +125,31 @@
 
     <div class="ref-content">
 
-      <!-- Top green stripe (animated, scrolling right) -->
-      <div class="ref-stripe-top-green nerv-stripe nerv-stripe-animated"></div>
+      <!-- === Top stripe pair === -->
+      <div class="ref-stripe-top-green nerv-stripe nerv-stripe-animated"
+           style="height: auto;"></div>
+      <div class="ref-stripe-top-red nerv-stripe nerv-stripe-red nerv-stripe-animated"
+           style="height: auto; animation-direction: reverse;"></div>
 
-      <!-- Left vertical stripe -->
+      <!-- === Left vertical stripe === -->
       <div class="ref-stripe-left nerv-stripe-vertical"></div>
 
-      <!-- Center: radar display -->
+      <!-- === Center: radar display === -->
       <div class="ref-center">
+        <span class="ref-center-label">Tactical Scope — Sector VII</span>
         <div class="ref-radar-container">
           <div class="nerv-radar">
             <div class="nerv-radar-sweep"></div>
           </div>
         </div>
+        <span class="ref-center-label nerv-flicker" style="color: var(--nerv-green);">
+          Range: 120km &middot; Mode: Active
+        </span>
       </div>
 
-      <!-- Right: hex grid with mixed states -->
+      <!-- === Right: hex grid with mixed states === -->
       <div class="ref-hex-area">
+        <span class="ref-hex-label">Defensive Grid Status</span>
         <div class="nerv-hex-grid">
           <div class="nerv-hex-row">
             <div class="nerv-hex-cell nerv-hex-danger"></div>
@@ -138,23 +171,28 @@
             <div class="nerv-hex-cell"></div>
             <div class="nerv-hex-cell nerv-hex-warn"></div>
           </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-warn"></div>
+          </div>
         </div>
+        <span class="ref-hex-label nerv-blink" style="color: var(--nerv-red);">
+          ⚠ 3 Sectors Compromised
+        </span>
       </div>
 
-      <!-- Red stripe (animated, opposite scroll direction) -->
-      <div class="ref-stripe-top-red nerv-stripe nerv-stripe-red nerv-stripe-animated"
-           style="animation-direction: reverse;"></div>
-
-      <!-- Bottom stripe pair -->
-      <div class="ref-stripe-bottom nerv-stripe nerv-stripe-animated"></div>
+      <!-- === Bottom stripe pair (mirror of top) === -->
+      <div class="ref-stripe-bottom-red nerv-stripe nerv-stripe-red nerv-stripe-animated"
+           style="height: auto; animation-direction: reverse;"></div>
+      <div class="ref-stripe-bottom-green nerv-stripe nerv-stripe-animated"
+           style="height: auto;"></div>
 
     </div>
   </div>
 
-  <script type="module">
-    import { NERV } from '../dist/nerv.js';
-    NERV.init();
-  </script>
+  <script src="../dist/nerv.js"></script>
+  <script>NERV.init();</script>
 
 </body>
 </html>

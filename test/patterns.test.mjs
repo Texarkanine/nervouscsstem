@@ -210,7 +210,8 @@ describe('nerv.js API surface', () => {
 
   // Behavior 27 + 28 + 29 + 30 + 31
   it('module exports NERV object with expected functions', async () => {
-    const { NERV } = await import(resolve(ROOT, 'src/nerv.js'));
+    const mod = await import(resolve(ROOT, 'src/nerv.js'));
+    const NERV = mod.NERV || (mod.default && mod.default.NERV);
     assert.ok(NERV, 'module should export NERV object');
     assert.equal(typeof NERV.init, 'function', 'NERV.init should be a function');
     assert.equal(typeof NERV.injectScanlines, 'function', 'NERV.injectScanlines should be a function');

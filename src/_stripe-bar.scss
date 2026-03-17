@@ -19,10 +19,10 @@ $_stripe-size: 47px;
 .nerv-stripe {
   background: repeating-linear-gradient(
     -45deg,
-    rgba(var(--nerv-green-rgb), 0.35),
-    rgba(var(--nerv-green-rgb), 0.35) 10px,
-    transparent 10px,
-    transparent 20px
+    rgba(var(--nerv-green-rgb), 0.15),
+    rgba(var(--nerv-green-rgb), 0.15) 10px,
+    rgba(var(--nerv-green-rgb), 0.55) 10px,
+    rgba(var(--nerv-green-rgb), 0.55) 20px
   );
   background-size: $_stripe-size $_stripe-size;
   height: 1rem;
@@ -31,10 +31,10 @@ $_stripe-size: 47px;
 .nerv-stripe-vertical {
   background: repeating-linear-gradient(
     45deg,
-    rgba(var(--nerv-green-rgb), 0.35),
-    rgba(var(--nerv-green-rgb), 0.35) 10px,
-    transparent 10px,
-    transparent 20px
+    rgba(var(--nerv-green-rgb), 0.15),
+    rgba(var(--nerv-green-rgb), 0.15) 10px,
+    rgba(var(--nerv-green-rgb), 0.55) 10px,
+    rgba(var(--nerv-green-rgb), 0.55) 20px
   );
   background-size: $_stripe-size $_stripe-size;
   width: 1rem;
@@ -44,10 +44,10 @@ $_stripe-size: 47px;
 .nerv-stripe-red {
   background: repeating-linear-gradient(
     -45deg,
-    rgba(var(--nerv-red-rgb), 0.35),
-    rgba(var(--nerv-red-rgb), 0.35) 10px,
-    transparent 10px,
-    transparent 20px
+    rgba(var(--nerv-red-rgb), 0.15),
+    rgba(var(--nerv-red-rgb), 0.15) 10px,
+    rgba(var(--nerv-red-rgb), 0.55) 10px,
+    rgba(var(--nerv-red-rgb), 0.55) 20px
   );
   background-size: $_stripe-size $_stripe-size;
 }

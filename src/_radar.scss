@@ -12,37 +12,34 @@
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
 ///   --nerv-animation-speed
 
-$_ring-color: rgba(var(--nerv-primary-rgb), 0.35);
-$_ring-gap: transparent;
-
 .nerv-radar {
   position: relative;
   aspect-ratio: 1;
   border-radius: 50%;
-  border: var(--nerv-border-width) solid rgba(var(--nerv-primary-rgb), 0.5);
+  border: calc(var(--nerv-border-width) * 2) solid rgba(var(--nerv-primary-rgb), 0.8);
   overflow: hidden;
   background:
     radial-gradient(
       circle,
-      $_ring-gap       0%,  $_ring-gap       9%,
-      $_ring-color     9%,  $_ring-color    10%,
-      $_ring-gap      10%,  $_ring-gap      19%,
-      $_ring-color    19%,  $_ring-color    20%,
-      $_ring-gap      20%,  $_ring-gap      29%,
-      $_ring-color    29%,  $_ring-color    30%,
-      $_ring-gap      30%,  $_ring-gap      39%,
-      $_ring-color    39%,  $_ring-color    40%,
-      $_ring-gap      40%,  $_ring-gap      49%,
-      $_ring-color    49%,  $_ring-color    50%,
-      $_ring-gap      50%,  $_ring-gap      59%,
-      $_ring-color    59%,  $_ring-color    60%,
-      $_ring-gap      60%,  $_ring-gap      69%,
-      $_ring-color    69%,  $_ring-color    70%,
-      $_ring-gap      70%,  $_ring-gap      79%,
-      $_ring-color    79%,  $_ring-color    80%,
-      $_ring-gap      80%,  $_ring-gap      89%,
-      $_ring-color    89%,  $_ring-color    90%,
-      $_ring-gap      90%
+      transparent              0%,  transparent              9%,
+      rgba(var(--nerv-primary-rgb), 0.6) 9%,  rgba(var(--nerv-primary-rgb), 0.6) 10%,
+      transparent             10%,  transparent             19%,
+      rgba(var(--nerv-primary-rgb), 0.5) 19%, rgba(var(--nerv-primary-rgb), 0.5) 20%,
+      transparent             20%,  transparent             29%,
+      rgba(var(--nerv-primary-rgb), 0.5) 29%, rgba(var(--nerv-primary-rgb), 0.5) 30%,
+      transparent             30%,  transparent             39%,
+      rgba(var(--nerv-primary-rgb), 0.5) 39%, rgba(var(--nerv-primary-rgb), 0.5) 40%,
+      transparent             40%,  transparent             49%,
+      rgba(var(--nerv-primary-rgb), 0.5) 49%, rgba(var(--nerv-primary-rgb), 0.5) 50%,
+      transparent             50%,  transparent             59%,
+      rgba(var(--nerv-primary-rgb), 0.5) 59%, rgba(var(--nerv-primary-rgb), 0.5) 60%,
+      transparent             60%,  transparent             69%,
+      rgba(var(--nerv-primary-rgb), 0.5) 69%, rgba(var(--nerv-primary-rgb), 0.5) 70%,
+      transparent             70%,  transparent             79%,
+      rgba(var(--nerv-primary-rgb), 0.5) 79%, rgba(var(--nerv-primary-rgb), 0.5) 80%,
+      transparent             80%,  transparent             89%,
+      rgba(var(--nerv-primary-rgb), 0.6) 89%, rgba(var(--nerv-primary-rgb), 0.6) 90%,
+      transparent             90%
     );
 
   &::before,
@@ -53,40 +50,38 @@ $_ring-gap: transparent;
     pointer-events: none;
   }
 
-  // Horizontal + vertical crosshairs
   &::before {
     background:
       linear-gradient(
         to right,
         transparent calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.3) calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.3) calc(50% + 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% + 0.5px),
         transparent calc(50% + 0.5px)
       ),
       linear-gradient(
         to bottom,
         transparent calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.3) calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.3) calc(50% + 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% + 0.5px),
         transparent calc(50% + 0.5px)
       );
   }
 
-  // 45° diagonal crosshairs
   &::after {
     background:
       linear-gradient(
         45deg,
         transparent calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.2) calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.2) calc(50% + 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% + 0.5px),
         transparent calc(50% + 0.5px)
       ),
       linear-gradient(
         -45deg,
         transparent calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.2) calc(50% - 0.5px),
-        rgba(var(--nerv-primary-rgb), 0.2) calc(50% + 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% + 0.5px),
         transparent calc(50% + 0.5px)
       );
   }
@@ -98,9 +93,9 @@ $_ring-gap: transparent;
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    rgba(var(--nerv-primary-rgb), 0.4) 0deg,
-    rgba(var(--nerv-primary-rgb), 0.05) 30deg,
-    transparent 60deg,
+    rgba(var(--nerv-primary-rgb), 0.6) 0deg,
+    rgba(var(--nerv-primary-rgb), 0.15) 25deg,
+    transparent 50deg,
     transparent 360deg
   );
   animation:

@@ -39,7 +39,7 @@ $_hex-cell-width: 80px;
   width: $_hex-cell-width;
   aspect-ratio: 1.1547; // width / height ratio for a regular hexagon
   clip-path: $_hex-clip;
-  background: rgba(var(--nerv-green-rgb), 0.06);
+  background: rgba(var(--nerv-green-rgb), 0.12);
   position: relative;
   transition: filter 0.2s ease;
 
