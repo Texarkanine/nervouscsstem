@@ -7,26 +7,23 @@
 @use 'sass:list';
 @use 'tokens';
 
-/// Box-shadow phosphor bloom. Multiple layers at increasing blur radii
-/// with decreasing opacity simulate CRT phosphor light bleeding.
+/// Box-shadow phosphor bloom. Faint multi-layer halo at increasing blur
+/// radii — the glow should tint the surrounding void, not obscure edges.
 @mixin nerv-glow($color-var, $color-rgb-var) {
   box-shadow:
-    0 0 2px var(#{$color-var}),
-    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.5),
-    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.25),
-    0 0 calc(var(--nerv-glow-spread) * 5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.1);
+    0 0 1px rgba(var(#{$color-rgb-var}), 0.4),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.25),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.13),
+    0 0 calc(var(--nerv-glow-spread) * 5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.13);
 }
 
-/// Text-shadow phosphor bloom. Directional 1px offsets for "fat stroke"
-/// plus a blurred layer for the bloom halo.
+/// Text-shadow phosphor bloom. Soft halo only — no directional offsets
+/// so character edges stay crisp. The bloom bleeds light outward.
 @mixin nerv-glow-text($color-var, $color-rgb-var) {
   text-shadow:
-    -1px 1px 0 var(#{$color-var}),
-    1px -1px 0 var(#{$color-var}),
-    -1px -1px 0 var(#{$color-var}),
-    1px 1px 0 var(#{$color-var}),
-    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.6),
-    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.3);
+    0 0 2px rgba(var(#{$color-rgb-var}), 0.35),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.4),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.8);
 }
 
 // Auto-generate .nerv-glow-{name} and .nerv-glow-text-{name} for each
