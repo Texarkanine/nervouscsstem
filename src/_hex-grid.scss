@@ -1,0 +1,19 @@
+/// _hex-grid.scss — Hexagonal cell grid with state-based coloring.
+///
+/// Tiled hexagonal cells for warning displays and status grids.
+/// Uses clip-path for hex shape, ::before for inner border,
+/// and filter: drop-shadow() for per-state glow.
+///
+/// Classes:
+///   .nerv-hex-grid   — Container for the hexagonal grid
+///   .nerv-hex-row    — A row of hex cells; odd rows offset for honeycomb stacking
+///   .nerv-hex-cell   — Individual hexagonal cell (clip-path polygon)
+///   .nerv-hex-danger — Red state (uses --nerv-red)
+///   .nerv-hex-warn   — Amber/warning state (uses --nerv-amber)
+///   .nerv-hex-safe   — Green/safe state (uses --nerv-green)
+///
+/// Tokens consumed:
+///   --nerv-red, --nerv-red-rgb, --nerv-amber, --nerv-amber-rgb,
+///   --nerv-green, --nerv-green-rgb
+
+// Stub — implementation pending

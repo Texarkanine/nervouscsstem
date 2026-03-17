@@ -1,0 +1,15 @@
+/// _radar.scss — Concentric circle radar display pattern.
+///
+/// Concentric ring pattern with radial division lines and optional
+/// animated sweep arm. Uses radial-gradient hard stops for rings,
+/// pseudo-elements for division lines, and conic-gradient for sweep.
+///
+/// Classes:
+///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
+///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
+///   --nerv-animation-speed
+
+// Stub — implementation pending

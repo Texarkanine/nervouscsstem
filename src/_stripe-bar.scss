@@ -1,0 +1,17 @@
+/// _stripe-bar.scss — Animated diagonal chevron/hazard stripe patterns.
+///
+/// Provides horizontal and vertical stripe bars with animated scrolling.
+/// Uses repeating-linear-gradient for the stripe pattern and background-position
+/// keyframes for the scrolling effect.
+///
+/// Classes:
+///   .nerv-stripe           — Horizontal green diagonal stripe bar (default)
+///   .nerv-stripe-vertical  — Vertical orientation variant
+///   .nerv-stripe-red       — Red/danger color variant
+///   .nerv-stripe-animated  — Adds scrolling animation
+///
+/// Tokens consumed:
+///   --nerv-green, --nerv-green-rgb, --nerv-red, --nerv-red-rgb,
+///   --nerv-stripe-duration, --nerv-animation-speed
+
+// Stub — implementation pending

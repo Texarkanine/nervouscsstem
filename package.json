@@ -4,10 +4,10 @@
   "private": true,
   "description": "NERV Design System — pure-CSS design system inspired by Neon Genesis Evangelion operational consoles",
   "scripts": {
-    "build": "sass src/nerv.scss dist/nerv.css --no-source-map",
+    "build": "sass src/nerv.scss dist/nerv.css --no-source-map && cp src/nerv.js dist/nerv.js",
     "build:min": "sass src/nerv.scss dist/nerv.min.css --style=compressed --no-source-map",
     "watch": "sass --watch src/nerv.scss dist/nerv.css",
-    "test": "node --test test/foundation.test.mjs test/effects.test.mjs test/panels.test.mjs",
+    "test": "node --test test/foundation.test.mjs test/effects.test.mjs test/panels.test.mjs test/patterns.test.mjs",
     "lint": "stylelint dist/nerv.css"
   },
   "devDependencies": {

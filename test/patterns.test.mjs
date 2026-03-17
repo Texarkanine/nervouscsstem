@@ -1,0 +1,243 @@
+import { describe, it, before } from 'node:test';
+import assert from 'node:assert/strict';
+import { execSync } from 'node:child_process';
+import { readFileSync, existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+const ROOT = resolve(import.meta.dirname, '..');
+const DIST_CSS = resolve(ROOT, 'dist/nerv.css');
+const DIST_JS = resolve(ROOT, 'dist/nerv.js');
+
+let css = '';
+
+describe('Phase 4 — build integration', () => {
+  before(() => {
+    execSync('npm run build', { cwd: ROOT, stdio: 'pipe' });
+    css = readFileSync(DIST_CSS, 'utf-8');
+  });
+
+  // Behavior 1
+  it('npm run build exits 0 and dist/nerv.css is non-empty', () => {
+    assert.ok(existsSync(DIST_CSS), 'dist/nerv.css should exist');
+    assert.ok(css.length > 0, 'compiled CSS should not be empty');
+  });
+
+  // Behavior 2
+  it('npm run build:min still succeeds', () => {
+    execSync('npm run build:min', { cwd: ROOT, stdio: 'pipe' });
+    assert.ok(existsSync(resolve(ROOT, 'dist/nerv.min.css')), 'dist/nerv.min.css should exist');
+  });
+});
+
+describe('New tokens', () => {
+  // Behavior 3
+  it('--nerv-stripe-duration token exists on :root', () => {
+    assert.match(css, /--nerv-stripe-duration\s*:/, 'missing --nerv-stripe-duration token');
+  });
+
+  // Behavior 4
+  it('--nerv-radar-duration token exists on :root', () => {
+    assert.match(css, /--nerv-radar-duration\s*:/, 'missing --nerv-radar-duration token');
+  });
+});
+
+describe('Stripe bar CSS', () => {
+  // Behavior 5
+  it('.nerv-stripe class exists with repeating-linear-gradient', () => {
+    assert.match(css, /\.nerv-stripe\b[^-]/, 'missing .nerv-stripe class');
+    assert.match(css, /repeating-linear-gradient/, '.nerv-stripe should use repeating-linear-gradient');
+  });
+
+  // Behavior 6
+  it('.nerv-stripe-vertical class exists', () => {
+    assert.match(css, /\.nerv-stripe-vertical\b/, 'missing .nerv-stripe-vertical class');
+  });
+
+  // Behavior 7
+  it('.nerv-stripe-red class exists', () => {
+    assert.match(css, /\.nerv-stripe-red\b/, 'missing .nerv-stripe-red class');
+  });
+
+  // Behavior 8
+  it('.nerv-stripe-animated class exists with animation referencing --nerv-stripe-duration', () => {
+    assert.match(css, /\.nerv-stripe-animated\b/, 'missing .nerv-stripe-animated class');
+    assert.match(css, /--nerv-stripe-duration/, '.nerv-stripe-animated should reference --nerv-stripe-duration');
+  });
+
+  // Behavior 9
+  it('@keyframes for stripe animation exists', () => {
+    assert.match(css, /@keyframes\s+nerv-stripe-scroll/, 'missing @keyframes nerv-stripe-scroll');
+  });
+
+  // Behavior 10
+  it('prefers-reduced-motion suppresses stripe animation', () => {
+    assert.match(
+      css,
+      /prefers-reduced-motion/,
+      'should contain prefers-reduced-motion media query'
+    );
+    const reducedIdx = css.indexOf('prefers-reduced-motion');
+    const reducedSection = css.slice(reducedIdx, reducedIdx + 500);
+    assert.ok(
+      reducedSection.includes('animation') || reducedSection.includes('nerv-stripe'),
+      'prefers-reduced-motion should affect stripe animation'
+    );
+  });
+});
+
+describe('Hex grid CSS', () => {
+  // Behavior 11
+  it('.nerv-hex-grid class exists', () => {
+    assert.match(css, /\.nerv-hex-grid\b/, 'missing .nerv-hex-grid class');
+  });
+
+  // Behavior 12
+  it('.nerv-hex-row class exists', () => {
+    assert.match(css, /\.nerv-hex-row\b/, 'missing .nerv-hex-row class');
+  });
+
+  // Behavior 13
+  it('.nerv-hex-cell class exists with clip-path', () => {
+    assert.match(css, /\.nerv-hex-cell\b/, 'missing .nerv-hex-cell class');
+    const cellIdx = css.indexOf('.nerv-hex-cell');
+    const cellSection = css.slice(cellIdx, cellIdx + 500);
+    assert.ok(cellSection.includes('clip-path'), '.nerv-hex-cell should use clip-path');
+  });
+
+  // Behavior 14
+  it('.nerv-hex-cell::before pseudo-element exists (inner border)', () => {
+    assert.match(css, /\.nerv-hex-cell::before/, 'missing .nerv-hex-cell::before pseudo-element');
+  });
+
+  // Behavior 15
+  it('.nerv-hex-danger uses --nerv-red token', () => {
+    assert.match(css, /\.nerv-hex-danger\b/, 'missing .nerv-hex-danger class');
+    const dangerIdx = css.indexOf('.nerv-hex-danger');
+    const dangerSection = css.slice(dangerIdx, dangerIdx + 400);
+    assert.ok(dangerSection.includes('--nerv-red'), '.nerv-hex-danger should use --nerv-red token');
+  });
+
+  // Behavior 16
+  it('.nerv-hex-warn uses --nerv-amber token', () => {
+    assert.match(css, /\.nerv-hex-warn\b/, 'missing .nerv-hex-warn class');
+    const warnIdx = css.indexOf('.nerv-hex-warn');
+    const warnSection = css.slice(warnIdx, warnIdx + 400);
+    assert.ok(warnSection.includes('--nerv-amber'), '.nerv-hex-warn should use --nerv-amber token');
+  });
+
+  // Behavior 17
+  it('.nerv-hex-safe uses --nerv-green token', () => {
+    assert.match(css, /\.nerv-hex-safe\b/, 'missing .nerv-hex-safe class');
+    const safeIdx = css.indexOf('.nerv-hex-safe');
+    const safeSection = css.slice(safeIdx, safeIdx + 400);
+    assert.ok(safeSection.includes('--nerv-green'), '.nerv-hex-safe should use --nerv-green token');
+  });
+
+  // Behavior 18
+  it('state classes apply filter: drop-shadow for glow', () => {
+    const dangerIdx = css.indexOf('.nerv-hex-danger');
+    const dangerToEnd = css.slice(dangerIdx, dangerIdx + 600);
+    assert.ok(
+      dangerToEnd.includes('drop-shadow'),
+      'hex state classes should apply drop-shadow for glow'
+    );
+  });
+});
+
+describe('Radar CSS', () => {
+  // Behavior 19
+  it('.nerv-radar class exists with radial-gradient', () => {
+    assert.match(css, /\.nerv-radar\b[^-]/, 'missing .nerv-radar class');
+    const radarIdx = css.indexOf('.nerv-radar');
+    const radarSection = css.slice(radarIdx, radarIdx + 800);
+    assert.ok(radarSection.includes('radial-gradient'), '.nerv-radar should use radial-gradient');
+  });
+
+  // Behavior 20
+  it('.nerv-radar uses aspect-ratio: 1 and border-radius: 50%', () => {
+    const radarIdx = css.indexOf('.nerv-radar');
+    const radarSection = css.slice(radarIdx, radarIdx + 800);
+    assert.ok(radarSection.includes('aspect-ratio'), '.nerv-radar should use aspect-ratio');
+    assert.ok(radarSection.includes('border-radius: 50%'), '.nerv-radar should use border-radius: 50%');
+  });
+
+  // Behavior 21
+  it('.nerv-radar has pseudo-elements for radial division lines', () => {
+    assert.ok(
+      css.includes('.nerv-radar::before') || css.includes('.nerv-radar::after'),
+      '.nerv-radar should have pseudo-elements for division lines'
+    );
+  });
+
+  // Behavior 22
+  it('.nerv-radar-sweep class exists with conic-gradient', () => {
+    assert.match(css, /\.nerv-radar-sweep\b/, 'missing .nerv-radar-sweep class');
+    const sweepIdx = css.indexOf('.nerv-radar-sweep');
+    const sweepSection = css.slice(sweepIdx, sweepIdx + 500);
+    assert.ok(sweepSection.includes('conic-gradient'), '.nerv-radar-sweep should use conic-gradient');
+  });
+
+  // Behavior 23
+  it('@keyframes for radar sweep exists', () => {
+    assert.match(css, /@keyframes\s+nerv-radar-sweep/, 'missing @keyframes nerv-radar-sweep');
+  });
+
+  // Behavior 24
+  it('radar sweep duration references --nerv-radar-duration', () => {
+    const sweepIdx = css.indexOf('.nerv-radar-sweep');
+    const sweepSection = css.slice(sweepIdx, sweepIdx + 500);
+    assert.ok(
+      sweepSection.includes('--nerv-radar-duration'),
+      '.nerv-radar-sweep should reference --nerv-radar-duration'
+    );
+  });
+
+  // Behavior 25
+  it('prefers-reduced-motion suppresses radar sweep', () => {
+    const reducedMotionBlocks = css.split('prefers-reduced-motion');
+    const hasRadarSuppression = reducedMotionBlocks.some(
+      (block) => block.includes('nerv-radar-sweep') || block.includes('nerv-radar')
+    );
+    assert.ok(hasRadarSuppression, 'prefers-reduced-motion should suppress radar sweep');
+  });
+});
+
+describe('nerv.js API surface', () => {
+  // Behavior 26
+  it('dist/nerv.js exists after build', () => {
+    assert.ok(existsSync(DIST_JS), 'dist/nerv.js should exist after build');
+  });
+
+  // Behavior 27 + 28 + 29 + 30 + 31
+  it('module exports NERV object with expected functions', async () => {
+    const { NERV } = await import(resolve(ROOT, 'src/nerv.js'));
+    assert.ok(NERV, 'module should export NERV object');
+    assert.equal(typeof NERV.init, 'function', 'NERV.init should be a function');
+    assert.equal(typeof NERV.injectScanlines, 'function', 'NERV.injectScanlines should be a function');
+    assert.equal(typeof NERV.initHexFlicker, 'function', 'NERV.initHexFlicker should be a function');
+    assert.equal(typeof NERV.initGridLabels, 'function', 'NERV.initGridLabels should be a function');
+  });
+});
+
+describe('Regression — Phase 1–3', () => {
+  // Behavior 32
+  it('Foundation tokens still present', () => {
+    assert.match(css, /--nerv-amber\s*:/, 'missing --nerv-amber token');
+    assert.match(css, /--nerv-primary\s*:/, 'missing --nerv-primary meta-token');
+    assert.match(css, /\.nerv-glow\b[^-]/, 'missing .nerv-glow class');
+  });
+
+  // Behavior 33
+  it('Effects selectors still present', () => {
+    assert.match(css, /\.nerv-scanlines\b/, 'missing .nerv-scanlines class');
+    assert.match(css, /\.nerv-flicker\b[^-]/, 'missing .nerv-flicker class');
+    assert.match(css, /\.nerv-glitch\b/, 'missing .nerv-glitch class');
+  });
+
+  // Behavior 34
+  it('Structural selectors still present', () => {
+    assert.match(css, /\.nerv-panel\b[^-]/, 'missing .nerv-panel class');
+    assert.match(css, /\.nerv-divider\b[^-]/, 'missing .nerv-divider class');
+    assert.match(css, /\.nerv-grid-marks\b/, 'missing .nerv-grid-marks class');
+  });
+});
