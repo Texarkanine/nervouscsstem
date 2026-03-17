@@ -2,7 +2,8 @@
  * nerv.js — NERV Design System orchestration module.
  *
  * Provides DOM manipulation that CSS alone cannot achieve:
- * scanline overlay injection, hex cell state cycling, and grid axis labels.
+ * scanline overlay injection, hex cell state cycling, grid axis labels,
+ * ghost-segment population, and bar meter fill activation.
  *
  * UMD-lite: works as a classic <script> tag (window.NERV) and as a
  * Node.js/CJS module (require/import). No build step required.
@@ -50,6 +51,9 @@
         for (var j = 0; j < gridMarks.length; j++) {
           NERV.initGridLabels(gridMarks[j]);
         }
+
+        NERV.initGhostSegments();
+        NERV.initBarMeters();
       };
 
       if (document.readyState === 'loading') {
@@ -99,12 +103,6 @@
     },
 
     /**
-     * Generates axis label span elements along grid container edges.
-     * Labels are positioned absolutely along X (bottom) and Y (left) axes.
-     *
-     * @param {HTMLElement} container - Element to attach axis labels to
-     */
-    /**
      * Populates data-ghost attributes on .nerv-segment-display elements.
      * Reads each element's text content, replaces digits with 8s, and sets
      * the result as data-ghost for the ::before ghost-segment overlay.
@@ -112,6 +110,16 @@
      * @param {HTMLElement} [container=document] - Scope for element lookup
      */
     initGhostSegments: function initGhostSegments(container) {
+      if (typeof document === 'undefined') return;
+      var scope = container || document;
+      var displays = scope.querySelectorAll('.nerv-segment-display');
+      for (var i = 0; i < displays.length; i++) {
+        var el = displays[i];
+        if (el.getAttribute('data-ghost')) continue;
+        var text = el.textContent || '';
+        var ghost = text.replace(/[0-9]/g, '8');
+        el.setAttribute('data-ghost', ghost);
+      }
     },
 
     /**
@@ -121,8 +129,30 @@
      * @param {HTMLElement} [container=document] - Scope for element lookup
      */
     initBarMeters: function initBarMeters(container) {
+      if (typeof document === 'undefined') return;
+      var scope = container || document;
+      var meters = scope.querySelectorAll('.nerv-bar-meter[data-fill]');
+      for (var i = 0; i < meters.length; i++) {
+        var meter = meters[i];
+        var fill = parseFloat(meter.getAttribute('data-fill')) || 0;
+        var bars = meter.querySelectorAll('.nerv-bar-meter-bar');
+        var activeCount = Math.round((fill / 100) * bars.length);
+        for (var j = 0; j < bars.length; j++) {
+          if (j < activeCount) {
+            bars[j].classList.add('nerv-bar-active');
+          } else {
+            bars[j].classList.remove('nerv-bar-active');
+          }
+        }
+      }
     },
 
+    /**
+     * Generates axis label span elements along grid container edges.
+     * Labels are positioned absolutely along X (bottom) and Y (left) axes.
+     *
+     * @param {HTMLElement} container - Element to attach axis labels to
+     */
     initGridLabels: function initGridLabels(container) {
       if (!container || typeof document === 'undefined') return;
 

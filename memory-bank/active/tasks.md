@@ -250,5 +250,5 @@ No new technology — validation not required. All implementation uses existing 
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Preflight — PASS (2 minor amendments: added test coverage for zone markers + MAGI connecting lines; added `--nerv-label-box-color` custom property hook)
-- [ ] Build
+- [x] Build — PASS (10/10 steps, 31 new tests, 121 total passing, 0 failures)
 - [ ] QA

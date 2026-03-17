@@ -18,12 +18,13 @@
 @use 'glow';
 
 .nerv-magi-panel {
+  --nerv-magi-color: var(--nerv-amber);
+  --nerv-magi-color-rgb: var(--nerv-amber-rgb);
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto 1.5rem auto;
   gap: 0;
-  --nerv-magi-color: var(--nerv-amber);
-  --nerv-magi-color-rgb: var(--nerv-amber-rgb);
 }
 
 .nerv-magi-system {
