@@ -26,3 +26,10 @@
 - Test plan: Node.js built-in test runner, 22 behaviors to verify
 - 8-step implementation plan following TDD and dependency graph order
 - Technology validation: Dart Sass + DSEG7 CDN URL verified
+
+## 2026-03-17 — Phase 1 Sub-run: Preflight Phase Complete
+
+- Convention compliance: all file locations, naming, patterns align with systemPatterns.md
+- Completeness gap fixed: added missing test cases for `.nerv-glow-drop` and `prefers-contrast` glow reduction
+- Innovation applied: SCSS `$nerv-colors` map as single source of truth for token + glow class generation
+- High-contrast glow handling added to `_glow.scss` implementation step

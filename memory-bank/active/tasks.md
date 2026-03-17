@@ -57,6 +57,10 @@ None — all new code, no existing interfaces to change.
 
 None — implementation approach is clear. All design decisions were resolved during L4 planning (SCSS tooling, font stack, font loading strategy, directory structure, token values).
 
+## Preflight Innovation: SCSS Color Map
+
+**Applied during preflight.** Introduce a SCSS `$nerv-colors` map in `_tokens.scss` as the single source of truth for the color system. Each map entry defines the color name, hex value, and whether it gets a glow variant. An `@each` loop generates `:root` custom properties and `-rgb` companions automatically. `_glow.scss` imports this map via `@use 'tokens'` and uses it with the glow mixin in another `@each` loop to auto-generate `.nerv-glow-*` and `.nerv-glow-text-*` classes. This eliminates manual duplication between tokens and glow, and makes adding new colors trivial (add to map → get token + RGB companion + glow class automatically).
+
 ## Test Plan (TDD)
 
 ### Behaviors to Verify
@@ -88,6 +92,8 @@ None — implementation approach is clear. All design decisions were resolved du
 - `.nerv-glow-red`, `.nerv-glow-green`, `.nerv-glow-cyan` variants present
 - `.nerv-glow-text` class has `text-shadow` with multiple layers
 - Color variants of `.nerv-glow-text` present
+- `.nerv-glow-drop` class has `filter` with `drop-shadow()`
+- `prefers-contrast` media query reduces or removes glow effects
 
 **Selector discipline:**
 - No bare element selectors in compiled output (all selectors are `.nerv-*`, `:root`, or `@font-face`/`@media`)
@@ -139,9 +145,9 @@ None — implementation approach is clear. All design decisions were resolved du
 
 - Files: `src/_tokens.scss`
 - Changes:
-    - `:root` block with all 10 named color tokens
-    - RGB companion tokens for each color
-    - Meta-tokens `--nerv-primary` and `--nerv-bg` with defaults
+    - Define SCSS `$nerv-colors` map: each entry has name, hex value, RGB triplet, and glow-variant flag
+    - `:root` block generated via `@each` loop over `$nerv-colors` → `--nerv-{name}` and `--nerv-{name}-rgb` properties
+    - Meta-tokens `--nerv-primary` and `--nerv-bg` with defaults (hand-written, not map-driven)
     - Utility tokens (`--nerv-glow-spread`, `--nerv-scanline-opacity`, `--nerv-flicker-duration`, `--nerv-animation-speed`, `--nerv-border-width`)
     - `@media (prefers-contrast: more)` override for `--nerv-border-width`
 - Update: `src/nerv.scss` → `@forward 'tokens'`
@@ -167,13 +173,14 @@ None — implementation approach is clear. All design decisions were resolved du
 
 - Files: `src/_glow.scss`
 - Changes:
-    - `@use 'tokens'` (if needed for SCSS variables; CSS custom properties accessed at runtime)
+    - `@use 'tokens'` to access `$nerv-colors` map
     - `@mixin nerv-glow($color-var, $color-rgb-var)`: generates multi-layer `box-shadow` at increasing blur radii with decreasing opacity
-    - `.nerv-glow`: default amber glow via mixin
-    - `.nerv-glow-red`, `.nerv-glow-green`, `.nerv-glow-cyan`: color variants
-    - `.nerv-glow-text`: text-shadow version (directional 1px offsets + blurred layer)
-    - Color variants of `.nerv-glow-text`
+    - `@mixin nerv-glow-text($color-var, $color-rgb-var)`: generates text-shadow version (directional 1px offsets + blurred layer)
+    - `@each` loop over `tokens.$nerv-colors` (filtered by glow-variant flag): auto-generates `.nerv-glow-{name}` and `.nerv-glow-text-{name}` classes
+    - `.nerv-glow` as alias for `.nerv-glow-amber` (default)
+    - `.nerv-glow-text` as alias for `.nerv-glow-text-amber` (default)
     - `.nerv-glow-drop`: `filter: drop-shadow()` utility for non-rectangular elements
+    - `@media (prefers-contrast: more)`: reduce or suppress glow shadows for element clarity
 - Update: `src/nerv.scss` → add `@forward 'glow'`
 - Run: `npm test` → glow tests pass
 
@@ -209,6 +216,7 @@ None — implementation approach is clear. All design decisions were resolved du
 - **Mixed JP/EN text** (`.nerv-type-mixed`): Requires `unicode-range` in `@font-face` to separate CJK and Latin rendering. **Mitigation**: This is an established CSS technique. Will define a composite font family with separate `@font-face` rules for CJK vs Latin unicode ranges.
 - **No prior test infrastructure**: Greenfield project has no tests. **Mitigation**: Node.js built-in test runner (zero dependencies) + CSS string matching provides lightweight automated validation alongside visual reference pages.
 - **SCSS @forward module resolution**: Dart Sass `@forward` requires specific syntax and load paths. **Mitigation**: Keep all partials in flat `src/` directory; use bare names (e.g., `@forward 'tokens'` resolves to `_tokens.scss`).
+- **High-contrast glow reduction**: `systemPatterns.md` specifies "reduce reliance on glow/shadow" under `prefers-contrast`. **Mitigation**: Add `prefers-contrast` media query in `_glow.scss` that reduces glow spread/opacity, in addition to the `--nerv-border-width` increase in `_tokens.scss`.
 
 ## Status
 
