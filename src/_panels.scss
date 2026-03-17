@@ -1,0 +1,30 @@
+/// _panels.scss — Panel containers for the NERV instrument-panel layout.
+///
+/// Four panel variants with a shared base mixin:
+///   .nerv-panel          — basic bordered container
+///   .nerv-panel-titled   — titled panel with ::before title bar
+///   .nerv-panel-double   — double-border concentric container
+///   .nerv-panel-inset    — visually recessed panel with inset shadow
+///
+/// Exposes --nerv-panel-color / --nerv-panel-color-rgb custom properties
+/// (default: amber) for per-panel color overrides.
+///
+/// Tokens consumed:
+///   --nerv-amber, --nerv-amber-rgb    (default panel color)
+///   --nerv-border-width               (border sizing, scales with prefers-contrast)
+///   --nerv-bg                         (panel background)
+///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
+
+@use 'glow';
+
+.nerv-panel {
+}
+
+.nerv-panel-titled {
+}
+
+.nerv-panel-double {
+}
+
+.nerv-panel-inset {
+}

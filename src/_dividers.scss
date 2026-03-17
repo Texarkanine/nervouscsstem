@@ -1,0 +1,24 @@
+/// _dividers.scss — Zone-separator divider rules.
+///
+/// Horizontal and vertical dividers in cyan (default) and amber.
+/// Glow effect via box-shadow.
+///
+///   .nerv-divider          — horizontal cyan divider
+///   .nerv-divider-vertical — vertical orientation
+///   .nerv-divider-amber    — amber color variant
+///
+/// Tokens consumed:
+///   --nerv-cyan, --nerv-cyan-rgb      (default divider color)
+///   --nerv-amber, --nerv-amber-rgb    (amber variant color)
+///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
+
+@use 'glow';
+
+.nerv-divider {
+}
+
+.nerv-divider-vertical {
+}
+
+.nerv-divider-amber {
+}

@@ -1,0 +1,17 @@
+/// _grid-marks.scss — Registration mark crosshair grid.
+///
+/// SVG data URI tiled background generating a crosshair pattern.
+/// Grid density controlled via background-size; position via background-position.
+///
+///   .nerv-grid-marks — cyan crosshair grid overlay (pointer-events: none)
+///
+/// Internal @mixin nerv-grid-marks-bg($rgb) generates SVG data URIs
+/// in any color for future extensibility.
+///
+/// Tokens consumed:
+///   Color values from tokens.$nerv-colors for SVG data URI interpolation
+
+@use 'tokens';
+
+.nerv-grid-marks {
+}
