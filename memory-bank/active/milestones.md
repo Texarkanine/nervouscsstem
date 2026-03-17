@@ -17,7 +17,7 @@
 
 See `planning/PHASE{N}.md` for phase research and details.
 
-- [ ] Phase 1 — Foundation Layer: project scaffolding, `_tokens.scss`, `_typography.scss`, `_glow.scss`, `ref-foundation.html` (estimated L3)
+- [x] Phase 1 — Foundation Layer: project scaffolding, `_tokens.scss`, `_typography.scss`, `_glow.scss`, `ref-foundation.html` (estimated L3)
 - [ ] Phase 2 — Effects Layer: `_scanlines.scss`, `_flicker.scss`, `_glitch.scss`, `ref-effects.html` (estimated L2)
 - [ ] Phase 3 — Structural Layer: `_panels.scss`, `_dividers.scss`, `_grid-marks.scss`, `ref-panels.html` (estimated L3)
 - [ ] Phase 4 — Patterns & Geometry + Initial JS: `_stripe-bar.scss`, `_hex-grid.scss`, `_radar.scss`, `nerv.js` v1, `ref-patterns.html` (estimated L3)
