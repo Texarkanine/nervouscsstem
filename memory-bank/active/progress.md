@@ -65,3 +65,14 @@ Implement Phase 3 (Structural Layer) of the NERV design system: panels, dividers
     - No fixes required — implementation is clean
 * Insights
     - The manual box-shadow composition for `.nerv-panel-inset` is a genuine constraint, not an oversight — `declaration-block-no-duplicate-properties` would fire if mixin were used then overridden
+
+## 2026-03-17 - REFLECT - COMPLETE
+
+* Work completed
+    - Full lifecycle review from planning through QA
+    - Reflection document written to `memory-bank/active/reflection/reflection-nerv-phase3-structural.md`
+* Decisions made
+    - None — reflection is observational
+* Insights
+    - Stylelint + compiled CSS custom properties: `declaration-empty-line-before` rule doesn't handle custom property → regular property transitions well in compiled output
+    - Dart Sass module system: use `@use 'sass:map'` / `@use 'sass:list'` from the start in all new SCSS files to avoid deprecation warnings
