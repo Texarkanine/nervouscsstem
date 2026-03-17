@@ -13,3 +13,8 @@
 - Sequential review verified dependency chain correctness
 - Identified and documented `--nerv-primary` meta-token as a Phase 1→Phase 6 forward-compatibility concern
 - Created milestones.md with 6 milestones and cross-milestone invariants
+
+## 2026-03-17 — Phase 1 Sub-run: Complexity Analysis Complete
+
+- L4 re-entry: Phase 1 (Foundation Layer) is first unchecked milestone
+- Classified as Level 3: multiple components, well-defined deliverables, no new architectural decisions needed
