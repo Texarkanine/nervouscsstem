@@ -20,3 +20,9 @@ A third hex grid layout variant where hexagons perfectly tile with no gaps (true
 - **Spaced**: Non-overlapping, corner-touching with triangular gaps
 
 The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math.
+
+## Fix: CRT opacity on barberspole
+
+Vertical and/or green barberpole has opacity in-between green bands. Should not.
+
+Perhaps: barberpoles should have square borders with glow of a configurable color? Default to the main barberpole color?
