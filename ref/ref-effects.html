@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Effects — ref-effects</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nerv-void);
+      color: var(--nerv-amber);
+      min-height: 100vh;
+      padding: 3rem 4rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    .ref-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(var(--nerv-steel-rgb), 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+    }
+
+    .ref-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: baseline;
+    }
+
+    .ref-swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .ref-color-name {
+      font-size: 0.6rem;
+      font-family: 'IBM Plex Mono', monospace;
+      opacity: 0.5;
+    }
+
+    .segment-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .segment-ghost {
+      color: rgba(var(--nerv-amber-rgb), 0.06);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .segment-value {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scanline overlay — in production, nerv.js injects this automatically -->
+  <div class="nerv-scanlines"></div>
+
+  <!-- =============================================
+       Phase 1 Regression: Typography Classes
+       ============================================= -->
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-display</div>
+    <p class="nerv-type-display" style="font-size: 2.5rem; color: var(--nerv-orange);">
+      NERV — 特務機関ネルフ
+    </p>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-hud</div>
+    <p class="nerv-type-hud" style="font-size: 1.5rem; color: var(--nerv-amber);">
+      Evangelion Unit-01 Status: Active
+    </p>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-data</div>
+    <p class="nerv-type-data" style="font-size: 1.1rem; color: var(--nerv-green);">
+      SYNC_RATE: 41.3% &nbsp; CONTAMINATION: 0.03% &nbsp; A10_DEPTH: 128.7m
+    </p>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-segment</div>
+    <div class="nerv-type-segment" style="font-size: 3rem; color: var(--nerv-amber);">
+      <span class="segment-wrapper">
+        <span class="segment-ghost">88:88:88:88</span>
+        <span
+          class="segment-value nerv-glow-text-amber"
+          id="live-segment-timer"
+          aria-label="Elapsed time with centisecond accuracy"
+        >00:00:00:00</span>
+      </span>
+    </div>
+    <script>
+      function formatCentisecondTimer(elapsedMs) {
+        const totalCentis = Math.floor(elapsedMs / 10);
+        const centis = totalCentis % 100;
+        const totalSeconds = Math.floor(totalCentis / 100);
+        const seconds = totalSeconds % 60;
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const minutes = totalMinutes % 60;
+        const hours = Math.floor(totalMinutes / 60);
+        const pad = n => n.toString().padStart(2, '0');
+        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}:${pad(centis)}`;
+      }
+
+      (function () {
+        const elem = document.getElementById('live-segment-timer');
+        if (!elem) return;
+        const start = performance.now();
+        function tick() {
+          const now = performance.now();
+          elem.textContent = formatCentisecondTimer(now - start);
+          requestAnimationFrame(tick);
+        }
+        tick();
+      })();
+    </script>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-mixed (JP/EN composite)</div>
+    <p class="nerv-type-mixed" style="font-size: 1.8rem; color: var(--nerv-amber);">
+      活動限界 ACTIVE TIME REMAINING
+    </p>
+  </section>
+
+  <!-- =============================================
+       Phase 1 Regression: Color Tokens
+       ============================================= -->
+
+  <section>
+    <div class="ref-label">Color Tokens</div>
+    <div class="ref-row">
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-amber);">NERV AMBER</span>
+        <span class="ref-color-name">#ffaa00</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-amber-dark);">AMBER DARK</span>
+        <span class="ref-color-name">#f06800</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-orange);">NERV ORANGE</span>
+        <span class="ref-color-name">#ff9830</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-red);">ALERT RED</span>
+        <span class="ref-color-name">#ff2233</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-red-deep);">RED DEEP</span>
+        <span class="ref-color-name">#a00010</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-green);">DATA GREEN</span>
+        <span class="ref-color-name">#50ff50</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-cyan);">WIRE CYAN</span>
+        <span class="ref-color-name">#20f0ff</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-blue);">DATA BLUE</span>
+        <span class="ref-color-name">#4488ff</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-steel);">STEEL</span>
+        <span class="ref-color-name">#e0e0d8</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       Phase 1 Regression: Glow Effects
+       ============================================= -->
+
+  <section>
+    <div class="ref-label">Glow Effects — box-shadow (.nerv-glow-*)</div>
+    <div class="ref-row">
+      <div class="nerv-glow" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-amber);">
+        <span class="nerv-type-hud" style="color: var(--nerv-amber);">.nerv-glow</span>
+      </div>
+      <div class="nerv-glow-red" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-red);">
+        <span class="nerv-type-hud" style="color: var(--nerv-red);">.nerv-glow-red</span>
+      </div>
+      <div class="nerv-glow-cyan" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-cyan);">
+        <span class="nerv-type-hud" style="color: var(--nerv-cyan);">.nerv-glow-cyan</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       Phase 2: Flicker Effects
+       ============================================= -->
+
+  <section>
+    <div class="ref-label">Flicker — .nerv-flicker (staccato on/off)</div>
+    <div class="ref-row">
+      <span class="nerv-type-hud nerv-flicker nerv-glow-text-amber" style="font-size: 1.4rem; color: var(--nerv-amber);">
+        SYSTEM ACTIVE
+      </span>
+      <span class="nerv-type-hud nerv-flicker nerv-glow-text-green" style="font-size: 1.4rem; color: var(--nerv-green);">
+        LINK ESTABLISHED
+      </span>
+      <span class="nerv-type-hud nerv-flicker nerv-glow-text-cyan" style="font-size: 1.4rem; color: var(--nerv-cyan);">
+        DATA STREAM
+      </span>
+    </div>
+  </section>
+
+  <section>
+    <div class="ref-label">Flicker — .nerv-flicker-fast (rapid staccato)</div>
+    <div class="ref-row">
+      <span class="nerv-type-hud nerv-flicker-fast nerv-glow-text-red" style="font-size: 1.4rem; color: var(--nerv-red);">
+        WARNING
+      </span>
+      <span class="nerv-type-hud nerv-flicker-fast nerv-glow-text-amber" style="font-size: 1.4rem; color: var(--nerv-amber);">
+        TRANSMITTING
+      </span>
+    </div>
+  </section>
+
+  <section>
+    <div class="ref-label">Flicker — .nerv-flicker-staccato (hard two-state toggle)</div>
+    <span class="nerv-type-data nerv-flicker-staccato nerv-glow-text-green" style="font-size: 1.2rem; color: var(--nerv-green);">
+      NOMINAL
+    </span>
+  </section>
+
+  <section>
+    <div class="ref-label">Blink — .nerv-blink (slow sustained pulse)</div>
+    <span class="nerv-type-hud nerv-blink nerv-glow-text-amber" style="font-size: 1.6rem; color: var(--nerv-amber);">
+      STANDBY
+    </span>
+  </section>
+
+  <!-- =============================================
+       Phase 2: Glitch Effect
+       ============================================= -->
+
+  <section>
+    <div class="ref-label">Glitch — .nerv-glitch (digital corruption, requires data-text)</div>
+    <div class="ref-row">
+      <span
+        class="nerv-type-hud nerv-glitch"
+        data-text="EMERGENCY"
+        style="font-size: 2rem; color: var(--nerv-red);"
+      >EMERGENCY</span>
+      <span
+        class="nerv-type-hud nerv-glitch"
+        data-text="PATTERN BLUE"
+        style="font-size: 1.5rem; color: var(--nerv-cyan);"
+      >PATTERN BLUE</span>
+    </div>
+  </section>
+
+  <!-- =============================================
+       Phase 2: Alert State Transition (timed demo)
+       ============================================= -->
+
+  <section>
+    <div class="ref-label">Alert State Transition — timed color shift loop</div>
+    <span
+      id="alert-transition-label"
+      class="nerv-type-hud nerv-glow-text-green"
+      style="font-size: 1.6rem; color: var(--nerv-green);"
+    >CONDITION: NORMAL</span>
+    <script>
+      (function () {
+        const label = document.getElementById('alert-transition-label');
+        if (!label) return;
+        const states = [
+          { text: 'CONDITION: NORMAL',  color: '--nerv-green', glow: 'nerv-glow-text-green' },
+          { text: 'CONDITION: CAUTION', color: '--nerv-amber', glow: 'nerv-glow-text-amber' },
+          { text: 'CONDITION: ALERT',   color: '--nerv-red',   glow: 'nerv-glow-text-red' },
+        ];
+        let idx = 0;
+        setInterval(function () {
+          idx = (idx + 1) % states.length;
+          const s = states[idx];
+          label.textContent = s.text;
+          label.style.color = 'var(' + s.color + ')';
+          label.className = 'nerv-type-hud ' + s.glow;
+        }, 2500);
+      })();
+    </script>
+  </section>
+
+</body>
+</html>

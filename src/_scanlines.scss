@@ -1,0 +1,66 @@
+/// _scanlines.scss — CRT scanline overlay, vignette, and scrolling bright band.
+///
+/// Provides a full-viewport overlay element with:
+///   - Horizontal scanline pattern via repeating-linear-gradient
+///   - Edge-darkening vignette via radial-gradient
+///   - Slowly scrolling bright band via ::after keyframe animation
+///
+/// The overlay requires a DOM <div class="nerv-scanlines"> in the markup.
+/// In reference pages this is included directly; in production, nerv.js
+/// (Phase 4) injects it automatically.
+///
+/// Tokens consumed:
+///   --nerv-scanline-opacity (line darkness)
+///   --nerv-animation-speed  (band scroll rate)
+
+.nerv-scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1px,
+      rgba(0, 0, 0, var(--nerv-scanline-opacity)) 1px,
+      rgba(0, 0, 0, var(--nerv-scanline-opacity)) 2px
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 50%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+  background-size: 100% 2px, 100% 100%;
+  mix-blend-mode: multiply;
+}
+
+.nerv-scanlines::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8%;
+  background: linear-gradient(
+    0deg,
+    transparent 0%,
+    rgba(var(--nerv-amber-rgb), 0.03) 50%,
+    transparent 100%
+  );
+  animation: nerv-scanline-band calc(5s / var(--nerv-animation-speed)) linear infinite;
+}
+
+@keyframes nerv-scanline-band {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(1250%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-scanlines::after {
+    animation: none;
+  }
+}

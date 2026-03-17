@@ -7,7 +7,7 @@
     "build": "sass src/nerv.scss dist/nerv.css --no-source-map",
     "build:min": "sass src/nerv.scss dist/nerv.min.css --style=compressed --no-source-map",
     "watch": "sass --watch src/nerv.scss dist/nerv.css",
-    "test": "node --test test/foundation.test.mjs",
+    "test": "node --test test/foundation.test.mjs test/effects.test.mjs",
     "lint": "stylelint dist/nerv.css"
   },
   "devDependencies": {

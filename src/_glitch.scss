@@ -1,0 +1,82 @@
+/// _glitch.scss — Digital corruption glitch effect.
+///
+/// Text distortion via ::before/::after pseudo-elements with clip-path
+/// polygon slices and chromatic-aberration-like color offsets.
+///
+/// Consumer contract: elements using .nerv-glitch must include a
+/// data-text attribute matching their text content:
+///   <span class="nerv-glitch" data-text="EMERGENCY">EMERGENCY</span>
+///
+/// Tokens consumed:
+///   --nerv-animation-speed (glitch cycle rate)
+
+.nerv-glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.nerv-glitch::before,
+.nerv-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.nerv-glitch::before {
+  color: var(--nerv-cyan);
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  animation: nerv-glitch-top calc(2s / var(--nerv-animation-speed)) steps(2) infinite;
+}
+
+.nerv-glitch::after {
+  color: var(--nerv-red);
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  animation: nerv-glitch-bottom calc(2.5s / var(--nerv-animation-speed)) steps(3) infinite;
+}
+
+@keyframes nerv-glitch-top {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-3px, -1px) skewX(2deg);
+  }
+  40% {
+    transform: translate(2px, 1px) skewX(-1deg);
+  }
+  60% {
+    transform: translate(-1px, 0) skewX(0deg);
+  }
+  80% {
+    transform: translate(3px, -1px) skewX(-2deg);
+  }
+}
+
+@keyframes nerv-glitch-bottom {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  15% {
+    transform: translate(2px, 1px) skewX(-3deg);
+  }
+  35% {
+    transform: translate(-3px, 0) skewX(1deg);
+  }
+  55% {
+    transform: translate(1px, -1px) skewX(2deg);
+  }
+  75% {
+    transform: translate(-2px, 1px) skewX(-1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-glitch::before,
+  .nerv-glitch::after {
+    animation: none;
+  }
+}

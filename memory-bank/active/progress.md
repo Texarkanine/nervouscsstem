@@ -32,3 +32,20 @@ Implement the Effects Layer (Phase 2) of the NERV Design System: scanline overla
     - Identified scanline band naming clarification (::after, not separate class) — plan updated
 * Advisory
     - Future consideration: `--nerv-stagger-index` custom property as alternative to `:nth-child()` stagger
+
+## 2026-03-17 - BUILD - COMPLETE
+
+* Work completed
+    - Stubbed and implemented 17 tests in `test/effects.test.mjs` (TDD red→green)
+    - Implemented `src/_scanlines.scss`: scanline overlay, vignette, scrolling band with `@keyframes nerv-scanline-band`
+    - Implemented `src/_flicker.scss`: four classes (flicker, flicker-fast, flicker-staccato, blink) with `steps()` timing and `--nerv-flicker-duration` token
+    - Implemented `src/_glitch.scss`: `clip-path` pseudo-element glitch with chromatic aberration (`--nerv-cyan`, `--nerv-red`)
+    - Updated `src/nerv.scss` with three new `@forward` lines
+    - Created `ref/ref-effects.html` with all Phase 1 regression content + all Phase 2 effects + timed alert state transition demo
+    - Updated `package.json` test script and `.stylelintrc.json`
+* Decisions made
+    - `prefers-reduced-motion` blocks co-located inline with each module (not centralized)
+    - Stylelint `color-function-notation` and `alpha-value-notation` disabled (Dart Sass legacy-normalizes)
+    - Scanline band is `::after` pseudo (not separate class), consistent with preflight finding
+* Verification
+    - 32/32 tests pass (17 new + 15 Phase 1), Stylelint clean, build + minify succeed
