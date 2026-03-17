@@ -9,3 +9,26 @@
 /// Tokens consumed:
 ///   --nerv-amber, --nerv-amber-rgb (LED glow color)
 ///   --nerv-bg (background)
+
+.nerv-segment-display {
+  position: relative;
+  display: inline-block;
+  font-family: 'DSEG7 Classic', monospace;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--nerv-amber);
+  text-shadow:
+    0 0 2px rgba(var(--nerv-amber-rgb), 0.4),
+    0 0 8px rgba(var(--nerv-amber-rgb), 0.5),
+    0 0 20px rgba(var(--nerv-amber-rgb), 0.3);
+
+  &::before {
+    content: attr(data-ghost);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgba(var(--nerv-amber-rgb), 0.08);
+    text-shadow: none;
+    pointer-events: none;
+  }
+}

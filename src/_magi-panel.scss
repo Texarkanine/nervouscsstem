@@ -14,3 +14,56 @@
 ///   --nerv-border-width
 ///   --nerv-bg
 ///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
+
+@use 'glow';
+
+.nerv-magi-panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1.5rem auto;
+  gap: 0;
+  --nerv-magi-color: var(--nerv-amber);
+  --nerv-magi-color-rgb: var(--nerv-amber-rgb);
+}
+
+.nerv-magi-system {
+  position: relative;
+  border: var(--nerv-border-width) solid var(--nerv-magi-color);
+  background: var(--nerv-bg);
+  padding: 0.8rem 0.6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nerv-magi-color);
+  @include glow.nerv-glow(--nerv-magi-color, --nerv-magi-color-rgb);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: calc(-1.5rem - var(--nerv-border-width));
+    left: 50%;
+    width: var(--nerv-border-width);
+    height: 1.5rem;
+    background: var(--nerv-magi-color);
+    pointer-events: none;
+  }
+}
+
+.nerv-magi-output {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  position: relative;
+  border: var(--nerv-border-width) solid var(--nerv-magi-color);
+  background: var(--nerv-bg);
+  padding: 0.8rem 0.6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nerv-magi-color);
+  text-align: center;
+  @include glow.nerv-glow(--nerv-magi-color, --nerv-magi-color-rgb);
+}

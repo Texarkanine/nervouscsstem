@@ -17,3 +17,48 @@
 ///   --nerv-bg
 ///   --nerv-border-width
 ///   --nerv-glow-spread, --nerv-glow-intensity
+
+.nerv-label-box {
+  --nerv-label-box-color: var(--nerv-primary);
+  --nerv-label-box-color-rgb: var(--nerv-primary-rgb);
+
+  display: inline-block;
+  transform: skewX(-15deg);
+  border: var(--nerv-border-width) solid var(--nerv-label-box-color);
+  background: transparent;
+  padding: 0.3em 1em;
+  color: var(--nerv-label-box-color);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+
+  > * {
+    display: inline-block;
+    transform: skewX(15deg);
+  }
+}
+
+.nerv-label-box-active {
+  background: var(--nerv-label-box-color);
+  color: var(--nerv-bg);
+  box-shadow:
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.35),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.18);
+}
+
+.nerv-label-box-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-label-box {
+    transition: none;
+  }
+}

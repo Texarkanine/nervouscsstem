@@ -8,5 +8,61 @@
 ///   .nerv-bar-meter-bar   — individual bar segments
 ///
 /// Tokens consumed:
-///   --nerv-cyan-rgb, --nerv-blue-rgb (named data tokens for HSL gradient)
+///   Named data tokens for HSL color gradient (cyan → blue → purple)
 ///   --nerv-border-width
+
+@use 'sass:math';
+
+$nerv-bar-count: 50;
+$nerv-hue-start: 185; // cyan
+$nerv-hue-end: 270;   // purple
+
+.nerv-bar-meter {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  height: 1.2rem;
+}
+
+.nerv-bar-meter-bar {
+  position: relative;
+  flex: 1;
+  min-width: 4px;
+  background: transparent;
+  transition: background-color 0.1s;
+
+  &.active {
+    background-color: var(--nerv-bar-color, var(--nerv-cyan));
+  }
+}
+
+@for $i from 1 through $nerv-bar-count {
+  $ratio: math.div($i - 1, $nerv-bar-count - 1);
+  $hue: $nerv-hue-start + ($nerv-hue-end - $nerv-hue-start) * $ratio;
+
+  .nerv-bar-meter-bar:nth-child(#{$i}) {
+    --nerv-bar-color: hsl(#{$hue}, 85%, 55%);
+  }
+}
+
+.nerv-bar-meter-bar[data-zone]::after {
+  content: attr(data-zone);
+  position: absolute;
+  top: -1.4em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(var(--nerv-amber-rgb), 0.6);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-bar-meter-bar {
+    transition: none;
+  }
+}
