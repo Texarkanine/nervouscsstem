@@ -83,6 +83,7 @@ None — implementation approach is clear. The PHASE5.md design doc provides exp
 4. `.nerv-bar-meter-bar` child class exists
 5. Bar color gradient: nth-child selectors present for HSL color stepping
 6. Bar meter uses gap for discrete bar spacing
+6b. Bar meter zone markers: `::after` pseudo-element present in bar meter CSS
 
 **Segment display (`_segment-display.scss`):**
 7. `.nerv-segment-display` class exists
@@ -95,6 +96,7 @@ None — implementation approach is clear. The PHASE5.md design doc provides exp
 12. `.nerv-magi-system` class exists
 13. `.nerv-magi-output` class exists
 14. MAGI system boxes use panel-like border styling with glow
+14b. MAGI connecting lines: pseudo-elements present on `.nerv-magi-system` or `.nerv-magi-output`
 
 **Label box (`_label-box.scss`):**
 15. `.nerv-label-box` class exists with `skewX`
@@ -184,9 +186,9 @@ None — implementation approach is clear. The PHASE5.md design doc provides exp
 
 - Files: `src/_label-box.scss`
 - Changes:
-  - `.nerv-label-box`: `display: inline-block`, `transform: skewX(-15deg)`, border, padding
+  - `.nerv-label-box`: `display: inline-block`, `transform: skewX(-15deg)`, border, padding, `--nerv-label-box-color` / `--nerv-label-box-color-rgb` custom properties (default: `--nerv-primary` / `--nerv-primary-rgb`) following `--nerv-panel-color` pattern
   - Inner text counter-skew: `> *` or `> span` with `transform: skewX(15deg)`
-  - `.nerv-label-box-active`: background fill, color inversion, `box-shadow` glow
+  - `.nerv-label-box-active`: background fill with `--nerv-label-box-color`, color inversion to `--nerv-bg`, `box-shadow` glow
   - `.nerv-label-box-group`: `display: flex`, row container with gap
 - Run tests: label box tests should pass
 
@@ -247,6 +249,6 @@ No new technology — validation not required. All implementation uses existing 
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight — PASS (2 minor amendments: added test coverage for zone markers + MAGI connecting lines; added `--nerv-label-box-color` custom property hook)
 - [ ] Build
 - [ ] QA
