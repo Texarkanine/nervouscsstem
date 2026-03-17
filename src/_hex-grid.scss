@@ -16,4 +16,71 @@
 ///   --nerv-red, --nerv-red-rgb, --nerv-amber, --nerv-amber-rgb,
 ///   --nerv-green, --nerv-green-rgb
 
-// Stub — implementation pending
+$_hex-clip: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+$_hex-inner-clip: polygon(27% 2%, 73% 2%, 97% 50%, 73% 98%, 27% 98%, 3% 50%);
+$_hex-cell-width: 80px;
+
+.nerv-hex-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nerv-hex-row {
+  display: flex;
+  gap: 4px;
+
+  &:nth-child(odd) {
+    margin-left: calc(#{$_hex-cell-width} / 2);
+  }
+}
+
+.nerv-hex-cell {
+  width: $_hex-cell-width;
+  aspect-ratio: 1.1547; // width / height ratio for a regular hexagon
+  clip-path: $_hex-clip;
+  background: rgba(var(--nerv-green-rgb), 0.06);
+  position: relative;
+  transition: filter 0.2s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    clip-path: $_hex-inner-clip;
+    border: var(--nerv-border-width) solid rgba(var(--nerv-green-rgb), 0.15);
+  }
+}
+
+.nerv-hex-danger {
+  background: rgba(var(--nerv-red-rgb), 0.25);
+  filter:
+    drop-shadow(0 0 4px var(--nerv-red))
+    drop-shadow(0 0 8px rgba(var(--nerv-red-rgb), 0.4));
+
+  &::before {
+    border-color: var(--nerv-red);
+  }
+}
+
+.nerv-hex-warn {
+  background: rgba(var(--nerv-amber-rgb), 0.2);
+  filter:
+    drop-shadow(0 0 4px var(--nerv-amber))
+    drop-shadow(0 0 8px rgba(var(--nerv-amber-rgb), 0.4));
+
+  &::before {
+    border-color: var(--nerv-amber);
+  }
+}
+
+.nerv-hex-safe {
+  background: rgba(var(--nerv-green-rgb), 0.2);
+  filter:
+    drop-shadow(0 0 4px var(--nerv-green))
+    drop-shadow(0 0 8px rgba(var(--nerv-green-rgb), 0.4));
+
+  &::before {
+    border-color: var(--nerv-green);
+  }
+}

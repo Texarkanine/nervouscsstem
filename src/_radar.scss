@@ -12,4 +12,116 @@
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
 ///   --nerv-animation-speed
 
-// Stub — implementation pending
+$_ring-color: rgba(var(--nerv-primary-rgb), 0.35);
+$_ring-gap: transparent;
+
+.nerv-radar {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: var(--nerv-border-width) solid rgba(var(--nerv-primary-rgb), 0.5);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle,
+      $_ring-gap       0%,  $_ring-gap       9%,
+      $_ring-color     9%,  $_ring-color    10%,
+      $_ring-gap      10%,  $_ring-gap      19%,
+      $_ring-color    19%,  $_ring-color    20%,
+      $_ring-gap      20%,  $_ring-gap      29%,
+      $_ring-color    29%,  $_ring-color    30%,
+      $_ring-gap      30%,  $_ring-gap      39%,
+      $_ring-color    39%,  $_ring-color    40%,
+      $_ring-gap      40%,  $_ring-gap      49%,
+      $_ring-color    49%,  $_ring-color    50%,
+      $_ring-gap      50%,  $_ring-gap      59%,
+      $_ring-color    59%,  $_ring-color    60%,
+      $_ring-gap      60%,  $_ring-gap      69%,
+      $_ring-color    69%,  $_ring-color    70%,
+      $_ring-gap      70%,  $_ring-gap      79%,
+      $_ring-color    79%,  $_ring-color    80%,
+      $_ring-gap      80%,  $_ring-gap      89%,
+      $_ring-color    89%,  $_ring-color    90%,
+      $_ring-gap      90%
+    );
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  // Horizontal + vertical crosshairs
+  &::before {
+    background:
+      linear-gradient(
+        to right,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.3) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.3) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      ),
+      linear-gradient(
+        to bottom,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.3) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.3) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      );
+  }
+
+  // 45° diagonal crosshairs
+  &::after {
+    background:
+      linear-gradient(
+        45deg,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.2) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.2) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      ),
+      linear-gradient(
+        -45deg,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.2) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.2) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      );
+  }
+}
+
+.nerv-radar-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(var(--nerv-primary-rgb), 0.4) 0deg,
+    rgba(var(--nerv-primary-rgb), 0.05) 30deg,
+    transparent 60deg,
+    transparent 360deg
+  );
+  animation:
+    nerv-radar-sweep
+    calc(var(--nerv-radar-duration) / var(--nerv-animation-speed))
+    linear
+    infinite;
+}
+
+@keyframes nerv-radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-radar-sweep {
+    animation: none;
+  }
+}

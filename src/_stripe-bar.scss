@@ -14,4 +14,64 @@
 ///   --nerv-green, --nerv-green-rgb, --nerv-red, --nerv-red-rgb,
 ///   --nerv-stripe-duration, --nerv-animation-speed
 
-// Stub — implementation pending
+$_stripe-size: 47px;
+
+.nerv-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(var(--nerv-green-rgb), 0.35),
+    rgba(var(--nerv-green-rgb), 0.35) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  background-size: $_stripe-size $_stripe-size;
+  height: 1rem;
+}
+
+.nerv-stripe-vertical {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(var(--nerv-green-rgb), 0.35),
+    rgba(var(--nerv-green-rgb), 0.35) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  background-size: $_stripe-size $_stripe-size;
+  width: 1rem;
+  height: auto;
+}
+
+.nerv-stripe-red {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(var(--nerv-red-rgb), 0.35),
+    rgba(var(--nerv-red-rgb), 0.35) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  background-size: $_stripe-size $_stripe-size;
+}
+
+.nerv-stripe-animated {
+  animation:
+    nerv-stripe-scroll
+    calc(var(--nerv-stripe-duration) / var(--nerv-animation-speed))
+    linear
+    infinite;
+}
+
+@keyframes nerv-stripe-scroll {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: $_stripe-size $_stripe-size;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-stripe-animated {
+    animation: none;
+  }
+}
