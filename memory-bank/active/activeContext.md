@@ -1,12 +1,14 @@
 # Active Context
 
 ## Current Task: nerv-phase2-effects
-**Phase:** COMPLEXITY-ANALYSIS - COMPLETE
+**Phase:** PLAN - COMPLETE
 
 ## What Was Done
-- L4 re-entry: Phase 1 milestone checked off (archive confirmed at `memory-bank/archive/features/20260317-nerv-phase1-foundation.md`)
-- Phase 2 classified as Level 2 (Simple Enhancement): three new SCSS partials + reference page, self-contained, builds on existing foundation
-- Ephemeral files created for Phase 2 sub-run
+- Complexity analysis: Level 2 (Simple Enhancement)
+- Surveyed existing codebase: `_tokens.scss` utility tokens (`--nerv-scanline-opacity`, `--nerv-flicker-duration`, `--nerv-animation-speed`), `_glow.scss` pattern (SCSS `@use`/`@each`), test infrastructure (`node:test`, regex on compiled CSS), ref page conventions
+- Test plan: 16 behaviors across scanlines, flicker, glitch, reduced-motion, and regressions; new `test/effects.test.mjs`
+- Implementation plan: 9 steps following TDD — stub → tests → scanlines → flicker → glitch → reduced-motion → verify → ref page → final check
+- No new technology needed; no creative/design decisions required
 
 ## Next Step
-- Load Level 2 workflow and begin planning phase
+- Preflight validation runs automatically
