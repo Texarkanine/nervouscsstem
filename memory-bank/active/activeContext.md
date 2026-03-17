@@ -1,12 +1,13 @@
 # Active Context
 
 ## Current Task: nerv-phase2-effects
-**Phase:** QA - COMPLETE
+**Phase:** REFLECT COMPLETE
 
 ## What Was Done
-- Semantic review against KISS, DRY, YAGNI, Completeness, Regression, Integrity, Documentation
-- Found 1 trivial issue: `.nerv-blink` used hardcoded `1s` instead of `--nerv-flicker-duration` token — fixed to `calc(var(--nerv-flicker-duration) * 7 / var(--nerv-animation-speed))`
-- Re-verified after fix: 32/32 tests pass, lint clean, build succeeds
+- All 10 acceptance criteria delivered
+- 17 new tests pass (32 total), Stylelint clean, build succeeds
+- QA caught 1 trivial issue (blink token), fixed in-place
+- Reflection documented: clean execution, Dart Sass color notation insight for future phases
 
 ## Next Step
-- Reflect phase executes automatically
+- Run `/niko-archive` to archive this task
