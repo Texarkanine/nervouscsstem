@@ -60,7 +60,7 @@
 .nerv-blink {
   animation:
     nerv-blink-kf
-    calc(1s / var(--nerv-animation-speed))
+    calc(var(--nerv-flicker-duration) * 7 / var(--nerv-animation-speed))
     steps(4)
     infinite;
 }
