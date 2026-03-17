@@ -142,7 +142,12 @@
         wrapper.appendChild(spanY);
       }
 
-      container.style.position = container.style.position || 'relative';
+      var pos = typeof getComputedStyle !== 'undefined'
+        ? getComputedStyle(container).position
+        : container.style.position;
+      if (!pos || pos === 'static') {
+        container.style.position = 'relative';
+      }
       container.appendChild(wrapper);
     }
   };

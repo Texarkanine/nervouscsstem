@@ -1,29 +1,36 @@
 /// _stripe-bar.scss — Animated diagonal chevron/hazard stripe patterns.
 ///
-/// Uses repeating-linear-gradient with two-tone bands and the barberpole
-/// animation technique (background-size: 200% + position shift) for
-/// seamless scrolling at any element width.
+/// Hard-stop two-tone bands (no gradients — CRT vector constraint).
+/// Uses the barberpole animation technique (background-size: 200% +
+/// position shift) for seamless scrolling at any element width.
+///
+/// Color variant classes (.nerv-stripe-{name}) are auto-generated from
+/// the $nerv-colors map for every glow-flagged color — add a color to
+/// tokens and the stripe variant appears automatically.
 ///
 /// Customization (set on element or ancestor):
-///   --nerv-stripe-color-rgb  Override stripe color (RGB triplet, e.g. "255, 0, 0")
-///   --nerv-stripe-width      Band width (from tokens, e.g. 0.75rem)
-///   --nerv-stripe-duration   Scroll speed (from tokens, e.g. 15s)
+///   --nerv-stripe-color-rgb  Override stripe color (RGB triplet)
+///   --nerv-stripe-width      Band width (from tokens)
+///   --nerv-stripe-duration   Scroll speed (from tokens)
 ///
 /// Classes:
 ///   .nerv-stripe             — Horizontal green stripe bar (default)
 ///   .nerv-stripe-vertical    — Vertical orientation
-///   .nerv-stripe-red         — Red/danger color variant
+///   .nerv-stripe-{color}     — Color variant (auto-generated per glow-flagged token)
 ///   .nerv-stripe-transparent — Dark band is fully transparent (see-through)
 ///   .nerv-stripe-animated    — Adds scrolling animation
+
+@use 'sass:list';
+@use 'tokens';
 
 .nerv-stripe {
   --nerv-stripe-color-rgb: var(--nerv-green-rgb);
   background-image: repeating-linear-gradient(
     -45deg,
-    rgba(var(--nerv-stripe-color-rgb), 0.08),
-    rgba(var(--nerv-stripe-color-rgb), 0.12) var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 0.5) var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 0.35) calc(var(--nerv-stripe-width) * 2)
+    rgba(var(--nerv-stripe-color-rgb), 0.15) 0,
+    rgba(var(--nerv-stripe-color-rgb), 0.15) var(--nerv-stripe-width),
+    rgba(var(--nerv-stripe-color-rgb), 0.85) var(--nerv-stripe-width),
+    rgba(var(--nerv-stripe-color-rgb), 0.85) calc(var(--nerv-stripe-width) * 2)
   );
   background-size: 200% 200%;
   height: 1rem;
@@ -33,27 +40,34 @@
   --nerv-stripe-color-rgb: var(--nerv-green-rgb);
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(var(--nerv-stripe-color-rgb), 0.08),
-    rgba(var(--nerv-stripe-color-rgb), 0.12) var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 0.5) var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 0.35) calc(var(--nerv-stripe-width) * 2)
+    rgba(var(--nerv-stripe-color-rgb), 0.15) 0,
+    rgba(var(--nerv-stripe-color-rgb), 0.15) var(--nerv-stripe-width),
+    rgba(var(--nerv-stripe-color-rgb), 0.85) var(--nerv-stripe-width),
+    rgba(var(--nerv-stripe-color-rgb), 0.85) calc(var(--nerv-stripe-width) * 2)
   );
   background-size: 200% 200%;
   width: 1rem;
   height: auto;
 }
 
-.nerv-stripe-red {
-  --nerv-stripe-color-rgb: var(--nerv-red-rgb);
+// Auto-generate .nerv-stripe-{name} for each glow-flagged color
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-stripe-#{$name} {
+      --nerv-stripe-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
 }
 
 .nerv-stripe-transparent {
   background-image: repeating-linear-gradient(
     -45deg,
-    transparent,
+    transparent 0,
     transparent var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 0.5) var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 0.35) calc(var(--nerv-stripe-width) * 2)
+    rgba(var(--nerv-stripe-color-rgb), 0.85) var(--nerv-stripe-width),
+    rgba(var(--nerv-stripe-color-rgb), 0.85) calc(var(--nerv-stripe-width) * 2)
   );
 }
 

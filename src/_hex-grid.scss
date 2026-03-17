@@ -1,86 +1,172 @@
 /// _hex-grid.scss — Hexagonal cell grid with state-based coloring.
 ///
 /// Tiled hexagonal cells for warning displays and status grids.
-/// Uses clip-path for hex shape, ::before for inner border,
-/// and filter: drop-shadow() for per-state glow.
+/// Cell uses ::before for the outer hex shape (visible phosphor border)
+/// and ::after for the inner fill over a solid black backing. Glow is
+/// rendered as inset box-shadow on ::after (clipped by its clip-path),
+/// keeping all luminance contained within each cell — no cross-cell
+/// opacity blending in tiled grids.
+///
+/// Honeycomb tiling is built-in: odd rows offset horizontally, and rows
+/// use negative margin-top to eliminate triangular gaps.
 ///
 /// Classes:
-///   .nerv-hex-grid   — Container for the hexagonal grid
-///   .nerv-hex-row    — A row of hex cells; odd rows offset for honeycomb stacking
-///   .nerv-hex-cell   — Individual hexagonal cell (clip-path polygon)
-///   .nerv-hex-danger — Red state (uses --nerv-red)
-///   .nerv-hex-warn   — Amber/warning state (uses --nerv-amber)
-///   .nerv-hex-safe   — Green/safe state (uses --nerv-green)
+///   .nerv-hex-grid        — Container (default: honeycomb tiled, overlapping rows)
+///   .nerv-hex-grid-spaced — Spacing modifier: non-overlapping, corner-touching with gaps
+///   .nerv-hex-grid-filled — Fill modifier: saturated active fills (combinable with any spacing)
+///   .nerv-hex-row         — A row of hex cells; odd rows offset for honeycomb stacking
+///   .nerv-hex-cell        — Individual hexagonal cell
+///   .nerv-hex-danger      — Red state (uses --nerv-red)
+///   .nerv-hex-warn        — Amber/warning state (uses --nerv-amber)
+///   .nerv-hex-safe        — Green/safe state (uses --nerv-green)
 ///
 /// Tokens consumed:
 ///   --nerv-red, --nerv-red-rgb, --nerv-amber, --nerv-amber-rgb,
-///   --nerv-green, --nerv-green-rgb
+///   --nerv-green, --nerv-green-rgb, --nerv-border-width
 
 $_hex-clip: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-$_hex-inner-clip: polygon(27% 2%, 73% 2%, 97% 50%, 73% 98%, 27% 98%, 3% 50%);
 $_hex-cell-width: 80px;
+$_hex-row-overlap: 15px;
 
 .nerv-hex-grid {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 }
 
 .nerv-hex-row {
   display: flex;
-  gap: 4px;
+  gap: 2px;
 
   &:nth-child(odd) {
     margin-left: calc(#{$_hex-cell-width} / 2);
   }
+
+  &:not(:first-child) {
+    margin-top: -#{$_hex-row-overlap};
+  }
+}
+
+// Spaced variant: no row overlap, corner-touching with triangular gaps
+.nerv-hex-grid-spaced > .nerv-hex-row {
+  gap: 4px;
+}
+
+.nerv-hex-grid-spaced > .nerv-hex-row:not(:first-child) {
+  margin-top: 4px;
 }
 
 .nerv-hex-cell {
   width: $_hex-cell-width;
-  aspect-ratio: 1.1547; // width / height ratio for a regular hexagon
-  clip-path: $_hex-clip;
-  background: rgba(var(--nerv-green-rgb), 0.12);
+  aspect-ratio: 1.1547;
   position: relative;
-  transition: filter 0.2s ease;
+  isolation: isolate;
+  clip-path: $_hex-clip;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.5rem;
+  line-height: 1.15;
+  padding: 6px;
+  overflow-wrap: break-word;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    clip-path: $_hex-inner-clip;
-    border: var(--nerv-border-width) solid rgba(var(--nerv-green-rgb), 0.15);
+    z-index: -2;
+    clip-path: $_hex-clip;
+    background: rgba(var(--nerv-green-rgb), 0.5);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    z-index: -1;
+    clip-path: $_hex-clip;
+    background-color: var(--nerv-void);
   }
 }
 
-.nerv-hex-danger {
-  background: rgba(var(--nerv-red-rgb), 0.25);
-  filter:
-    drop-shadow(0 0 4px var(--nerv-red))
-    drop-shadow(0 0 8px rgba(var(--nerv-red-rgb), 0.4));
+// === Default state fills (tiled grid) ===
 
+.nerv-hex-danger {
   &::before {
-    border-color: var(--nerv-red);
+    background: var(--nerv-red);
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        rgba(var(--nerv-red-rgb), 0.2),
+        rgba(var(--nerv-red-rgb), 0.2)
+      );
+    box-shadow: inset 0 0 12px 4px rgba(var(--nerv-red-rgb), 0.6);
   }
 }
 
 .nerv-hex-warn {
-  background: rgba(var(--nerv-amber-rgb), 0.2);
-  filter:
-    drop-shadow(0 0 4px var(--nerv-amber))
-    drop-shadow(0 0 8px rgba(var(--nerv-amber-rgb), 0.4));
-
   &::before {
-    border-color: var(--nerv-amber);
+    background: var(--nerv-amber);
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        rgba(var(--nerv-amber-rgb), 0.15),
+        rgba(var(--nerv-amber-rgb), 0.15)
+      );
+    box-shadow: inset 0 0 12px 4px rgba(var(--nerv-amber-rgb), 0.6);
   }
 }
 
 .nerv-hex-safe {
-  background: rgba(var(--nerv-green-rgb), 0.2);
-  filter:
-    drop-shadow(0 0 4px var(--nerv-green))
-    drop-shadow(0 0 8px rgba(var(--nerv-green-rgb), 0.4));
-
   &::before {
-    border-color: var(--nerv-green);
+    background: var(--nerv-green);
   }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        rgba(var(--nerv-green-rgb), 0.12),
+        rgba(var(--nerv-green-rgb), 0.12)
+      );
+    box-shadow: inset 0 0 12px 4px rgba(var(--nerv-green-rgb), 0.6);
+  }
+}
+
+// === Filled variant: passive + saturated active fills (independent of spacing) ===
+
+.nerv-hex-grid-filled .nerv-hex-cell::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-green-rgb), 0.15),
+      rgba(var(--nerv-green-rgb), 0.15)
+    );
+}
+
+.nerv-hex-grid-filled .nerv-hex-danger::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-red-rgb), 0.45),
+      rgba(var(--nerv-red-rgb), 0.45)
+    );
+}
+
+.nerv-hex-grid-filled .nerv-hex-warn::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-amber-rgb), 0.35),
+      rgba(var(--nerv-amber-rgb), 0.35)
+    );
+}
+
+.nerv-hex-grid-filled .nerv-hex-safe::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-green-rgb), 0.3),
+      rgba(var(--nerv-green-rgb), 0.3)
+    );
 }

@@ -4,6 +4,8 @@
 /// animated sweep arm. Uses radial-gradient hard stops for rings,
 /// pseudo-elements for division lines, and conic-gradient for sweep.
 ///
+/// The sweep fade trails BEHIND the bright leading edge (clockwise).
+///
 /// Classes:
 ///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
 ///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
@@ -93,10 +95,10 @@
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    rgba(var(--nerv-primary-rgb), 0.6) 0deg,
-    rgba(var(--nerv-primary-rgb), 0.15) 25deg,
-    transparent 50deg,
-    transparent 360deg
+    transparent 0deg,
+    transparent 310deg,
+    rgba(var(--nerv-primary-rgb), 0.15) 335deg,
+    rgba(var(--nerv-primary-rgb), 0.6) 360deg
   );
   animation:
     nerv-radar-sweep

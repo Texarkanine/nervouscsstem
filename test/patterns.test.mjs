@@ -63,6 +63,17 @@ describe('Stripe bar CSS', () => {
     assert.match(css, /\.nerv-stripe-red\b/, 'missing .nerv-stripe-red class');
   });
 
+  it('.nerv-stripe-cyan class exists', () => {
+    assert.match(css, /\.nerv-stripe-cyan\b/, 'missing .nerv-stripe-cyan class');
+  });
+
+  it('stripe color variant exists for every glow-flagged token color', () => {
+    const colors = ['amber', 'amber-dark', 'orange', 'red', 'red-deep', 'cyan', 'blue', 'steel'];
+    for (const c of colors) {
+      assert.match(css, new RegExp(`\\.nerv-stripe-${c}\\b`), `missing .nerv-stripe-${c} class`);
+    }
+  });
+
   it('.nerv-stripe-transparent class exists', () => {
     assert.match(css, /\.nerv-stripe-transparent\b/, 'missing .nerv-stripe-transparent class');
   });
@@ -75,6 +86,20 @@ describe('Stripe bar CSS', () => {
     const stripeIdx = css.indexOf('.nerv-stripe');
     const stripeSection = css.slice(stripeIdx, stripeIdx + 500);
     assert.ok(stripeSection.includes('--nerv-stripe-width'), '.nerv-stripe should reference --nerv-stripe-width');
+  });
+
+  it('.nerv-stripe uses hard-stop gradient bands (CRT constraint, no smooth transitions)', () => {
+    const stripeIdx = css.indexOf('.nerv-stripe {');
+    const blockEnd = css.indexOf('}', stripeIdx);
+    const block = css.slice(stripeIdx, blockEnd);
+    assert.ok(
+      /0\.\d+\)\s*0,/.test(block),
+      'first band should start at explicit position 0 (hard stop)'
+    );
+    assert.ok(
+      /--nerv-stripe-width\),\s*rgba\(var\(--nerv-stripe-color-rgb\),\s*0\.\d+\)\s*var\(--nerv-stripe-width\)/.test(block),
+      'adjacent bands share the same stop position (hard stop boundary, no gradient gap)'
+    );
   });
 
   // Behavior 8
@@ -116,16 +141,21 @@ describe('Hex grid CSS', () => {
   });
 
   // Behavior 13
-  it('.nerv-hex-cell class exists with clip-path', () => {
+  it('.nerv-hex-cell exists and pseudo-elements use clip-path for hex shape', () => {
     assert.match(css, /\.nerv-hex-cell\b/, 'missing .nerv-hex-cell class');
-    const cellIdx = css.indexOf('.nerv-hex-cell');
-    const cellSection = css.slice(cellIdx, cellIdx + 500);
-    assert.ok(cellSection.includes('clip-path'), '.nerv-hex-cell should use clip-path');
+    assert.match(css, /\.nerv-hex-cell::before/, 'missing .nerv-hex-cell::before');
+    assert.match(css, /\.nerv-hex-cell::after/, 'missing .nerv-hex-cell::after');
+    const beforeIdx = css.indexOf('.nerv-hex-cell::before');
+    const beforeSection = css.slice(beforeIdx, beforeIdx + 300);
+    assert.ok(beforeSection.includes('clip-path'), '::before should use clip-path for hex outline');
   });
 
   // Behavior 14
-  it('.nerv-hex-cell::before pseudo-element exists (inner border)', () => {
-    assert.match(css, /\.nerv-hex-cell::before/, 'missing .nerv-hex-cell::before pseudo-element');
+  it('.nerv-hex-cell::after uses inset clip-path for inner fill', () => {
+    const afterIdx = css.indexOf('.nerv-hex-cell::after');
+    const afterSection = css.slice(afterIdx, afterIdx + 300);
+    assert.ok(afterSection.includes('clip-path'), '::after should use clip-path for inner fill');
+    assert.ok(afterSection.includes('inset'), '::after should be inset from the outer hex');
   });
 
   // Behavior 15
@@ -152,13 +182,22 @@ describe('Hex grid CSS', () => {
     assert.ok(safeSection.includes('--nerv-green'), '.nerv-hex-safe should use --nerv-green token');
   });
 
+  it('.nerv-hex-row uses negative margin-top for honeycomb tiling', () => {
+    const rowIdx = css.indexOf('.nerv-hex-row');
+    const rowSection = css.slice(rowIdx, rowIdx + 600);
+    assert.ok(
+      /margin-top:\s*-/.test(rowSection),
+      '.nerv-hex-row should use negative margin-top for honeycomb overlap'
+    );
+  });
+
   // Behavior 18
-  it('state classes apply filter: drop-shadow for glow', () => {
+  it('state classes apply inset box-shadow for contained glow', () => {
     const dangerIdx = css.indexOf('.nerv-hex-danger');
     const dangerToEnd = css.slice(dangerIdx, dangerIdx + 600);
     assert.ok(
-      dangerToEnd.includes('drop-shadow'),
-      'hex state classes should apply drop-shadow for glow'
+      dangerToEnd.includes('box-shadow') && dangerToEnd.includes('inset'),
+      'hex state classes should apply inset box-shadow for glow (no cross-cell bleed)'
     );
   });
 });
@@ -208,6 +247,15 @@ describe('Radar CSS', () => {
     assert.ok(
       sweepSection.includes('--nerv-radar-duration'),
       '.nerv-radar-sweep should reference --nerv-radar-duration'
+    );
+  });
+
+  it('radar sweep fade trails behind the bright edge (not ahead)', () => {
+    const sweepIdx = css.indexOf('.nerv-radar-sweep');
+    const sweepSection = css.slice(sweepIdx, sweepIdx + 600);
+    assert.ok(
+      /transparent\s+0deg[\s\S]*transparent\s+310deg/.test(sweepSection),
+      'conic-gradient should have transparent region first (0–310deg), bright at end'
     );
   });
 

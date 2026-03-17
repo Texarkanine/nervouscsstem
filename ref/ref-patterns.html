@@ -27,7 +27,10 @@
 
     .ref-grid-bg {
       position: absolute;
-      inset: 0;
+      top: 4.5rem;
+      bottom: 4.5rem;
+      left: 0;
+      right: 0;
       z-index: 0;
     }
 
@@ -58,20 +61,28 @@
       grid-row: 5;
     }
 
-    /* === DANGER bar === */
-    .ref-danger-bar {
-      grid-column: 1 / -1;
-      grid-row: 2;
+    /* === DANGER / EMERGENCY bars === */
+    .ref-alert-bar {
       position: relative;
       height: 2.5rem;
     }
 
-    .ref-danger-bar-bg {
+    .ref-alert-bar-top {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .ref-alert-bar-bottom {
+      grid-column: 1 / -1;
+      grid-row: 4;
+    }
+
+    .ref-alert-bar-stripe {
       position: absolute;
       inset: 0;
     }
 
-    .ref-danger-bar-label {
+    .ref-alert-bar-center {
       position: relative;
       z-index: 1;
       display: flex;
@@ -80,21 +91,14 @@
       height: 100%;
     }
 
-    .ref-danger-bar-label span {
-      padding: 0.3rem 2rem;
+    .ref-alert-label-box {
       background: var(--nerv-void);
+      padding: 0.25rem 2rem;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1rem;
       font-weight: 700;
       letter-spacing: 0.4em;
       text-transform: uppercase;
-    }
-
-    .ref-danger-bar-bottom {
-      grid-column: 1 / -1;
-      grid-row: 4;
-      position: relative;
-      height: 2.5rem;
     }
 
     /* === Main center area === */
@@ -149,7 +153,7 @@
 
   <div class="ref-viewport">
 
-    <!-- Grid marks background layer -->
+    <!-- Grid marks background layer (inset to avoid peeking behind bars) -->
     <div class="ref-grid-bg nerv-grid-marks"></div>
 
     <div class="ref-content">
@@ -158,20 +162,20 @@
       <div class="ref-stripe-top-green nerv-stripe nerv-stripe-animated"
            style="height: auto;"></div>
 
-      <!-- === DANGER bar: transparent red stripes + centered label === -->
-      <div class="ref-danger-bar">
-        <div class="ref-danger-bar-bg nerv-stripe nerv-stripe-red nerv-stripe-transparent nerv-stripe-animated"
+      <!-- === DANGER bar === -->
+      <div class="ref-alert-bar ref-alert-bar-top">
+        <div class="ref-alert-bar-stripe nerv-stripe nerv-stripe-red nerv-stripe-transparent nerv-stripe-animated"
              style="height: 100%;"></div>
-        <div class="ref-danger-bar-label">
-          <span class="nerv-glow-red nerv-blink"
+        <div class="ref-alert-bar-center">
+          <span class="ref-alert-label-box nerv-glow-red"
                 style="color: var(--nerv-red); border: var(--nerv-border-width) solid var(--nerv-red);">
-            DANGER
+            <span class="nerv-glitch nerv-blink" data-text="DANGER">DANGER</span>
           </span>
         </div>
       </div>
 
-      <!-- === Left vertical stripe === -->
-      <div class="ref-stripe-left nerv-stripe-vertical"></div>
+      <!-- === Left vertical stripe (animated) === -->
+      <div class="ref-stripe-left nerv-stripe-vertical nerv-stripe-animated"></div>
 
       <!-- === Center: radar display === -->
       <div class="ref-center">
@@ -186,14 +190,15 @@
         </span>
       </div>
 
-      <!-- === Right: hex grid with mixed states === -->
+      <!-- === Right: hex grids (tiled + spaced) === -->
       <div class="ref-hex-area">
-        <span class="ref-hex-label">Defensive Grid Status</span>
+        <!-- Tiled (honeycomb, overlapping rows) -->
+        <span class="ref-hex-label">Tiled — Honeycomb</span>
         <div class="nerv-hex-grid">
           <div class="nerv-hex-row">
-            <div class="nerv-hex-cell nerv-hex-danger"></div>
-            <div class="nerv-hex-cell nerv-hex-warn"></div>
-            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-danger"><span class="nerv-glitch nerv-blink" data-text="SHINJI">SHINJI</span></div>
+            <div class="nerv-hex-cell nerv-hex-warn">ASUKA</div>
+            <div class="nerv-hex-cell nerv-hex-safe">REI</div>
           </div>
           <div class="nerv-hex-row">
             <div class="nerv-hex-cell"></div>
@@ -204,30 +209,40 @@
             <div class="nerv-hex-cell nerv-hex-warn"></div>
             <div class="nerv-hex-cell nerv-hex-danger"></div>
             <div class="nerv-hex-cell"></div>
-          </div>
-          <div class="nerv-hex-row">
-            <div class="nerv-hex-cell nerv-hex-safe"></div>
-            <div class="nerv-hex-cell"></div>
-            <div class="nerv-hex-cell nerv-hex-warn"></div>
-          </div>
-          <div class="nerv-hex-row">
-            <div class="nerv-hex-cell nerv-hex-danger"></div>
-            <div class="nerv-hex-cell nerv-hex-safe"></div>
-            <div class="nerv-hex-cell nerv-hex-warn"></div>
           </div>
         </div>
         <span class="ref-hex-label nerv-blink" style="color: var(--nerv-red);">
           ⚠ 3 Sectors Compromised
         </span>
+
+        <!-- Spaced variant (non-overlapping, boosted fills) -->
+        <span class="ref-hex-label" style="margin-top: 0.5rem;">Spaced — Fuel Bundle</span>
+        <div class="nerv-hex-grid nerv-hex-grid-spaced nerv-hex-grid-filled">
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-safe">EVA-01</div>
+            <div class="nerv-hex-cell nerv-hex-safe">HANGAR</div>
+            <div class="nerv-hex-cell nerv-hex-safe">LAUNCH BAY</div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-safe">BARRACKS</div>
+            <div class="nerv-hex-cell nerv-hex-danger">SERVER</div>
+            <div class="nerv-hex-cell nerv-hex-safe">SHUTTLE</div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- === Bottom DANGER bar (mirror) === -->
-      <div class="ref-danger-bar-bottom">
-        <div class="ref-danger-bar-bg nerv-stripe nerv-stripe-red nerv-stripe-transparent nerv-stripe-animated"
+      <!-- === Bottom EMERGENCY bar: cyan wire stripes === -->
+      <div class="ref-alert-bar ref-alert-bar-bottom">
+        <div class="ref-alert-bar-stripe nerv-stripe nerv-stripe-amber nerv-stripe-transparent nerv-stripe-animated"
              style="height: 100%; animation-direction: reverse;"></div>
-        <div class="ref-danger-bar-label">
-          <span class="nerv-glow-red"
-                style="color: var(--nerv-red); border: var(--nerv-border-width) solid var(--nerv-red);">
+        <div class="ref-alert-bar-center">
+          <span class="ref-alert-label-box nerv-cyan"
+                style="color: var(--nerv-cyan); border: var(--nerv-border-width) solid var(--nerv-cyan);">
             EMERGENCY
           </span>
         </div>

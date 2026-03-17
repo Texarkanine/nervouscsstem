@@ -4,13 +4,12 @@
 Phase 4 — Patterns & Geometry + Initial JS (L4 sub-run)
 
 ## Phase
-QA - PASS
+Reflect - COMPLETE
 
 ## What Was Done
-- Build completed: all 13 implementation steps, 80/80 tests passing
-- QA found 2 trivial issues, both fixed:
-  1. `nerv.scss` doc comment updated to include Phase 4 partials
-  2. `ref-patterns.html` script tag changed to `type="module"` to match ES module exports
+- Reflection completed: full lifecycle review covering requirements, plan accuracy, build observations, and cross-phase analysis
+- Key findings: CRT aesthetic constraints were implicit requirements that drove significant build-phase iteration; `clip-path` + glow interaction and pseudo-element z-ordering for text content were the main technical discoveries
+- Created `planning/FUTURE.md` for backlog items (reticle tickmarks, tiled hex grid)
 
 ## Next Step
-Proceed to `/niko-reflect`
+Proceed to `/niko-archive`
