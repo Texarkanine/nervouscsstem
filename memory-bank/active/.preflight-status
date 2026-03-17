@@ -1,0 +1,8 @@
+PASS
+task: nerv-phase3-structural
+date: 2026-03-17
+findings:
+  - ADVISORY: Panel color composability — added --nerv-panel-color/--nerv-panel-color-rgb custom properties for per-panel recoloring
+  - ADVISORY: Grid-marks mixin — added internal @mixin nerv-grid-marks-bg($rgb) for future color flexibility
+  - FIX: Box-shadow composition — .nerv-panel-inset must manually compose inset + glow layers (mixin override conflict). Added to challenges.
+  - FIX: SVG color encoding — clarified rgb() approach using existing RGB strings from $nerv-colors to avoid %23 encoding

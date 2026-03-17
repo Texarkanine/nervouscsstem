@@ -1,15 +1,16 @@
 # Active Context
 
 ## Current Task: nerv-phase3-structural
-**Phase:** PLAN - COMPLETE
+**Phase:** PREFLIGHT - COMPLETE (PASS)
 
 ## What Was Done
-- Component analysis: 3 new SCSS modules + entry point update + reference page + test file + package.json update
-- Cross-module dependency mapping: panels and dividers consume tokens + glow; grid-marks consumes tokens
-- No open questions identified — SVG data URI approach for grid-marks is clear
-- TDD test plan: 12 behaviors across build integration, panels, dividers, grid-marks, accessibility, and regression
-- Implementation plan: 12 ordered steps following TDD red-green cycle
-- Challenges identified and mitigated: SVG color encoding, z-ordering, double-border technique, stylelint compliance
+- Convention compliance: all file names, selector patterns, @forward order, doc comment style verified
+- Dependency impact: traced glow mixin usage in panels/dividers, SVG data URI color interpolation via tokens.$nerv-colors RGB strings
+- Conflict detection: no overlaps or duplication risks found
+- Completeness precheck: all 12 acceptance criteria mapped to concrete implementation steps
+- Radical innovation: added `--nerv-panel-color` custom property pair for composability; added internal grid-marks mixin for color flexibility
+- Identified box-shadow composition issue for .nerv-panel-inset (must manually compose inset + glow)
+- Plan amended with 4 findings (2 advisory enhancements incorporated, 2 implementation clarifications)
 
 ## Next Step
-- Proceed to Preflight phase to validate the plan
+- Proceed to Build phase (`/niko-build`)

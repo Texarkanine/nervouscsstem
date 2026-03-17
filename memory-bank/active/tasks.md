@@ -31,9 +31,9 @@ graph LR
 ## Component Analysis
 
 ### Affected Components
-- `src/_panels.scss` (NEW): Four panel container variants — basic, titled, double-border, inset. Uses `@mixin nerv-panel-base` for shared properties, each variant extends it.
+- `src/_panels.scss` (NEW): Four panel container variants — basic, titled, double-border, inset. Uses `@mixin nerv-panel-base` for shared properties, each variant extends it. Exposes `--nerv-panel-color` / `--nerv-panel-color-rgb` custom properties (default: amber) for per-panel color overrides.
 - `src/_dividers.scss` (NEW): Horizontal/vertical zone-separator rules in cyan (default) and amber. Glow via box-shadow.
-- `src/_grid-marks.scss` (NEW): Registration mark crosshair grid as SVG data URI tiled background. Grid density via `background-size`, position via `background-position`.
+- `src/_grid-marks.scss` (NEW): Registration mark crosshair grid as SVG data URI tiled background. Grid density via `background-size`, position via `background-position`. Internal `@mixin nerv-grid-marks-bg($rgb)` for generating data URIs in any color; default class uses cyan.
 - `src/nerv.scss` (MODIFIED): Add `@forward 'panels'`, `@forward 'dividers'`, `@forward 'grid-marks'` after effects layer.
 - `ref/ref-panels.html` (NEW): Reference page 3 — 2×2 panel grid with dividers, grid marks, axis labels, scanline overlay.
 - `test/panels.test.mjs` (NEW): Automated checks against compiled CSS for all Phase 3 selectors and properties.
@@ -124,7 +124,7 @@ None — implementation approach is clear. The SVG data URI approach for grid-ma
 
 7. **Implement `_panels.scss`** — panel base mixin + 4 variants
     - Files: `src/_panels.scss`
-    - Changes: `@mixin nerv-panel-base` with position/border/padding/glow; `.nerv-panel`, `.nerv-panel-titled` (::before title bar), `.nerv-panel-double` (outline technique), `.nerv-panel-inset` (inset box-shadow)
+    - Changes: Define `--nerv-panel-color` / `--nerv-panel-color-rgb` custom properties (default amber). `@mixin nerv-panel-base` with position/border/padding/glow using panel color vars; `.nerv-panel`, `.nerv-panel-titled` (::before title bar), `.nerv-panel-double` (outline technique), `.nerv-panel-inset` (manually composed box-shadow with both inset + glow layers)
 
 8. **Implement `_dividers.scss`** — horizontal/vertical dividers with glow
     - Files: `src/_dividers.scss`
@@ -132,7 +132,7 @@ None — implementation approach is clear. The SVG data URI approach for grid-ma
 
 9. **Implement `_grid-marks.scss`** — SVG data URI crosshair grid
     - Files: `src/_grid-marks.scss`
-    - Changes: `.nerv-grid-marks` with SVG `+` crosshair as background-image data URI, `background-repeat: repeat`, `background-size` for grid density
+    - Changes: Internal `@mixin nerv-grid-marks-bg($rgb)` generates SVG data URI with `rgb()` color (avoids URL encoding). `.nerv-grid-marks` uses the mixin with cyan RGB, `background-repeat: repeat`, `background-size` for grid density, `pointer-events: none`
 
 10. **Run tests** — all tests should pass (TDD green phase)
     - Verify: `npm run test` all pass, `npm run build` succeeds, `npm run lint` passes
@@ -150,7 +150,8 @@ No new technology — validation not required. SVG data URIs in CSS `background-
 
 ## Challenges & Mitigations
 
-- **SVG data URI color injection**: SCSS string interpolation into the SVG data URI must produce valid URL-encoded SVG. Mitigation: use `%23` for `#` in hex colors within the data URI, or use `rgb()` color notation which doesn't need encoding.
+- **SVG data URI color injection**: SCSS string interpolation into the SVG data URI must produce valid URL-encoded SVG. Mitigation: use `rgb()` color notation with the existing RGB string from `$nerv-colors` — avoids `#`/`%23` encoding entirely.
+- **Box-shadow composition in `.nerv-panel-inset`**: The `nerv-glow` mixin sets `box-shadow`, and the inset variant also needs `box-shadow: inset ...`. Both shadows must be combined in a single declaration. Mitigation: manually compose the combined box-shadow for the inset variant instead of using the mixin.
 - **Grid-marks z-ordering**: The crosshair grid must appear behind panels but above the body background. Mitigation: apply `.nerv-grid-marks` to a wrapper element or use `z-index` layering, with `pointer-events: none` so it doesn't block interaction.
 - **Double-border technique**: `outline` + negative `outline-offset` may not receive glow via `box-shadow` (box-shadow follows the border, not the outline). Mitigation: use `::after` pseudo-element for the second border if outline doesn't produce the desired visual.
 - **Stylelint `selector-class-pattern`**: All new selectors must match `^nerv-`. Already planned — all classes use `.nerv-` prefix.
@@ -162,6 +163,6 @@ No new technology — validation not required. SVG data URIs in CSS `background-
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight
 - [ ] Build
 - [ ] QA
