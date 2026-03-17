@@ -233,4 +233,4 @@ This is a CSS design system. The behaviors that matter — "does it look right?"
 - [x] Technology validation complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA

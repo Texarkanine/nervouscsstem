@@ -43,3 +43,9 @@
 - Stylelint passes (0 errors)
 - Shippori Mincho B1 includes curated CJK subsets (10 unicode-range blocks) covering common Japanese characters
 - No deviations from plan
+
+## 2026-03-17 — Phase 1 Sub-run: QA Phase Complete
+
+- Fixed: NERV Mixed CJK @font-face pointed to Latin-only woff2 — removed (CJK handled by font-family fallback)
+- Fixed: techContext.md updated to reflect new test infrastructure (Node.js test runner + Stylelint)
+- All other checks passed: KISS, DRY, YAGNI, Completeness, Regression, Integrity

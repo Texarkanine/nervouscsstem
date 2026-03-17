@@ -18,7 +18,9 @@ Pure-CSS design system with minimal vanilla JS orchestration. SCSS (Dart Sass) i
 
 ## Testing Process
 
-Visual verification against reference HTML pages in `ref/`. Each page (`ref-foundation.html` through `ref-alert-cascade.html`) tests a cumulative subset of the design system's layers. No automated test framework is configured.
+Visual verification against reference HTML pages in `ref/`. Each page (`ref-foundation.html` through `ref-alert-cascade.html`) tests a cumulative subset of the design system's layers.
+
+Automated checks via Node.js built-in test runner (`node --test`) in `test/`. Stylelint enforces `.nerv-` prefix convention and is configured in `.stylelintrc.json`. Test and lint commands are defined in `package.json`.
 
 ## Design System
 

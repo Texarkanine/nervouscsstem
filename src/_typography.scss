@@ -247,6 +247,8 @@
 // Shippori Mincho B1 handles CJK ranges; Barlow Condensed handles Latin.
 // ---------------------------------------------------------------------------
 
+// Latin range covered by Barlow Condensed; CJK falls through to
+// Shippori Mincho B1 in the .nerv-type-mixed font-family stack.
 @font-face {
   font-family: 'NERV Mixed';
   font-style: normal;
@@ -254,15 +256,6 @@
   font-display: swap;
   src: url('https://fonts.gstatic.com/s/barlowcondensed/v13/HTx3L3I-JCGChYJ8VI-L6OO_au7B6xHT2lv0tKk.woff2') format('woff2');
   unicode-range: U+0000-024F, U+0300-036F, U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'NERV Mixed';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('https://fonts.gstatic.com/s/shipporiminchob1/v24/wXK2E2wCr44tulPdnn-xbIpJ9RgT9-nCiapq9FCt7A.woff2') format('woff2');
-  unicode-range: U+3000-30FF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
 }
 
 // ---------------------------------------------------------------------------
