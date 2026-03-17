@@ -40,7 +40,9 @@ $nerv-colors: (
 
   // Ambiance meta-tokens — overridden by .nerv-state-* in Phase 6
   --nerv-primary: var(--nerv-amber);
+  --nerv-primary-rgb: var(--nerv-amber-rgb);
   --nerv-bg: var(--nerv-void);
+  --nerv-bg-rgb: var(--nerv-void-rgb);
 
   // Utility tokens
   --nerv-glow-spread: 8px;

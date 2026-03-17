@@ -1,8 +1,9 @@
 /// _stripe-bar.scss — Animated diagonal chevron/hazard stripe patterns.
 ///
 /// Provides horizontal and vertical stripe bars with animated scrolling.
-/// Uses repeating-linear-gradient for the stripe pattern and background-position
-/// keyframes for the scrolling effect.
+/// Uses repeating-linear-gradient with two solid bands (dark + bright) and
+/// the barberpole animation technique (background-size: 200% + position shift)
+/// for seamless scrolling at any element width.
 ///
 /// Classes:
 ///   .nerv-stripe           — Horizontal green diagonal stripe bar (default)
@@ -14,42 +15,39 @@
 ///   --nerv-green, --nerv-green-rgb, --nerv-red, --nerv-red-rgb,
 ///   --nerv-stripe-duration, --nerv-animation-speed
 
-$_stripe-size: 47px;
-
 .nerv-stripe {
-  background: repeating-linear-gradient(
+  background-image: repeating-linear-gradient(
     -45deg,
-    rgba(var(--nerv-green-rgb), 0.15),
-    rgba(var(--nerv-green-rgb), 0.15) 10px,
-    rgba(var(--nerv-green-rgb), 0.55) 10px,
-    rgba(var(--nerv-green-rgb), 0.55) 20px
+    rgba(var(--nerv-green-rgb), 0.08),
+    rgba(var(--nerv-green-rgb), 0.12) 0.75rem,
+    rgba(var(--nerv-green-rgb), 0.5) 0.75rem,
+    rgba(var(--nerv-green-rgb), 0.35) 1.5rem
   );
-  background-size: $_stripe-size $_stripe-size;
+  background-size: 200% 200%;
   height: 1rem;
 }
 
 .nerv-stripe-vertical {
-  background: repeating-linear-gradient(
+  background-image: repeating-linear-gradient(
     45deg,
-    rgba(var(--nerv-green-rgb), 0.15),
-    rgba(var(--nerv-green-rgb), 0.15) 10px,
-    rgba(var(--nerv-green-rgb), 0.55) 10px,
-    rgba(var(--nerv-green-rgb), 0.55) 20px
+    rgba(var(--nerv-green-rgb), 0.08),
+    rgba(var(--nerv-green-rgb), 0.12) 0.75rem,
+    rgba(var(--nerv-green-rgb), 0.5) 0.75rem,
+    rgba(var(--nerv-green-rgb), 0.35) 1.5rem
   );
-  background-size: $_stripe-size $_stripe-size;
+  background-size: 200% 200%;
   width: 1rem;
   height: auto;
 }
 
 .nerv-stripe-red {
-  background: repeating-linear-gradient(
+  background-image: repeating-linear-gradient(
     -45deg,
-    rgba(var(--nerv-red-rgb), 0.15),
-    rgba(var(--nerv-red-rgb), 0.15) 10px,
-    rgba(var(--nerv-red-rgb), 0.55) 10px,
-    rgba(var(--nerv-red-rgb), 0.55) 20px
+    rgba(var(--nerv-red-rgb), 0.08),
+    rgba(var(--nerv-red-rgb), 0.12) 0.75rem,
+    rgba(var(--nerv-red-rgb), 0.5) 0.75rem,
+    rgba(var(--nerv-red-rgb), 0.35) 1.5rem
   );
-  background-size: $_stripe-size $_stripe-size;
 }
 
 .nerv-stripe-animated {
@@ -61,12 +59,8 @@ $_stripe-size: 47px;
 }
 
 @keyframes nerv-stripe-scroll {
-  from {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: $_stripe-size $_stripe-size;
+  100% {
+    background-position: 100% 100%;
   }
 }
 
