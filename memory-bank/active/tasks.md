@@ -148,6 +148,7 @@ None — the user provided explicit direction on all three enhancements. No desi
 
 - Files: `src/_label-box.scss`
 - Changes:
+  - Wrap hover styles in `@media (hover: hover)` to avoid sticky hover on touch devices (first hover pattern in codebase — establishes convention)
   - `.nerv-label-box:hover` — border color intensification, subtle background hint (`rgba` of label-box-color at ~0.08), slight glow via `box-shadow`
   - `.nerv-label-box:active` — stronger background fill (`rgba` at ~0.15), slightly reduced scale or inset shadow for "pressed" feel
   - `.nerv-label-box-active:hover` — slightly brighter glow than base active state
@@ -223,6 +224,6 @@ None — the user provided explicit direction on all three enhancements. No desi
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight — PASS (2 amendments: `@media (hover: hover)` wrapper for label box hover, note `--nerv-bar-color` removal as internal-only breaking change)
 - [ ] Build
 - [ ] QA
