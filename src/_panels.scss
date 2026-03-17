@@ -17,14 +17,62 @@
 
 @use 'glow';
 
+/// Shared panel base properties. All panel variants include this.
+@mixin nerv-panel-base {
+  --nerv-panel-color: var(--nerv-amber);
+  --nerv-panel-color-rgb: var(--nerv-amber-rgb);
+
+  position: relative;
+  border: var(--nerv-border-width) solid var(--nerv-panel-color);
+  background: var(--nerv-bg);
+  padding: 1.25rem;
+  @include glow.nerv-glow(--nerv-panel-color, --nerv-panel-color-rgb);
+}
+
 .nerv-panel {
+  @include nerv-panel-base;
 }
 
 .nerv-panel-titled {
+  @include nerv-panel-base;
+  padding-top: 2.5rem;
+
+  &::before {
+    content: attr(data-title);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0.3rem 0.75rem;
+    background: var(--nerv-panel-color);
+    color: var(--nerv-bg);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
 }
 
 .nerv-panel-double {
+  @include nerv-panel-base;
+  outline: var(--nerv-border-width) solid var(--nerv-panel-color);
+  outline-offset: 3px;
 }
 
 .nerv-panel-inset {
+  --nerv-panel-color: var(--nerv-amber);
+  --nerv-panel-color-rgb: var(--nerv-amber-rgb);
+
+  position: relative;
+  border: var(--nerv-border-width) solid var(--nerv-panel-color);
+  background: var(--nerv-bg);
+  padding: 1.25rem;
+  box-shadow:
+    inset 0 0 12px 2px rgba(0, 0, 0, 0.6),
+    inset 0 0 4px 1px rgba(var(--nerv-panel-color-rgb), 0.08),
+    0 0 1px rgba(var(--nerv-panel-color-rgb), 0.4),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-panel-color-rgb), 0.25),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-panel-color-rgb), 0.13),
+    0 0 calc(var(--nerv-glow-spread) * 5 * var(--nerv-glow-intensity)) rgba(var(--nerv-panel-color-rgb), 0.13);
 }

@@ -10,15 +10,27 @@
 /// Tokens consumed:
 ///   --nerv-cyan, --nerv-cyan-rgb      (default divider color)
 ///   --nerv-amber, --nerv-amber-rgb    (amber variant color)
+///   --nerv-border-width               (divider thickness)
 ///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
 
 @use 'glow';
 
 .nerv-divider {
+  border: none;
+  height: var(--nerv-border-width);
+  background: var(--nerv-cyan);
+  @include glow.nerv-glow(--nerv-cyan, --nerv-cyan-rgb);
 }
 
 .nerv-divider-vertical {
+  width: var(--nerv-border-width);
+  height: auto;
+  min-height: 100%;
+  background: var(--nerv-cyan);
+  @include glow.nerv-glow(--nerv-cyan, --nerv-cyan-rgb);
 }
 
 .nerv-divider-amber {
+  background: var(--nerv-amber);
+  @include glow.nerv-glow(--nerv-amber, --nerv-amber-rgb);
 }

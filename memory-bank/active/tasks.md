@@ -164,5 +164,5 @@ No new technology — validation not required. SVG data URIs in CSS `background-
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Preflight
-- [ ] Build
+- [x] Build
 - [ ] QA

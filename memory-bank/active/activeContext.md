@@ -1,16 +1,23 @@
 # Active Context
 
 ## Current Task: nerv-phase3-structural
-**Phase:** PREFLIGHT - COMPLETE (PASS)
+**Phase:** BUILD - COMPLETE
 
 ## What Was Done
-- Convention compliance: all file names, selector patterns, @forward order, doc comment style verified
-- Dependency impact: traced glow mixin usage in panels/dividers, SVG data URI color interpolation via tokens.$nerv-colors RGB strings
-- Conflict detection: no overlaps or duplication risks found
-- Completeness precheck: all 12 acceptance criteria mapped to concrete implementation steps
-- Radical innovation: added `--nerv-panel-color` custom property pair for composability; added internal grid-marks mixin for color flexibility
-- Identified box-shadow composition issue for .nerv-panel-inset (must manually compose inset + glow)
-- Plan amended with 4 findings (2 advisory enhancements incorporated, 2 implementation clarifications)
+- Implemented 3 new SCSS modules: `_panels.scss`, `_dividers.scss`, `_grid-marks.scss`
+- `_panels.scss`: `@mixin nerv-panel-base` + 4 variants (basic, titled, double, inset) with `--nerv-panel-color`/`--nerv-panel-color-rgb` custom properties
+- `_dividers.scss`: horizontal/vertical dividers in cyan (default) and amber, with glow via `nerv-glow` mixin
+- `_grid-marks.scss`: SVG data URI crosshair grid with internal `@mixin nerv-grid-marks-bg($rgb)` using `rgb()` notation (avoids URL encoding), `map.get` for Dart Sass 3.x compat
+- `.nerv-panel-inset` manually composes box-shadow (inset + glow layers) as planned — cannot use glow mixin due to box-shadow override
+- Updated `src/nerv.scss` with 3 new `@forward` directives
+- Created `test/panels.test.mjs` with 12 assertions (TDD: red → green)
+- Created `ref/ref-panels.html`: 2×2 panel grid, dividers, grid marks, axis labels, scanline overlay, countdown timer
+- Added `declaration-empty-line-before: null` to `.stylelintrc.json` (custom property declarations in compiled CSS triggered false positives)
+- All 50 tests pass, lint clean, build clean
+
+## Deviations from Plan
+- Added `declaration-empty-line-before: null` to `.stylelintrc.json` — not in original plan but necessary because custom property declarations (`--nerv-panel-color`) followed by regular declarations (`position: relative`) in compiled output triggered Stylelint errors. Consistent with existing pattern of disabling compiled-output formatting rules.
+- Used `map.get` instead of global `map-get` in `_grid-marks.scss` to avoid Dart Sass deprecation warning (the plan mentioned `%23` encoding but the preflight amended this to `rgb()` approach)
 
 ## Next Step
-- Proceed to Build phase (`/niko-build`)
+- Proceed to QA phase
