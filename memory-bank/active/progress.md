@@ -49,3 +49,11 @@
 - Fixed: NERV Mixed CJK @font-face pointed to Latin-only woff2 — removed (CJK handled by font-family fallback)
 - Fixed: techContext.md updated to reflect new test infrastructure (Node.js test runner + Stylelint)
 - All other checks passed: KISS, DRY, YAGNI, Completeness, Regression, Integrity
+
+## 2026-03-17 — Phase 1 Sub-run: Reflect Phase Complete
+
+- Full lifecycle review: all requirements met, plan executed in exact order with no changes
+- Preflight innovation ($nerv-colors map) proved its value — eliminated glow duplication
+- QA caught a real font config bug that tests can't detect — validates multi-layered verification
+- Technical insights: CJK font subsetting complexity, calc() multiplier pattern for accessibility
+- Process insight: Stylelint on compiled CSS requires config tuning for Dart Sass output
