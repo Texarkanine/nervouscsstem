@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Patterns — ref-patterns</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nerv-void);
+      color: var(--nerv-amber);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ref-viewport {
+      position: relative;
+      width: 960px;
+      max-width: 96vw;
+      aspect-ratio: 4 / 3;
+    }
+
+    .ref-grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .ref-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 3rem 1fr 280px;
+      grid-template-rows: 1rem auto 1rem 1rem;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Top stripe bars — span full width */
+    .ref-stripe-top-green {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+
+    .ref-stripe-top-red {
+      grid-column: 1 / -1;
+      grid-row: 3;
+    }
+
+    /* Left vertical stripe */
+    .ref-stripe-left {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    /* Main center area: radar */
+    .ref-center {
+      grid-column: 2;
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .ref-radar-container {
+      width: min(320px, 60%);
+    }
+
+    /* Right side: hex grid */
+    .ref-hex-area {
+      grid-column: 3;
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* Bottom stripe pair */
+    .ref-stripe-bottom {
+      grid-column: 1 / -1;
+      grid-row: 4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- No manual scanline div — nerv.js injects it automatically -->
+
+  <div class="ref-viewport">
+
+    <!-- Grid marks background layer -->
+    <div class="ref-grid-bg nerv-grid-marks"></div>
+
+    <div class="ref-content">
+
+      <!-- Top green stripe (animated, scrolling right) -->
+      <div class="ref-stripe-top-green nerv-stripe nerv-stripe-animated"></div>
+
+      <!-- Left vertical stripe -->
+      <div class="ref-stripe-left nerv-stripe-vertical"></div>
+
+      <!-- Center: radar display -->
+      <div class="ref-center">
+        <div class="ref-radar-container">
+          <div class="nerv-radar">
+            <div class="nerv-radar-sweep"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: hex grid with mixed states -->
+      <div class="ref-hex-area">
+        <div class="nerv-hex-grid">
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+            <div class="nerv-hex-cell nerv-hex-warn"></div>
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell"></div>
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-warn"></div>
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+            <div class="nerv-hex-cell"></div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell"></div>
+            <div class="nerv-hex-cell nerv-hex-warn"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Red stripe (animated, opposite scroll direction) -->
+      <div class="ref-stripe-top-red nerv-stripe nerv-stripe-red nerv-stripe-animated"
+           style="animation-direction: reverse;"></div>
+
+      <!-- Bottom stripe pair -->
+      <div class="ref-stripe-bottom nerv-stripe nerv-stripe-animated"></div>
+
+    </div>
+  </div>
+
+  <script src="../dist/nerv.js"></script>
+  <script>NERV.init();</script>
+
+</body>
+</html>
