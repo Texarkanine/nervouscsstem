@@ -1,6 +1,7 @@
 /// nerv.scss — Main entry point for the NERV Design System.
 /// @forward order follows the module dependency graph:
-///   tokens → typography → glow → scanlines → flicker → glitch → panels → dividers → grid-marks
+///   tokens → typography → glow → scanlines → flicker → glitch
+///   → panels → dividers → grid-marks → stripe-bar → hex-grid → radar
 /// All downstream modules consume tokens via CSS custom properties (not @use).
 
 @forward 'tokens';

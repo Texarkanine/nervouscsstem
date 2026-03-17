@@ -151,8 +151,10 @@
     </div>
   </div>
 
-  <script src="../dist/nerv.js"></script>
-  <script>NERV.init();</script>
+  <script type="module">
+    import { NERV } from '../dist/nerv.js';
+    NERV.init();
+  </script>
 
 </body>
 </html>
