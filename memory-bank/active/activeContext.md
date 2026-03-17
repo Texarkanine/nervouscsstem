@@ -1,6 +1,6 @@
 # Active Context
 
-- **Current Task:** Phase 5 — Functional UI Components (L4 sub-run)
-- **Phase:** REFLECT - COMPLETE
-- **What Was Done:** Full task lifecycle completed — plan, preflight, build (10/10 steps), QA (2 trivial fixes), reflect. All 5 SCSS partials, JS extensions, test suite (31 new, 121 total), and reference page delivered.
-- **Next Step:** Operator invokes `/niko-archive` to finalize.
+- **Current Task:** Phase 5 Enhancements — Component Flexibility (L4 sub-run)
+- **Phase:** PLAN - COMPLETE
+- **What Was Done:** Planned 3 enhancements to Phase 5 components: (1) label box hover/press/toggle interactivity, (2) MAGI N-to-1 flexible layout with per-system-box color, (3) bar meter token-based color gradients via `color-mix()`. Added `--nerv-white` token. 9-step implementation plan, 12 new test behaviors.
+- **Next Step:** Preflight validation, then build.

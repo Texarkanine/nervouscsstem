@@ -1,246 +1,220 @@
-# Task: Phase 5 — Functional UI Components
+# Task: Phase 5 Enhancements — Component Flexibility
 
-* Task ID: nerv-phase5-components
+* Task ID: nerv-phase5-enhance
 * Complexity: Level 3
-* Type: Feature (L4 sub-run — Phase 5 of nerv-design-system)
+* Type: Enhancement (L4 sub-run — Phase 5 revision of nerv-design-system)
 
-Deliver five functional UI components that sit inside Phase 3's structural containers and compose with Phase 2's effects: bar meters, seven-segment displays, MAGI decision panels, skewed label-box buttons, and status text overlays. Extend `nerv.js` with ghost-segment and bar-meter initialization. Build `ref/ref-components.html` as the Phase 5 reference page.
+Enhance label boxes with hover/press/toggle interactivity, MAGI panels with per-system-box coloring and N-to-1 flexible layout, and bar meters with token-based customizable color gradients via CSS `color-mix()`. Add `--nerv-white` token for gradient endpoints.
 
 ## Pinned Info
 
-### Module Dependency Flow
+### Color Gradient Strategy
 
-All five new SCSS partials consume tokens via CSS custom properties (not `@use`), matching the pattern established in Phases 2–4. Only `_magi-panel.scss` uses `@use 'glow'` (for MAGI box glow). The JS functions are orchestration-only: reading DOM attributes and toggling classes.
+The bar meter color system shifts from compile-time HSL values to runtime `color-mix()` interpolation between two CSS custom properties. This allows consumers to set any `--nerv-*` token as the start/end color.
+
+```
+Consumer HTML:
+  <div class="nerv-bar-meter"
+       style="--nerv-bar-from: var(--nerv-green); --nerv-bar-to: var(--nerv-red);"
+       data-fill="75">
+
+Compiled CSS (per bar):
+  .nerv-bar-meter-bar:nth-child(25) { --nerv-bar-pct: 48.98%; }
+
+Active bar color:
+  background-color: color-mix(in srgb, var(--nerv-bar-from), var(--nerv-bar-to) var(--nerv-bar-pct, 0%));
+```
+
+### MAGI Per-System Color Cascade
+
+Each `.nerv-magi-system` box defines `--nerv-magi-system-color` (defaulting to the panel's `--nerv-magi-color`). Border, text, glow, and connecting line all reference the per-system property, so a single override colors everything including the edge.
 
 ```mermaid
-graph LR
-    T["_tokens.scss"] -->|CSS vars| BM["_bar-meter.scss"]
-    T -->|CSS vars| SD["_segment-display.scss"]
-    T -->|CSS vars| MP["_magi-panel.scss"]
-    T -->|CSS vars| LB["_label-box.scss"]
-    T -->|CSS vars| ST["_status-text.scss"]
-    TY["_typography.scss"] -->|".nerv-type-segment"| SD
-    G["_glow.scss"] -->|"@use glow mixin"| MP
-    P["_panels.scss"] -->|"panel base styles"| MP
-    FL["_flicker.scss"] -->|".nerv-blink class"| ST
-    GL["_glitch.scss"] -->|".nerv-glitch class"| ST
-    JS["nerv.js"] -->|"initGhostSegments()"| SD
-    JS -->|"initBarMeters()"| BM
+graph TD
+    P["--nerv-magi-color (panel)"] --> S1["--nerv-magi-system-color (system 1)"]
+    P --> S2["--nerv-magi-system-color (system 2)"]
+    P --> SN["--nerv-magi-system-color (system N)"]
+    S1 -->|border, text, glow, ::after| S1V["CASPER — APPROVE ↓"]
+    S2 -->|border, text, glow, ::after| S2V["BALTHASAR — APPROVE ↓"]
+    SN -->|border, text, glow, ::after| SNV["MELCHIOR — DENY ↓"]
+    S1V --> O["--nerv-magi-color → OUTPUT"]
+    S2V --> O
+    SNV --> O
 ```
 
 ## Component Analysis
 
 ### Affected Components
 
-- **`src/_bar-meter.scss`** (NEW): Discrete colored bar meter — flex row of small blocks with HSL color gradient via SCSS `@for` loop, zone markers via `::after`, fill level via `data-fill` / `.active` class
-- **`src/_segment-display.scss`** (NEW): Seven-segment readout — DSEG7 font, ghost-segment `::before` with `content: attr(data-ghost)`, amber LED glow via `text-shadow`
-- **`src/_magi-panel.scss`** (NEW): MAGI consensus display — CSS Grid layout, three `.nerv-magi-system` boxes + one `.nerv-magi-output` box, connecting lines via pseudo-elements, uses `_glow.scss` mixin and `_panels.scss` styles
-- **`src/_label-box.scss`** (NEW): Skewed parallelogram buttons — `skewX(-15deg)` with counter-skew on inner text, active state with background fill + glow
-- **`src/_status-text.scss`** (NEW): Status text overlays — large bordered labels with severity variants (nominal/caution/danger/critical), composes with `.nerv-blink` and `.nerv-glitch` for animation
-- **`src/nerv.js`** (MODIFIED): Add `NERV.initGhostSegments(container?)` and `NERV.initBarMeters(container?)`, call both from `NERV.init()`
-- **`src/nerv.scss`** (MODIFIED): Add 5 `@forward` statements for new partials
-- **`ref/ref-components.html`** (NEW): Four-zone 12-column grid reference page
-- **`test/components.test.mjs`** (NEW): Phase 5 test suite
+- **`src/_label-box.scss`** (MODIFIED): Add `:hover` and `:active` pseudo-class states for interactive feedback. Hover adds subtle glow/border brightness. Active (press) adds compressed/intensified feel.
+- **`src/_magi-panel.scss`** (MODIFIED): Add per-system-box `--nerv-magi-system-color` / `--nerv-magi-system-color-rgb` custom properties. Change all `.nerv-magi-system` visual references from panel-level to system-level color. Connecting line inherits per-system color.
+- **`src/_bar-meter.scss`** (MODIFIED): Replace SCSS `@for` HSL hue loop with percentage-only loop. Add `--nerv-bar-from` / `--nerv-bar-to` custom properties. Use `color-mix(in srgb, ...)` for active bar background color.
+- **`src/_tokens.scss`** (MODIFIED): Add `'white': (#ffffff, '255, 255, 255', false)` to `$nerv-colors` map.
+- **`src/nerv.js`** (MODIFIED): Add `NERV.initLabelBoxGroups(container?)` for click-to-toggle radio behavior. Add `NERV.initMagiPanels(container?)` to set grid columns based on system count. Enhance `initBarMeters()` to set `--nerv-bar-pct` per bar for exact gradients beyond the SCSS 50-bar limit.
+- **`ref/ref-components.html`** (MODIFIED): Update to demo all enhancements — hover/click on label boxes, per-system MAGI colors, varied bar meter color ranges.
+- **`test/components.test.mjs`** (MODIFIED): Add new test cases, modify existing bar meter color tests for new `color-mix()` approach.
 
 ### Cross-Module Dependencies
 
-- `_bar-meter.scss` → `_tokens.scss`: named data tokens for HSL color gradient (cyan → blue → purple)
-- `_segment-display.scss` → `_tokens.scss`: `--nerv-amber-rgb` for ghost dimming and glow; `_typography.scss`: `.nerv-type-segment` font class
-- `_magi-panel.scss` → `_glow.scss`: `@use 'glow'` for box glow mixin; `_panels.scss`: reuses `.nerv-panel-titled` concept for system boxes; `_tokens.scss`: color tokens
-- `_label-box.scss` → `_tokens.scss`: color tokens for border/background
-- `_status-text.scss` → `_tokens.scss`: severity color tokens; composes with Phase 2 classes `.nerv-blink` and `.nerv-glitch` (consumers add both classes)
-- `nerv.js` → DOM: reads `.nerv-segment-display` text content, reads `.nerv-bar-meter[data-fill]` attribute
+- `_bar-meter.scss` → `_tokens.scss`: now uses `--nerv-bar-from` / `--nerv-bar-to` referencing named tokens via `color-mix()` instead of hardcoded HSL
+- `_magi-panel.scss` → `_glow.scss`: glow mixin now receives per-system-box color variable names
+- `nerv.js` → DOM: new `initLabelBoxGroups()` reads `.nerv-label-box-group` containers and attaches click handlers; `initMagiPanels()` reads `.nerv-magi-system` child count and sets grid style
 
 ### Boundary Changes
 
-- **`nerv.js` public API**: adds `NERV.initGhostSegments(container?)` and `NERV.initBarMeters(container?)` — backward-compatible additions, no breaking changes
-- **`nerv.scss`**: adds 5 `@forward` statements — purely additive
+- **`nerv.js` public API**: adds `NERV.initLabelBoxGroups(container?)` and `NERV.initMagiPanels(container?)` — backward-compatible additions
+- **`_bar-meter.scss` compiled CSS**: `color-mix()` replaces per-bar `hsl()` values — visual change (token-based colors vs hardcoded HSL), behavioral improvement (customizable)
+- **`_magi-panel.scss`**: grid columns no longer hardcoded to 3 when JS runs — backward-compatible (JS defaults to child count, which for existing markup is 3)
+- **`_label-box.scss`**: new `:hover` / `:active` states — purely additive CSS
 
 ### Invariants & Constraints
 
 - All selectors use `.nerv-` prefix (enforced by stylelint `selector-class-pattern: ^nerv-`)
-- All colors via CSS custom properties from `_tokens.scss` — no hardcoded hex in new modules
-- Bar meter colors use **named data tokens** (stable across alert states), not ambiance tokens
-- `prefers-reduced-motion` suppresses all new animations (status text blink/glitch are handled by Phase 2 classes)
-- `prefers-contrast` increases `--nerv-border-width` — new modules must use this token for borders
-- No images, no canvas — SVG data URIs in CSS only if needed
-- JS is orchestration only — DOM attribute setting, class toggling
+- All colors via CSS custom properties from `_tokens.scss` — `color-mix()` uses resolved token values, no hardcoded hex in new code
+- `prefers-reduced-motion` suppresses label box hover transitions
+- `prefers-contrast` increases `--nerv-border-width` — label box hover must respect
+- JS is orchestration only — click handlers, grid column setting, percentage computation
+- `color-mix()` browser support: baseline since 2023 (Chrome 111+, Firefox 113+, Safari 16.2+) — acceptable for this project's modern-CSS target
 
 ## Open Questions
 
-None — implementation approach is clear. The PHASE5.md design doc provides explicit technique descriptions, class names, and DOM structure for every component. All patterns follow established conventions from Phases 1–4.
+None — the user provided explicit direction on all three enhancements. No design ambiguity exists.
 
 ## Test Plan (TDD)
 
 ### Behaviors to Verify
 
-**Build integration:**
-1. `npm run build` exits 0, `dist/nerv.css` is non-empty
-2. `npm run build:min` still succeeds
+**Token additions:**
+1. `--nerv-white` token present in `:root` output
+2. `--nerv-white-rgb` token present in `:root` output
 
-**Bar meter (`_bar-meter.scss`):**
-3. `.nerv-bar-meter` class exists with `display: flex`
-4. `.nerv-bar-meter-bar` child class exists
-5. Bar color gradient: nth-child selectors present for HSL color stepping
-6. Bar meter uses gap for discrete bar spacing
-6b. Bar meter zone markers: `::after` pseudo-element present in bar meter CSS
+**Label box enhancements:**
+3. `.nerv-label-box:hover` styles exist in compiled CSS
+4. `.nerv-label-box:active` styles exist in compiled CSS
+5. `NERV.initLabelBoxGroups` is a function
 
-**Segment display (`_segment-display.scss`):**
-7. `.nerv-segment-display` class exists
-8. `.nerv-segment-display::before` exists with `content: attr(data-ghost)`
-9. Segment display references `text-shadow` for LED glow
-10. Segment display references DSEG7 font (via `--nerv-type-segment` or font-family)
+**MAGI panel enhancements:**
+6. `--nerv-magi-system-color` custom property declared on `.nerv-magi-system`
+7. `.nerv-magi-system::after` references `--nerv-magi-system-color` (not `--nerv-magi-color`)
+8. `NERV.initMagiPanels` is a function
 
-**MAGI panel (`_magi-panel.scss`):**
-11. `.nerv-magi-panel` class exists with CSS Grid (`display: grid`)
-12. `.nerv-magi-system` class exists
-13. `.nerv-magi-output` class exists
-14. MAGI system boxes use panel-like border styling with glow
-14b. MAGI connecting lines: pseudo-elements present on `.nerv-magi-system` or `.nerv-magi-output`
+**Bar meter enhancements:**
+9. `--nerv-bar-from` custom property declared on `.nerv-bar-meter`
+10. `--nerv-bar-to` custom property declared on `.nerv-bar-meter`
+11. `.nerv-bar-active` uses `color-mix` for background color
+12. SCSS loop generates `--nerv-bar-pct` values (not `hsl(` values per bar)
 
-**Label box (`_label-box.scss`):**
-15. `.nerv-label-box` class exists with `skewX`
-16. `.nerv-label-box-active` class exists with background fill
-17. `.nerv-label-box-group` row container exists with `display: flex`
+**Modified existing tests:**
+- Behavior 5 (bar color gradient): change assertion from `hsl(` to `--nerv-bar-pct` and `color-mix`
 
-**Status text (`_status-text.scss`):**
-18. `.nerv-status-text` base class exists
-19. `.nerv-status-nominal` class exists referencing `--nerv-green`
-20. `.nerv-status-caution` class exists referencing `--nerv-amber`
-21. `.nerv-status-danger` class exists referencing `--nerv-red`
-22. `.nerv-status-critical` class exists referencing `--nerv-red`
-
-**JavaScript (`nerv.js`):**
-23. `NERV.initGhostSegments` is a function
-24. `NERV.initBarMeters` is a function
-25. `NERV.init` still exists (backward compatible)
-
-**Regressions — Phase 1–4:**
-26. Foundation tokens still present (`--nerv-amber`, `--nerv-primary`, `.nerv-glow`)
-27. Effects selectors still present (`.nerv-scanlines`, `.nerv-flicker`, `.nerv-glitch`)
-28. Structural selectors still present (`.nerv-panel`, `.nerv-divider`, `.nerv-grid-marks`)
-29. Phase 4 selectors still present (`.nerv-stripe`, `.nerv-hex-grid`, `.nerv-radar`)
+**Regressions — all existing Phase 5 and Phase 1–4 tests remain green**
 
 ### Test Infrastructure
 
 - Framework: Node.js built-in test runner (`node --test`)
 - Test location: `test/`
-- Conventions: one test file per phase, `describe()` blocks group by component, `it()` tests match selectors/properties in compiled CSS string, JS API tested via dynamic import
-- New test file: `test/components.test.mjs`
+- Conventions: one test file per phase, `describe()` blocks group by component
+- New test files: none — new tests added to existing `test/components.test.mjs`
 
 ### Integration Tests
 
-- Build integration: compilation of all 5 new partials together via `nerv.scss`
-- JS API: `initGhostSegments` and `initBarMeters` exported and callable
-- Regression: Phase 1–4 selectors survive addition of Phase 5 modules
+- Build integration: all modified SCSS compiles cleanly via `nerv.scss`
+- JS API: new functions exported and callable
+- Regression: Phase 1–4 selectors survive modifications
 
 ## Implementation Plan
 
-### Step 1: Test file stub + interface stubs (TDD prep)
+### Step 1: TDD prep — stub tests and interfaces
 
-- Files: `test/components.test.mjs`, `src/_bar-meter.scss`, `src/_segment-display.scss`, `src/_magi-panel.scss`, `src/_label-box.scss`, `src/_status-text.scss`
+- Files: `test/components.test.mjs`, `src/nerv.js`
 - Changes:
-  - Create `test/components.test.mjs` with all `describe`/`it` blocks — empty implementations
-  - Create 5 SCSS partials as empty files with doc comments and no rules
-  - Stub `NERV.initGhostSegments` and `NERV.initBarMeters` in `nerv.js` as empty functions
-  - Update `nerv.scss` to `@forward` the 5 new partials
-  - Update `package.json` test script to include `test/components.test.mjs`
+  - Add empty `it()` blocks in `test/components.test.mjs` for behaviors 1–12 (new tests) and modify behavior 5 test signature
+  - Stub `NERV.initLabelBoxGroups` and `NERV.initMagiPanels` as empty functions in `nerv.js`
+  - Update `NERV.init()` to call both new functions
 
 ### Step 2: Implement tests
 
 - Files: `test/components.test.mjs`
-- Changes: Fill out all test implementations (CSS string matching, JS API import verification)
-- Run tests: all new tests should **fail** (empty SCSS, empty JS stubs)
+- Changes: Fill out all test implementations — CSS string matching for new properties, JS API import verification
+- Run tests: new tests should **fail** (empty stubs, unchanged CSS)
 
-### Step 3: Implement `_bar-meter.scss`
+### Step 3: Add `--nerv-white` token
 
-- Files: `src/_bar-meter.scss`
-- Changes:
-  - `.nerv-bar-meter`: flex container with `gap: 2–3px`, `align-items: stretch`
-  - `.nerv-bar-meter-bar`: `flex: 1; min-width: 4px; height` for individual bar segments
-  - SCSS `@for` loop: generates `nth-child` selectors with HSL hue stepping (cyan → blue → purple) using named data tokens
-  - `.nerv-bar-meter-bar:not(.active)` or threshold-based deactivation styles (transparent background for inactive bars)
-  - Zone marker `::after` pseudo-elements at threshold positions
-- Run tests: bar meter tests should pass
+- Files: `src/_tokens.scss`
+- Changes: Add `'white': (#ffffff, '255, 255, 255', false)` to `$nerv-colors` map
+- Run tests: token tests (behaviors 1–2) should pass
 
-### Step 4: Implement `_segment-display.scss`
-
-- Files: `src/_segment-display.scss`
-- Changes:
-  - `.nerv-segment-display`: container positioning, font setup via `.nerv-type-segment` pattern, letter-spacing
-  - `::before` pseudo-element: `content: attr(data-ghost)`, dimmed color (`rgba(var(--nerv-amber-rgb), 0.08)`), positioned absolutely behind actual content
-  - `text-shadow` for amber LED glow
-- Run tests: segment display tests should pass
-
-### Step 5: Implement `_magi-panel.scss`
-
-- Files: `src/_magi-panel.scss`
-- Changes:
-  - `.nerv-magi-panel`: CSS Grid layout (`grid-template-columns: repeat(3, 1fr)`, `grid-template-rows: auto auto`)
-  - `.nerv-magi-system`: bordered box with panel color, glow mixin, connecting line pseudo-elements
-  - `.nerv-magi-output`: spanning all 3 columns, bordered result box
-  - Connecting lines via `::before`/`::after` pseudo-elements using `border-top`/`border-left`
-- Run tests: MAGI panel tests should pass
-
-### Step 6: Implement `_label-box.scss`
+### Step 4: Enhance label box CSS
 
 - Files: `src/_label-box.scss`
 - Changes:
-  - `.nerv-label-box`: `display: inline-block`, `transform: skewX(-15deg)`, border, padding, `--nerv-label-box-color` / `--nerv-label-box-color-rgb` custom properties (default: `--nerv-primary` / `--nerv-primary-rgb`) following `--nerv-panel-color` pattern
-  - Inner text counter-skew: `> *` or `> span` with `transform: skewX(15deg)`
-  - `.nerv-label-box-active`: background fill with `--nerv-label-box-color`, color inversion to `--nerv-bg`, `box-shadow` glow
-  - `.nerv-label-box-group`: `display: flex`, row container with gap
-- Run tests: label box tests should pass
+  - `.nerv-label-box:hover` — border color intensification, subtle background hint (`rgba` of label-box-color at ~0.08), slight glow via `box-shadow`
+  - `.nerv-label-box:active` — stronger background fill (`rgba` at ~0.15), slightly reduced scale or inset shadow for "pressed" feel
+  - `.nerv-label-box-active:hover` — slightly brighter glow than base active state
+  - `prefers-reduced-motion` — existing `transition: none` already covers hover/active transitions
+- Run tests: behaviors 3–4 should pass
 
-### Step 7: Implement `_status-text.scss`
+### Step 5: Enhance MAGI panel CSS
 
-- Files: `src/_status-text.scss`
+- Files: `src/_magi-panel.scss`
 - Changes:
-  - `.nerv-status-text`: large font, bordered label, padding
-  - `.nerv-status-nominal`: `background: var(--nerv-green)`, `color: var(--nerv-void)`, no animation
-  - `.nerv-status-caution`: `background: var(--nerv-amber)`, `color: var(--nerv-void)`
-  - `.nerv-status-danger`: `background: var(--nerv-red)`, `color: var(--nerv-void)` (consumers add `.nerv-blink`)
-  - `.nerv-status-critical`: `background: var(--nerv-red)`, `color: var(--nerv-void)` (consumers add `.nerv-glitch`)
-- Run tests: status text tests should pass
+  - `.nerv-magi-system`: add `--nerv-magi-system-color: var(--nerv-magi-color)` and `--nerv-magi-system-color-rgb: var(--nerv-magi-color-rgb)` at top of rule
+  - Change all `var(--nerv-magi-color)` references within `.nerv-magi-system` to `var(--nerv-magi-system-color)` (border, color, `::after` background)
+  - Change `@include glow.nerv-glow(--nerv-magi-color, --nerv-magi-color-rgb)` to `@include glow.nerv-glow(--nerv-magi-system-color, --nerv-magi-system-color-rgb)`
+  - `.nerv-magi-output` stays with `var(--nerv-magi-color)` (output represents consensus, not individual system)
+- Run tests: behaviors 6–7 should pass
 
-### Step 8: Implement `nerv.js` additions
+### Step 6: Rework bar meter colors
+
+- Files: `src/_bar-meter.scss`
+- Changes:
+  - Add `--nerv-bar-from: var(--nerv-cyan)` and `--nerv-bar-to: var(--nerv-blue)` on `.nerv-bar-meter`
+  - Replace SCSS `@for` loop body: instead of computing HSL hue, compute percentage: `--nerv-bar-pct: #{$pct}%` where `$pct = math.round(math.div(($i - 1) * 100, $nerv-bar-count - 1) * 100) * 0.01`
+  - Change `.nerv-bar-active` background from `var(--nerv-bar-color, var(--nerv-cyan))` to `color-mix(in srgb, var(--nerv-bar-from), var(--nerv-bar-to) var(--nerv-bar-pct, 0%))`
+  - Remove old `--nerv-bar-color` per-nth-child HSL values (replaced by `--nerv-bar-pct`)
+- Run tests: behaviors 9–12 and modified behavior 5 should pass
+
+### Step 7: Implement JS enhancements
 
 - Files: `src/nerv.js`
 - Changes:
-  - `NERV.initGhostSegments(container?)`: finds `.nerv-segment-display` elements, reads text content format, generates all-8s ghost string, sets `data-ghost` attribute
-  - `NERV.initBarMeters(container?)`: finds `.nerv-bar-meter[data-fill]` elements, reads percentage, adds/removes `.active` class on child `.nerv-bar-meter-bar` elements
-  - Update `NERV.init()` run function to call both new initializers
-- Run tests: JS API tests should pass
+  - `NERV.initLabelBoxGroups(container?)`: find `.nerv-label-box-group` containers, attach click handlers to child `.nerv-label-box` elements. In a group: radio behavior (click toggles active, deactivates siblings). For standalone `.nerv-label-box` not in a group: simple toggle.
+  - `NERV.initMagiPanels(container?)`: find `.nerv-magi-panel` containers, count `.nerv-magi-system` children, set `gridTemplateColumns = 'repeat(' + count + ', 1fr)'`
+  - Enhance `initBarMeters()`: after setting `.nerv-bar-active` class, also set `--nerv-bar-pct` as inline style on each bar (`(j / (bars.length - 1)) * 100 + '%'`) for exact gradient independent of SCSS loop limit
+- Run tests: behaviors 5, 8 should pass; all JS tests green
 
-### Step 9: Build `ref/ref-components.html`
+### Step 8: Update reference page
 
 - Files: `ref/ref-components.html`
-- Changes: Four-zone 12-column grid layout:
-  - Zone A (top-left, 4 cols): MAGI panel
-  - Zone B (top-right, 8 cols): 3 bar meter rows at different fill levels
-  - Zone C (bottom-left, 6 cols): segment display countdown + label box row
-  - Zone D (bottom-right, 6 cols): status text cycling demo (inline script)
-  - Scanline overlay, grid marks, ghost segments, bar meter fills all active
-  - Inline `<script>` for Zone D status cycling (demo behavior)
+- Changes:
+  - **Label boxes**: no HTML changes needed (JS handles interactivity after `NERV.init()`)
+  - **MAGI panel**: add per-system color overrides — CASPER/BALTHASAR green (`--nerv-magi-system-color: var(--nerv-green); --nerv-magi-system-color-rgb: var(--nerv-green-rgb)`), MELCHIOR red (`--nerv-magi-system-color: var(--nerv-red); --nerv-magi-system-color-rgb: var(--nerv-red-rgb)`)
+  - **Bar meters**: set different `--nerv-bar-from` / `--nerv-bar-to` on each meter:
+    - Subject 00: `--nerv-bar-from: var(--nerv-green); --nerv-bar-to: var(--nerv-red)` (safe → danger)
+    - Subject 01: `--nerv-bar-from: var(--nerv-cyan); --nerv-bar-to: var(--nerv-blue)` (default, cool range)
+    - Subject 02: `--nerv-bar-from: var(--nerv-void); --nerv-bar-to: var(--nerv-amber)` (fade-in from black)
 
-### Step 10: Full verification
+### Step 9: Full verification
 
 - Run full build: `npm run build && npm run build:min`
 - Run lint: `npm run lint`
 - Run full test suite: `npm test`
-- Visual verification: open `ref/ref-components.html` in browser
 
 ## Technology Validation
 
-No new technology — validation not required. All implementation uses existing SCSS patterns, CSS custom properties, and vanilla JS established in Phases 1–4. The DSEG7 font is already loaded in `_typography.scss`.
+**CSS `color-mix()`** — new CSS feature used in `_bar-meter.scss`. Baseline support since 2023:
+- Chrome 111+ (March 2023), Firefox 113+ (May 2023), Safari 16.2+ (Dec 2022)
+- This project already uses modern CSS features (aspect-ratio, CSS Grid, custom properties with var() in calc()), confirming modern browser targeting
+- No polyfill needed
+- Stylelint: `function-no-unknown` and `color-function-notation` are both `null` (disabled) in `.stylelintrc.json` — `color-mix()` will not be rejected
 
 ## Challenges & Mitigations
 
-- **Bar meter SCSS loop count**: The `@for` loop generating `nth-child` color selectors needs a max bar count. Default to 50 — covers most display widths. Validate against reference page's actual bar count.
-- **Ghost segment format matching**: `initGhostSegments()` must handle colons, decimal points, and spaces in the source text (e.g., "888:88:88"). Mitigation: replace digits with `8`, preserve other characters.
-- **MAGI connecting lines**: CSS pseudo-element positioning for connecting lines between system boxes and output box is finicky. Mitigation: use absolute positioning with calculated offsets relative to the grid gaps.
-- **Label box skew + text alignment**: Counter-skew on inner text can affect line-height/baseline. Mitigation: test with various text lengths in the reference page.
-- **Stylelint compliance**: All new selectors must pass `selector-class-pattern: ^nerv-`. The `@for` loop generates selectors programmatically — verify they compile to compliant CSS.
+- **`color-mix()` with `var()` percentage**: CSS custom properties substitute textually, so `var(--nerv-bar-pct, 0%)` resolves to a literal percentage string before `color-mix()` evaluates. Tested pattern is sound, but may encounter issues in edge-case browsers. Mitigation: the `color-mix()` declaration includes `, 0%` fallback in the `var()`, and old browsers that don't support `color-mix()` simply won't render bar colors (transparent bars), which is gracefully degraded.
+- **SCSS loop precision for percentages**: `math.div()` can produce many decimal places. Mitigation: round to 2 decimal places using `math.round($val * 100) * 0.01` to satisfy `number-max-precision` stylelint rule.
+- **MAGI grid column count**: `repeat()` can't use `var()` for the count. Mitigation: JS sets `gridTemplateColumns` directly, and CSS default of `repeat(3, 1fr)` works for the common case without JS.
+- **Label box click handler memory**: event listeners on many label boxes. Mitigation: use event delegation on the group container, not per-element listeners.
+- **Existing test modification**: behavior 5 (bar color gradient) must change assertion from `hsl(` to `color-mix`. Mitigation: carefully update the test, verify old and new assertions don't conflict.
 
 ## Status
 
@@ -249,6 +223,6 @@ No new technology — validation not required. All implementation uses existing 
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [x] Preflight — PASS (2 minor amendments: added test coverage for zone markers + MAGI connecting lines; added `--nerv-label-box-color` custom property hook)
-- [x] Build — PASS (10/10 steps, 31 new tests, 121 total passing, 0 failures)
-- [x] QA — PASS (2 trivial fixes: reference page 12-column grid layout, dead CSS cleanup)
+- [ ] Preflight
+- [ ] Build
+- [ ] QA

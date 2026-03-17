@@ -21,6 +21,19 @@ A third hex grid layout variant where hexagons perfectly tile with no gaps (true
 
 The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math.
 
+## Rainbow Gradient System
+
+Multi-hue rainbow gradients as seen in the Evangelion operational console backgrounds — smooth hue sweeps across large regions. Reference imagery in `planning/selected-ref-images/hexagons-with-border-fill-and-noboder-merge.png` shows rainbow-tinted hex grid backgrounds transitioning through red/amber/green/cyan zones.
+
+A full rainbow gradient system would provide:
+
+- A reusable gradient primitive (mixin or utility class) for backgrounds, overlays, and bar meter fills
+- Integration with the bar meter `--nerv-bar-from-rgb` / `--nerv-bar-to-rgb` system (multi-stop extension)
+- Background application via `.nerv-rainbow-bg` or similar class
+- Configurable hue range, direction, and opacity
+
+This is a broader project than a single component — would touch tokens, utilities, and multiple consumers.
+
 ## Fix: CRT opacity on barberspole
 
 Vertical and/or green barberpole has opacity in-between green bands. Should not.
