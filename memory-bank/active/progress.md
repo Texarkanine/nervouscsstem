@@ -22,3 +22,13 @@ Implement the Effects Layer (Phase 2) of the NERV Design System: scanline overla
     - All three SCSS modules get their own `prefers-reduced-motion` block (inline, not centralized)
     - Scanline overlay at `z-index: 9999` with `pointer-events: none`
     - Animation durations use `calc()` with `--nerv-animation-speed` token for Phase 6 compatibility
+
+## 2026-03-17 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Convention compliance: all file names, locations, and selector patterns align with established conventions
+    - Dependency impact: all additive, no conflicts with Phase 1 output or existing tests
+    - Completeness: all 10 acceptance criteria mapped to implementation steps; 16 test behaviors planned
+    - Identified scanline band naming clarification (::after, not separate class) — plan updated
+* Advisory
+    - Future consideration: `--nerv-stagger-index` custom property as alternative to `:nth-child()` stagger

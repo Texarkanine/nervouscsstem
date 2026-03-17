@@ -91,6 +91,7 @@ No new technology — validation not required. All techniques (CSS keyframes, `r
 - **`steps()` timing feel**: Hard cuts need to feel organic, not robotic. Mitigation: Use `:nth-child()` `animation-delay` offsets so grouped elements flicker out of phase.
 - **Scanline readability**: Lines must be faint enough not to impair text readability. Mitigation: Use `--nerv-scanline-opacity` token (default 0.08) and test visually.
 - **Animation token scaling**: Durations must use `calc()` with `--nerv-animation-speed` so Phase 6 alert cascade can accelerate them. Mitigation: Define base duration, multiply by speed token.
+- **Scanline band naming**: PHASE2.md spec lists `.nerv-scanline-band` as a class but describes it as a `::after` pseudo-element. Resolution: the band is `.nerv-scanlines::after`; `prefers-reduced-motion` targets that pseudo-element. No separate `.nerv-scanline-band` class.
 
 ## Status
 
@@ -98,6 +99,6 @@ No new technology — validation not required. All techniques (CSS keyframes, `r
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight
 - [ ] Build
 - [ ] QA

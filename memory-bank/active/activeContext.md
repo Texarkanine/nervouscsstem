@@ -1,14 +1,14 @@
 # Active Context
 
 ## Current Task: nerv-phase2-effects
-**Phase:** PLAN - COMPLETE
+**Phase:** PREFLIGHT - COMPLETE
 
 ## What Was Done
-- Complexity analysis: Level 2 (Simple Enhancement)
-- Surveyed existing codebase: `_tokens.scss` utility tokens (`--nerv-scanline-opacity`, `--nerv-flicker-duration`, `--nerv-animation-speed`), `_glow.scss` pattern (SCSS `@use`/`@each`), test infrastructure (`node:test`, regex on compiled CSS), ref page conventions
-- Test plan: 16 behaviors across scanlines, flicker, glitch, reduced-motion, and regressions; new `test/effects.test.mjs`
-- Implementation plan: 9 steps following TDD — stub → tests → scanlines → flicker → glitch → reduced-motion → verify → ref page → final check
-- No new technology needed; no creative/design decisions required
+- Convention compliance verified: all file names, locations, patterns match established conventions
+- Dependency impact traced: all additive, no conflicts with Phase 1
+- Completeness check: all 10 acceptance criteria mapped, 16 test behaviors planned
+- Found scanline band naming clarification (::after pseudo, not separate class) — plan updated
+- Advisory: `--nerv-stagger-index` custom property as future `:nth-child()` alternative
 
 ## Next Step
-- Preflight validation runs automatically
+- Build phase executes automatically
