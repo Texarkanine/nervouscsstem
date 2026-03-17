@@ -39,7 +39,8 @@ All components are new (greenfield). The project currently has only `LICENSE`, `
 - **`src/_typography.scss`**: New. `@font-face` declarations for 4 font families (Google Fonts CDN + jsDelivr). 5 utility classes (`.nerv-type-display`, `.nerv-type-hud`, `.nerv-type-data`, `.nerv-type-segment`, `.nerv-type-mixed`).
 - **`src/_glow.scss`**: New. `@mixin nerv-glow($color-var, $color-rgb-var)` generates box-shadow and text-shadow stacks. Classes: `.nerv-glow`, `.nerv-glow-red`, `.nerv-glow-green`, `.nerv-glow-cyan`, `.nerv-glow-text`, plus color variants of `.nerv-glow-text`. `filter: drop-shadow()` utility for non-rectangular elements.
 - **`ref/ref-foundation.html`**: New. Visual test fixture — black void background, all typography classes, all color tokens as glowing labels, ghost-segment seven-segment display.
-- **`test/foundation.test.mjs`**: New. Automated validation of compiled CSS using Node.js built-in test runner.
+- **`test/foundation.test.mjs`**: New. Build smoke test + color map output verification using Node.js built-in test runner.
+- **`.stylelintrc.json`**: New. Stylelint configuration for convention enforcement.
 
 ### Cross-Module Dependencies
 
@@ -47,7 +48,8 @@ All components are new (greenfield). The project currently has only `LICENSE`, `
 - `_glow.scss` → `_tokens.scss`: References `-rgb` companion tokens for `rgba()` in box-shadow stacks, `--nerv-glow-spread` for blur radius
 - `nerv.scss` → all partials: `@forward` chain in strict dependency order (tokens → typography → glow)
 - `ref-foundation.html` → `dist/nerv.css`: links compiled output
-- `test/foundation.test.mjs` → `dist/nerv.css`: reads compiled output for assertions
+- `test/foundation.test.mjs` → `dist/nerv.css`: reads compiled output for map-generated token/glow verification
+- Stylelint → `dist/nerv.css`: enforces `.nerv-` prefix and no-hardcoded-hex conventions
 
 ### Boundary Changes
 
@@ -61,56 +63,53 @@ None — implementation approach is clear. All design decisions were resolved du
 
 **Applied during preflight.** Introduce a SCSS `$nerv-colors` map in `_tokens.scss` as the single source of truth for the color system. Each map entry defines the color name, hex value, and whether it gets a glow variant. An `@each` loop generates `:root` custom properties and `-rgb` companions automatically. `_glow.scss` imports this map via `@use 'tokens'` and uses it with the glow mixin in another `@each` loop to auto-generate `.nerv-glow-*` and `.nerv-glow-text-*` classes. This eliminates manual duplication between tokens and glow, and makes adding new colors trivial (add to map → get token + RGB companion + glow class automatically).
 
-## Test Plan (TDD)
+## Test Plan
 
-### Behaviors to Verify
+### Testing Philosophy
 
-**Build:**
-- Build succeeds: `npm run build` exits 0 and produces `dist/nerv.css`
-- Minified build succeeds: `npm run build:min` exits 0 and produces `dist/nerv.min.css`
+This is a CSS design system. The behaviors that matter — "does it look right?" — are inherently visual. Automated string-matching against compiled CSS mostly just tests that Dart Sass copies CSS, which has negligible value. The test plan therefore prioritizes:
 
-**Tokens (_tokens.scss):**
-- All 10 named color tokens present on `:root` with correct values (`--nerv-void`, `--nerv-amber`, `--nerv-amber-dark`, `--nerv-orange`, `--nerv-red`, `--nerv-red-deep`, `--nerv-green`, `--nerv-cyan`, `--nerv-blue`, `--nerv-steel`)
-- RGB companion token present for each color (`--nerv-amber-rgb`, etc.)
-- Meta-tokens present with correct defaults: `--nerv-primary: var(--nerv-amber)`, `--nerv-bg: var(--nerv-void)`
-- Utility tokens present: `--nerv-glow-spread`, `--nerv-scanline-opacity`, `--nerv-flicker-duration`, `--nerv-animation-speed`, `--nerv-border-width`
-- `prefers-contrast` media query overrides `--nerv-border-width`
+1. **Build smoke test**: Does the SCSS compile? (Catches syntax errors and broken `@forward`/`@use` chains)
+2. **Stylelint**: Does the compiled output follow conventions? (`.nerv-` prefix, no hardcoded hex outside `_tokens.scss`) — catches real violations automatically
+3. **Map-generated output verification**: Does the `$nerv-colors` map produce the expected set of tokens and glow classes? (This is the one place where SCSS template logic is complex enough to warrant automated checks)
+4. **Reference pages**: `ref/ref-foundation.html` IS the test. Visual acceptance criteria, verified by human inspection.
 
-**Typography (_typography.scss):**
-- `@font-face` declaration for Shippori Mincho B1
-- `@font-face` declaration for Barlow Condensed
-- `@font-face` declaration for IBM Plex Mono
-- `@font-face` declaration for DSEG7 Classic
-- `.nerv-type-display` class exists with `font-family` including 'Shippori Mincho B1'
-- `.nerv-type-hud` class exists with `font-family` including 'Barlow Condensed', `text-transform: uppercase`, `letter-spacing`
-- `.nerv-type-data` class exists with `font-family` including 'IBM Plex Mono', `font-variant-numeric: tabular-nums`
-- `.nerv-type-segment` class exists with `font-family` including 'DSEG7 Classic'
-- `.nerv-type-mixed` class exists with appropriate font-family stack
+### Automated Checks
 
-**Glow (_glow.scss):**
-- `.nerv-glow` class has `box-shadow` with multiple layers
-- `.nerv-glow-red`, `.nerv-glow-green`, `.nerv-glow-cyan` variants present
-- `.nerv-glow-text` class has `text-shadow` with multiple layers
-- Color variants of `.nerv-glow-text` present
-- `.nerv-glow-drop` class has `filter` with `drop-shadow()`
-- `prefers-contrast` media query reduces or removes glow effects
+**Build smoke test:**
+- `npm run build` exits 0 and produces `dist/nerv.css`
+- `npm run build:min` exits 0 and produces `dist/nerv.min.css`
 
-**Selector discipline:**
-- No bare element selectors in compiled output (all selectors are `.nerv-*`, `:root`, or `@font-face`/`@media`)
+**Stylelint conventions:**
+- No bare element selectors (all class selectors start with `.nerv-`)
+- No hardcoded color hex values outside `_tokens.scss`
+
+**Color map output verification:**
+- `$nerv-colors` map generates exactly 10 `--nerv-*` color tokens on `:root`
+- Each color token has a corresponding `--nerv-*-rgb` companion
+- Each color flagged for glow produces `.nerv-glow-{name}` and `.nerv-glow-text-{name}` classes
+
+### Visual Verification (Reference Page)
+
+`ref/ref-foundation.html` is the primary test artifact. Acceptance criteria checked by visual inspection:
+
+- Black void background
+- All 4 font families render correctly
+- Each `.nerv-type-*` class shows correct font + properties
+- Mixed JP/EN text renders with correct font pairing
+- All 10 color tokens visually distinguishable
+- Phosphor bloom visible around glowing text
+- DSEG7 ghost segments visible behind active digits
+- `prefers-reduced-motion`: page fully usable (no animations to suppress in Phase 1)
+- `prefers-contrast`: text readable, glow reduced, borders thicker
 
 ### Test Infrastructure
 
-- Framework: Node.js built-in test runner (`node --test`, available since Node 18; project uses Node 22)
+- Framework: Node.js built-in test runner (`node --test`)
+- Linter: Stylelint with standard SCSS config
 - Test location: `test/foundation.test.mjs`
-- Conventions: ESM modules, `describe`/`it` from `node:test`, `assert` from `node:assert`
-- New test files: `test/foundation.test.mjs`
-- npm script: `"test": "node --test test/"` in package.json
-- Test approach: Run SCSS build, read compiled `dist/nerv.css`, assert expected content via string/regex matching
-
-### Integration Tests
-
-- Full build pipeline: `npm run build` → read `dist/nerv.css` → validate tokens + typography + glow all present in correct order
-- Reference page loadability: verify `ref/ref-foundation.html` exists and contains `<link>` to `../dist/nerv.css`
+- npm scripts: `"test": "node --test test/"`, `"lint": "stylelint dist/nerv.css"`
+- New dev dependencies: `stylelint`, `stylelint-config-standard`
 
 ## Implementation Plan
 
@@ -118,7 +117,7 @@ None — implementation approach is clear. All design decisions were resolved du
 
 - Files: `package.json`, `.gitignore`
 - Changes:
-    - `package.json`: name `nervouscsstem`, private, sass as devDependency, scripts for `build`, `build:min`, `watch`, `test`
+    - `package.json`: name `nervouscsstem`, private, `sass`/`stylelint`/`stylelint-config-standard` as devDependencies, scripts for `build`, `build:min`, `watch`, `test`, `lint`
     - `.gitignore`: `node_modules/`, `dist/`
 - Post: `npm install`
 
@@ -130,6 +129,7 @@ None — implementation approach is clear. All design decisions were resolved du
     - `src/_tokens.scss` — empty, doc comment describing purpose
     - `src/_typography.scss` — empty, doc comment describing purpose
     - `src/_glow.scss` — empty, doc comment describing purpose
+- Create: `.stylelintrc.json` — Stylelint config enforcing `.nerv-` prefix, no hardcoded hex
 
 ### Step 3: Test Infrastructure & Test Cases
 
@@ -138,8 +138,12 @@ None — implementation approach is clear. All design decisions were resolved du
     - Import `node:test` and `node:assert`
     - Helper: build SCSS via `child_process.execSync('npm run build')`
     - Helper: read `dist/nerv.css` into string
-    - Write ALL test cases (build, tokens, typography, glow, selectors) — all initially failing
-- Run: `npm test` → confirm all tests fail (TDD red phase)
+    - Test cases (initially failing):
+        - Build smoke: `dist/nerv.css` exists after build
+        - Color map output: exactly 10 `--nerv-*` color tokens + 10 `-rgb` companions on `:root`
+        - Color map → glow: each glow-flagged color has `.nerv-glow-{name}` and `.nerv-glow-text-{name}`
+- Run: `npm test` → confirm tests fail (TDD red phase)
+- Run: `npm run lint` → confirm Stylelint runs (will have no output until CSS exists)
 
 ### Step 4: Implement _tokens.scss (TDD green)
 
@@ -148,10 +152,10 @@ None — implementation approach is clear. All design decisions were resolved du
     - Define SCSS `$nerv-colors` map: each entry has name, hex value, RGB triplet, and glow-variant flag
     - `:root` block generated via `@each` loop over `$nerv-colors` → `--nerv-{name}` and `--nerv-{name}-rgb` properties
     - Meta-tokens `--nerv-primary` and `--nerv-bg` with defaults (hand-written, not map-driven)
-    - Utility tokens (`--nerv-glow-spread`, `--nerv-scanline-opacity`, `--nerv-flicker-duration`, `--nerv-animation-speed`, `--nerv-border-width`)
-    - `@media (prefers-contrast: more)` override for `--nerv-border-width`
+    - Utility tokens (`--nerv-glow-spread`, `--nerv-glow-intensity`, `--nerv-scanline-opacity`, `--nerv-flicker-duration`, `--nerv-animation-speed`, `--nerv-border-width`)
+    - `@media (prefers-contrast: more)`: override `--nerv-border-width` (increase) and `--nerv-glow-intensity` (reduce)
 - Update: `src/nerv.scss` → `@forward 'tokens'`
-- Run: `npm test` → token tests pass
+- Run: `npm test` → color map token tests pass; `npm run lint` → passes
 
 ### Step 5: Implement _typography.scss (TDD green)
 
@@ -167,7 +171,7 @@ None — implementation approach is clear. All design decisions were resolved du
     - `.nerv-type-segment`: DSEG7 Classic font stack
     - `.nerv-type-mixed`: Composite font stack using unicode-range to pair Shippori Mincho B1 for CJK with Barlow Condensed for Latin
 - Update: `src/nerv.scss` → add `@forward 'typography'`
-- Run: `npm test` → typography tests pass
+- Run: `npm run build` → still compiles; `npm run lint` → passes
 
 ### Step 6: Implement _glow.scss (TDD green)
 
@@ -180,9 +184,9 @@ None — implementation approach is clear. All design decisions were resolved du
     - `.nerv-glow` as alias for `.nerv-glow-amber` (default)
     - `.nerv-glow-text` as alias for `.nerv-glow-text-amber` (default)
     - `.nerv-glow-drop`: `filter: drop-shadow()` utility for non-rectangular elements
-    - `@media (prefers-contrast: more)`: reduce or suppress glow shadows for element clarity
+    - `@media (prefers-contrast: more)`: reduce glow via a `--nerv-glow-intensity` multiplier token (initially reduces significantly; architecture supports tuning to zero later)
 - Update: `src/nerv.scss` → add `@forward 'glow'`
-- Run: `npm test` → glow tests pass
+- Run: `npm test` → color map glow tests pass; `npm run lint` → passes
 
 ### Step 7: Reference Page
 
@@ -200,13 +204,15 @@ None — implementation approach is clear. All design decisions were resolved du
 ### Step 8: Final Verification
 
 - Run: `npm run build` (expanded) and `npm run build:min` (compressed)
-- Run: `npm test` — full test suite
+- Run: `npm test` — full test suite (build smoke + color map verification)
+- Run: `npm run lint` — Stylelint convention checks
 - Visual inspection of `ref/ref-foundation.html` in browser
 
 ## Technology Validation
 
 - **Dart Sass**: New dev dependency. Verify: `npm install` succeeds, `npx sass --version` returns version string, `npm run build` compiles SCSS to CSS.
-- **Node.js built-in test runner**: Available in Node 22 (confirmed). No additional dependency needed. Verify: `node --test test/` runs without errors.
+- **Node.js built-in test runner**: Available in Node 22 (confirmed). No additional dependency needed.
+- **Stylelint**: New dev dependency. Verify: `npx stylelint --version` returns version string, `npm run lint` runs against compiled output.
 - **DSEG7 Classic font**: CDN URL verified at `https://cdn.jsdelivr.net/npm/@fontsource/dseg7-classic@5.2.5/files/dseg7-classic-latin-400-normal.woff2` (5.07 KB, woff2 format).
 - **Google Fonts**: Shippori Mincho B1, Barlow Condensed, IBM Plex Mono available via `fonts.googleapis.com/css2` API. Direct woff2 URLs from fonts.gstatic.com will be extracted and baked into `_typography.scss`.
 
@@ -214,9 +220,9 @@ None — implementation approach is clear. All design decisions were resolved du
 
 - **Google Fonts direct URLs**: fonts.gstatic.com URLs can change without notice. **Mitigation**: Document exact URLs used; consider migration to Fontsource (jsDelivr) for all 4 fonts in future if stability becomes an issue. URLs are concentrated in `_typography.scss` for easy replacement.
 - **Mixed JP/EN text** (`.nerv-type-mixed`): Requires `unicode-range` in `@font-face` to separate CJK and Latin rendering. **Mitigation**: This is an established CSS technique. Will define a composite font family with separate `@font-face` rules for CJK vs Latin unicode ranges.
-- **No prior test infrastructure**: Greenfield project has no tests. **Mitigation**: Node.js built-in test runner (zero dependencies) + CSS string matching provides lightweight automated validation alongside visual reference pages.
+- **No prior test infrastructure**: Greenfield project has no tests. **Mitigation**: Build smoke test + Stylelint for convention enforcement + targeted color map verification. Reference pages are the primary visual tests. Avoids low-value CSS string matching.
 - **SCSS @forward module resolution**: Dart Sass `@forward` requires specific syntax and load paths. **Mitigation**: Keep all partials in flat `src/` directory; use bare names (e.g., `@forward 'tokens'` resolves to `_tokens.scss`).
-- **High-contrast glow reduction**: `systemPatterns.md` specifies "reduce reliance on glow/shadow" under `prefers-contrast`. **Mitigation**: Add `prefers-contrast` media query in `_glow.scss` that reduces glow spread/opacity, in addition to the `--nerv-border-width` increase in `_tokens.scss`.
+- **High-contrast glow reduction**: `systemPatterns.md` specifies "reduce reliance on glow/shadow" under `prefers-contrast`. **Mitigation**: Introduce `--nerv-glow-intensity` multiplier token in `_tokens.scss`, reduced under `prefers-contrast`. `_glow.scss` scales blur radii and opacities by this multiplier. Architecture supports tuning to zero later; initial value is a significant reduction, not elimination.
 
 ## Status
 
