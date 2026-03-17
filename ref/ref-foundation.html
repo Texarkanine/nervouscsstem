@@ -95,9 +95,48 @@
     <div class="nerv-type-segment" style="font-size: 3rem; color: var(--nerv-amber);">
       <span class="segment-wrapper">
         <span class="segment-ghost">88:88:88:88</span>
-        <span class="segment-value nerv-glow-text-amber">00:03:25:08</span>
+        <span
+          class="segment-value nerv-glow-text-amber"
+          id="live-segment-timer"
+          aria-label="Elapsed time with centisecond accuracy"
+        >00:00:00:00</span>
       </span>
     </div>
+    <script>
+      /**
+       * Formats a centisecond timer value to the 00:00:00:00 format
+       * HH:MM:SS:CC where CC = centiseconds.
+       * @param {number} elapsedMs Elapsed milliseconds
+       * @returns {string} formatted time
+       */
+      function formatCentisecondTimer(elapsedMs) {
+        const totalCentis = Math.floor(elapsedMs / 10);
+        const centis = totalCentis % 100;
+        const totalSeconds = Math.floor(totalCentis / 100);
+        const seconds = totalSeconds % 60;
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const minutes = totalMinutes % 60;
+        const hours = Math.floor(totalMinutes / 60);
+        const pad = n => n.toString().padStart(2, '0');
+        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}:${pad(centis)}`;
+      }
+
+      (function () {
+        const elem = document.getElementById('live-segment-timer');
+        if (!elem) return;
+        // Use performance.now() for improved time accuracy (not Date.now)
+        const start = performance.now();
+
+        function tick() {
+          const now = performance.now();
+          const elapsed = now - start; // in ms
+          elem.textContent = formatCentisecondTimer(elapsed);
+          requestAnimationFrame(tick); // ~60fps, good enough for centiseconds
+        }
+
+        tick();
+      })();
+    </script>
   </section>
 
   <section>
