@@ -1,6 +1,0 @@
-PASS
-task: nerv-phase1-foundation
-date: 2026-03-17
-findings:
-  - Fixed: NERV Mixed CJK @font-face pointed to Latin-only woff2 — removed (CJK falls through to Shippori Mincho B1 via font-family stack)
-  - Fixed: techContext.md updated to reflect new test infrastructure (Node.js test runner + Stylelint)
