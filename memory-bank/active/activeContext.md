@@ -1,7 +1,7 @@
 # Active Context
 
 - **Current Task:** Phase 5 — Functional UI Components (L4 sub-run)
-- **Phase:** BUILD - COMPLETE
+- **Phase:** QA - PASS
 - **What Was Done:**
   - All 5 SCSS partials implemented: `_bar-meter.scss`, `_segment-display.scss`, `_magi-panel.scss`, `_label-box.scss`, `_status-text.scss`
   - `nerv.js` extended with `NERV.initGhostSegments()` and `NERV.initBarMeters()`, both called from `NERV.init()`
@@ -14,4 +14,7 @@
   - Used `math.round()` to limit HSL hue precision to 4 decimal places + appended `deg` unit for `hue-degree-notation` compliance
   - Moved custom properties to top of `.nerv-magi-panel` block for `custom-property-empty-line-before` compliance
   - Used `currentcolor` (lowercase) in `_status-text.scss` for `value-keyword-case` compliance
-- **Next Step:** QA phase runs automatically.
+- **QA Fixes Applied:**
+  - Fixed reference page grid to proper 12-column layout (Zone A: 4 cols, Zone B: 8 cols, Zone C: 6 cols, Zone D: 6 cols)
+  - Removed dead CSS rules (.ref-divider-h, .ref-divider-v) from reference page
+- **Next Step:** Reflect phase runs automatically.

@@ -251,4 +251,4 @@ No new technology — validation not required. All implementation uses existing 
 - [x] Technology validation complete
 - [x] Preflight — PASS (2 minor amendments: added test coverage for zone markers + MAGI connecting lines; added `--nerv-label-box-color` custom property hook)
 - [x] Build — PASS (10/10 steps, 31 new tests, 121 total passing, 0 failures)
-- [ ] QA
+- [x] QA — PASS (2 trivial fixes: reference page 12-column grid layout, dead CSS cleanup)
