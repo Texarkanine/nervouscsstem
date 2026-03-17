@@ -104,6 +104,25 @@
      *
      * @param {HTMLElement} container - Element to attach axis labels to
      */
+    /**
+     * Populates data-ghost attributes on .nerv-segment-display elements.
+     * Reads each element's text content, replaces digits with 8s, and sets
+     * the result as data-ghost for the ::before ghost-segment overlay.
+     *
+     * @param {HTMLElement} [container=document] - Scope for element lookup
+     */
+    initGhostSegments: function initGhostSegments(container) {
+    },
+
+    /**
+     * Reads data-fill percentage on .nerv-bar-meter containers and
+     * activates/deactivates child .nerv-bar-meter-bar elements accordingly.
+     *
+     * @param {HTMLElement} [container=document] - Scope for element lookup
+     */
+    initBarMeters: function initBarMeters(container) {
+    },
+
     initGridLabels: function initGridLabels(container) {
       if (!container || typeof document === 'undefined') return;
 

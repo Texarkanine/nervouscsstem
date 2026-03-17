@@ -1,0 +1,11 @@
+/// _segment-display.scss — Seven-segment numeric readout with ghost segments.
+///
+/// DSEG7 font display with ::before ghost-segment overlay showing dimmed
+/// all-8s placeholder behind the active digit values.
+///
+/// Classes:
+///   .nerv-segment-display — container for the seven-segment readout
+///
+/// Tokens consumed:
+///   --nerv-amber, --nerv-amber-rgb (LED glow color)
+///   --nerv-bg (background)

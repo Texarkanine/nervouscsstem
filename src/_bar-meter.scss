@@ -1,0 +1,12 @@
+/// _bar-meter.scss — Discrete colored bar meter component.
+///
+/// Flex row of small blocks with HSL color gradient via SCSS @for loop,
+/// zone markers via ::after, fill level via data-fill / .active class.
+///
+/// Classes:
+///   .nerv-bar-meter       — container (flex row)
+///   .nerv-bar-meter-bar   — individual bar segments
+///
+/// Tokens consumed:
+///   --nerv-cyan-rgb, --nerv-blue-rgb (named data tokens for HSL gradient)
+///   --nerv-border-width

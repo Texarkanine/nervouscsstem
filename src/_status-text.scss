@@ -1,0 +1,16 @@
+/// _status-text.scss — Large alert/status text overlays.
+///
+/// Severity-based styling with composition hooks for Phase 2 animation
+/// classes (.nerv-blink, .nerv-glitch).
+///
+/// Classes:
+///   .nerv-status-text     — base large status label
+///   .nerv-status-nominal  — green, no animation
+///   .nerv-status-caution  — amber
+///   .nerv-status-danger   — red (consumers add .nerv-blink)
+///   .nerv-status-critical — red (consumers add .nerv-glitch)
+///
+/// Tokens consumed:
+///   --nerv-green, --nerv-amber, --nerv-red
+///   --nerv-void
+///   --nerv-border-width

@@ -1,0 +1,19 @@
+/// _label-box.scss — Skewed parallelogram mode-indicator buttons.
+///
+/// Parallelogram shape via skewX(-15deg) with counter-skew on inner text.
+/// Active state fills background and inverts text color.
+///
+/// Classes:
+///   .nerv-label-box        — individual skewed button
+///   .nerv-label-box-active — active/selected state
+///   .nerv-label-box-group  — row container for a set of label boxes
+///
+/// Custom properties:
+///   --nerv-label-box-color     (default: --nerv-primary)
+///   --nerv-label-box-color-rgb (default: --nerv-primary-rgb)
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb
+///   --nerv-bg
+///   --nerv-border-width
+///   --nerv-glow-spread, --nerv-glow-intensity

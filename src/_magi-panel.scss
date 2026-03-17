@@ -1,0 +1,16 @@
+/// _magi-panel.scss — MAGI three-system consensus decision display.
+///
+/// CSS Grid layout with three .nerv-magi-system boxes and one
+/// .nerv-magi-output box, connecting lines via pseudo-elements.
+/// Uses _glow.scss mixin for box glow.
+///
+/// Classes:
+///   .nerv-magi-panel  — grid container
+///   .nerv-magi-system — individual system box (CASPER, BALTHASAR, MELCHIOR)
+///   .nerv-magi-output — consensus result box
+///
+/// Tokens consumed:
+///   --nerv-amber, --nerv-amber-rgb (default panel color)
+///   --nerv-border-width
+///   --nerv-bg
+///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
