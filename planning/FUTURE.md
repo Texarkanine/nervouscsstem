@@ -43,3 +43,9 @@ Perhaps: barberpoles should have square borders with glow of a configurable colo
 ## Glitch Refinement:
 
 Insight: Glitch styling should NEVER smoothly translate; it shoudl JUMP between slides/positions. This makes it look broken instead of like a little moth around a flame.
+
+## Web Forms
+
+We are building components used in NGE. This allows building NGE-ish displays.
+
+We also want to be able to style actual websites; we should take an inventory of the major web form elements and make sure they can be styled appropriately (text input, textarea, etc. - the basics!)
