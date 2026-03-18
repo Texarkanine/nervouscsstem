@@ -98,4 +98,4 @@ No new technology — validation not required.
 - [x] Technology validation complete
 - [x] Preflight (PASS — advisory: major/minor ticks deferred)
 - [x] Build
-- [ ] QA
+- [x] QA (PASS — 1 trivial fix: nerv.scss header comment)
