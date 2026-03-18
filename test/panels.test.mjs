@@ -102,29 +102,29 @@ describe('Accessibility — prefers-contrast', () => {
 });
 
 describe('Reticle tickmarks', () => {
-  it('B1: .nerv-reticle class exists with repeating-linear-gradient background', () => {
+  it('B1: .nerv-reticle::after exists with repeating-linear-gradient background', () => {
     assert.match(css, /\.nerv-reticle\b[^-]/, 'missing .nerv-reticle class');
-    const idx = css.indexOf('.nerv-reticle {');
-    assert.ok(idx !== -1, '.nerv-reticle block not found');
+    const idx = css.indexOf('.nerv-reticle::after');
+    assert.ok(idx !== -1, '.nerv-reticle::after block not found');
     const block = css.slice(idx, css.indexOf('}', idx) + 1);
-    assert.ok(block.includes('repeating-linear-gradient'), '.nerv-reticle should use repeating-linear-gradient');
+    assert.ok(block.includes('repeating-linear-gradient'), '.nerv-reticle::after should use repeating-linear-gradient');
   });
 
-  it('B2: .nerv-reticle has 4 background layers for all edges', () => {
-    const idx = css.indexOf('.nerv-reticle {');
-    assert.ok(idx !== -1, '.nerv-reticle block not found');
+  it('B2: .nerv-reticle::after has 4 background layers for all edges', () => {
+    const idx = css.indexOf('.nerv-reticle::after');
+    assert.ok(idx !== -1, '.nerv-reticle::after block not found');
     const block = css.slice(idx, css.indexOf('}', idx) + 1);
-    assert.ok(block.includes('top'), '.nerv-reticle background-position should reference top');
-    assert.ok(block.includes('bottom'), '.nerv-reticle background-position should reference bottom');
-    assert.ok(block.includes('right'), '.nerv-reticle background-position should reference right');
+    assert.ok(block.includes('top'), '.nerv-reticle::after background-position should reference top');
+    assert.ok(block.includes('bottom'), '.nerv-reticle::after background-position should reference bottom');
+    assert.ok(block.includes('right'), '.nerv-reticle::after background-position should reference right');
   });
 
-  it('B3: .nerv-reticle-top class exists with repeating-linear-gradient background', () => {
+  it('B3: .nerv-reticle-top::after exists with repeating-linear-gradient background', () => {
     assert.match(css, /\.nerv-reticle-top\b/, 'missing .nerv-reticle-top class');
-    const idx = css.indexOf('.nerv-reticle-top {');
-    assert.ok(idx !== -1, '.nerv-reticle-top block not found');
+    const idx = css.indexOf('.nerv-reticle-top::after');
+    assert.ok(idx !== -1, '.nerv-reticle-top::after block not found');
     const block = css.slice(idx, css.indexOf('}', idx) + 1);
-    assert.ok(block.includes('repeating-linear-gradient'), '.nerv-reticle-top should use repeating-linear-gradient');
+    assert.ok(block.includes('repeating-linear-gradient'), '.nerv-reticle-top::after should use repeating-linear-gradient');
   });
 
   it('B4: .nerv-reticle-right class exists', () => {
