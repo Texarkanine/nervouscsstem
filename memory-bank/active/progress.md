@@ -14,3 +14,6 @@ Analyzed current `_glitch.scss`: transforms max 5px/4deg with 5-6 intermediate k
 
 ### Preflight — Complete (PASS)
 All checks passed. Convention compliance, dependency impact, conflict detection, and completeness all clean. Advisory: `--nerv-glitch-intensity` token could allow consumer-tunable magnitudes — deferred as YAGNI for this milestone.
+
+### Build — Complete
+Implemented glitch refinement. Translate magnitudes: max 5px → 8-14px. Skew magnitudes: max 4deg → 6-10deg. Keyframe stops: top 5→3, bottom 6→4. Step counts: steps(5)/steps(7) → steps(3)/steps(5). 5 new tests + 1 edge case added. All 182 tests pass, lint and build clean. No deviations from plan.

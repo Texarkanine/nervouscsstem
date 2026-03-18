@@ -108,6 +108,84 @@ describe('Glitch effect', () => {
       'glitch animation should reference --nerv-glitch-duration token'
     );
   });
+
+  it('glitch keyframes contain translate magnitudes >= 8px', () => {
+    const startIdx = css.indexOf('@keyframes nerv-glitch-top');
+    const endMarker = css.indexOf('@media', startIdx);
+    const glitchSection = css.slice(startIdx, endMarker > -1 ? endMarker : undefined);
+
+    const translateValues = [...glitchSection.matchAll(/translate\(\s*(-?\d+(?:\.\d+)?)px/g)]
+      .map(m => Math.abs(parseFloat(m[1])));
+
+    assert.ok(translateValues.length > 0, 'should have translate values in glitch keyframes');
+    assert.ok(
+      translateValues.some(v => v >= 8),
+      `largest translate magnitude is ${Math.max(...translateValues)}px, expected >= 8px`
+    );
+  });
+
+  it('glitch keyframes contain skewX magnitudes >= 6deg', () => {
+    const startIdx = css.indexOf('@keyframes nerv-glitch-top');
+    const endMarker = css.indexOf('@media', startIdx);
+    const glitchSection = css.slice(startIdx, endMarker > -1 ? endMarker : undefined);
+
+    const skewValues = [...glitchSection.matchAll(/skewX\(\s*(-?\d+(?:\.\d+)?)deg/g)]
+      .map(m => Math.abs(parseFloat(m[1])));
+
+    assert.ok(skewValues.length > 0, 'should have skewX values in glitch keyframes');
+    assert.ok(
+      skewValues.some(v => v >= 6),
+      `largest skewX magnitude is ${Math.max(...skewValues)}deg, expected >= 6deg`
+    );
+  });
+
+  it('nerv-glitch-top has reduced keyframe density (<= 3 intermediate stops)', () => {
+    const topStart = css.indexOf('@keyframes nerv-glitch-top');
+    const bottomStart = css.indexOf('@keyframes nerv-glitch-bottom');
+    const topBlock = css.slice(topStart, bottomStart);
+
+    const stops = [...topBlock.matchAll(/(\d+)%/g)]
+      .map(m => parseInt(m[1]))
+      .filter(v => v > 0 && v < 100);
+    const uniqueStops = [...new Set(stops)];
+
+    assert.ok(
+      uniqueStops.length <= 3,
+      `nerv-glitch-top has ${uniqueStops.length} intermediate stops, expected <= 3`
+    );
+  });
+
+  it('nerv-glitch-bottom has reduced keyframe density (<= 4 intermediate stops)', () => {
+    const bottomStart = css.indexOf('@keyframes nerv-glitch-bottom');
+    const afterBottom = css.slice(bottomStart + 1);
+    const nextKeyframes = afterBottom.indexOf('@keyframes');
+    const nextMedia = afterBottom.indexOf('@media');
+    const candidates = [nextKeyframes, nextMedia].filter(i => i > -1);
+    const nextBlock = candidates.length > 0 ? Math.min(...candidates) : afterBottom.length;
+    const bottomBlock = afterBottom.slice(0, nextBlock);
+
+    const stops = [...bottomBlock.matchAll(/(\d+)%/g)]
+      .map(m => parseInt(m[1]))
+      .filter(v => v > 0 && v < 100);
+    const uniqueStops = [...new Set(stops)];
+
+    assert.ok(
+      uniqueStops.length <= 4,
+      `nerv-glitch-bottom has ${uniqueStops.length} intermediate stops, expected <= 4`
+    );
+  });
+
+  it('top and bottom glitch animations use different step counts', () => {
+    const glitchSection = css.slice(css.indexOf('.nerv-glitch'));
+    const stepMatches = [...glitchSection.matchAll(/steps\(\s*(\d+)\s*\)/g)]
+      .map(m => parseInt(m[1]));
+
+    assert.ok(stepMatches.length >= 2, 'should have at least 2 steps() values');
+    assert.notEqual(
+      stepMatches[0], stepMatches[1],
+      'top and bottom glitch should use different step counts for coprime drift'
+    );
+  });
 });
 
 describe('Accessibility — prefers-reduced-motion', () => {
