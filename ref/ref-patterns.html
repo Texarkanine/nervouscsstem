@@ -51,7 +51,8 @@
       grid-row: 1;
     }
 
-    .ref-stripe-left {
+    .ref-stripe-left,
+    .ref-stripe-left-behind {
       grid-column: 1;
       grid-row: 3;
     }
@@ -174,8 +175,15 @@
         </div>
       </div>
 
-      <!-- === Left vertical stripe (animated) === -->
-      <div class="ref-stripe-left nerv-stripe-vertical nerv-stripe-animated"></div>
+      <!-- === Left vertical stripe (green, transparent, with glow) === -->
+      <div class="ref-stripe-left-behind"
+           style="writing-mode: vertical-lr; display: flex; align-items: center; justify-content: space-around;
+                  font-family: 'Barlow Condensed', sans-serif; font-size: 0.5rem; letter-spacing: 0.15em;
+                  text-transform: uppercase; color: var(--nerv-amber); padding: 1rem 0;">
+        <span>SEC</span><span>VII</span><span>ACT</span>
+      </div>
+      <div class="ref-stripe-left nerv-stripe-vertical nerv-stripe-green nerv-stripe-transparent nerv-stripe-animated"
+           style="--nerv-stripe-glow-spread: 6px;"></div>
 
       <!-- === Center: radar display === -->
       <div class="ref-center">

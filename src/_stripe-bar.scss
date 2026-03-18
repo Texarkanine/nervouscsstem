@@ -1,8 +1,8 @@
 /// _stripe-bar.scss — Animated diagonal chevron/hazard stripe patterns.
 ///
 /// Hard-stop two-tone bands (no gradients — CRT vector constraint).
-/// Bright bands are the stripe color; dark bands are the background color.
-/// Both are fully opaque — no background bleed-through.
+/// Bright bands are the stripe color at full opacity; dark bands are
+/// either solid (--nerv-bg) or fully transparent — no in-between alpha.
 /// Uses the barberpole animation technique (background-size: 200% +
 /// position shift) for seamless scrolling at any element width.
 ///
@@ -29,10 +29,11 @@
 .nerv-stripe {
   --nerv-stripe-color-rgb: var(--nerv-primary-rgb);
   --nerv-stripe-glow-spread: 0px;
+  --nerv-stripe-dark: rgba(var(--nerv-bg-rgb), 1);
   background-image: repeating-linear-gradient(
     -45deg,
-    rgba(var(--nerv-bg-rgb), 1) 0,
-    rgba(var(--nerv-bg-rgb), 1) var(--nerv-stripe-width),
+    var(--nerv-stripe-dark) 0,
+    var(--nerv-stripe-dark) var(--nerv-stripe-width),
     rgba(var(--nerv-stripe-color-rgb), 1) var(--nerv-stripe-width),
     rgba(var(--nerv-stripe-color-rgb), 1) calc(var(--nerv-stripe-width) * 2)
   );
@@ -48,10 +49,11 @@
 .nerv-stripe-vertical {
   --nerv-stripe-color-rgb: var(--nerv-primary-rgb);
   --nerv-stripe-glow-spread: 0px;
+  --nerv-stripe-dark: rgba(var(--nerv-bg-rgb), 1);
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(var(--nerv-bg-rgb), 1) 0,
-    rgba(var(--nerv-bg-rgb), 1) var(--nerv-stripe-width),
+    var(--nerv-stripe-dark) 0,
+    var(--nerv-stripe-dark) var(--nerv-stripe-width),
     rgba(var(--nerv-stripe-color-rgb), 1) var(--nerv-stripe-width),
     rgba(var(--nerv-stripe-color-rgb), 1) calc(var(--nerv-stripe-width) * 2)
   );
@@ -77,13 +79,7 @@
 }
 
 .nerv-stripe-transparent {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0,
-    transparent var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 1) var(--nerv-stripe-width),
-    rgba(var(--nerv-stripe-color-rgb), 1) calc(var(--nerv-stripe-width) * 2)
-  );
+  --nerv-stripe-dark: transparent;
 }
 
 .nerv-stripe-animated {
