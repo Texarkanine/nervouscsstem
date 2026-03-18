@@ -54,6 +54,8 @@
 
         NERV.initGhostSegments();
         NERV.initBarMeters();
+        NERV.initLabelBoxGroups();
+        NERV.initMagiPanels();
       };
 
       if (document.readyState === 'loading') {
@@ -145,6 +147,25 @@
           }
         }
       }
+    },
+
+    /**
+     * Enables click-to-toggle radio behavior within .nerv-label-box-group
+     * containers. Clicking a .nerv-label-box activates it and deactivates
+     * siblings. Uses event delegation on the group container.
+     *
+     * @param {HTMLElement} [container=document] - Scope for element lookup
+     */
+    initLabelBoxGroups: function initLabelBoxGroups(container) {
+    },
+
+    /**
+     * Sets grid-template-columns on .nerv-magi-panel elements based on the
+     * count of .nerv-magi-system children, enabling N-to-1 flexible layouts.
+     *
+     * @param {HTMLElement} [container=document] - Scope for element lookup
+     */
+    initMagiPanels: function initMagiPanels(container) {
     },
 
     /**

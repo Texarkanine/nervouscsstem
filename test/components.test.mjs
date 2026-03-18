@@ -11,6 +11,16 @@ const DIST_JS = resolve(ROOT, 'dist/nerv.js');
 execSync('npm run build', { cwd: ROOT, stdio: 'pipe' });
 const css = readFileSync(DIST_CSS, 'utf-8');
 
+describe('Phase 5 Enhancement — Token additions', () => {
+  it('--nerv-white token present in :root output', () => {
+    assert.match(css, /--nerv-white\s*:/, 'missing --nerv-white token in :root');
+  });
+
+  it('--nerv-white-rgb token present in :root output', () => {
+    assert.match(css, /--nerv-white-rgb\s*:/, 'missing --nerv-white-rgb token in :root');
+  });
+});
+
 describe('Phase 5 — build integration', () => {
   // Behavior 1
   it('npm run build exits 0 and dist/nerv.css is non-empty', () => {
@@ -40,10 +50,11 @@ describe('Bar meter CSS', () => {
     assert.match(css, /\.nerv-bar-meter-bar\b/, 'missing .nerv-bar-meter-bar class');
   });
 
-  // Behavior 5
-  it('bar color gradient: nth-child selectors present for HSL color stepping', () => {
+  // Behavior 5 (modified for color-mix enhancement)
+  it('bar color gradient: nth-child selectors present with --nerv-bar-pct percentage values', () => {
     assert.match(css, /\.nerv-bar-meter-bar:nth-child/, 'missing nth-child selectors for color stepping');
-    assert.match(css, /hsl\(/, 'should use HSL color values for gradient');
+    assert.match(css, /--nerv-bar-pct\s*:/, 'should set --nerv-bar-pct values for gradient');
+    assert.doesNotMatch(css, /\.nerv-bar-meter-bar:nth-child[^}]*hsl\(/s, 'should not use hsl() values per bar (replaced by color-mix)');
   });
 
   // Behavior 6
@@ -57,6 +68,65 @@ describe('Bar meter CSS', () => {
   // Behavior 6b
   it('bar meter zone markers: ::after pseudo-element present', () => {
     assert.match(css, /\.nerv-bar-meter-bar[^{]*::after/, 'missing ::after pseudo-element on bar meter bars');
+  });
+
+  // Enhancement: --nerv-bar-from custom property
+  it('--nerv-bar-from custom property declared on .nerv-bar-meter', () => {
+    const idx = css.indexOf('.nerv-bar-meter {');
+    assert.ok(idx !== -1, '.nerv-bar-meter block not found');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-bar-from'), '.nerv-bar-meter should declare --nerv-bar-from');
+  });
+
+  // Enhancement: --nerv-bar-to custom property
+  it('--nerv-bar-to custom property declared on .nerv-bar-meter', () => {
+    const idx = css.indexOf('.nerv-bar-meter {');
+    assert.ok(idx !== -1, '.nerv-bar-meter block not found');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-bar-to'), '.nerv-bar-meter should declare --nerv-bar-to');
+  });
+
+  // Enhancement: color-mix for active bars
+  it('.nerv-bar-active uses color-mix for background color', () => {
+    const idx = css.indexOf('.nerv-bar-active');
+    assert.ok(idx !== -1, '.nerv-bar-active block not found');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('color-mix'), '.nerv-bar-active should use color-mix for background');
+  });
+
+  // Enhancement: SCSS loop generates --nerv-bar-pct (not hsl)
+  it('SCSS loop generates --nerv-bar-pct values, not hsl() values per bar', () => {
+    const nthChildMatches = css.match(/\.nerv-bar-meter-bar:nth-child\(\d+\)\s*\{[^}]*\}/g) || [];
+    assert.ok(nthChildMatches.length > 0, 'should have nth-child rules for bars');
+    for (const rule of nthChildMatches) {
+      assert.ok(rule.includes('--nerv-bar-pct'), `nth-child rule should set --nerv-bar-pct: ${rule.slice(0, 60)}...`);
+      assert.ok(!rule.includes('hsl('), `nth-child rule should not contain hsl(): ${rule.slice(0, 60)}...`);
+    }
+  });
+
+  // Enhancement: vertical orientation
+  it('.nerv-bar-meter-vertical class exists with column in flex-direction', () => {
+    assert.match(css, /\.nerv-bar-meter-vertical\b/, 'missing .nerv-bar-meter-vertical class');
+    const idx = css.indexOf('.nerv-bar-meter-vertical');
+    assert.ok(idx !== -1, '.nerv-bar-meter-vertical block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('column'), '.nerv-bar-meter-vertical should use column flex-direction');
+  });
+
+  // Enhancement: --nerv-bar-gap
+  it('--nerv-bar-gap custom property referenced in .nerv-bar-meter CSS', () => {
+    const idx = css.indexOf('.nerv-bar-meter {');
+    assert.ok(idx !== -1, '.nerv-bar-meter block not found');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-bar-gap'), '.nerv-bar-meter should reference --nerv-bar-gap');
+  });
+
+  // Enhancement: --nerv-bar-width
+  it('--nerv-bar-width custom property referenced in .nerv-bar-meter-bar CSS', () => {
+    const idx = css.indexOf('.nerv-bar-meter-bar {');
+    assert.ok(idx !== -1, '.nerv-bar-meter-bar block not found');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-bar-width'), '.nerv-bar-meter-bar should reference --nerv-bar-width');
   });
 });
 
@@ -131,6 +201,23 @@ describe('MAGI panel CSS', () => {
                             css.includes('.nerv-magi-output::after');
     assert.ok(hasSystemPseudo, 'MAGI should have pseudo-elements for connecting lines');
   });
+
+  // Enhancement: per-system-box color property
+  it('--nerv-magi-system-color custom property declared on .nerv-magi-system', () => {
+    const idx = css.indexOf('.nerv-magi-system {');
+    assert.ok(idx !== -1, '.nerv-magi-system block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-magi-system-color'), '.nerv-magi-system should declare --nerv-magi-system-color');
+  });
+
+  // Enhancement: connecting line uses per-system color
+  it('.nerv-magi-system::after references --nerv-magi-system-color', () => {
+    const idx = css.indexOf('.nerv-magi-system::after');
+    assert.ok(idx !== -1, '.nerv-magi-system::after block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('--nerv-magi-system-color'), '.nerv-magi-system::after should reference --nerv-magi-system-color');
+    assert.ok(!block.includes('var(--nerv-magi-color)'), '.nerv-magi-system::after should NOT reference --nerv-magi-color directly');
+  });
 });
 
 describe('Label box CSS', () => {
@@ -157,6 +244,21 @@ describe('Label box CSS', () => {
     const idx = css.indexOf('.nerv-label-box-group');
     const block = css.slice(idx, idx + 300);
     assert.ok(block.includes('display: flex'), '.nerv-label-box-group should use display: flex');
+  });
+
+  // Enhancement: hover state
+  it('.nerv-label-box:hover styles exist in compiled CSS', () => {
+    assert.match(css, /\.nerv-label-box:hover\b/, 'missing .nerv-label-box:hover in compiled CSS');
+  });
+
+  // Enhancement: active/press state
+  it('.nerv-label-box:active styles exist in compiled CSS', () => {
+    assert.match(css, /\.nerv-label-box:active\b/, 'missing .nerv-label-box:active in compiled CSS');
+  });
+
+  // Enhancement: focus-visible state
+  it('.nerv-label-box:focus-visible styles exist in compiled CSS', () => {
+    assert.match(css, /\.nerv-label-box:focus-visible\b/, 'missing .nerv-label-box:focus-visible in compiled CSS');
   });
 });
 
@@ -222,6 +324,22 @@ describe('nerv.js Phase 5 API', () => {
     const NERV = mod.NERV || (mod.default && mod.default.NERV);
     assert.ok(NERV, 'module should export NERV object');
     assert.equal(typeof NERV.init, 'function', 'NERV.init should be a function');
+  });
+
+  // Enhancement: initLabelBoxGroups
+  it('NERV.initLabelBoxGroups is a function', async () => {
+    const mod = await import(resolve(ROOT, 'src/nerv.js'));
+    const NERV = mod.NERV || (mod.default && mod.default.NERV);
+    assert.ok(NERV, 'module should export NERV object');
+    assert.equal(typeof NERV.initLabelBoxGroups, 'function', 'NERV.initLabelBoxGroups should be a function');
+  });
+
+  // Enhancement: initMagiPanels
+  it('NERV.initMagiPanels is a function', async () => {
+    const mod = await import(resolve(ROOT, 'src/nerv.js'));
+    const NERV = mod.NERV || (mod.default && mod.default.NERV);
+    assert.ok(NERV, 'module should export NERV object');
+    assert.equal(typeof NERV.initMagiPanels, 'function', 'NERV.initMagiPanels should be a function');
   });
 });
 
