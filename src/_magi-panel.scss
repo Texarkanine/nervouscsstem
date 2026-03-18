@@ -1,13 +1,21 @@
-/// _magi-panel.scss — MAGI three-system consensus decision display.
+/// _magi-panel.scss — MAGI N-system consensus decision display.
 ///
-/// CSS Grid layout with three .nerv-magi-system boxes and one
+/// CSS Grid layout with N .nerv-magi-system boxes and one
 /// .nerv-magi-output box, connecting lines via pseudo-elements.
-/// Uses _glow.scss mixin for box glow.
+/// Uses _glow.scss mixin for box glow. JS sets grid columns from child count.
 ///
 /// Classes:
 ///   .nerv-magi-panel  — grid container
 ///   .nerv-magi-system — individual system box (CASPER, BALTHASAR, MELCHIOR)
 ///   .nerv-magi-output — consensus result box
+///
+/// Custom properties (panel):
+///   --nerv-magi-color       (default: --nerv-amber)
+///   --nerv-magi-color-rgb   (default: --nerv-amber-rgb)
+///
+/// Custom properties (system box):
+///   --nerv-magi-system-color      (default: inherits --nerv-magi-color)
+///   --nerv-magi-system-color-rgb  (default: inherits --nerv-magi-color-rgb)
 ///
 /// Tokens consumed:
 ///   --nerv-amber, --nerv-amber-rgb (default panel color)

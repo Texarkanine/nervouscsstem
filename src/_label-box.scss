@@ -1,7 +1,13 @@
 /// _label-box.scss — Skewed parallelogram mode-indicator buttons.
 ///
 /// Parallelogram shape via skewX(-15deg) with counter-skew on inner text.
-/// Active state fills background and inverts text color.
+/// Active state fills background and inverts text color. Button reset
+/// (appearance: none) enables native <button> element usage.
+///
+/// Interactive states:
+///   :hover        — subtle background tint + glow (hover-capable devices only)
+///   :active       — stronger fill + inset shadow for "pressed" feel
+///   :focus-visible — visible focus ring via box-shadow offset
 ///
 /// Classes:
 ///   .nerv-label-box        — individual skewed button

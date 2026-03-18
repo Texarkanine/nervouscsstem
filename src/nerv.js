@@ -3,7 +3,8 @@
  *
  * Provides DOM manipulation that CSS alone cannot achieve:
  * scanline overlay injection, hex cell state cycling, grid axis labels,
- * ghost-segment population, and bar meter fill activation.
+ * ghost-segment population, bar meter fill activation / generation,
+ * label box group radio toggle, and MAGI panel dynamic grid columns.
  *
  * UMD-lite: works as a classic <script> tag (window.NERV) and as a
  * Node.js/CJS module (require/import). No build step required.
