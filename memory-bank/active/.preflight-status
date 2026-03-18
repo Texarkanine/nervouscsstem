@@ -11,4 +11,4 @@ findings:
   - severity: INFO
     description: ".nerv-divider-amber auto-generation produces same class name as manual — existing test survives."
 advisory:
-  - "Consider a state-at-least() SCSS mixin for generating cumulative state selectors (DRY, self-documenting). Not required — manual selector lists work for 5 states."
+  - "ACCEPTED: at-state() SCSS mixin for generating cumulative state selectors incorporated into plan."

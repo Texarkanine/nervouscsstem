@@ -54,6 +54,31 @@ flowchart LR
     named --> statustext & hexdata & barfill
 ```
 
+### Cumulative State Mixin (`at-state`)
+
+Defined file-scoped in `_states.scss`. Generates cumulative selector lists from the state hierarchy so "Active+" effects don't require manual repetition. The hierarchy list is the single source of truth for state ordering.
+
+```scss
+$_state-order: ('nominal', 'active', 'caution', 'alert', 'critical');
+
+@mixin at-state($min-state) {
+  $idx: list.index($_state-order, $min-state);
+  $selectors: ();
+  @for $i from $idx through list.length($_state-order) {
+    $state: list.nth($_state-order, $i);
+    $selectors: append($selectors, '.nerv-state-#{$state} &', comma);
+  }
+  #{$selectors} {
+    @content;
+  }
+}
+
+// Usage:
+// .nerv-type-data {
+//   @include at-state('active') { animation: ...; }
+// }
+```
+
 ### Escalation State Table
 
 Quick reference for state token values during implementation.
@@ -229,7 +254,14 @@ Design decisions made during planning:
 ### Step 6: Implement `_states.scss`
 
 - Files: `src/_states.scss`, `src/nerv.scss`
-- Changes: Define five `.nerv-state-*` classes with token overrides. Add state-specific compound selectors using **cumulative selector lists** per the "Active+" notation (e.g., Active+ effects use `.nerv-state-active, .nerv-state-caution, .nerv-state-alert, .nerv-state-critical` selector lists). Add state-specific grid marks color overrides via `@use 'grid-marks'` + mixin calls. Add `prefers-reduced-motion` media queries. Add `@forward 'states'` to `nerv.scss` as last entry. Override `--nerv-glow-spread` and `--nerv-scanline-opacity` with escalating values per state (concrete values determined during implementation).
+- Changes:
+  - Define a file-scoped `$_state-order` list and `at-state($min-state)` mixin that generates cumulative selector lists from the hierarchy. All "Active+" style selectors use this mixin instead of manual repetition.
+  - Define five `.nerv-state-*` classes with token overrides.
+  - Add state-specific compound selectors via `@include at-state(...)` for cumulative effects (Active+ flicker, Alert+ blink/edge-bleed, Critical glitch/flash).
+  - Add state-specific grid marks color overrides via `@use 'grid-marks'` + mixin calls.
+  - Add `prefers-reduced-motion` media queries.
+  - Add `@forward 'states'` to `nerv.scss` as last entry.
+  - Override `--nerv-glow-spread` and `--nerv-scanline-opacity` with escalating values per state (concrete values determined during implementation).
 - Run tests: state class tests pass.
 
 ### Step 7: Implement JS API tests
