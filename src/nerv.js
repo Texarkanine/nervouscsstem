@@ -15,6 +15,13 @@
   'use strict';
 
   var HEX_STATES = ['nerv-hex-danger', 'nerv-hex-warn', 'nerv-hex-safe'];
+  var ALERT_STATES = [
+    'nerv-state-nominal',
+    'nerv-state-active',
+    'nerv-state-caution',
+    'nerv-state-alert',
+    'nerv-state-critical'
+  ];
 
   function prefersReducedMotion() {
     return (
@@ -210,6 +217,39 @@
         if (systems.length > 0) {
           panels[i].style.gridTemplateColumns = 'repeat(' + systems.length + ', 1fr)';
         }
+      }
+    },
+
+    /**
+     * Sets the alert cascade state by applying a .nerv-state-* class to the
+     * root element. Removes all existing state classes first. For 'critical'
+     * state, injects a temporary screen-flash overlay.
+     *
+     * @param {string} state - One of: 'nominal', 'active', 'caution', 'alert', 'critical'
+     */
+    setState: function setState(state) {
+      if (typeof document === 'undefined') return;
+      var root = document.documentElement;
+
+      for (var i = 0; i < ALERT_STATES.length; i++) {
+        root.classList.remove(ALERT_STATES[i]);
+      }
+
+      var cls = 'nerv-state-' + state;
+      if (ALERT_STATES.indexOf(cls) === -1) return;
+
+      void root.offsetHeight;
+      root.classList.add(cls);
+
+      if (state === 'critical' && !prefersReducedMotion()) {
+        var flash = document.createElement('div');
+        flash.style.cssText =
+          'position:fixed;inset:0;z-index:99999;pointer-events:none;' +
+          'background:rgba(255,34,51,0.35);animation:nerv-screen-flash 0.4s ease-out forwards;';
+        document.body.appendChild(flash);
+        flash.addEventListener('animationend', function () {
+          flash.remove();
+        });
       }
     },
 

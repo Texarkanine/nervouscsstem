@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Alert Cascade — ref-alert-cascade</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #111;
+      color: #ccc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    /* Control row — outside themed area, plain styling */
+    .ref-controls {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ref-controls button {
+      padding: 0.5rem 1.5rem;
+      border: 1px solid #555;
+      background: #222;
+      color: #ccc;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .ref-controls button:hover { background: #333; border-color: #777; }
+    .ref-controls button.active { background: #444; border-color: #aaa; color: #fff; }
+
+    .ref-controls .ref-label {
+      display: flex;
+      align-items: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #888;
+      margin-right: 0.5rem;
+    }
+
+    /* Themed viewport — state cascade applies here */
+    .ref-viewport {
+      position: relative;
+      width: 1100px;
+      max-width: 98vw;
+      min-height: 600px;
+      background: var(--nerv-bg);
+      color: var(--nerv-primary);
+      transition: background 0.3s, color 0.3s;
+      flex: 1;
+    }
+
+    .ref-grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .ref-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto auto auto;
+      width: 100%;
+      gap: 2px;
+      padding: 1rem;
+    }
+
+    /* Zone A: MAGI + segment (top-left) */
+    .ref-zone-a {
+      grid-column: 1 / 5;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      gap: 1rem;
+    }
+
+    .ref-zone-a-body {
+      display: flex;
+      align-items: stretch;
+      gap: 0.8rem;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    /* Zone B: bar meters (top-right) */
+    .ref-zone-b {
+      grid-column: 5 / 13;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      gap: 1.2rem;
+    }
+
+    .ref-meter-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .ref-meter-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(var(--nerv-primary-rgb), 0.6);
+    }
+
+    /* Zone C: hex grid + label boxes (mid) */
+    .ref-zone-c {
+      grid-column: 1 / 7;
+      grid-row: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      gap: 1rem;
+    }
+
+    /* Zone D: status text + segment (mid-right) */
+    .ref-zone-d {
+      grid-column: 7 / 13;
+      grid-row: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      gap: 1rem;
+    }
+
+    .ref-section-label {
+      font-size: 0.6rem;
+      color: rgba(var(--nerv-primary-rgb), 0.5);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* Zone E: stripe bars (bottom full-width) */
+    .ref-zone-e {
+      grid-column: 1 / 13;
+      grid-row: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Control Row — OUTSIDE themed area ═══ -->
+  <div class="ref-controls">
+    <span class="ref-label">Alert State:</span>
+    <button onclick="setAndHighlight('nominal')" id="btn-nominal">Nominal</button>
+    <button onclick="setAndHighlight('active')" id="btn-active">Active</button>
+    <button onclick="setAndHighlight('caution')" id="btn-caution">Caution</button>
+    <button onclick="setAndHighlight('alert')" id="btn-alert">Alert</button>
+    <button onclick="setAndHighlight('critical')" id="btn-critical">Critical</button>
+  </div>
+
+  <!-- ═══ Themed Viewport ═══ -->
+  <div class="ref-viewport">
+
+    <div class="ref-grid-bg nerv-grid-marks"></div>
+
+    <div class="ref-layout">
+
+      <!-- Zone A: MAGI panel + vertical bar -->
+      <div class="ref-zone-a">
+        <div class="nerv-magi-panel" style="width: 100%; max-width: 300px;">
+          <div class="nerv-magi-system">
+            <strong>CASPER·3</strong><br>
+            <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
+          </div>
+          <div class="nerv-magi-system">
+            <strong>BALTHASAR·2</strong><br>
+            <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
+          </div>
+          <div class="nerv-magi-system">
+            <strong>MELCHIOR·1</strong><br>
+            <span class="nerv-type-data" style="font-size: 0.65rem;">DENY</span>
+          </div>
+          <div class="nerv-magi-output">
+            <strong>MAGI</strong> — <span class="nerv-type-data" style="font-size: 0.7rem;">APPROVED (2:1)</span>
+          </div>
+        </div>
+        <div class="nerv-segment-display" style="font-size: 1.8rem;">00:42:17</div>
+      </div>
+
+      <!-- Zone B: Bar meters -->
+      <div class="ref-zone-b">
+        <div class="ref-meter-row">
+          <span class="ref-meter-label">Sync Rate — Subject 01</span>
+          <div class="nerv-bar-meter" data-bars="40" data-fill="72" style="height: 1rem; --nerv-bar-from: var(--nerv-green); --nerv-bar-to: var(--nerv-red);"></div>
+        </div>
+        <div class="ref-meter-row">
+          <span class="ref-meter-label">AT Field Strength</span>
+          <div class="nerv-bar-meter" data-bars="40" data-fill="55" style="height: 1rem;"></div>
+        </div>
+        <div class="ref-meter-row">
+          <span class="ref-meter-label">Ego Border Integrity</span>
+          <div class="nerv-bar-meter" data-bars="40" data-fill="38" style="height: 1rem; --nerv-bar-from: var(--nerv-amber); --nerv-bar-to: var(--nerv-red);"></div>
+        </div>
+      </div>
+
+      <!-- Zone C: Hex grid + label boxes -->
+      <div class="ref-zone-c">
+        <div class="nerv-panel" style="padding: 0.8rem;">
+          <div class="nerv-hex-grid">
+            <div class="nerv-hex-row">
+              <div class="nerv-hex-cell nerv-hex-safe"></div>
+              <div class="nerv-hex-cell"></div>
+              <div class="nerv-hex-cell nerv-hex-warn"></div>
+            </div>
+            <div class="nerv-hex-row">
+              <div class="nerv-hex-cell"></div>
+              <div class="nerv-hex-cell nerv-hex-danger"></div>
+              <div class="nerv-hex-cell nerv-hex-safe"></div>
+              <div class="nerv-hex-cell"></div>
+            </div>
+            <div class="nerv-hex-row">
+              <div class="nerv-hex-cell nerv-hex-warn"></div>
+              <div class="nerv-hex-cell"></div>
+              <div class="nerv-hex-cell"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nerv-label-box-group">
+          <button class="nerv-label-box"><span>ABORT</span></button>
+          <button class="nerv-label-box nerv-label-box-active"><span>HOLD</span></button>
+          <button class="nerv-label-box"><span>LAUNCH</span></button>
+        </div>
+      </div>
+
+      <!-- Zone D: Status text + dividers -->
+      <div class="ref-zone-d">
+        <div class="ref-section-label">System Status</div>
+
+        <span class="nerv-status-text nerv-status-nominal">ALL SYSTEMS NOMINAL</span>
+        <span class="nerv-status-text nerv-status-caution">SYNC VARIANCE DETECTED</span>
+        <span class="nerv-status-text nerv-status-danger">AT FIELD WEAKENING</span>
+
+        <div class="nerv-divider" style="width: 80%; margin: 0.5rem 0;"></div>
+
+        <div class="nerv-panel-titled" data-title="OPERATIONAL LOG" style="width: 80%; padding: 0.8rem; padding-top: 2rem;">
+          <span class="nerv-type-data" style="font-size: 0.6rem;">
+            &gt; Entry plug inserted<br>
+            &gt; LCL pressurization OK<br>
+            &gt; Neural link established
+          </span>
+        </div>
+      </div>
+
+      <!-- Zone E: Stripe bars -->
+      <div class="ref-zone-e">
+        <div class="nerv-stripe nerv-stripe-animated" style="height: 0.6rem;"></div>
+        <div class="nerv-stripe nerv-stripe-animated nerv-stripe-red nerv-stripe-transparent" style="height: 0.5rem;"></div>
+      </div>
+
+    </div>
+
+    <!-- Horizontal divider -->
+    <div class="nerv-divider" style="position: absolute; left: 0; right: 0; top: 38%; z-index: 2;"></div>
+
+  </div>
+
+  <script src="../dist/nerv.js"></script>
+  <script>
+    NERV.init();
+
+    function setAndHighlight(state) {
+      NERV.setState(state);
+      var btns = document.querySelectorAll('.ref-controls button');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.remove('active');
+      }
+      document.getElementById('btn-' + state).classList.add('active');
+    }
+
+    setAndHighlight('nominal');
+  </script>
+
+</body>
+</html>

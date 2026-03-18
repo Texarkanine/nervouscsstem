@@ -164,6 +164,13 @@ $_red-rgb: list.nth(map.get(tokens.$nerv-colors, 'red'), 2);
   @include grid-marks.nerv-grid-marks-bg($_red-rgb);
 }
 
+// === Screen flash animation (used by nerv.js for Critical state entry) ===
+
+@keyframes nerv-screen-flash {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 // === Accessibility ===
 
 @media (prefers-reduced-motion: reduce) {

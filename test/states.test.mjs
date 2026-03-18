@@ -251,13 +251,27 @@ describe('Auto-generated variants', () => {
 // === JavaScript API (behaviors 28–30) ===
 
 describe('NERV.setState JS API', () => {
-  it('28. NERV.setState function exists in nerv.js', () => {
+  it('28. NERV.setState function exists in nerv.js', async () => {
+    const mod = await import(resolve(ROOT, 'src/nerv.js'));
+    const NERV = mod.NERV || (mod.default && mod.default.NERV);
+    assert.ok(NERV, 'module should export NERV object');
+    assert.equal(typeof NERV.setState, 'function', 'NERV.setState should be a function');
   });
 
   it('29. setState accepts state name parameter', () => {
+    assert.ok(js.includes('setState'), 'nerv.js should contain setState');
+    const setStateIdx = js.indexOf('setState');
+    const fnBlock = js.slice(setStateIdx, setStateIdx + 200);
+    assert.ok(/function\s*\(?\s*\w+/.test(fnBlock) || /setState\s*:\s*function\s*\w*\s*\(\s*\w+/.test(fnBlock),
+      'setState should accept a parameter');
   });
 
   it('30. setState references all five state class names', () => {
+    assert.ok(js.includes('nerv-state-nominal'), 'nerv.js should reference nerv-state-nominal');
+    assert.ok(js.includes('nerv-state-active'), 'nerv.js should reference nerv-state-active');
+    assert.ok(js.includes('nerv-state-caution'), 'nerv.js should reference nerv-state-caution');
+    assert.ok(js.includes('nerv-state-alert'), 'nerv.js should reference nerv-state-alert');
+    assert.ok(js.includes('nerv-state-critical'), 'nerv.js should reference nerv-state-critical');
   });
 });
 
