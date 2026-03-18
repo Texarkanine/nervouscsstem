@@ -22,6 +22,7 @@
   --nerv-label-box-color: var(--nerv-primary);
   --nerv-label-box-color-rgb: var(--nerv-primary-rgb);
 
+  appearance: none;
   display: inline-block;
   transform: skewX(-15deg);
   border: var(--nerv-border-width) solid var(--nerv-label-box-color);
@@ -40,6 +41,35 @@
   > * {
     display: inline-block;
     transform: skewX(15deg);
+  }
+}
+
+.nerv-label-box:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--nerv-bg),
+    0 0 0 calc(2px + var(--nerv-border-width)) var(--nerv-label-box-color),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.45);
+}
+
+.nerv-label-box:active {
+  background: rgba(var(--nerv-label-box-color-rgb), 0.15);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 calc(var(--nerv-glow-spread) * 0.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.2);
+}
+
+@media (hover: hover) {
+  .nerv-label-box:hover {
+    background: rgba(var(--nerv-label-box-color-rgb), 0.08);
+    box-shadow:
+      0 0 calc(var(--nerv-glow-spread) * 0.7 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.25);
+  }
+
+  .nerv-label-box-active:hover {
+    box-shadow:
+      0 0 calc(var(--nerv-glow-spread) * 1.3 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.45),
+      0 0 calc(var(--nerv-glow-spread) * 3 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.22);
   }
 }
 

@@ -28,8 +28,11 @@
 }
 
 .nerv-magi-system {
+  --nerv-magi-system-color: var(--nerv-magi-color);
+  --nerv-magi-system-color-rgb: var(--nerv-magi-color-rgb);
+
   position: relative;
-  border: var(--nerv-border-width) solid var(--nerv-magi-color);
+  border: var(--nerv-border-width) solid var(--nerv-magi-system-color);
   background: var(--nerv-bg);
   padding: 0.8rem 0.6rem;
   font-family: 'Barlow Condensed', sans-serif;
@@ -37,8 +40,8 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--nerv-magi-color);
-  @include glow.nerv-glow(--nerv-magi-color, --nerv-magi-color-rgb);
+  color: var(--nerv-magi-system-color);
+  @include glow.nerv-glow(--nerv-magi-system-color, --nerv-magi-system-color-rgb);
 
   &::after {
     content: '';
@@ -47,7 +50,7 @@
     left: 50%;
     width: var(--nerv-border-width);
     height: 1.5rem;
-    background: var(--nerv-magi-color);
+    background: var(--nerv-magi-system-color);
     pointer-events: none;
   }
 }

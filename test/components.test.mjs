@@ -214,7 +214,8 @@ describe('MAGI panel CSS', () => {
   it('.nerv-magi-system::after references --nerv-magi-system-color', () => {
     const idx = css.indexOf('.nerv-magi-system::after');
     assert.ok(idx !== -1, '.nerv-magi-system::after block not found');
-    const block = css.slice(idx, idx + 400);
+    const closeIdx = css.indexOf('}', idx);
+    const block = css.slice(idx, closeIdx + 1);
     assert.ok(block.includes('--nerv-magi-system-color'), '.nerv-magi-system::after should reference --nerv-magi-system-color');
     assert.ok(!block.includes('var(--nerv-magi-color)'), '.nerv-magi-system::after should NOT reference --nerv-magi-color directly');
   });

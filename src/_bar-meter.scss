@@ -1,48 +1,79 @@
 /// _bar-meter.scss — Discrete colored bar meter component.
 ///
-/// Flex row of small blocks with HSL color gradient via SCSS @for loop,
+/// Flex row of small blocks with color-mix() gradient via SCSS @for loop,
 /// zone markers via ::after, fill level via data-fill / .nerv-bar-active class.
 ///
 /// Classes:
-///   .nerv-bar-meter       — container (flex row)
-///   .nerv-bar-meter-bar   — individual bar segments
-///   .nerv-bar-active      — active state for individual bars
+///   .nerv-bar-meter           — container (flex row)
+///   .nerv-bar-meter-bar       — individual bar segments
+///   .nerv-bar-active           — active state for individual bars
+///   .nerv-bar-meter-vertical  — modifier for vertical (column-reverse) orientation
+///
+/// Custom properties (container):
+///   --nerv-bar-from   Gradient start color token  (default: --nerv-cyan)
+///   --nerv-bar-to     Gradient end color token    (default: --nerv-blue)
+///   --nerv-bar-gap    Gap between bar segments    (default: 2px)
+///
+/// Custom properties (bar):
+///   --nerv-bar-width  Preferred segment size      (default: 4px min, flex to fill)
+///   --nerv-bar-pct    Gradient position 0–100%    (set by SCSS loop or JS)
 ///
 /// Tokens consumed:
-///   Named data tokens for HSL color gradient (cyan → blue → purple)
+///   --nerv-cyan, --nerv-blue (default gradient endpoints)
 ///   --nerv-border-width
+///   --nerv-amber-rgb (zone marker label color)
 
 @use 'sass:math';
 
 $nerv-bar-count: 50;
-$nerv-hue-start: 185; // cyan
-$nerv-hue-end: 270;   // purple
 
 .nerv-bar-meter {
+  --nerv-bar-from: var(--nerv-cyan);
+  --nerv-bar-to: var(--nerv-blue);
+  --nerv-bar-gap: 2px;
+
   display: flex;
   align-items: stretch;
-  gap: 2px;
+  gap: var(--nerv-bar-gap);
   height: 1.2rem;
 }
 
 .nerv-bar-meter-bar {
   position: relative;
-  flex: 1;
-  min-width: 4px;
+  flex: 1 0 var(--nerv-bar-width, 0px);
+  min-width: var(--nerv-bar-width, 4px);
   background: transparent;
   transition: background-color 0.1s;
 
   &.nerv-bar-active {
-    background-color: var(--nerv-bar-color, var(--nerv-cyan));
+    background-color: color-mix(in srgb, var(--nerv-bar-from), var(--nerv-bar-to) var(--nerv-bar-pct, 0%));
   }
 }
 
 @for $i from 1 through $nerv-bar-count {
-  $ratio: math.div($i - 1, $nerv-bar-count - 1);
-  $hue: math.round(($nerv-hue-start + ($nerv-hue-end - $nerv-hue-start) * $ratio) * 10000) * 0.0001;
+  $pct: math.div(math.round(math.div($i - 1, $nerv-bar-count - 1) * 10000), 100);
 
   .nerv-bar-meter-bar:nth-child(#{$i}) {
-    --nerv-bar-color: hsl(#{$hue}deg 85% 55%);
+    --nerv-bar-pct: #{$pct}%;
+  }
+}
+
+.nerv-bar-meter-vertical {
+  flex-direction: column-reverse;
+  width: 1.2rem;
+  height: auto;
+
+  .nerv-bar-meter-bar {
+    min-width: unset;
+    min-height: var(--nerv-bar-width, 4px);
+    flex: 1 0 var(--nerv-bar-width, 0px);
+  }
+
+  .nerv-bar-meter-bar[data-zone]::after {
+    top: 50%;
+    bottom: auto;
+    left: calc(100% + 0.4em);
+    transform: translateY(-50%);
   }
 }
 
