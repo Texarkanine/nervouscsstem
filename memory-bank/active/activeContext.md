@@ -1,13 +1,13 @@
 # Active Context
 
 ## Current Task
-M1: Fix barberpole stripe opacity
+M2: Refine glitch effect
 
 ## Phase
-BUILD - COMPLETE
+COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
-Fixed barberpole stripe opacity bug: both bands now fully opaque (dark bands use --nerv-bg-rgb, bright bands use --nerv-stripe-color-rgb, both at alpha 1). Added configurable glow border via --nerv-stripe-glow-spread custom property (default 0px). All 179 tests pass, lint clean.
+Classified M2 as Level 2 (Simple Enhancement). Self-contained change to single file `_glitch.scss` — increase transform magnitudes and reduce keyframe density for sharper discontinuous jumps.
 
 ## Next Step
-Proceed to QA phase.
+Load Level 2 workflow and begin planning.
