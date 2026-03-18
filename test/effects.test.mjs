@@ -139,52 +139,28 @@ describe('Glitch effect', () => {
     );
   });
 
-  it('nerv-glitch-top has reduced keyframe density (<= 3 intermediate stops)', () => {
+  it('glitch animations use step-end for zero-interpolation snapping', () => {
+    const glitchSection = css.slice(css.indexOf('.nerv-glitch'));
+    assert.ok(
+      glitchSection.includes('step-end'),
+      'glitch animations should use step-end timing function'
+    );
+  });
+
+  it('glitch keyframes include rest states (intermittent pattern)', () => {
     const topStart = css.indexOf('@keyframes nerv-glitch-top');
     const bottomStart = css.indexOf('@keyframes nerv-glitch-bottom');
-    const topBlock = css.slice(topStart, bottomStart);
+    const nextSection = css.indexOf('@', bottomStart + 1);
 
-    const stops = [...topBlock.matchAll(/(\d+)%/g)]
-      .map(m => parseInt(m[1]))
-      .filter(v => v > 0 && v < 100);
-    const uniqueStops = [...new Set(stops)];
-
-    assert.ok(
-      uniqueStops.length <= 3,
-      `nerv-glitch-top has ${uniqueStops.length} intermediate stops, expected <= 3`
-    );
-  });
-
-  it('nerv-glitch-bottom has reduced keyframe density (<= 4 intermediate stops)', () => {
-    const bottomStart = css.indexOf('@keyframes nerv-glitch-bottom');
-    const afterBottom = css.slice(bottomStart + 1);
-    const nextKeyframes = afterBottom.indexOf('@keyframes');
-    const nextMedia = afterBottom.indexOf('@media');
-    const candidates = [nextKeyframes, nextMedia].filter(i => i > -1);
-    const nextBlock = candidates.length > 0 ? Math.min(...candidates) : afterBottom.length;
-    const bottomBlock = afterBottom.slice(0, nextBlock);
-
-    const stops = [...bottomBlock.matchAll(/(\d+)%/g)]
-      .map(m => parseInt(m[1]))
-      .filter(v => v > 0 && v < 100);
-    const uniqueStops = [...new Set(stops)];
-
-    assert.ok(
-      uniqueStops.length <= 4,
-      `nerv-glitch-bottom has ${uniqueStops.length} intermediate stops, expected <= 4`
-    );
-  });
-
-  it('top and bottom glitch animations use different step counts', () => {
-    const glitchSection = css.slice(css.indexOf('.nerv-glitch'));
-    const stepMatches = [...glitchSection.matchAll(/steps\(\s*(\d+)\s*\)/g)]
-      .map(m => parseInt(m[1]));
-
-    assert.ok(stepMatches.length >= 2, 'should have at least 2 steps() values');
-    assert.notEqual(
-      stepMatches[0], stepMatches[1],
-      'top and bottom glitch should use different step counts for coprime drift'
-    );
+    for (const [name, block] of [
+      ['top', css.slice(topStart, bottomStart)],
+      ['bottom', css.slice(bottomStart, nextSection > -1 ? nextSection : undefined)]
+    ]) {
+      assert.ok(
+        /translate\(\s*0[^)]*,\s*0/.test(block),
+        `nerv-glitch-${name} should include rest states with translate(0, 0)`
+      );
+    }
   });
 });
 
