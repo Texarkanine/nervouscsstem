@@ -4,10 +4,10 @@
 M2: Refine glitch effect
 
 ## Phase
-PLAN - COMPLETE
+PREFLIGHT - COMPLETE (PASS)
 
 ## What Was Done
-Created implementation plan for M2. Analyzed current `_glitch.scss`: transform magnitudes too small (max 5px/4deg) and too many keyframe stops (5-6 intermediate), creating smooth-feeling micro-movements despite `steps()`. Plan: increase magnitudes to 8-15px/6-12deg, reduce to 3-4 intermediate stops, adjust step counts to match. Five new tests targeting magnitude and density; existing tests cover regression.
+Preflight validation passed. All checks clean: convention compliance, dependency impact, conflict detection, completeness. Advisory noted: `--nerv-glitch-intensity` token deferred as YAGNI.
 
 ## Next Step
-Proceed to preflight validation.
+Proceed to build phase.
