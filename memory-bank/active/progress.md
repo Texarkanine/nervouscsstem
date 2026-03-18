@@ -14,3 +14,6 @@ Designed `repeating-linear-gradient` approach for tick marks. 6 utility classes 
 
 ### Preflight — Complete (PASS)
 All checks passed. Convention compliance, dependency impact, conflict detection, and completeness all clean. Auto-shifts with alert state via `var(--nerv-primary)` — no explicit state overrides needed (advantage of gradient approach over SVG data URIs). Advisory: major/minor tick marks deferred for future enhancement.
+
+### Build — Complete
+Implemented `_reticle.scss` with 6 utility classes (`.nerv-reticle` all-edges, 4 individual edge classes) + 9 auto-generated color variants. 4 custom properties (`--nerv-reticle-color`, `--nerv-reticle-size`, `--nerv-reticle-spacing`, `--nerv-reticle-width`). `prefers-contrast: more` support. 9 new tests in `test/panels.test.mjs`. Ref page updated: viewport shows all-edge reticle in cyan, inset panel shows bottom-edge reticle in green. All 196 tests pass, lint and build clean. No deviations from plan.

@@ -101,6 +101,66 @@ describe('Accessibility — prefers-contrast', () => {
   });
 });
 
+describe('Reticle tickmarks', () => {
+  it('B1: .nerv-reticle class exists with repeating-linear-gradient background', () => {
+    assert.match(css, /\.nerv-reticle\b[^-]/, 'missing .nerv-reticle class');
+    const idx = css.indexOf('.nerv-reticle {');
+    assert.ok(idx !== -1, '.nerv-reticle block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('repeating-linear-gradient'), '.nerv-reticle should use repeating-linear-gradient');
+  });
+
+  it('B2: .nerv-reticle has 4 background layers for all edges', () => {
+    const idx = css.indexOf('.nerv-reticle {');
+    assert.ok(idx !== -1, '.nerv-reticle block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('top'), '.nerv-reticle background-position should reference top');
+    assert.ok(block.includes('bottom'), '.nerv-reticle background-position should reference bottom');
+    assert.ok(block.includes('right'), '.nerv-reticle background-position should reference right');
+  });
+
+  it('B3: .nerv-reticle-top class exists with repeating-linear-gradient background', () => {
+    assert.match(css, /\.nerv-reticle-top\b/, 'missing .nerv-reticle-top class');
+    const idx = css.indexOf('.nerv-reticle-top {');
+    assert.ok(idx !== -1, '.nerv-reticle-top block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('repeating-linear-gradient'), '.nerv-reticle-top should use repeating-linear-gradient');
+  });
+
+  it('B4: .nerv-reticle-right class exists', () => {
+    assert.match(css, /\.nerv-reticle-right\b/, 'missing .nerv-reticle-right class');
+  });
+
+  it('B5: .nerv-reticle-bottom class exists', () => {
+    assert.match(css, /\.nerv-reticle-bottom\b/, 'missing .nerv-reticle-bottom class');
+  });
+
+  it('B6: .nerv-reticle-left class exists', () => {
+    assert.match(css, /\.nerv-reticle-left\b/, 'missing .nerv-reticle-left class');
+  });
+
+  it('B7: --nerv-reticle-color custom property declared in .nerv-reticle', () => {
+    const idx = css.indexOf('.nerv-reticle {');
+    assert.ok(idx !== -1, '.nerv-reticle block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-reticle-color'), '.nerv-reticle should declare --nerv-reticle-color');
+  });
+
+  it('B8: .nerv-reticle-amber color variant exists and sets --nerv-reticle-color', () => {
+    assert.match(css, /\.nerv-reticle-amber\b/, 'missing .nerv-reticle-amber color variant');
+    const idx = css.indexOf('.nerv-reticle-amber');
+    assert.ok(idx !== -1, '.nerv-reticle-amber block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-reticle-color'), '.nerv-reticle-amber should set --nerv-reticle-color');
+  });
+
+  it('B9: regression — existing structural selectors still present', () => {
+    assert.match(css, /\.nerv-panel\b[^-]/, 'missing .nerv-panel class');
+    assert.match(css, /\.nerv-divider\b[^-]/, 'missing .nerv-divider class');
+    assert.match(css, /\.nerv-grid-marks\b/, 'missing .nerv-grid-marks class');
+  });
+});
+
 describe('Regression — Phase 1 and Phase 2', () => {
   it('Phase 1 foundation selectors still present', () => {
     assert.match(css, /--nerv-amber\s*:/, 'missing --nerv-amber token');
