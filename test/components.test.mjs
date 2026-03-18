@@ -130,6 +130,58 @@ describe('Bar meter CSS', () => {
   });
 });
 
+describe('Bar meter gradient presets', () => {
+  function extractBlock(className) {
+    const idx = css.indexOf(className + ' {');
+    assert.ok(idx !== -1, `${className} block not found in compiled CSS`);
+    const closeIdx = css.indexOf('}', idx);
+    return css.slice(idx, closeIdx + 1);
+  }
+
+  it('.nerv-bar-thermal sets --nerv-bar-from to green and --nerv-bar-to to red', () => {
+    const block = extractBlock('.nerv-bar-thermal');
+    assert.ok(block.includes('--nerv-bar-from: var(--nerv-green)'), 'thermal should set --nerv-bar-from to --nerv-green');
+    assert.ok(block.includes('--nerv-bar-to: var(--nerv-red)'), 'thermal should set --nerv-bar-to to --nerv-red');
+  });
+
+  it('.nerv-bar-energy sets --nerv-bar-from to cyan and --nerv-bar-to to blue', () => {
+    const block = extractBlock('.nerv-bar-energy');
+    assert.ok(block.includes('--nerv-bar-from: var(--nerv-cyan)'), 'energy should set --nerv-bar-from to --nerv-cyan');
+    assert.ok(block.includes('--nerv-bar-to: var(--nerv-blue)'), 'energy should set --nerv-bar-to to --nerv-blue');
+  });
+
+  it('.nerv-bar-warning sets --nerv-bar-from to amber and --nerv-bar-to to red', () => {
+    const block = extractBlock('.nerv-bar-warning');
+    assert.ok(block.includes('--nerv-bar-from: var(--nerv-amber)'), 'warning should set --nerv-bar-from to --nerv-amber');
+    assert.ok(block.includes('--nerv-bar-to: var(--nerv-red)'), 'warning should set --nerv-bar-to to --nerv-red');
+  });
+
+  it('.nerv-bar-field sets --nerv-bar-from to void and --nerv-bar-to to amber', () => {
+    const block = extractBlock('.nerv-bar-field');
+    assert.ok(block.includes('--nerv-bar-from: var(--nerv-void)'), 'field should set --nerv-bar-from to --nerv-void');
+    assert.ok(block.includes('--nerv-bar-to: var(--nerv-amber)'), 'field should set --nerv-bar-to to --nerv-amber');
+  });
+
+  it('preset classes contain only color token overrides, no layout properties', () => {
+    const presets = ['.nerv-bar-thermal', '.nerv-bar-energy', '.nerv-bar-warning', '.nerv-bar-field'];
+    const forbidden = ['display', 'flex', 'gap', 'height', 'width', 'grid'];
+    for (const cls of presets) {
+      const block = extractBlock(cls);
+      for (const prop of forbidden) {
+        assert.ok(!block.includes(prop), `${cls} should not contain layout property "${prop}"`);
+      }
+    }
+  });
+
+  it('regression: .nerv-bar-meter defaults still cyan→blue', () => {
+    const idx = css.indexOf('.nerv-bar-meter {');
+    assert.ok(idx !== -1, '.nerv-bar-meter block not found');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-bar-from: var(--nerv-cyan)'), 'default --nerv-bar-from should still be --nerv-cyan');
+    assert.ok(block.includes('--nerv-bar-to: var(--nerv-blue)'), 'default --nerv-bar-to should still be --nerv-blue');
+  });
+});
+
 describe('Segment display CSS', () => {
   // Behavior 7
   it('.nerv-segment-display class exists', () => {

@@ -14,3 +14,6 @@ Designed 4 preset classes (thermal, energy, warning, field) based on NGE UI grad
 
 ### Preflight — Complete (PASS)
 All checks passed. Convention compliance, dependency impact, conflict detection, and completeness all clean. Advisory: 3-stop gradient support (`--nerv-bar-mid`) deferred — `color-mix(in srgb)` naturally produces warm midtones for thermal preset.
+
+### Build — Complete
+Implemented 4 preset classes (thermal, energy, warning, field) in `_bar-meter.scss`. 6 new tests in `test/components.test.mjs`. Ref page updated: 3 bars use presets instead of inline styles, 4th bar added for warning preset. Vertical bar retained inline styles (cyan→steel is a custom gradient, not a preset). All 187 tests pass, lint and build clean. No deviations from plan.

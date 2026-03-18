@@ -4,17 +4,21 @@
 M3: Add built-in gradient presets for bar meters
 
 ## Phase
-PLAN - COMPLETE
+BUILD - COMPLETE
 
 ## What Was Done
-Designed 4 gradient preset classes for bar meters based on NGE UI patterns:
-- `.nerv-bar-thermal` (green→red) — canonical NGE gauge gradient
-- `.nerv-bar-energy` (cyan→blue) — power/operational readouts
-- `.nerv-bar-warning` (amber→red) — warning/damage indicators
-- `.nerv-bar-field` (void→amber) — AT field / boundary extent displays
+Implemented 4 gradient preset classes in `src/_bar-meter.scss`:
+- `.nerv-bar-thermal` (green→red)
+- `.nerv-bar-energy` (cyan→blue)
+- `.nerv-bar-warning` (amber→red)
+- `.nerv-bar-field` (void→amber)
 
-Test plan: 5 behavior tests + 1 regression test in existing `test/components.test.mjs`.
-Implementation: 2 files touched (`_bar-meter.scss`, `ref-components.html`), no new dependencies.
+Files modified:
+- `src/_bar-meter.scss` — added preset class definitions and updated doc comment
+- `test/components.test.mjs` — added 6 tests (5 behaviors + 1 regression) in new describe block
+- `ref/ref-components.html` — replaced inline gradient styles with preset classes on 3 bars, added 4th bar for warning preset
+
+No deviations from plan. All 187 tests pass, lint and build clean.
 
 ## Next Step
-Preflight validation, then build.
+QA review.
