@@ -4,10 +4,10 @@
 M2: Refine glitch effect
 
 ## Phase
-QA - COMPLETE (PASS)
+REFLECT COMPLETE
 
 ## What Was Done
-Semantic review passed. All seven constraints clean: KISS, DRY, YAGNI, Completeness, Regression, Integrity, Documentation. No issues found.
+Reflection complete. Clean execution — plan accurate, build smooth, QA clean. Key insight: `steps()` alone doesn't sell discontinuity; it's the magnitude × sparsity combination that creates the broken feel.
 
 ## Next Step
-Proceed to reflect phase.
+Run /niko to continue to the next milestone.

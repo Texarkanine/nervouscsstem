@@ -20,3 +20,6 @@ Implemented glitch refinement. Translate magnitudes: max 5px → 8-14px. Skew ma
 
 ### QA — Complete (PASS)
 Semantic review passed. KISS/DRY/YAGNI/Completeness/Regression/Integrity/Documentation all clean. No issues found.
+
+### Reflect — Complete
+Clean execution. Key insight: discontinuous animation feel comes from magnitude × sparsity, not steps() alone.
