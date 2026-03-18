@@ -7,10 +7,10 @@
 ///   .nerv-panel-inset    — visually recessed panel with inset shadow
 ///
 /// Exposes --nerv-panel-color / --nerv-panel-color-rgb custom properties
-/// (default: amber) for per-panel color overrides.
+/// (default: --nerv-primary) for per-panel color overrides.
 ///
 /// Tokens consumed:
-///   --nerv-amber, --nerv-amber-rgb    (default panel color)
+///   --nerv-primary, --nerv-primary-rgb (default panel color, follows ambiance)
 ///   --nerv-border-width               (border sizing, scales with prefers-contrast)
 ///   --nerv-bg                         (panel background)
 ///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)

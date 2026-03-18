@@ -19,8 +19,8 @@
 ///   --nerv-bar-pct    Gradient position 0–100%    (set by SCSS loop or JS)
 ///
 /// Tokens consumed:
-///   --nerv-cyan, --nerv-blue (default gradient endpoints)
-///   --nerv-amber-rgb (zone marker label color)
+///   --nerv-cyan, --nerv-blue (default gradient endpoints — data-driven)
+///   --nerv-primary-rgb (zone marker label color, follows ambiance)
 
 @use 'sass:math';
 

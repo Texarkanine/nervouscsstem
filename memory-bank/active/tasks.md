@@ -306,4 +306,4 @@ No new technology — validation not required. All implementation uses existing 
 - [x] Technology validation complete
 - [x] Preflight — PASS with ADVISORY
 - [x] Build — PASS (10/10 steps, 37 new tests, 175 total)
-- [ ] QA
+- [x] QA — PASS (2 trivial doc fixes applied)

@@ -21,8 +21,10 @@
 ///   .nerv-hex-safe        — Green/safe state (uses --nerv-green)
 ///
 /// Tokens consumed:
+///   --nerv-primary-rgb (neutral cell border — follows ambiance)
 ///   --nerv-red, --nerv-red-rgb, --nerv-amber, --nerv-amber-rgb,
-///   --nerv-green, --nerv-green-rgb, --nerv-border-width
+///   --nerv-green, --nerv-green-rgb (data states — stable)
+///   --nerv-border-width
 
 $_hex-clip: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 $_hex-cell-width: 80px;

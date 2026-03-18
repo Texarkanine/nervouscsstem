@@ -1,0 +1,8 @@
+PASS
+task: nerv-phase6-states
+timestamp: 2026-03-17
+findings:
+  - severity: FIXED
+    description: "Stale doc comments in 6 modules still referenced pre-retrofit token names (--nerv-amber, --nerv-cyan, --nerv-green). Updated to --nerv-primary."
+  - severity: FIXED
+    description: "nerv.scss header comment missing 'states' in the module dependency chain. Added."

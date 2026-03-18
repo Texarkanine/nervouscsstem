@@ -10,15 +10,15 @@
 ///   .nerv-magi-output — consensus result box
 ///
 /// Custom properties (panel):
-///   --nerv-magi-color       (default: --nerv-amber)
-///   --nerv-magi-color-rgb   (default: --nerv-amber-rgb)
+///   --nerv-magi-color       (default: --nerv-primary)
+///   --nerv-magi-color-rgb   (default: --nerv-primary-rgb)
 ///
 /// Custom properties (system box):
 ///   --nerv-magi-system-color      (default: inherits --nerv-magi-color)
 ///   --nerv-magi-system-color-rgb  (default: inherits --nerv-magi-color-rgb)
 ///
 /// Tokens consumed:
-///   --nerv-amber, --nerv-amber-rgb (default panel color)
+///   --nerv-primary, --nerv-primary-rgb (default panel color, follows ambiance)
 ///   --nerv-border-width
 ///   --nerv-bg
 ///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
