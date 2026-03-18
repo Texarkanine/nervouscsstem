@@ -42,7 +42,7 @@
       gap: 2px;
     }
 
-    /* Zone A: top-left — MAGI panel (4 cols) */
+    /* Zone A: top-left — MAGI panel + vertical bar (4 cols) */
     .ref-zone-a {
       grid-column: 1 / 5;
       grid-row: 1;
@@ -52,6 +52,14 @@
       justify-content: center;
       padding: 1.5rem 1rem;
       gap: 0.5rem;
+    }
+
+    .ref-zone-a-body {
+      display: flex;
+      align-items: stretch;
+      gap: 0.8rem;
+      width: 100%;
+      max-width: 320px;
     }
 
     .ref-zone-a-header {
@@ -147,16 +155,17 @@
       <!-- ═══ Zone A: MAGI Panel ═══ -->
       <div class="ref-zone-a">
         <div class="ref-zone-a-header nerv-type-display">提訴決議</div>
-        <div class="nerv-magi-panel" style="width: 100%; max-width: 280px;">
-          <div class="nerv-magi-system">
+        <div class="ref-zone-a-body">
+        <div class="nerv-magi-panel" style="flex: 1;">
+          <div class="nerv-magi-system" style="--nerv-magi-system-color: var(--nerv-green); --nerv-magi-system-color-rgb: var(--nerv-green-rgb);">
             <strong>CASPER·3</strong><br>
             <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
           </div>
-          <div class="nerv-magi-system">
+          <div class="nerv-magi-system" style="--nerv-magi-system-color: var(--nerv-green); --nerv-magi-system-color-rgb: var(--nerv-green-rgb);">
             <strong>BALTHASAR·2</strong><br>
             <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
           </div>
-          <div class="nerv-magi-system">
+          <div class="nerv-magi-system" style="--nerv-magi-system-color: var(--nerv-red); --nerv-magi-system-color-rgb: var(--nerv-red-rgb);">
             <strong>MELCHIOR·1</strong><br>
             <span class="nerv-type-data" style="font-size: 0.65rem;">DENY</span>
           </div>
@@ -164,13 +173,15 @@
             <strong>MAGI</strong> — <span class="nerv-type-data" style="font-size: 0.7rem;">APPROVED (2:1)</span>
           </div>
         </div>
+        <div class="nerv-bar-meter nerv-bar-meter-vertical" data-bars="30" data-fill="60" style="height: 8rem; --nerv-bar-from: var(--nerv-cyan); --nerv-bar-to: var(--nerv-steel);"></div>
+        </div>
       </div>
 
       <!-- ═══ Zone B: Bar Meters ═══ -->
       <div class="ref-zone-b">
         <div class="ref-meter-row">
           <span class="ref-meter-label">Subject 00 — Mental Contamination</span>
-          <div class="nerv-bar-meter" data-fill="85" style="height: 1rem;">
+          <div class="nerv-bar-meter" data-fill="85" style="height: 1rem; --nerv-bar-from: var(--nerv-green); --nerv-bar-to: var(--nerv-red);">
             <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
             <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
             <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
@@ -198,58 +209,12 @@
 
         <div class="ref-meter-row">
           <span class="ref-meter-label">Subject 01 — Sync Rate</span>
-          <div class="nerv-bar-meter" data-fill="62" style="height: 1rem;">
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar" data-zone="CAUTION"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar" data-zone="DANGER"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div>
-          </div>
+          <div class="nerv-bar-meter" data-bars="40" data-fill="62" style="height: 1rem; --nerv-bar-from: var(--nerv-cyan); --nerv-bar-to: var(--nerv-blue);"></div>
         </div>
 
         <div class="ref-meter-row">
           <span class="ref-meter-label">Subject 02 — Ego Border Integrity</span>
-          <div class="nerv-bar-meter" data-fill="38" style="height: 1rem;">
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar" data-zone="CAUTION"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar" data-zone="DANGER"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div><div class="nerv-bar-meter-bar"></div>
-            <div class="nerv-bar-meter-bar"></div>
-          </div>
+          <div class="nerv-bar-meter" data-bars="40" data-fill="38" style="height: 1rem; --nerv-bar-from: var(--nerv-void); --nerv-bar-to: var(--nerv-amber);"></div>
         </div>
       </div>
 
@@ -261,10 +226,10 @@
         </div>
 
         <div class="nerv-label-box-group">
-          <div class="nerv-label-box"><span>STOP</span></div>
-          <div class="nerv-label-box"><span>SLOW</span></div>
-          <div class="nerv-label-box nerv-label-box-active"><span>NORMAL</span></div>
-          <div class="nerv-label-box"><span>RACING</span></div>
+          <button class="nerv-label-box"><span>STOP</span></button>
+          <button class="nerv-label-box"><span>SLOW</span></button>
+          <button class="nerv-label-box nerv-label-box-active"><span>NORMAL</span></button>
+          <button class="nerv-label-box"><span>RACING</span></button>
         </div>
       </div>
 

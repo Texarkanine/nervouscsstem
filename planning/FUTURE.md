@@ -39,3 +39,7 @@ This is a broader project than a single component — would touch tokens, utilit
 Vertical and/or green barberpole has opacity in-between green bands. Should not.
 
 Perhaps: barberpoles should have square borders with glow of a configurable color? Default to the main barberpole color?
+
+## Glitch Refinement:
+
+Insight: Glitch styling should NEVER smoothly translate; it shoudl JUMP between slides/positions. This makes it look broken instead of like a little moth around a flame.

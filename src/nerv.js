@@ -133,17 +133,36 @@
     initBarMeters: function initBarMeters(container) {
       if (typeof document === 'undefined') return;
       var scope = container || document;
-      var meters = scope.querySelectorAll('.nerv-bar-meter[data-fill]');
+      var meters = scope.querySelectorAll('.nerv-bar-meter');
       for (var i = 0; i < meters.length; i++) {
         var meter = meters[i];
-        var fill = parseFloat(meter.getAttribute('data-fill')) || 0;
+
+        var barCount = parseInt(meter.getAttribute('data-bars'), 10);
+        if (barCount > 0 && !meter.querySelector('.nerv-bar-meter-bar')) {
+          for (var b = 0; b < barCount; b++) {
+            var div = document.createElement('div');
+            div.className = 'nerv-bar-meter-bar';
+            meter.appendChild(div);
+          }
+        }
+
         var bars = meter.querySelectorAll('.nerv-bar-meter-bar');
-        var activeCount = Math.round((fill / 100) * bars.length);
-        for (var j = 0; j < bars.length; j++) {
-          if (j < activeCount) {
-            bars[j].classList.add('nerv-bar-active');
-          } else {
-            bars[j].classList.remove('nerv-bar-active');
+        var total = bars.length;
+
+        for (var j = 0; j < total; j++) {
+          var pct = total > 1 ? (j / (total - 1)) * 100 : 0;
+          bars[j].style.setProperty('--nerv-bar-pct', pct + '%');
+        }
+
+        var fill = parseFloat(meter.getAttribute('data-fill'));
+        if (!isNaN(fill)) {
+          var activeCount = Math.round((fill / 100) * total);
+          for (var k = 0; k < total; k++) {
+            if (k < activeCount) {
+              bars[k].classList.add('nerv-bar-active');
+            } else {
+              bars[k].classList.remove('nerv-bar-active');
+            }
           }
         }
       }
@@ -157,6 +176,22 @@
      * @param {HTMLElement} [container=document] - Scope for element lookup
      */
     initLabelBoxGroups: function initLabelBoxGroups(container) {
+      if (typeof document === 'undefined') return;
+      var scope = container || document;
+      var groups = scope.querySelectorAll('.nerv-label-box-group');
+      for (var i = 0; i < groups.length; i++) {
+        (function (group) {
+          group.addEventListener('click', function (e) {
+            var target = e.target.closest('.nerv-label-box');
+            if (!target || !group.contains(target)) return;
+            var boxes = group.querySelectorAll('.nerv-label-box');
+            for (var k = 0; k < boxes.length; k++) {
+              boxes[k].classList.remove('nerv-label-box-active');
+            }
+            target.classList.add('nerv-label-box-active');
+          });
+        })(groups[i]);
+      }
     },
 
     /**
@@ -166,6 +201,15 @@
      * @param {HTMLElement} [container=document] - Scope for element lookup
      */
     initMagiPanels: function initMagiPanels(container) {
+      if (typeof document === 'undefined') return;
+      var scope = container || document;
+      var panels = scope.querySelectorAll('.nerv-magi-panel');
+      for (var i = 0; i < panels.length; i++) {
+        var systems = panels[i].querySelectorAll('.nerv-magi-system');
+        if (systems.length > 0) {
+          panels[i].style.gridTemplateColumns = 'repeat(' + systems.length + ', 1fr)';
+        }
+      }
     },
 
     /**
