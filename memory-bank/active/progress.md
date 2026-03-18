@@ -11,3 +11,6 @@ Classified as Level 2 (Simple Enhancement). Self-contained change targeting `_ba
 
 ### Plan — Complete
 Designed 4 preset classes (thermal, energy, warning, field) based on NGE UI gradient patterns. Each sets `--nerv-bar-from`/`--nerv-bar-to` to curated token pairs. 6 tests (5 behaviors + 1 regression) in existing `test/components.test.mjs`. 2 files affected: `src/_bar-meter.scss`, `ref/ref-components.html`. No new dependencies.
+
+### Preflight — Complete (PASS)
+All checks passed. Convention compliance, dependency impact, conflict detection, and completeness all clean. Advisory: 3-stop gradient support (`--nerv-bar-mid`) deferred — `color-mix(in srgb)` naturally produces warm midtones for thermal preset.
