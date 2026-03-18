@@ -4,10 +4,10 @@
 M4: Add reticle tickmarks
 
 ## Phase
-COMPLEXITY-ANALYSIS - COMPLETE
+PLAN - COMPLETE
 
 ## What Was Done
-Classified as Level 2 (Simple Enhancement). New self-contained structural component — CSS-based measurement-ruler tickmarks along panel edges via utility classes and/or mixin. New SCSS partial, no cross-component dependencies.
+Designed reticle tickmark implementation using `repeating-linear-gradient` technique. 6 utility classes (base all-edges + 4 individual edges) plus auto-generated color variants. Custom properties for color, size, spacing, width. Contrast mode support. 9 test behaviors mapped to `test/panels.test.mjs`. 2 files affected (`src/_reticle.scss` new, `ref/ref-panels.html` updated), 1 file modified (`src/nerv.scss`).
 
 ## Next Step
-Load Level 2 workflow and begin planning.
+Proceed to preflight validation.
