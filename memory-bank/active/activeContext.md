@@ -4,10 +4,10 @@
 M2: Refine glitch effect
 
 ## Phase
-COMPLEXITY-ANALYSIS - COMPLETE
+PLAN - COMPLETE
 
 ## What Was Done
-Classified M2 as Level 2 (Simple Enhancement). Self-contained change to single file `_glitch.scss` — increase transform magnitudes and reduce keyframe density for sharper discontinuous jumps.
+Created implementation plan for M2. Analyzed current `_glitch.scss`: transform magnitudes too small (max 5px/4deg) and too many keyframe stops (5-6 intermediate), creating smooth-feeling micro-movements despite `steps()`. Plan: increase magnitudes to 8-15px/6-12deg, reduce to 3-4 intermediate stops, adjust step counts to match. Five new tests targeting magnitude and density; existing tests cover regression.
 
 ## Next Step
-Load Level 2 workflow and begin planning.
+Proceed to preflight validation.
