@@ -11,3 +11,6 @@ Classified as Level 2 (Simple Enhancement). Self-contained new component — uti
 
 ### Plan — Complete
 Designed `repeating-linear-gradient` approach for tick marks. 6 utility classes (`.nerv-reticle` all edges, 4 individual edge classes) + auto-generated color variants from `$nerv-colors`. Custom properties: `--nerv-reticle-color`, `--nerv-reticle-size`, `--nerv-reticle-spacing`, `--nerv-reticle-width`. `prefers-contrast: more` bumps width to 2px. 9 test behaviors in `test/panels.test.mjs`. 3 files touched: `src/_reticle.scss` (new), `src/nerv.scss` (add @forward), `ref/ref-panels.html` (demos).
+
+### Preflight — Complete (PASS)
+All checks passed. Convention compliance, dependency impact, conflict detection, and completeness all clean. Auto-shifts with alert state via `var(--nerv-primary)` — no explicit state overrides needed (advantage of gradient approach over SVG data URIs). Advisory: major/minor tick marks deferred for future enhancement.
