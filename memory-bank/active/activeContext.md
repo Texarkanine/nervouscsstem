@@ -1,13 +1,13 @@
 # Active Context
 
 ## Current Task
-M3: Add built-in gradient presets for bar meters
+M4: Add reticle tickmarks
 
 ## Phase
-REFLECT COMPLETE
+COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
-Reflection complete. Clean execution — plan accurate, build smooth, QA clean. Key insight: CSS custom property presets compose elegantly via cascade (same-specificity + later-source-order = clean override, no `!important` needed).
+Classified as Level 2 (Simple Enhancement). New self-contained structural component — CSS-based measurement-ruler tickmarks along panel edges via utility classes and/or mixin. New SCSS partial, no cross-component dependencies.
 
 ## Next Step
-Run /niko to continue to the next milestone.
+Load Level 2 workflow and begin planning.
