@@ -12,15 +12,6 @@ CSS-based tickmarks along rectangle/panel edges, creating measurement-ruler or t
 
 Fits naturally in the structural layer alongside panels and dividers.
 
-## Tiled Hex Grid
-
-A third hex grid layout variant where hexagons perfectly tile with no gaps (true honeycomb tessellation). Currently we have:
-
-- **Default (overlapping)**: Rows overlap via negative margin for tight honeycomb
-- **Spaced**: Non-overlapping, corner-touching with triangular gaps
-
-The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math.
-
 ## Rainbow Gradient System
 
 Multi-hue rainbow gradients as seen in the Evangelion operational console backgrounds — smooth hue sweeps across large regions. Reference imagery in `planning/selected-ref-images/hexagons-with-border-fill-and-noboder-merge.png` shows rainbow-tinted hex grid backgrounds transitioning through red/amber/green/cyan zones.
@@ -34,6 +25,8 @@ A full rainbow gradient system would provide:
 
 This is a broader project than a single component — would touch tokens, utilities, and multiple consumers.
 
+We did get rainbow gradients in ref/ref-components.html; so maybe this is done? Or we want to just make it EASIER to add rainbow gradients to things? Maybe there's no work here.
+
 ## Fix: CRT opacity on barberspole
 
 Vertical and/or green barberpole has opacity in-between green bands. Should not.
@@ -42,7 +35,7 @@ Perhaps: barberpoles should have square borders with glow of a configurable colo
 
 ## Glitch Refinement:
 
-Insight: Glitch styling should NEVER smoothly translate; it shoudl JUMP between slides/positions. This makes it look broken instead of like a little moth around a flame.
+Insight: Glitch styling should NEVER smoothly translate; it should JUMP between slides/positions. This makes it look broken instead of like a little moth around a flame.
 
 ## Web Forms
 
@@ -62,7 +55,18 @@ However, we want to support a few kinds of special table rows:
 
 - alternating triangles - tiled equilateral triangles, up and down, as table cells in a "triangle" row. Text is aligned to the base, alternating up or down depending on triangle direction. Height scales with row height.
 - hexagons - touching on edges. Need an offset A and B that will cause multiple rows of hexagon cells to align out-of-phase so that they can have triangles in-between, or in-phase so that they form nice vertical columns. Ideally, a table could specify what it wanted its hexagon rows to do - be the same offset, or alternate between two offsets.
-- trimmed alternating trapezoids with triangle fill - this is ridiculous: You start with a trapezoid, and alternate them upside down and rightside up like with the triangles. But, this is just "long triangles," so you clip the edges of each trapezoid's base to leave an empty triangle in-between, which you either style or let the table row / table BG show through. TODO: find a screenshot of this.
+- alternating stretchable triangles - like regular triangles, except, cells can expand based on their contents, and become trapezoids. The edge tiling remains.
+
+### Tiled Hex Grid
+
+A third hex grid layout variant where hexagons perfectly tile with no gaps (true honeycomb tessellation). Currently we have:
+
+- **Default (overlapping)**: Rows overlap via negative margin for tight honeycomb
+- **Spaced**: Non-overlapping, corner-touching with triangular gaps
+
+The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math.
+
+TO DECIDE: is this just the hexagon table type?
 
 ## Radar pulse
 
