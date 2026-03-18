@@ -4,10 +4,10 @@
 M4: Add reticle tickmarks
 
 ## Phase
-QA - COMPLETE (PASS)
+REFLECT COMPLETE
 
 ## What Was Done
-Semantic review passed. One trivial fix applied: `nerv.scss` header comment updated to include `reticle` in the dependency chain. KISS/DRY/YAGNI/Completeness/Regression/Integrity/Documentation all clean. 196 tests pass, lint and build clean.
+Reflection complete. Clean execution — plan accurate, build smooth, QA clean (one trivial comment fix). Key insight: CSS gradients with `var()` auto-follow the alert cascade, making them superior to SVG data URIs for components that need alert-state responsiveness.
 
 ## Next Step
-Proceed to reflect phase.
+Run /niko to continue to the next milestone.

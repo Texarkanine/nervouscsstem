@@ -20,3 +20,6 @@ Implemented `_reticle.scss` with 6 utility classes (`.nerv-reticle` all-edges, 4
 
 ### QA — Complete (PASS)
 Semantic review passed. KISS/DRY/YAGNI/Completeness/Regression/Integrity/Documentation all clean. One trivial fix: updated `nerv.scss` header comment to include `reticle` in the dependency chain. Re-verified: 196 tests pass, lint and build clean.
+
+### Reflect — Complete
+Clean execution. Key insight: `repeating-linear-gradient` with `var()` is superior to SVG data URIs for alert-cascade-responsive components — avoids per-state SCSS mixin overrides in `_states.scss`.
