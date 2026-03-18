@@ -8,3 +8,4 @@ Implement the alert state cascade system: five escalation states (Nominal → Ac
 
 - **Complexity Analysis** — COMPLETE. Classified as L3 (Intermediate Feature). Ephemeral files created.
 - **Plan** — COMPLETE. Full component analysis (10 modules to retrofit, including grid marks + divider variant generation per operator feedback), 37-behavior test plan, 10-step implementation plan. No open questions. No creative phase needed.
+- **Preflight** — PASS with ADVISORY. Corrected cumulative state selector pattern. Advisory: consider `state-at-least()` mixin.

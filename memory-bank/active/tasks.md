@@ -138,11 +138,11 @@ Design decisions made during planning:
 9. Alert: `--nerv-primary` → red, `--nerv-animation-speed: 2`
 10. Critical: `--nerv-primary` → red, `--nerv-bg` → red-deep, `--nerv-animation-speed: 3`
 
-**State-specific selectors:**
-11. `.nerv-state-active .nerv-type-data` triggers flicker
-12. `.nerv-state-alert .nerv-status-text` blinks
-13. `.nerv-state-critical .nerv-status-text` gets glitch
-14. Alert/Critical vignette red edge bleed selector exists
+**State-specific selectors (cumulative — "Active+" means active/caution/alert/critical):**
+11. Active+ `.nerv-type-data` triggers flicker (all states at or above Active)
+12. Alert+ `.nerv-status-text` blinks (Alert and Critical)
+13. Critical `.nerv-status-text` gets glitch (Critical only)
+14. Alert+ vignette red edge bleed selector exists (Alert and Critical)
 
 **Accessibility:**
 15. `prefers-reduced-motion` inside state classes suppresses animations
@@ -229,7 +229,7 @@ Design decisions made during planning:
 ### Step 6: Implement `_states.scss`
 
 - Files: `src/_states.scss`, `src/nerv.scss`
-- Changes: Define five `.nerv-state-*` classes with token overrides. Add state-specific compound selectors. Add state-specific grid marks color overrides via `@use 'grid-marks'` + mixin calls. Add `prefers-reduced-motion` media queries. Add `@forward 'states'` to `nerv.scss` as last entry.
+- Changes: Define five `.nerv-state-*` classes with token overrides. Add state-specific compound selectors using **cumulative selector lists** per the "Active+" notation (e.g., Active+ effects use `.nerv-state-active, .nerv-state-caution, .nerv-state-alert, .nerv-state-critical` selector lists). Add state-specific grid marks color overrides via `@use 'grid-marks'` + mixin calls. Add `prefers-reduced-motion` media queries. Add `@forward 'states'` to `nerv.scss` as last entry. Override `--nerv-glow-spread` and `--nerv-scanline-opacity` with escalating values per state (concrete values determined during implementation).
 - Run tests: state class tests pass.
 
 ### Step 7: Implement JS API tests
@@ -272,6 +272,6 @@ No new technology — validation not required. All implementation uses existing 
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight — PASS with ADVISORY
 - [ ] Build
 - [ ] QA
