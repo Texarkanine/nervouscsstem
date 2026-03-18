@@ -26,8 +26,8 @@
 @use 'glow';
 
 .nerv-magi-panel {
-  --nerv-magi-color: var(--nerv-amber);
-  --nerv-magi-color-rgb: var(--nerv-amber-rgb);
+  --nerv-magi-color: var(--nerv-primary);
+  --nerv-magi-color-rgb: var(--nerv-primary-rgb);
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);

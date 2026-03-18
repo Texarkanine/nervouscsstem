@@ -42,13 +42,13 @@
   }
 }
 
-// Default aliases — amber is the system primary glow color
+// Default aliases — follow the ambiance meta-token
 .nerv-glow {
-  @include nerv-glow(--nerv-amber, --nerv-amber-rgb);
+  @include nerv-glow(--nerv-primary, --nerv-primary-rgb);
 }
 
 .nerv-glow-text {
-  @include nerv-glow-text(--nerv-amber, --nerv-amber-rgb);
+  @include nerv-glow-text(--nerv-primary, --nerv-primary-rgb);
 }
 
 /// drop-shadow utility for non-rectangular elements (hex cells, clipped panels).

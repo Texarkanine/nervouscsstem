@@ -24,7 +24,7 @@
 @use 'tokens';
 
 .nerv-stripe {
-  --nerv-stripe-color-rgb: var(--nerv-green-rgb);
+  --nerv-stripe-color-rgb: var(--nerv-primary-rgb);
   background-image: repeating-linear-gradient(
     -45deg,
     rgba(var(--nerv-stripe-color-rgb), 0.15) 0,
@@ -37,7 +37,7 @@
 }
 
 .nerv-stripe-vertical {
-  --nerv-stripe-color-rgb: var(--nerv-green-rgb);
+  --nerv-stripe-color-rgb: var(--nerv-primary-rgb);
   background-image: repeating-linear-gradient(
     45deg,
     rgba(var(--nerv-stripe-color-rgb), 0.15) 0,

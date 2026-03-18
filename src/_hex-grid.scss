@@ -77,7 +77,7 @@ $_hex-row-overlap: 15px;
     inset: 0;
     z-index: -2;
     clip-path: $_hex-clip;
-    background: rgba(var(--nerv-green-rgb), 0.5);
+    background: rgba(var(--nerv-primary-rgb), 0.5);
   }
 
   &::after {
@@ -142,8 +142,8 @@ $_hex-row-overlap: 15px;
 .nerv-hex-grid-filled .nerv-hex-cell::after {
   background-image:
     linear-gradient(
-      rgba(var(--nerv-green-rgb), 0.15),
-      rgba(var(--nerv-green-rgb), 0.15)
+      rgba(var(--nerv-primary-rgb), 0.15),
+      rgba(var(--nerv-primary-rgb), 0.15)
     );
 }
 

@@ -1,0 +1,22 @@
+/// _states.scss — Alert state cascade system.
+///
+/// Five escalation states (Nominal → Active → Caution → Alert → Critical)
+/// controlled by a single root class change. Each state overrides ambiance
+/// tokens (--nerv-primary, --nerv-bg, --nerv-animation-speed, etc.) so the
+/// entire design system shifts appearance simultaneously.
+///
+/// State-specific compound selectors add progressive visual effects:
+///   Active+:  data elements flicker
+///   Caution+: intensified glow and scanline opacity
+///   Alert+:   red edge bleed vignette, status text blinks
+///   Critical: full glitch on text, screen flash, max-speed stripes
+///
+/// Classes:
+///   .nerv-state-nominal   — calm green baseline
+///   .nerv-state-active    — amber operational
+///   .nerv-state-caution   — amber-dark heightened
+///   .nerv-state-alert     — red warning
+///   .nerv-state-critical  — red emergency with bg shift
+///
+/// This module must be @forward'ed last in nerv.scss so its selectors
+/// cascade after all token definitions.

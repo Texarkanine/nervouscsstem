@@ -48,7 +48,7 @@
   background: linear-gradient(
     0deg,
     transparent 0%,
-    rgba(var(--nerv-amber-rgb), 0.03) 50%,
+    rgba(var(--nerv-primary-rgb), 0.03) 50%,
     transparent 100%
   );
   animation: nerv-scanline-band calc(5s / var(--nerv-animation-speed)) linear infinite;

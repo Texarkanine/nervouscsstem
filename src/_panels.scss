@@ -19,8 +19,8 @@
 
 /// Shared panel base properties. All panel variants include this.
 @mixin nerv-panel-base {
-  --nerv-panel-color: var(--nerv-amber);
-  --nerv-panel-color-rgb: var(--nerv-amber-rgb);
+  --nerv-panel-color: var(--nerv-primary);
+  --nerv-panel-color-rgb: var(--nerv-primary-rgb);
 
   position: relative;
   border: var(--nerv-border-width) solid var(--nerv-panel-color);
@@ -61,8 +61,8 @@
 }
 
 .nerv-panel-inset {
-  --nerv-panel-color: var(--nerv-amber);
-  --nerv-panel-color-rgb: var(--nerv-amber-rgb);
+  --nerv-panel-color: var(--nerv-primary);
+  --nerv-panel-color-rgb: var(--nerv-primary-rgb);
 
   position: relative;
   border: var(--nerv-border-width) solid var(--nerv-panel-color);
