@@ -21,18 +21,23 @@ const js = readFileSync(resolve(ROOT, 'src/nerv.js'), 'utf-8');
 
 describe('State class existence', () => {
   it('1. .nerv-state-nominal selector exists in compiled CSS', () => {
+    assert.match(css, /\.nerv-state-nominal\b/, 'missing .nerv-state-nominal selector');
   });
 
   it('2. .nerv-state-active selector exists', () => {
+    assert.match(css, /\.nerv-state-active\b/, 'missing .nerv-state-active selector');
   });
 
   it('3. .nerv-state-caution selector exists', () => {
+    assert.match(css, /\.nerv-state-caution\b/, 'missing .nerv-state-caution selector');
   });
 
   it('4. .nerv-state-alert selector exists', () => {
+    assert.match(css, /\.nerv-state-alert\b/, 'missing .nerv-state-alert selector');
   });
 
   it('5. .nerv-state-critical selector exists', () => {
+    assert.match(css, /\.nerv-state-critical\b/, 'missing .nerv-state-critical selector');
   });
 });
 
@@ -40,18 +45,45 @@ describe('State class existence', () => {
 
 describe('State token overrides', () => {
   it('6. Nominal: --nerv-primary → green, --nerv-animation-speed: 1', () => {
+    const idx = css.indexOf('.nerv-state-nominal');
+    assert.ok(idx !== -1, '.nerv-state-nominal not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-green'), 'Nominal should set --nerv-primary to green');
+    assert.match(block, /--nerv-animation-speed\s*:\s*1\b/, 'Nominal should set --nerv-animation-speed: 1');
   });
 
   it('7. Active: --nerv-primary → amber, --nerv-animation-speed: 1', () => {
+    const idx = css.indexOf('.nerv-state-active');
+    assert.ok(idx !== -1, '.nerv-state-active not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-amber'), 'Active should set --nerv-primary to amber');
+    assert.match(block, /--nerv-animation-speed\s*:\s*1\b/, 'Active should set --nerv-animation-speed: 1');
   });
 
   it('8. Caution: --nerv-primary → amber-dark, --nerv-animation-speed: 1.5', () => {
+    const idx = css.indexOf('.nerv-state-caution');
+    assert.ok(idx !== -1, '.nerv-state-caution not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-amber-dark'), 'Caution should set --nerv-primary to amber-dark');
+    assert.match(block, /--nerv-animation-speed\s*:\s*1\.5\b/, 'Caution should set --nerv-animation-speed: 1.5');
   });
 
   it('9. Alert: --nerv-primary → red, --nerv-animation-speed: 2', () => {
+    const idx = css.indexOf('.nerv-state-alert');
+    assert.ok(idx !== -1, '.nerv-state-alert not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-red'), 'Alert should set --nerv-primary to red');
+    assert.match(block, /--nerv-animation-speed\s*:\s*2\b/, 'Alert should set --nerv-animation-speed: 2');
   });
 
   it('10. Critical: --nerv-primary → red, --nerv-bg → red-deep, --nerv-animation-speed: 3', () => {
+    const idx = css.indexOf('.nerv-state-critical');
+    assert.ok(idx !== -1, '.nerv-state-critical not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-red'), 'Critical should set --nerv-primary to red');
+    assert.ok(block.includes('--nerv-bg'), 'Critical should set --nerv-bg');
+    assert.ok(block.includes('--nerv-red-deep') || block.includes('red-deep'), 'Critical --nerv-bg should reference red-deep');
+    assert.match(block, /--nerv-animation-speed\s*:\s*3\b/, 'Critical should set --nerv-animation-speed: 3');
   });
 });
 
@@ -59,15 +91,30 @@ describe('State token overrides', () => {
 
 describe('State-specific compound selectors', () => {
   it('11. Active+ .nerv-type-data triggers flicker', () => {
+    assert.match(css, /\.nerv-state-active\s+\.nerv-type-data/, 'Active state should target .nerv-type-data');
+    assert.match(css, /\.nerv-state-caution\s+\.nerv-type-data/, 'Caution state should also target .nerv-type-data (cumulative)');
+    assert.match(css, /\.nerv-state-alert\s+\.nerv-type-data/, 'Alert state should also target .nerv-type-data (cumulative)');
+    assert.match(css, /\.nerv-state-critical\s+\.nerv-type-data/, 'Critical state should also target .nerv-type-data (cumulative)');
+    const activeDataIdx = css.indexOf('.nerv-state-active .nerv-type-data');
+    const section = css.slice(activeDataIdx, activeDataIdx + 400);
+    assert.ok(section.includes('nerv-flicker') || section.includes('animation'), 'Active+ .nerv-type-data should trigger flicker animation');
   });
 
   it('12. Alert+ .nerv-status-text blinks', () => {
+    assert.match(css, /\.nerv-state-alert\s+\.nerv-status-text/, 'Alert state should target .nerv-status-text');
+    assert.match(css, /\.nerv-state-critical\s+\.nerv-status-text/, 'Critical state should also target .nerv-status-text (cumulative)');
+    const alertTextIdx = css.indexOf('.nerv-state-alert .nerv-status-text');
+    const section = css.slice(alertTextIdx, alertTextIdx + 400);
+    assert.ok(section.includes('nerv-blink') || section.includes('animation'), 'Alert+ .nerv-status-text should trigger blink animation');
   });
 
   it('13. Critical .nerv-status-text gets glitch', () => {
+    assert.match(css, /\.nerv-state-critical\s+\.nerv-status-text/, 'Critical state should target .nerv-status-text');
   });
 
   it('14. Alert+ vignette red edge bleed selector exists', () => {
+    assert.match(css, /\.nerv-state-alert\s+\.nerv-scanlines/, 'Alert state should target .nerv-scanlines for edge bleed');
+    assert.match(css, /\.nerv-state-critical\s+\.nerv-scanlines/, 'Critical state should also target .nerv-scanlines (cumulative)');
   });
 });
 
@@ -75,6 +122,19 @@ describe('State-specific compound selectors', () => {
 
 describe('State accessibility', () => {
   it('15. prefers-reduced-motion inside state classes suppresses animations', () => {
+    const statesStart = css.indexOf('.nerv-state-');
+    assert.ok(statesStart !== -1, 'no state selectors found');
+    const statesSection = css.slice(statesStart);
+    assert.ok(
+      statesSection.includes('prefers-reduced-motion'),
+      'states section should include prefers-reduced-motion media query'
+    );
+    const rmIdx = statesSection.indexOf('prefers-reduced-motion');
+    const rmBlock = statesSection.slice(rmIdx, rmIdx + 500);
+    assert.ok(
+      rmBlock.includes('animation') && (rmBlock.includes('none') || rmBlock.includes('0s')),
+      'prefers-reduced-motion in states should suppress animations'
+    );
   });
 });
 
@@ -205,12 +265,27 @@ describe('NERV.setState JS API', () => {
 
 describe('State-specific grid marks via mixin', () => {
   it('31. .nerv-state-nominal .nerv-grid-marks gets green grid marks SVG', () => {
+    assert.match(css, /\.nerv-state-nominal\s+\.nerv-grid-marks/, '.nerv-state-nominal should target .nerv-grid-marks');
+    const idx = css.indexOf('.nerv-state-nominal .nerv-grid-marks');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('data:image/svg+xml'), 'should contain SVG data URI');
+    assert.ok(block.includes('80, 255, 80') || block.includes('80,%20255,%2080'), 'Nominal grid marks should use green RGB');
   });
 
   it('32. .nerv-state-alert .nerv-grid-marks gets red grid marks SVG', () => {
+    assert.match(css, /\.nerv-state-alert\s+\.nerv-grid-marks/, '.nerv-state-alert should target .nerv-grid-marks');
+    const idx = css.indexOf('.nerv-state-alert .nerv-grid-marks');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('data:image/svg+xml'), 'should contain SVG data URI');
+    assert.ok(block.includes('255, 34, 51') || block.includes('255,%2034,%2051'), 'Alert grid marks should use red RGB');
   });
 
   it('33. .nerv-state-critical .nerv-grid-marks gets red grid marks SVG', () => {
+    assert.match(css, /\.nerv-state-critical\s+\.nerv-grid-marks/, '.nerv-state-critical should target .nerv-grid-marks');
+    const idx = css.indexOf('.nerv-state-critical .nerv-grid-marks');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('data:image/svg+xml'), 'should contain SVG data URI');
+    assert.ok(block.includes('255, 34, 51') || block.includes('255,%2034,%2051'), 'Critical grid marks should use red RGB');
   });
 });
 

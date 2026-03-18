@@ -20,3 +20,166 @@
 ///
 /// This module must be @forward'ed last in nerv.scss so its selectors
 /// cascade after all token definitions.
+
+@use 'sass:list';
+@use 'sass:map';
+@use 'grid-marks';
+@use 'tokens';
+
+// === State hierarchy — single source of truth for ordering ===
+
+$_state-order: ('nominal', 'active', 'caution', 'alert', 'critical');
+
+/// Generates cumulative selector lists from the state hierarchy.
+/// "Active+" means: active, caution, alert, critical.
+/// The hierarchy list determines ordering.
+@mixin at-state($min-state) {
+  $idx: list.index($_state-order, $min-state);
+  $selectors: ();
+  @for $i from $idx through list.length($_state-order) {
+    $state: list.nth($_state-order, $i);
+    $selectors: list.append($selectors, '.nerv-state-#{$state} &', comma);
+  }
+  #{$selectors} {
+    @content;
+  }
+}
+
+// === State token overrides ===
+
+.nerv-state-nominal {
+  --nerv-primary: var(--nerv-green);
+  --nerv-primary-rgb: var(--nerv-green-rgb);
+  --nerv-bg: var(--nerv-void);
+  --nerv-bg-rgb: var(--nerv-void-rgb);
+  --nerv-animation-speed: 1;
+  --nerv-glow-spread: 8px;
+  --nerv-scanline-opacity: 0.08;
+}
+
+.nerv-state-active {
+  --nerv-primary: var(--nerv-amber);
+  --nerv-primary-rgb: var(--nerv-amber-rgb);
+  --nerv-bg: var(--nerv-void);
+  --nerv-bg-rgb: var(--nerv-void-rgb);
+  --nerv-animation-speed: 1;
+  --nerv-glow-spread: 10px;
+  --nerv-scanline-opacity: 0.1;
+}
+
+.nerv-state-caution {
+  --nerv-primary: var(--nerv-amber-dark);
+  --nerv-primary-rgb: var(--nerv-amber-dark-rgb);
+  --nerv-bg: var(--nerv-void);
+  --nerv-bg-rgb: var(--nerv-void-rgb);
+  --nerv-animation-speed: 1.5;
+  --nerv-glow-spread: 14px;
+  --nerv-scanline-opacity: 0.12;
+}
+
+.nerv-state-alert {
+  --nerv-primary: var(--nerv-red);
+  --nerv-primary-rgb: var(--nerv-red-rgb);
+  --nerv-bg: var(--nerv-void);
+  --nerv-bg-rgb: var(--nerv-void-rgb);
+  --nerv-animation-speed: 2;
+  --nerv-glow-spread: 18px;
+  --nerv-scanline-opacity: 0.16;
+}
+
+.nerv-state-critical {
+  --nerv-primary: var(--nerv-red);
+  --nerv-primary-rgb: var(--nerv-red-rgb);
+  --nerv-bg: var(--nerv-red-deep);
+  --nerv-bg-rgb: var(--nerv-red-deep-rgb);
+  --nerv-animation-speed: 3;
+  --nerv-glow-spread: 24px;
+  --nerv-scanline-opacity: 0.2;
+}
+
+// === State-specific compound selectors ===
+
+// Active+: data elements flicker
+.nerv-type-data {
+  @include at-state('active') {
+    animation: nerv-flicker calc(var(--nerv-flicker-duration) / var(--nerv-animation-speed)) steps(2) infinite;
+  }
+}
+
+// Alert+: status text blinks
+.nerv-status-text {
+  @include at-state('alert') {
+    animation: nerv-blink calc(0.6s / var(--nerv-animation-speed)) steps(2) infinite;
+  }
+}
+
+// Critical only: status text gets glitch effect
+.nerv-state-critical .nerv-status-text {
+  animation: nerv-glitch calc(var(--nerv-glitch-duration) / var(--nerv-animation-speed)) steps(4) infinite;
+}
+
+// Alert+: vignette red edge bleed
+.nerv-scanlines {
+  @include at-state('alert') {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, var(--nerv-scanline-opacity)) 1px,
+        rgba(0, 0, 0, var(--nerv-scanline-opacity)) 2px
+      ),
+      radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(var(--nerv-red-rgb), 0.15) 100%
+      );
+  }
+}
+
+// === State-specific grid marks (SVG data URI per state via mixin) ===
+
+$_green-rgb: list.nth(map.get(tokens.$nerv-colors, 'green'), 2);
+$_amber-rgb: list.nth(map.get(tokens.$nerv-colors, 'amber'), 2);
+$_amber-dark-rgb: list.nth(map.get(tokens.$nerv-colors, 'amber-dark'), 2);
+$_red-rgb: list.nth(map.get(tokens.$nerv-colors, 'red'), 2);
+
+.nerv-state-nominal .nerv-grid-marks {
+  @include grid-marks.nerv-grid-marks-bg($_green-rgb);
+}
+
+.nerv-state-active .nerv-grid-marks {
+  @include grid-marks.nerv-grid-marks-bg($_amber-rgb);
+}
+
+.nerv-state-caution .nerv-grid-marks {
+  @include grid-marks.nerv-grid-marks-bg($_amber-dark-rgb);
+}
+
+.nerv-state-alert .nerv-grid-marks {
+  @include grid-marks.nerv-grid-marks-bg($_red-rgb);
+}
+
+.nerv-state-critical .nerv-grid-marks {
+  @include grid-marks.nerv-grid-marks-bg($_red-rgb);
+}
+
+// === Accessibility ===
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-type-data {
+    @include at-state('active') {
+      animation: none;
+    }
+  }
+
+  .nerv-status-text {
+    @include at-state('alert') {
+      animation: none;
+    }
+  }
+
+  .nerv-state-critical .nerv-status-text {
+    animation: none;
+  }
+}
