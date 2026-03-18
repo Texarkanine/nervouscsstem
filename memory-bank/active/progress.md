@@ -8,3 +8,6 @@ Add built-in gradient presets for bar meters. Review NGE UIs for common color pa
 
 ### Complexity Analysis — Complete
 Classified as Level 2 (Simple Enhancement). Self-contained change targeting `_bar-meter.scss` with new utility classes. Design research required for color pairings, but implementation is contained to single component.
+
+### Plan — Complete
+Designed 4 preset classes (thermal, energy, warning, field) based on NGE UI gradient patterns. Each sets `--nerv-bar-from`/`--nerv-bar-to` to curated token pairs. 6 tests (5 behaviors + 1 regression) in existing `test/components.test.mjs`. 2 files affected: `src/_bar-meter.scss`, `ref/ref-components.html`. No new dependencies.
