@@ -1,19 +1,13 @@
 # Active Context
 
 ## Current Task
-NERV Design System — Future Features Buildout
+M1: Fix barberpole stripe opacity
 
 ## Phase
-PREFLIGHT - COMPLETE
+BUILD - READY
 
 ## What Was Done
-Preflight validated the 8-milestone L4 plan. All checks passed:
-- Convention compliance confirmed (`.nerv-` prefix, `_name.scss` partials, `@forward` pattern)
-- No conflicts with existing code (no form/list/table styles exist)
-- All 9 FUTURE.md items covered
-- All milestones independently deliverable
-
-Three advisory items noted: reference page strategy, potential geometric primitive sharing, and radar pulse JS boundary.
+Complexity analysis classified M1 as Level 1 (Quick Bug Fix). Single component fix targeting `_stripe-bar.scss` — make bands fully opaque and add configurable glow border.
 
 ## Next Step
-Operator review of the milestone plan. When approved, run `/niko` to begin the first milestone sub-run.
+Execute Level 1 Build phase — investigate the bug, write tests, implement fix.

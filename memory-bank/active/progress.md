@@ -2,7 +2,7 @@
 
 Implement all planned features and enhancements from `planning/FUTURE.md`: reticle tickmarks, rainbow gradient system, barberpole fix, glitch refinement, web forms, lists, tables (with triangle/hex row types), tiled hex grid, and radar pulse.
 
-**Complexity:** Level 4
+**Complexity:** Level 1
 
 ## Phase History
 
@@ -14,3 +14,6 @@ Generated 8 milestones: 2× L1, 5× L2, 1× L3. All independent (no cross-depend
 
 ### L4 Preflight — Complete (PASS)
 All checks passed. No conflicts, full coverage, convention compliance confirmed. Three advisory items noted for sub-run consideration (reference page strategy, geometric primitive sharing, radar pulse JS boundary).
+
+### M1 Complexity Analysis — Complete
+Classified M1 (Fix barberpole stripe opacity) as Level 1 (Quick Bug Fix). Single component bug fix targeting `_stripe-bar.scss` — make bands fully opaque and add configurable glow border.
