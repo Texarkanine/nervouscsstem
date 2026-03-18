@@ -4,10 +4,10 @@
 M1: Fix barberpole stripe opacity
 
 ## Phase
-BUILD - READY
+BUILD - COMPLETE
 
 ## What Was Done
-Complexity analysis classified M1 as Level 1 (Quick Bug Fix). Single component fix targeting `_stripe-bar.scss` — make bands fully opaque and add configurable glow border.
+Fixed barberpole stripe opacity bug: both bands now fully opaque (dark bands use --nerv-bg-rgb, bright bands use --nerv-stripe-color-rgb, both at alpha 1). Added configurable glow border via --nerv-stripe-glow-spread custom property (default 0px). All 179 tests pass, lint clean.
 
 ## Next Step
-Execute Level 1 Build phase — investigate the bug, write tests, implement fix.
+Proceed to QA phase.

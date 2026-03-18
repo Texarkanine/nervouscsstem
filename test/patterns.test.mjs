@@ -93,12 +93,59 @@ describe('Stripe bar CSS', () => {
     const blockEnd = css.indexOf('}', stripeIdx);
     const block = css.slice(stripeIdx, blockEnd);
     assert.ok(
-      /0\.\d+\)\s*0,/.test(block),
+      /\)\s*0[,\s]/.test(block),
       'first band should start at explicit position 0 (hard stop)'
     );
     assert.ok(
-      /--nerv-stripe-width\),\s*rgba\(var\(--nerv-stripe-color-rgb\),\s*0\.\d+\)\s*var\(--nerv-stripe-width\)/.test(block),
+      /--nerv-stripe-width\)[\s,]+\w*\(/.test(block),
       'adjacent bands share the same stop position (hard stop boundary, no gradient gap)'
+    );
+  });
+
+  it('.nerv-stripe bands are fully opaque (no fractional alpha)', () => {
+    const stripeIdx = css.indexOf('.nerv-stripe {');
+    const blockEnd = css.indexOf('}', stripeIdx);
+    const block = css.slice(stripeIdx, blockEnd);
+    const gradientMatch = block.match(/repeating-linear-gradient\([\s\S]*?\)\s*;/);
+    assert.ok(gradientMatch, 'should have repeating-linear-gradient in .nerv-stripe');
+    const gradient = gradientMatch[0];
+    const alphaMatches = [...gradient.matchAll(/rgba\(var\([^)]+\),\s*([\d.]+)\)/g)];
+    assert.ok(alphaMatches.length > 0, 'gradient should contain rgba() band definitions');
+    for (const m of alphaMatches) {
+      assert.ok(
+        parseFloat(m[1]) === 1,
+        `stripe gradient band has fractional alpha ${m[1]} — expected 1 (fully opaque)`
+      );
+    }
+  });
+
+  it('.nerv-stripe dark bands use --nerv-bg-rgb for solid background', () => {
+    const stripeIdx = css.indexOf('.nerv-stripe {');
+    const blockEnd = css.indexOf('}', stripeIdx);
+    const block = css.slice(stripeIdx, blockEnd);
+    assert.ok(
+      block.includes('--nerv-bg-rgb'),
+      '.nerv-stripe dark bands should reference --nerv-bg-rgb for opaque background'
+    );
+  });
+
+  it('.nerv-stripe has --nerv-stripe-glow-spread custom property for configurable glow border', () => {
+    const stripeIdx = css.indexOf('.nerv-stripe {');
+    const blockEnd = css.indexOf('}', stripeIdx);
+    const block = css.slice(stripeIdx, blockEnd);
+    assert.ok(
+      block.includes('--nerv-stripe-glow-spread'),
+      '.nerv-stripe should define --nerv-stripe-glow-spread custom property'
+    );
+  });
+
+  it('.nerv-stripe has box-shadow for glow border', () => {
+    const stripeIdx = css.indexOf('.nerv-stripe {');
+    const blockEnd = css.indexOf('}', stripeIdx);
+    const block = css.slice(stripeIdx, blockEnd);
+    assert.ok(
+      block.includes('box-shadow'),
+      '.nerv-stripe should have box-shadow for configurable glow border'
     );
   });
 
