@@ -17,3 +17,9 @@ All checks passed. No conflicts, full coverage, convention compliance confirmed.
 
 ### M1 Complexity Analysis — Complete
 Classified M1 (Fix barberpole stripe opacity) as Level 1 (Quick Bug Fix). Single component bug fix targeting `_stripe-bar.scss` — make bands fully opaque and add configurable glow border.
+
+### M1 Build — Complete
+Fixed both band opacities to alpha 1: dark bands now use `--nerv-bg-rgb`, bright bands use `--nerv-stripe-color-rgb`. Added `--nerv-stripe-glow-spread` custom property (default: 0px) with two-layer box-shadow glow. All 179 tests pass, lint clean.
+
+### M1 QA — Complete (PASS)
+Semantic review passed. KISS/DRY/YAGNI/Completeness/Regression/Integrity/Documentation all clean. No issues found.
