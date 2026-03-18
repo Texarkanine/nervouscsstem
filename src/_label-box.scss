@@ -1,22 +1,24 @@
 /// _label-box.scss — Skewed parallelogram mode-indicator buttons.
 ///
-/// Parallelogram shape via skewX(-15deg) with counter-skew on inner text.
-/// Active state fills background and inverts text color. Button reset
-/// (appearance: none) enables native <button> element usage.
+/// Parallelogram shape via CSS custom property --nerv-label-box-skew
+/// with auto counter-skew on inner children. Button reset (appearance: none)
+/// enables native <button> element usage.
 ///
-/// Interactive states:
-///   :hover        — subtle background tint + glow (hover-capable devices only)
-///   :active       — stronger fill + inset shadow for "pressed" feel
-///   :focus-visible — visible focus ring via box-shadow offset
+/// Interactive states (intensity: hover > active-hover > press > active > base):
+///   :hover         — visible tint + full glow bloom (hover-capable devices)
+///   :active        — scale squeeze + inset glow burst (momentary)
+///   :focus-visible — focus ring via box-shadow offset
 ///
 /// Classes:
-///   .nerv-label-box        — individual skewed button
-///   .nerv-label-box-active — active/selected state
-///   .nerv-label-box-group  — row container for a set of label boxes
+///   .nerv-label-box         — individual skewed button (default: skew left)
+///   .nerv-label-box-reverse — opposite skew direction
+///   .nerv-label-box-active  — active/selected state
+///   .nerv-label-box-group   — row container for a set of label boxes
 ///
 /// Custom properties:
 ///   --nerv-label-box-color     (default: --nerv-primary)
 ///   --nerv-label-box-color-rgb (default: --nerv-primary-rgb)
+///   --nerv-label-box-skew      (default: -15deg)
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb
@@ -27,10 +29,11 @@
 .nerv-label-box {
   --nerv-label-box-color: var(--nerv-primary);
   --nerv-label-box-color-rgb: var(--nerv-primary-rgb);
+  --nerv-label-box-skew: -15deg;
 
   appearance: none;
   display: inline-block;
-  transform: skewX(-15deg);
+  transform: skewX(var(--nerv-label-box-skew));
   border: var(--nerv-border-width) solid var(--nerv-label-box-color);
   background: transparent;
   padding: 0.3em 1em;
@@ -42,12 +45,16 @@
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s, text-shadow 0.15s, transform 0.05s;
 
   > * {
     display: inline-block;
-    transform: skewX(15deg);
+    transform: skewX(calc(var(--nerv-label-box-skew) * -1));
   }
+}
+
+.nerv-label-box-reverse {
+  --nerv-label-box-skew: 15deg;
 }
 
 .nerv-label-box:focus-visible {
@@ -58,25 +65,44 @@
     0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.45);
 }
 
-.nerv-label-box:active {
-  background: rgba(var(--nerv-label-box-color-rgb), 0.15);
-  box-shadow:
-    inset 0 1px 3px rgba(0, 0, 0, 0.3),
-    0 0 calc(var(--nerv-glow-spread) * 0.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.2);
-}
-
 @media (hover: hover) {
   .nerv-label-box:hover {
-    background: rgba(var(--nerv-label-box-color-rgb), 0.08);
+    background: rgba(var(--nerv-label-box-color-rgb), 0.12);
     box-shadow:
-      0 0 calc(var(--nerv-glow-spread) * 0.7 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.25);
+      0 0 calc(var(--nerv-glow-spread) * 1.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.45),
+      0 0 calc(var(--nerv-glow-spread) * 3.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.2);
   }
 
   .nerv-label-box-active:hover {
+    background: var(--nerv-label-box-color);
+    color: var(--nerv-bg);
     box-shadow:
-      0 0 calc(var(--nerv-glow-spread) * 1.3 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.45),
-      0 0 calc(var(--nerv-glow-spread) * 3 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.22);
+      0 0 2px rgba(var(--nerv-label-box-color-rgb), 0.6),
+      0 0 calc(var(--nerv-glow-spread) * 2 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.6),
+      0 0 calc(var(--nerv-glow-spread) * 4.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.3);
+    text-shadow: 0 0 6px rgba(var(--nerv-label-box-color-rgb), 0.5);
   }
+}
+
+// :active AFTER :hover so it wins at equal specificity during press
+.nerv-label-box:active {
+  transform: skewX(var(--nerv-label-box-skew)) scale(0.93);
+  background: rgba(var(--nerv-label-box-color-rgb), 0.25);
+  box-shadow:
+    inset 0 0 12px rgba(var(--nerv-label-box-color-rgb), 0.35),
+    0 0 calc(var(--nerv-glow-spread) * 2 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.55),
+    0 0 calc(var(--nerv-glow-spread) * 4 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.25);
+}
+
+.nerv-label-box-active:active {
+  transform: skewX(var(--nerv-label-box-skew)) scale(0.93);
+  background: var(--nerv-label-box-color);
+  color: var(--nerv-bg);
+  box-shadow:
+    inset 0 0 14px rgba(var(--nerv-label-box-color-rgb), 0.45),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.7),
+    0 0 calc(var(--nerv-glow-spread) * 5 * var(--nerv-glow-intensity)) rgba(var(--nerv-label-box-color-rgb), 0.35);
+  text-shadow: 0 0 8px rgba(var(--nerv-label-box-color-rgb), 0.6);
 }
 
 .nerv-label-box-active {

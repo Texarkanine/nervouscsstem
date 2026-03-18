@@ -261,6 +261,11 @@ describe('Label box CSS', () => {
   it('.nerv-label-box:focus-visible styles exist in compiled CSS', () => {
     assert.match(css, /\.nerv-label-box:focus-visible\b/, 'missing .nerv-label-box:focus-visible in compiled CSS');
   });
+
+  // Enhancement: reverse-angle modifier
+  it('.nerv-label-box-reverse class exists', () => {
+    assert.match(css, /\.nerv-label-box-reverse\b/, 'missing .nerv-label-box-reverse class');
+  });
 });
 
 describe('Status text CSS', () => {
