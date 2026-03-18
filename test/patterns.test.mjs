@@ -129,26 +129,6 @@ describe('Stripe bar CSS', () => {
     );
   });
 
-  it('.nerv-stripe has --nerv-stripe-glow-spread custom property for configurable glow border', () => {
-    const stripeIdx = css.indexOf('.nerv-stripe {');
-    const blockEnd = css.indexOf('}', stripeIdx);
-    const block = css.slice(stripeIdx, blockEnd);
-    assert.ok(
-      block.includes('--nerv-stripe-glow-spread'),
-      '.nerv-stripe should define --nerv-stripe-glow-spread custom property'
-    );
-  });
-
-  it('.nerv-stripe has box-shadow for glow border', () => {
-    const stripeIdx = css.indexOf('.nerv-stripe {');
-    const blockEnd = css.indexOf('}', stripeIdx);
-    const block = css.slice(stripeIdx, blockEnd);
-    assert.ok(
-      block.includes('box-shadow'),
-      '.nerv-stripe should have box-shadow for configurable glow border'
-    );
-  });
-
   // Behavior 8
   it('.nerv-stripe-animated class exists with animation referencing --nerv-stripe-duration', () => {
     assert.match(css, /\.nerv-stripe-animated\b/, 'missing .nerv-stripe-animated class');

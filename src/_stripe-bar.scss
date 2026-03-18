@@ -11,10 +11,9 @@
 /// tokens and the stripe variant appears automatically.
 ///
 /// Customization (set on element or ancestor):
-///   --nerv-stripe-color-rgb    Override stripe color (RGB triplet)
-///   --nerv-stripe-width        Band width (from tokens)
-///   --nerv-stripe-duration     Scroll speed (from tokens)
-///   --nerv-stripe-glow-spread  Glow border size (0px = off, default)
+///   --nerv-stripe-color-rgb  Override stripe color (RGB triplet)
+///   --nerv-stripe-width      Band width (from tokens)
+///   --nerv-stripe-duration   Scroll speed (from tokens)
 ///
 /// Classes:
 ///   .nerv-stripe             — Horizontal stripe bar (default: --nerv-primary)
@@ -28,7 +27,6 @@
 
 .nerv-stripe {
   --nerv-stripe-color-rgb: var(--nerv-primary-rgb);
-  --nerv-stripe-glow-spread: 0px;
   --nerv-stripe-dark: rgba(var(--nerv-bg-rgb), 1);
   background-image: repeating-linear-gradient(
     -45deg,
@@ -39,16 +37,10 @@
   );
   background-size: 200% 200%;
   height: 1rem;
-  box-shadow:
-    0 0 calc(var(--nerv-stripe-glow-spread) * var(--nerv-glow-intensity))
-      rgba(var(--nerv-stripe-color-rgb), 0.5),
-    0 0 calc(var(--nerv-stripe-glow-spread) * 2 * var(--nerv-glow-intensity))
-      rgba(var(--nerv-stripe-color-rgb), 0.2);
 }
 
 .nerv-stripe-vertical {
   --nerv-stripe-color-rgb: var(--nerv-primary-rgb);
-  --nerv-stripe-glow-spread: 0px;
   --nerv-stripe-dark: rgba(var(--nerv-bg-rgb), 1);
   background-image: repeating-linear-gradient(
     45deg,
@@ -60,11 +52,6 @@
   background-size: 200% 200%;
   width: 1rem;
   height: auto;
-  box-shadow:
-    0 0 calc(var(--nerv-stripe-glow-spread) * var(--nerv-glow-intensity))
-      rgba(var(--nerv-stripe-color-rgb), 0.5),
-    0 0 calc(var(--nerv-stripe-glow-spread) * 2 * var(--nerv-glow-intensity))
-      rgba(var(--nerv-stripe-color-rgb), 0.2);
 }
 
 // Auto-generate .nerv-stripe-{name} for each glow-flagged color
