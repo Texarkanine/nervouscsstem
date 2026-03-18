@@ -8,3 +8,9 @@ Implement all planned features and enhancements from `planning/FUTURE.md`: retic
 
 ### Complexity Analysis — Complete
 Classified as Level 4 (Complex System). 9 features from `planning/FUTURE.md` spanning multiple design system layers. Each will become an L1-L3 milestone sub-run.
+
+### L4 Plan — Complete
+Generated 8 milestones: 2× L1, 5× L2, 1× L3. All independent (no cross-dependencies). Tiled hex grid folded into Tables milestone. Investigation confirmed rainbow gradients are not implemented, barberpole opacity bug is real, and glitch uses `steps()` but needs magnitude refinement.
+
+### L4 Preflight — Complete (PASS)
+All checks passed. No conflicts, full coverage, convention compliance confirmed. Three advisory items noted for sub-run consideration (reference page strategy, geometric primitive sharing, radar pulse JS boundary).
