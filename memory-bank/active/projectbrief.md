@@ -38,7 +38,7 @@ Elements (possibly just text) placed radially in the radar that pulse and fade w
 
 ## Acceptance Criteria
 
-- Each NEW feature has its own reference HTML section or page demonstrating the feature
+- Fixes/refinements to existing components update the existing ref page that demonstrates them; new capabilities get demonstrated in ref pages (new sections on existing pages for small additions, new pages for substantial new features)
 - All features respect `prefers-reduced-motion` and `prefers-contrast`
 - All selectors use `.nerv-` prefix
 - No image files — CSS-only (SVG data URIs permitted)

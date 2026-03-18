@@ -10,6 +10,7 @@
 - Token architecture preserved: ambiance tokens shift with alert state, named data tokens remain stable
 - New SCSS partials follow the `_name.scss` convention and are `@forward`ed from `nerv.scss` before `states`
 - Existing features and reference pages remain unbroken after each milestone
+- Ref page strategy: fixes/refinements to existing components update the existing ref page that already demonstrates them; new capabilities get demonstrated in ref pages (new sections on existing pages for small additions, new pages for substantial features)
 - Stylelint + Node.js test runner must pass after each milestone
 
 ## Execution Order
