@@ -49,3 +49,23 @@ Insight: Glitch styling should NEVER smoothly translate; it shoudl JUMP between 
 We are building components used in NGE. This allows building NGE-ish displays.
 
 We also want to be able to style actual websites; we should take an inventory of the major web form elements and make sure they can be styled appropriately (text input, textarea, etc. - the basics!)
+
+## Lists
+
+Lists should get a helper set of classes that let them be 45% angled up or down pillboxes around content, this is a very common NGE design element. Should allow color selection and maybe shape (trapezoid or enlongated hexagon?) though shape may be YAGNI.
+
+## Tables
+
+Tables - both real and CSS - should be trivially styleable as vector-like phosphor glowing outlines.
+
+However, we want to support a few kinds of special table rows:
+
+- alternating triangles - tiled equilateral triangles, up and down, as table cells in a "triangle" row. Text is aligned to the base, alternating up or down depending on triangle direction. Height scales with row height.
+- hexagons - touching on edges. Need an offset A and B that will cause multiple rows of hexagon cells to align out-of-phase so that they can have triangles in-between, or in-phase so that they form nice vertical columns. Ideally, a table could specify what it wanted its hexagon rows to do - be the same offset, or alternate between two offsets.
+- trimmed alternating trapezoids with triangle fill - this is ridiculous: You start with a trapezoid, and alternate them upside down and rightside up like with the triangles. But, this is just "long triangles," so you clip the edges of each trapezoid's base to leave an empty triangle in-between, which you either style or let the table row / table BG show through. TODO: find a screenshot of this.
+
+## Radar pulse
+
+Ability to put elements (maybe just text) in the radar radially and have them pulse and fade down when the radar scans over them, like actual radar. Not possible with CSs? find out!
+
+AT least be able to sync elements to WHERE the radar sweep is, e.g. update a value when it hits top - even if not provided by us. goal: syncing other UI actions - even if outside our kit - to the radar sweep.
