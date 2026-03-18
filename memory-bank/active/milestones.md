@@ -18,7 +18,7 @@
 flowchart LR
     M1["M1: Barberpole fix"]
     M2["M2: Glitch refinement"]
-    M3["M3: Rainbow gradients"]
+    M3["M3: Gradient presets"]
     M4["M4: Reticle tickmarks"]
     M5["M5: Lists"]
     M6["M6: Web forms"]
@@ -38,7 +38,7 @@ All milestones are independent — no cross-milestone dependencies. They can be 
 
 - [ ] M1: Fix barberpole stripe opacity — make bands fully opaque and add configurable glow border (L1 — bug fix, single file `_stripe-bar.scss`)
 - [ ] M2: Refine glitch effect — increase transform magnitudes and reduce keyframe density for sharper discontinuous jumps (L1 — enhancement, single file `_glitch.scss`)
-- [ ] M3: Implement rainbow gradient system — reusable multi-hue gradient mixin/utility, integration with bar meter multi-stop fills, `.nerv-rainbow-bg` class (L2 — new tokens + mixin + utility class, touches bar meter integration)
+- [ ] M3: Add built-in gradient presets for bar meters — review NGE UIs for common color pairings, provide off-the-shelf preset classes/attributes that set `--nerv-bar-from`/`--nerv-bar-to` automatically (L2 — design research + utility classes on `_bar-meter.scss`)
 - [ ] M4: Add reticle tickmarks — CSS-based measurement-ruler tickmarks along panel edges via utility classes and/or mixin (L2 — new structural component, new SCSS partial)
 - [ ] M5: Add list styling — angled 45-degree pillbox helper classes with configurable color for list items (L2 — new component, new SCSS partial)
 - [ ] M6: Style web form elements — text input, textarea, select, radio, checkbox, and button in NERV aesthetic (L2 — new component set, new SCSS partial)

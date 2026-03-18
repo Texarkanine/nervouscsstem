@@ -9,8 +9,8 @@ Implement all planned features and enhancements documented in `planning/FUTURE.m
 ### 1. Reticle Tickmarks
 CSS-based tickmarks along rectangle/panel edges for measurement-ruler or targeting-reticle aesthetics. Utility classes (`.nerv-reticle-top`, `.nerv-reticle-left`, etc.) or a mixin taking edge, color, and density parameters. Pure CSS via `repeating-linear-gradient` or SVG data URIs. Fits in the structural layer alongside panels and dividers.
 
-### 2. Rainbow Gradient System
-Multi-hue rainbow gradients for backgrounds, overlays, and bar meter fills. Reusable gradient primitive (mixin or utility class), integration with bar meter `--nerv-bar-from-rgb` / `--nerv-bar-to-rgb`, background application via `.nerv-rainbow-bg` or similar. Configurable hue range, direction, and opacity. **Note:** Rainbow gradients already exist in `ref/ref-components.html` — may need scoping to determine if this is already done or if it needs to be made easier/more reusable.
+### 2. Gradient Presets
+The bar meter gradient mechanism (`--nerv-bar-from` / `--nerv-bar-to`) already works — the green-to-red gradient in `ref/ref-components.html` is visually the "rainbow" referenced in FUTURE.md. The actual need is to make common gradient pairings available as easy-to-use presets (classes or data attributes) so consumers don't have to manually set `--nerv-bar-from`/`--nerv-bar-to` each time. Review existing NGE UI references for the most common color pairings and ship a handful of built-in presets. The green→red "thermal" gradient is the most common and should be the first preset.
 
 ### 3. Fix: CRT Opacity on Barberpole
 Vertical and/or green barberpole has unwanted opacity between green bands. Should be solid. Also consider: barberpoles should have square borders with glow of a configurable color (default to main barberpole color).
