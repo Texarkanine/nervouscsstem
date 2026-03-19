@@ -4,10 +4,10 @@
 M6: Style web form elements
 
 ## Phase
-QA — COMPLETE
+REFLECT — COMPLETE
 
 ## What Was Done
-QA semantic review passed. One trivial DRY fix applied (consolidated prefers-contrast selectors). All constraints (KISS, DRY, YAGNI, Completeness, Regression, Integrity, Documentation) clean. Noted: select arrow SVG hardcoded amber is a known platform limitation.
+Reflected on M6 form styling task. Clean execution with two minor pivots: @extend→@mixin (combined selectors broke tests), fragile list test fix (lastIndexOf→regex). Key insights: Sass @extend produces combined selectors; SVG data URIs can't reference custom properties; positional CSS test methods are fragile. Million-dollar: extracting shared interaction mixins into _glow.scss would reduce duplication, but current independent approach suits the à la carte consumption model.
 
 ## Next Step
-Proceed to reflect phase.
+Run /niko to continue to the next milestone.

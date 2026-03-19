@@ -20,3 +20,6 @@ Implemented `_form.scss` with 6 element classes (`.nerv-input`, `.nerv-textarea`
 
 ### QA — Complete (PASS)
 Semantic review passed. One trivial fix applied: consolidated three separate prefers-contrast selector groups into one (DRY). KISS/YAGNI/Completeness/Regression/Integrity/Documentation all clean. Select arrow SVG uses hardcoded amber — known platform limitation of CSS custom properties in SVG data URIs, acceptable for V1.
+
+### Reflect — Complete
+Key insights: Sass @extend produces combined selectors that break individual-block test lookups; SVG data URIs can't reference CSS custom properties; positional CSS test methods (lastIndexOf) are fragile to new block additions. Million-dollar: shared interaction mixins in _glow.scss would reduce duplication but current independent approach suits à la carte consumption.
