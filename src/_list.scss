@@ -13,8 +13,11 @@
 /// Classes:
 ///   .nerv-list              — container (flex column, resets list-style)
 ///   .nerv-list > li         — auto-styled pillbox children
-///   .nerv-list-rect         — plain bordered rectangles (no clip-path)
+///   .nerv-list-rect         — rectangular items (no clip-path)
 ///   .nerv-list-para         — left point + flat right edge (arrow/chevron shape)
+///   .nerv-list-bordered     — fill mode: translucent fill + strong phosphor glow border
+///   .nerv-list-outline      — fill mode: no fill + strong phosphor glow border
+///   .nerv-list-solid        — fill mode: opaque color fill, no glow
 ///   .nerv-list-angled       — each item pivots -45deg at its left point (fans upward)
 ///   .nerv-list-angled-reverse — each item pivots +45deg at its left point (fans downward)
 ///   .nerv-list-{color}      — color variant (auto-generated per glow-flagged token)
@@ -73,7 +76,6 @@
 
 .nerv-list-rect > li {
   clip-path: none;
-  border: var(--nerv-border-width) solid var(--nerv-list-color);
   padding: 0.3em 0.8em;
 }
 
@@ -85,6 +87,33 @@
     var(--nerv-list-inset) 100%,
     0% 50%
   );
+}
+
+.nerv-list-bordered {
+  filter:
+    drop-shadow(0 0 1px var(--nerv-list-color))
+    drop-shadow(0 0 1px var(--nerv-list-color))
+    drop-shadow(0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) var(--nerv-list-color));
+}
+
+.nerv-list-outline {
+  filter:
+    drop-shadow(0 0 1px var(--nerv-list-color))
+    drop-shadow(0 0 1px var(--nerv-list-color))
+    drop-shadow(0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) var(--nerv-list-color));
+
+  > li {
+    background: transparent;
+  }
+}
+
+.nerv-list-solid {
+  filter: none;
+
+  > li {
+    background: var(--nerv-list-color);
+    color: var(--nerv-bg);
+  }
 }
 
 .nerv-list-angled {

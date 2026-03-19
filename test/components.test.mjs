@@ -501,13 +501,12 @@ describe('List styling CSS', () => {
     assert.ok(block.includes('45deg'), '.nerv-list-angled-reverse should set angle to 45deg');
   });
 
-  it('B14: .nerv-list-rect > li removes clip-path and adds border', () => {
+  it('B14: .nerv-list-rect > li removes clip-path (shape-only, no border)', () => {
     assert.match(css, /\.nerv-list-rect\b/, 'missing .nerv-list-rect class');
     const idx = css.indexOf('.nerv-list-rect');
     assert.ok(idx !== -1, '.nerv-list-rect block not found');
     const block = css.slice(idx, idx + 400);
     assert.ok(block.includes('clip-path: none'), '.nerv-list-rect li should set clip-path: none');
-    assert.ok(block.includes('border'), '.nerv-list-rect li should add border');
   });
 
   it('B15: .nerv-list-para > li has clip-path polygon with flat right edge', () => {
@@ -526,6 +525,32 @@ describe('List styling CSS', () => {
     assert.ok(idx !== -1, '.nerv-list-angled block not found');
     const block = css.slice(idx, css.indexOf('}', idx) + 1);
     assert.ok(block.includes('gap'), '.nerv-list-angled should set a larger gap');
+  });
+
+  it('B17: .nerv-list-bordered exists with enhanced drop-shadow filter', () => {
+    assert.match(css, /\.nerv-list-bordered\b/, 'missing .nerv-list-bordered class');
+    const idx = css.indexOf('.nerv-list-bordered');
+    assert.ok(idx !== -1, '.nerv-list-bordered block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('filter'), '.nerv-list-bordered should set filter');
+    assert.ok(block.includes('drop-shadow'), '.nerv-list-bordered should use drop-shadow');
+  });
+
+  it('B18: .nerv-list-outline sets background: transparent on li', () => {
+    assert.match(css, /\.nerv-list-outline\b/, 'missing .nerv-list-outline class');
+    const outlineIdx = css.indexOf('.nerv-list-outline');
+    assert.ok(outlineIdx !== -1, '.nerv-list-outline not found');
+    const block = css.slice(outlineIdx, outlineIdx + 600);
+    assert.ok(block.includes('transparent'), '.nerv-list-outline should set transparent background');
+  });
+
+  it('B19: .nerv-list-solid sets opaque background and removes glow', () => {
+    assert.match(css, /\.nerv-list-solid\b/, 'missing .nerv-list-solid class');
+    const solidIdx = css.indexOf('.nerv-list-solid');
+    assert.ok(solidIdx !== -1, '.nerv-list-solid not found');
+    const block = css.slice(solidIdx, solidIdx + 600);
+    assert.ok(block.includes('filter: none'), '.nerv-list-solid should remove filter');
+    assert.ok(block.includes('--nerv-list-color'), '.nerv-list-solid li should use opaque list color');
   });
 });
 
