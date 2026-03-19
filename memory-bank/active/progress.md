@@ -11,3 +11,6 @@ Classified as Level 2 (Simple Enhancement). Self-contained new component — uti
 
 ### Plan — Complete
 Designed `clip-path: polygon()` hexagonal pillbox approach for list items. 9 test behaviors. `.nerv-list` container + auto-styled `> li` children + `@each`-generated `.nerv-list-{color}` variants. Custom properties: `--nerv-list-color`, `--nerv-list-color-rgb`, `--nerv-list-inset`. `filter: drop-shadow()` for glow (borders incompatible with clip-path). `prefers-contrast: more` support. 4 files touched: `src/_list.scss` (new), `src/nerv.scss` (add @forward), `test/components.test.mjs` (add tests), `ref/ref-components.html` (demo).
+
+### Preflight — Complete (PASS)
+All checks passed. Convention compliance (`.nerv-` prefix, `_list.scss` naming, `@use 'tokens'` pattern), dependency impact (`nerv.scss` header comment needs `list` in chain — amended plan), conflict detection (no existing `.nerv-list`), and completeness all clean. Advisory: horizontal layout modifier `.nerv-list-horizontal` deferred as YAGNI per brief.

@@ -4,10 +4,10 @@
 M5: Add list styling
 
 ## Phase
-PLAN - COMPLETE
+PREFLIGHT - COMPLETE
 
 ## What Was Done
-Designed pillbox list component using `clip-path: polygon()` for symmetric hexagonal shapes. 9 test behaviors identified. 8-step implementation plan: stub tests → stub SCSS → register partial → implement tests → red phase → implement SCSS → green phase → ref page demo. `filter: drop-shadow()` chosen over borders (clip-path clips borders). Auto-generated color variants via `@each` loop.
+Preflight validation passed. Convention compliance, dependency impact, conflict detection, completeness all clean. Plan amended: `nerv.scss` header comment update added to step 3. Advisory deferred: horizontal layout modifier is YAGNI per brief.
 
 ## Next Step
-Preflight validation will now run automatically.
+Transition to Build phase.

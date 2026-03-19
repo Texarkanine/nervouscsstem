@@ -39,7 +39,7 @@ Add angled 45-degree pillbox helper classes with configurable color for list ite
 
 3. **Register partial in entry point**
    - Files: `src/nerv.scss`
-   - Changes: Add `@forward 'list'` in the component layer (after `status-text`, before `states`)
+   - Changes: Add `@forward 'list'` in the component layer (after `status-text`, before `states`); update header comment dependency chain to include `list`
 
 4. **Implement tests** (B1–B9)
    - Files: `test/components.test.mjs`
@@ -83,6 +83,6 @@ No new technology — `clip-path: polygon()`, CSS custom properties, SCSS `@each
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight
 - [ ] Build
 - [ ] QA
