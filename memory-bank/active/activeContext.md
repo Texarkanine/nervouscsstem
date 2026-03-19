@@ -4,10 +4,10 @@
 M7: Implement table styling with special row types
 
 ## Phase
-PLAN — COMPLETE
+PLAN — COMPLETE (revised)
 
 ## What Was Done
-Completed comprehensive implementation plan for M7 table styling. Component analysis identified new `_table.scss` partial, test infrastructure, and reference page. Identified one open question (tiled hex grid variant) and resolved via architecture creative phase: tiled variant belongs in hex-grid component (future enhancement), not M7. Created 20-behavior test plan and 8-step implementation plan. All open questions resolved, plan ready for preflight.
+Completed implementation plan for M7 table styling, then revised after operator feedback. Key addition: fill/border mode orthogonality (default, bordered, outline, solid) and auto-generated color variants from `$nerv-colors` — following `_list.scss` as the canonical precedent. Tables are "2D lists": same design language applies. FUTURE.md cleaned up: tiled hex grid forked into its own entry, completed milestones (M1-M6) marked, old Tables section replaced. 17 test behaviors, 9 implementation steps.
 
 ## Next Step
 Proceed to Preflight phase to validate the plan.
