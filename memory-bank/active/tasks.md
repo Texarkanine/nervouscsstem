@@ -54,7 +54,7 @@ Style major web form elements (text input, textarea, select, radio, checkbox, bu
 
 1. **Stub + Register**
    - Files: `src/_form.scss` (new, empty), `src/nerv.scss`
-   - Changes: Create empty `_form.scss` with doc comment. Add `@forward 'form'` to `nerv.scss` after `list` and before `states`.
+   - Changes: Create empty `_form.scss` with doc comment. Add `@forward 'form'` to `nerv.scss` after `list` and before `states`. Update `nerv.scss` header comment chain to include `form` between `list` and `states`.
 
 2. **Write failing tests**
    - Files: `test/components.test.mjs`

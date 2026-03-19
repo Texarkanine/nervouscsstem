@@ -4,10 +4,10 @@
 M6: Style web form elements
 
 ## Phase
-PLAN — COMPLETE
+PREFLIGHT — COMPLETE
 
 ## What Was Done
-Designed form element styling system: `.nerv-input`, `.nerv-textarea`, `.nerv-select`, `.nerv-checkbox`, `.nerv-radio`, `.nerv-btn`. Custom properties `--nerv-form-color` / `--nerv-form-color-rgb` for per-element color override. 17 test behaviors covering all elements + focus/checked states + accessibility + regression. 8 implementation steps in TDD cycles. New `_form.scss` partial + `ref/ref-forms.html` demo page.
+Preflight validation passed. Convention compliance verified (`_form.scss` naming, `.nerv-` prefix, header comment chain). No conflicts detected. Completeness confirmed — all 6 elements mapped. Plan amended to include `nerv.scss` header comment update. Advisory noted: `.nerv-form` auto-styling container deferred.
 
 ## Next Step
-Preflight validation, then build.
+Build phase — stub files, write failing tests, then implement.
