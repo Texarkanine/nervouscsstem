@@ -47,6 +47,20 @@ We also want to be able to style actual websites; we should take an inventory of
 
 Lists should get a helper set of classes that let them be 45% angled up or down pillboxes around content, this is a very common NGE design element. Should allow color selection and maybe shape (trapezoid or enlongated hexagon?) though shape may be YAGNI.
 
+## Custom Dropdown (`.nerv-dropdown`)
+
+Native `<select>` dropdowns are OS-rendered — we can style the closed box (`.nerv-select` does this), but the open dropdown popup ignores CSS for hover highlights, per-option backgrounds, borders, glow, and shapes. This means we can't do things like an "alert level" selector where each option is colored to match its severity.
+
+A custom dropdown component would replace the native `<select>` with a `<div>`/`<ul>` structure that gives full CSS control over every option. The visual building blocks already exist: `.nerv-list` color variants for the option items, `.nerv-panel` for the container, focus/glow patterns from `_form.scss` and `_label-box.scss`. What's missing is the JS interaction layer in `nerv.js`:
+
+- Open/close on click and Escape
+- Arrow-key navigation through options
+- Selection management (update a hidden `<input>` or data attribute)
+- ARIA attributes (`role="listbox"`, `aria-expanded`, `aria-activedescendant`)
+- `<label>` association for accessibility
+
+This is orchestration (managing state and DOM interaction), which fits within the project's minimal-JS constraint. Probably L2-sized — one new JS function (`NERV.initDropdowns()`) and CSS for the open/closed/selected states.
+
 ## Tables
 
 Tables - both real and CSS - should be trivially styleable as vector-like phosphor glowing outlines.
