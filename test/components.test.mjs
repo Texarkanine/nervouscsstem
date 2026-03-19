@@ -692,11 +692,9 @@ describe('Form styling CSS', () => {
   });
 
   it('B16: prefers-contrast: more media query targets form elements', () => {
-    const contrastBlocks = css.split('prefers-contrast: more');
-    const lastBlock = contrastBlocks[contrastBlocks.length - 1];
-    assert.ok(
-      lastBlock.includes('.nerv-input') || lastBlock.includes('.nerv-btn') || lastBlock.includes('.nerv-select'),
-      'last prefers-contrast: more block should reference form elements'
+    const contrastRe = /prefers-contrast:\s*more\)[^}]*(?:\.nerv-input|\.nerv-btn|\.nerv-select)/;
+    assert.match(css, contrastRe,
+      'a prefers-contrast: more block should reference form elements'
     );
   });
 
@@ -720,6 +718,149 @@ describe('Form styling CSS', () => {
     assert.match(css, /\.nerv-bar-meter\b[^-]/, 'missing .nerv-bar-meter class');
     assert.match(css, /\.nerv-label-box\b[^-]/, 'missing .nerv-label-box class');
     assert.match(css, /\.nerv-list\b[^-]/, 'missing .nerv-list class');
+  });
+});
+
+describe('Table styling CSS', () => {
+  // --- Base Table Styling ---
+
+  it('B1: .nerv-table class exists with border and background styling', () => {
+    assert.match(css, /\.nerv-table\b[^-]/, 'missing .nerv-table class');
+    const idx = css.indexOf('.nerv-table {');
+    assert.ok(idx !== -1, '.nerv-table block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('border'), '.nerv-table should have border styling');
+  });
+
+  it('B2: .nerv-table declares --nerv-table-color and --nerv-table-color-rgb', () => {
+    const idx = css.indexOf('.nerv-table {');
+    assert.ok(idx !== -1, '.nerv-table block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-table-color'), '.nerv-table should declare --nerv-table-color');
+    assert.ok(block.includes('--nerv-table-color-rgb'), '.nerv-table should declare --nerv-table-color-rgb');
+  });
+
+  it('B3: .nerv-table th and .nerv-table td have border styling', () => {
+    const hasTh = css.includes('.nerv-table th') || css.includes('.nerv-table td');
+    assert.ok(hasTh, 'CSS should contain .nerv-table th or .nerv-table td selectors');
+    const cellMatch = css.match(/\.nerv-table\s+(?:th|td)\s*(?:,\s*\.nerv-table\s+(?:th|td)\s*)?\{[^}]*\}/);
+    assert.ok(cellMatch, '.nerv-table th/td block not found');
+    assert.ok(cellMatch[0].includes('border'), '.nerv-table th/td should have border styling');
+  });
+
+  // --- Fill/Border Modes ---
+
+  it('B4: .nerv-table-bordered adds border to cells', () => {
+    assert.match(css, /\.nerv-table-bordered\b/, 'missing .nerv-table-bordered class');
+    const idx = css.indexOf('.nerv-table-bordered');
+    assert.ok(idx !== -1, '.nerv-table-bordered block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('border'), '.nerv-table-bordered should set border on cells');
+  });
+
+  it('B5: .nerv-table-outline sets border + dark bg', () => {
+    assert.match(css, /\.nerv-table-outline\b/, 'missing .nerv-table-outline class');
+    const idx = css.indexOf('.nerv-table-outline');
+    assert.ok(idx !== -1, '.nerv-table-outline block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('border'), '.nerv-table-outline should set border');
+    assert.ok(block.includes('background'), '.nerv-table-outline should set background');
+  });
+
+  it('B6: .nerv-table-solid sets opaque fill and cutout text', () => {
+    assert.match(css, /\.nerv-table-solid\b/, 'missing .nerv-table-solid class');
+    const idx = css.indexOf('.nerv-table-solid');
+    assert.ok(idx !== -1, '.nerv-table-solid block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('--nerv-table-color'), '.nerv-table-solid should reference --nerv-table-color for background');
+    assert.ok(block.includes('--nerv-bg'), '.nerv-table-solid should reference --nerv-bg for cutout text');
+  });
+
+  // --- Color Variants ---
+
+  it('B7: at least one .nerv-table-{color} variant exists with --nerv-table-color', () => {
+    const hasVariant = css.includes('.nerv-table-amber') || css.includes('.nerv-table-red') || css.includes('.nerv-table-green');
+    assert.ok(hasVariant, 'should have at least one auto-generated .nerv-table-{color} variant');
+    const idx = css.indexOf('.nerv-table-amber');
+    if (idx !== -1) {
+      const block = css.slice(idx, css.indexOf('}', idx) + 1);
+      assert.ok(block.includes('--nerv-table-color'), '.nerv-table-amber should set --nerv-table-color');
+    }
+  });
+
+  // --- Geometric Row Types: Row-Level ---
+
+  it('B8: triangle row class exists in compiled CSS', () => {
+    assert.match(css, /\.nerv-table-triangle\b/, 'missing .nerv-table-triangle class in compiled CSS');
+  });
+
+  it('B9: triangle cells use clip-path: polygon()', () => {
+    const triangleSection = css.slice(css.indexOf('.nerv-table-triangle'));
+    const block = triangleSection.slice(0, 1500);
+    assert.ok(block.includes('clip-path'), 'triangle context should contain clip-path');
+    assert.ok(block.includes('polygon'), 'triangle context should contain polygon');
+  });
+
+  it('B10: triangles alternate up/down via :nth-child', () => {
+    const triangleSection = css.slice(css.indexOf('.nerv-table-triangle'));
+    const block = triangleSection.slice(0, 2000);
+    assert.ok(block.includes('nth-child'), 'triangle rows should use :nth-child for alternating direction');
+  });
+
+  it('B11: hexagon row class exists in compiled CSS', () => {
+    assert.match(css, /\.nerv-table-hex\b/, 'missing .nerv-table-hex class in compiled CSS');
+  });
+
+  it('B12: hexagon cells use clip-path: polygon() matching hex shape', () => {
+    const hexSection = css.slice(css.indexOf('.nerv-table-hex'));
+    const block = hexSection.slice(0, 1500);
+    assert.ok(block.includes('clip-path'), 'hex context should contain clip-path');
+    assert.ok(block.includes('polygon'), 'hex context should contain polygon');
+  });
+
+  it('B13: hexagon rows support out-of-phase offset via :nth-child', () => {
+    const hexAltPresent = css.includes('.nerv-table-hex-alt') || css.includes('nerv-table-hex');
+    assert.ok(hexAltPresent, 'should have hex-alt or hex modifier for alternating offsets');
+    const hexSection = css.slice(css.indexOf('.nerv-table-hex'));
+    const block = hexSection.slice(0, 3000);
+    assert.ok(block.includes('nth-child'), 'hex rows should use :nth-child for alternating row offsets');
+  });
+
+  it('B14: trapezoid row class exists in compiled CSS', () => {
+    assert.match(css, /\.nerv-table-trapezoid\b/, 'missing .nerv-table-trapezoid class in compiled CSS');
+  });
+
+  it('B15: trapezoid cells use clip-path: polygon() for angled edges', () => {
+    const trapSection = css.slice(css.indexOf('.nerv-table-trapezoid'));
+    const block = trapSection.slice(0, 1500);
+    assert.ok(block.includes('clip-path'), 'trapezoid context should contain clip-path');
+    assert.ok(block.includes('polygon'), 'trapezoid context should contain polygon');
+  });
+
+  // --- Geometric Row Types: Table-Level Default ---
+
+  it('B16: shape class on table cascades to rows via descendant selector', () => {
+    const tableTriangle = css.match(/\.nerv-table\.nerv-table-triangle\s+(?:td|th)/);
+    const tableHex = css.match(/\.nerv-table\.nerv-table-hex\s+(?:td|th)/);
+    const tableTrap = css.match(/\.nerv-table\.nerv-table-trapezoid\s+(?:td|th)/);
+    const hasTableLevel = tableTriangle || tableHex || tableTrap;
+    assert.ok(hasTableLevel, 'at least one table-level shape selector should cascade to cells (e.g. .nerv-table.nerv-table-triangle td)');
+  });
+
+  // --- Accessibility ---
+
+  it('B17: prefers-contrast: more media query targets table elements', () => {
+    const contrastRe = /prefers-contrast:\s*more\)[^}]*\.nerv-table/;
+    assert.match(css, contrastRe, 'a prefers-contrast: more block should reference .nerv-table');
+  });
+
+  // --- Regression ---
+
+  it('B18: existing component selectors still present', () => {
+    assert.match(css, /\.nerv-bar-meter\b[^-]/, 'missing .nerv-bar-meter class');
+    assert.match(css, /\.nerv-hex-grid\b/, 'missing .nerv-hex-grid class');
+    assert.match(css, /\.nerv-list\b[^-]/, 'missing .nerv-list class');
+    assert.match(css, /\.nerv-input\b[^-]/, 'missing .nerv-input class');
   });
 });
 

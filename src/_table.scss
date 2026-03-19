@@ -1,0 +1,250 @@
+/// _table.scss — Phosphor-outline table styling with geometric row types.
+///
+/// Provides base table styling following the same fill/border/color design
+/// language as `_list.scss`. Tables support fill mode modifiers, auto-generated
+/// color variants from `$nerv-colors`, and geometric row types (triangle,
+/// hexagon, trapezoid) applied at the row or table level.
+///
+/// Base classes:
+///   .nerv-table                  — base phosphor-outline table
+///
+/// Fill modes (mutually exclusive, on container):
+///   (default)                    — translucent color fill on cells
+///   .nerv-table-bordered         — translucent fill + phosphor border on cells
+///   .nerv-table-outline          — border only, bg = --nerv-bg (no fill)
+///   .nerv-table-solid            — opaque fill, cutout text
+///
+/// Geometric row types (on <tr> or on <table> as default):
+///   .nerv-table-triangle         — equilateral triangles alternating up/down
+///   .nerv-table-hex              — hexagonal cells
+///   .nerv-table-hex-alt          — hexagonal cells with alternating row offset
+///   .nerv-table-trapezoid        — angled trapezoid cells
+///
+/// Color variants (auto-generated from $nerv-colors):
+///   .nerv-table-{color}          — sets --nerv-table-color
+///
+/// Custom properties:
+///   --nerv-table-color           (default: --nerv-primary)
+///   --nerv-table-color-rgb       (default: --nerv-primary-rgb)
+///   --nerv-table-inset           (trapezoid angle control, default: 10%)
+///
+/// ⚠ clip-path clips borders: bordered/outline only render crisp borders
+///   on base rectangular cells. Triangle/hex/trapezoid cells clip borders away.
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb, --nerv-bg, --nerv-border-width,
+///   --nerv-glow-spread, --nerv-glow-intensity
+///   Color values from tokens.$nerv-colors for variant generation
+
+@use 'sass:list';
+@use 'tokens';
+
+// ---------------------------------------------------------------------------
+// 1. Base container + default cell styling
+// ---------------------------------------------------------------------------
+
+.nerv-table {
+  --nerv-table-color: var(--nerv-primary);
+  --nerv-table-color-rgb: var(--nerv-primary-rgb);
+
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: var(--nerv-border-width) solid var(--nerv-table-color);
+  box-shadow:
+    0 0 var(--nerv-glow-spread) rgba(var(--nerv-table-color-rgb), var(--nerv-glow-intensity)),
+    inset 0 0 calc(var(--nerv-glow-spread) / 2) rgba(var(--nerv-table-color-rgb), calc(var(--nerv-glow-intensity) * 0.3));
+
+  th,
+  td {
+    padding: 0.4em 0.8em;
+    background: rgba(var(--nerv-table-color-rgb), 0.5);
+    color: var(--nerv-table-color);
+    border: var(--nerv-border-width) solid rgba(var(--nerv-table-color-rgb), 0.25);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  th {
+    background: rgba(var(--nerv-table-color-rgb), 0.65);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 2. Fill / border modifiers (BEFORE shapes so shapes can override bg)
+// ---------------------------------------------------------------------------
+
+.nerv-table-bordered th,
+.nerv-table-bordered td {
+  border: var(--nerv-border-width) solid var(--nerv-table-color);
+}
+
+.nerv-table-outline th,
+.nerv-table-outline td {
+  border: var(--nerv-border-width) solid var(--nerv-table-color);
+  background: var(--nerv-bg);
+}
+
+.nerv-table-solid th,
+.nerv-table-solid td {
+  background: var(--nerv-table-color);
+  color: var(--nerv-bg);
+}
+
+// ---------------------------------------------------------------------------
+// 3. Color variants (auto-generated from glow-flagged tokens)
+// ---------------------------------------------------------------------------
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-table-#{$name} {
+      --nerv-table-color: var(--nerv-#{$name});
+      --nerv-table-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 4. Geometric row types — table-level defaults (lower specificity)
+//    .nerv-table.nerv-table-{shape} td → specificity (0,2,1)
+// ---------------------------------------------------------------------------
+
+// Triangle — table-level default
+.nerv-table.nerv-table-triangle td,
+.nerv-table.nerv-table-triangle th {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  text-align: center;
+  padding: 1.2em 0.5em 0.4em;
+  overflow-wrap: break-word;
+}
+
+.nerv-table.nerv-table-triangle td:nth-child(even),
+.nerv-table.nerv-table-triangle th:nth-child(even) {
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  padding: 0.4em 0.5em 1.2em;
+}
+
+// Hexagon — table-level default
+.nerv-table.nerv-table-hex td,
+.nerv-table.nerv-table-hex th {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  text-align: center;
+  padding: 0.6em 1.2em;
+}
+
+// Hexagon alt offset — table-level (even rows get transform offset)
+.nerv-table.nerv-table-hex-alt tr:nth-child(even) td,
+.nerv-table.nerv-table-hex-alt tr:nth-child(even) th {
+  transform: translateX(1.5em);
+}
+
+// Trapezoid — table-level default
+.nerv-table.nerv-table-trapezoid td,
+.nerv-table.nerv-table-trapezoid th {
+  --nerv-table-inset: 10%;
+  clip-path: polygon(
+    var(--nerv-table-inset) 0%,
+    calc(100% - var(--nerv-table-inset)) 0%,
+    100% 100%,
+    0% 100%
+  );
+  text-align: center;
+  padding: 0.4em 1em;
+}
+
+.nerv-table.nerv-table-trapezoid td:nth-child(even),
+.nerv-table.nerv-table-trapezoid th:nth-child(even) {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    calc(100% - var(--nerv-table-inset)) 100%,
+    var(--nerv-table-inset) 100%
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 5. Geometric row types — row-level overrides (higher specificity)
+//    .nerv-table tr.nerv-table-{shape} > td → specificity (0,2,2)
+// ---------------------------------------------------------------------------
+
+// Triangle — row-level
+.nerv-table tr.nerv-table-triangle > td,
+.nerv-table tr.nerv-table-triangle > th {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  text-align: center;
+  padding: 1.2em 0.5em 0.4em;
+  overflow-wrap: break-word;
+}
+
+.nerv-table tr.nerv-table-triangle > td:nth-child(even),
+.nerv-table tr.nerv-table-triangle > th:nth-child(even) {
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  padding: 0.4em 0.5em 1.2em;
+}
+
+// Hexagon — row-level
+.nerv-table tr.nerv-table-hex > td,
+.nerv-table tr.nerv-table-hex > th {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  text-align: center;
+  padding: 0.6em 1.2em;
+}
+
+// Hexagon alt offset — row-level (even rows get transform offset)
+.nerv-table tr.nerv-table-hex-alt > td,
+.nerv-table tr.nerv-table-hex-alt > th {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  text-align: center;
+  padding: 0.6em 1.2em;
+  transform: translateX(1.5em);
+}
+
+// Trapezoid — row-level
+.nerv-table tr.nerv-table-trapezoid > td,
+.nerv-table tr.nerv-table-trapezoid > th {
+  --nerv-table-inset: 10%;
+  clip-path: polygon(
+    var(--nerv-table-inset) 0%,
+    calc(100% - var(--nerv-table-inset)) 0%,
+    100% 100%,
+    0% 100%
+  );
+  text-align: center;
+  padding: 0.4em 1em;
+}
+
+.nerv-table tr.nerv-table-trapezoid > td:nth-child(even),
+.nerv-table tr.nerv-table-trapezoid > th:nth-child(even) {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    calc(100% - var(--nerv-table-inset)) 100%,
+    var(--nerv-table-inset) 100%
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 6. Accessibility
+// ---------------------------------------------------------------------------
+
+@media (prefers-contrast: more) {
+  .nerv-table th,
+  .nerv-table td {
+    background: rgba(var(--nerv-table-color-rgb), 0.7);
+    border-width: calc(var(--nerv-border-width) * 2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-table,
+  .nerv-table th,
+  .nerv-table td {
+    transition: none;
+    animation: none;
+  }
+}
