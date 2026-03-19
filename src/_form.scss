@@ -65,6 +65,16 @@
   @include _form-base;
 }
 
+.nerv-input::-webkit-outer-spin-button,
+.nerv-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+#{'.nerv-input[type="number"]'} {
+  appearance: textfield;
+}
+
 .nerv-input:focus {
   @include _form-focus;
 }
@@ -138,6 +148,14 @@
 
 .nerv-checkbox:focus {
   @include _form-focus;
+}
+
+.nerv-checkbox:checked:focus {
+  box-shadow:
+    inset 0 0 0 2px var(--nerv-bg),
+    0 0 0 1px var(--nerv-bg),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.45),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.2);
 }
 
 // ---------------------------------------------------------------------------
