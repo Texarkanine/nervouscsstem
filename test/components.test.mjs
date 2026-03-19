@@ -401,6 +401,74 @@ describe('nerv.js Phase 5 API', () => {
   });
 });
 
+describe('List styling CSS', () => {
+  it('B1: .nerv-list class exists with list-style: none and flex column layout', () => {
+    assert.match(css, /\.nerv-list\b[^-]/, 'missing .nerv-list class');
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('list-style'), '.nerv-list should set list-style');
+    assert.ok(block.includes('display: flex'), '.nerv-list should use display: flex');
+    assert.ok(block.includes('column'), '.nerv-list should use flex-direction: column');
+  });
+
+  it('B2: .nerv-list li applies clip-path polygon for pillbox shape', () => {
+    assert.match(css, /\.nerv-list[^{]*li\b/, 'missing .nerv-list li rule');
+    const liMatch = css.match(/\.nerv-list[^{]*li\s*\{[^}]*\}/);
+    assert.ok(liMatch, '.nerv-list li block not found');
+    assert.ok(liMatch[0].includes('clip-path'), '.nerv-list li should use clip-path');
+    assert.ok(liMatch[0].includes('polygon'), '.nerv-list li clip-path should use polygon()');
+  });
+
+  it('B3: --nerv-list-color custom property declared on .nerv-list', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-list-color'), '.nerv-list should declare --nerv-list-color');
+  });
+
+  it('B4: --nerv-list-color-rgb custom property declared on .nerv-list', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-list-color-rgb'), '.nerv-list should declare --nerv-list-color-rgb');
+  });
+
+  it('B5: --nerv-list-inset custom property declared on .nerv-list', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-list-inset'), '.nerv-list should declare --nerv-list-inset');
+  });
+
+  it('B6: .nerv-list-amber color variant exists and sets --nerv-list-color', () => {
+    assert.match(css, /\.nerv-list-amber\b/, 'missing .nerv-list-amber color variant');
+    const idx = css.indexOf('.nerv-list-amber');
+    assert.ok(idx !== -1, '.nerv-list-amber block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-list-color'), '.nerv-list-amber should set --nerv-list-color');
+  });
+
+  it('B7: prefers-contrast: more media query targets .nerv-list items', () => {
+    const contrastIdx = css.lastIndexOf('prefers-contrast: more');
+    assert.ok(contrastIdx !== -1, 'prefers-contrast: more media query not found');
+    const contrastBlock = css.slice(contrastIdx, contrastIdx + 600);
+    assert.ok(contrastBlock.includes('.nerv-list'), 'prefers-contrast block should reference .nerv-list');
+  });
+
+  it('B8: .nerv-list li background uses rgba with --nerv-list-color-rgb', () => {
+    const liMatch = css.match(/\.nerv-list[^{]*li\s*\{[^}]*\}/);
+    assert.ok(liMatch, '.nerv-list li block not found');
+    assert.ok(liMatch[0].includes('--nerv-list-color-rgb'), '.nerv-list li should reference --nerv-list-color-rgb for background');
+  });
+
+  it('B9: regression — existing component selectors still present', () => {
+    assert.match(css, /\.nerv-bar-meter\b[^-]/, 'missing .nerv-bar-meter class');
+    assert.match(css, /\.nerv-label-box\b[^-]/, 'missing .nerv-label-box class');
+    assert.match(css, /\.nerv-segment-display\b/, 'missing .nerv-segment-display class');
+  });
+});
+
 describe('Regression — Phase 1–4', () => {
   // Behavior 26
   it('Foundation tokens still present', () => {

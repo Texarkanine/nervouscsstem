@@ -1,0 +1,81 @@
+/// _list.scss — Angled pillbox list item styling.
+///
+/// Utility class that styles list items as symmetric hexagonal pillbox shapes
+/// via `clip-path: polygon()`. The 45-degree angled ends create the
+/// characteristic NGE HUD list appearance. Color is configurable via custom
+/// properties and auto-generated color variant classes.
+///
+/// The host `<ul>` or `<ol>` gets `.nerv-list`; child `<li>` elements are
+/// auto-styled with the pillbox shape and colored background fill.
+/// `filter: drop-shadow()` on the container provides the NERV glow outline
+/// (borders are incompatible with clip-path).
+///
+/// Classes:
+///   .nerv-list              — container (flex column, resets list-style)
+///   .nerv-list > li         — auto-styled pillbox children
+///   .nerv-list-{color}      — color variant (auto-generated per glow-flagged token)
+///
+/// Custom properties:
+///   --nerv-list-color       (default: --nerv-primary)
+///   --nerv-list-color-rgb   (default: --nerv-primary-rgb)
+///   --nerv-list-inset       (horizontal extent of angled points, default: 0.9em)
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert state)
+///   --nerv-glow-spread, --nerv-glow-intensity (drop-shadow glow)
+///   Color values from tokens.$nerv-colors for variant generation
+
+@use 'sass:list';
+@use 'tokens';
+
+.nerv-list {
+  --nerv-list-color: var(--nerv-primary);
+  --nerv-list-color-rgb: var(--nerv-primary-rgb);
+  --nerv-list-inset: 0.9em;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  filter:
+    drop-shadow(0 0 1px var(--nerv-list-color))
+    drop-shadow(0 0 calc(var(--nerv-glow-spread) * 0.5 * var(--nerv-glow-intensity)) var(--nerv-list-color));
+
+  > li {
+    padding: 0.3em calc(var(--nerv-list-inset) + 0.5em);
+    background: rgba(var(--nerv-list-color-rgb), 0.12);
+    color: var(--nerv-list-color);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    clip-path: polygon(
+      var(--nerv-list-inset) 0%,
+      calc(100% - var(--nerv-list-inset)) 0%,
+      100% 50%,
+      calc(100% - var(--nerv-list-inset)) 100%,
+      var(--nerv-list-inset) 100%,
+      0% 50%
+    );
+  }
+}
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-list-#{$name} {
+      --nerv-list-color: var(--nerv-#{$name});
+      --nerv-list-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nerv-list > li {
+    background: rgba(var(--nerv-list-color-rgb), 0.25);
+  }
+}

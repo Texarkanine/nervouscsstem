@@ -84,5 +84,5 @@ No new technology — `clip-path: polygon()`, CSS custom properties, SCSS `@each
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Preflight
-- [ ] Build
+- [x] Build
 - [ ] QA

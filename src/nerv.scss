@@ -2,7 +2,7 @@
 /// @forward order follows the module dependency graph:
 ///   tokens → typography → glow → scanlines → flicker → glitch
 ///   → panels → dividers → grid-marks → reticle → stripe-bar → hex-grid → radar
-///   → bar-meter → segment-display → magi-panel → label-box → status-text
+///   → bar-meter → segment-display → magi-panel → label-box → status-text → list
 ///   → states (last — cascades token overrides for alert states)
 /// All downstream modules consume tokens via CSS custom properties (not @use).
 
@@ -24,4 +24,5 @@
 @forward 'magi-panel';
 @forward 'label-box';
 @forward 'status-text';
+@forward 'list';
 @forward 'states';

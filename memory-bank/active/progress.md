@@ -14,3 +14,6 @@ Designed `clip-path: polygon()` hexagonal pillbox approach for list items. 9 tes
 
 ### Preflight — Complete (PASS)
 All checks passed. Convention compliance (`.nerv-` prefix, `_list.scss` naming, `@use 'tokens'` pattern), dependency impact (`nerv.scss` header comment needs `list` in chain — amended plan), conflict detection (no existing `.nerv-list`), and completeness all clean. Advisory: horizontal layout modifier `.nerv-list-horizontal` deferred as YAGNI per brief.
+
+### Build — Complete
+Implemented `_list.scss` with 6 classes (`.nerv-list` container + 5 sub-rules) + 9 auto-generated color variants. 3 custom properties (`--nerv-list-color`, `--nerv-list-color-rgb`, `--nerv-list-inset`). `prefers-contrast: more` support. 9 new tests in `test/components.test.mjs`. Ref page updated: Zone E with 4 list demos (default, cyan, red, green). All 205 tests pass, lint and build clean. No deviations from plan.
