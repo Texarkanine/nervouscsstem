@@ -224,4 +224,4 @@ No new technology — validation not required. All techniques used (`clip-path: 
 - [x] Technology validation complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA

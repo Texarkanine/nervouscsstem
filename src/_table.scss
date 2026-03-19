@@ -137,7 +137,14 @@
   padding: 0.6em 1.2em;
 }
 
-// Hexagon alt offset — table-level (even rows get transform offset)
+// Hexagon alt — table-level (standalone: hex clip-path + alternating row offset)
+.nerv-table.nerv-table-hex-alt td,
+.nerv-table.nerv-table-hex-alt th {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  text-align: center;
+  padding: 0.6em 1.2em;
+}
+
 .nerv-table.nerv-table-hex-alt tr:nth-child(even) td,
 .nerv-table.nerv-table-hex-alt tr:nth-child(even) th {
   transform: translateX(1.5em);
