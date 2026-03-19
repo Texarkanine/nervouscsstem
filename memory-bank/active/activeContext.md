@@ -4,10 +4,10 @@
 M7: Implement table styling with special row types
 
 ## Phase
-PLAN — COMPLETE (revised)
+PREFLIGHT — COMPLETE (PASS)
 
 ## What Was Done
-Completed implementation plan for M7 table styling, revised twice after operator feedback. Key additions: (1) fill/border mode orthogonality and auto-generated color variants from `$nerv-colors`, following `_list.scss` precedent. (2) Geometric shapes are row-level modifiers — rows within one table are freely mixable (triangle, hex, trapezoid, plain). Table-level shape class sets default, row-level overrides. FUTURE.md cleaned up. 18 test behaviors, 8 implementation steps + ref page.
+Preflight validation found and fixed a specificity bug in the table-level vs. row-level shape cascade mechanism. Original row-level selectors (`tr.nerv-table-triangle > td` at (0,1,2)) would lose to table-level (`.nerv-table.nerv-table-triangle td` at (0,2,1)). Fixed by adding `.nerv-table` ancestor context to row-level selectors (→ (0,2,2)). Convention compliance, dependency impact, conflict detection, and completeness all verified. Two advisory items documented (shared mixin opportunity, CSS-grid clarification).
 
 ## Next Step
-Proceed to Preflight phase to validate the plan.
+Proceed to Build phase (`/niko-build`).

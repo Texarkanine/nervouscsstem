@@ -29,7 +29,7 @@ Geometric shape classes (triangle, hex, trapezoid) are **row-level modifiers** a
 </table>
 ```
 
-**CSS cascade**: Table-level shape uses `.nerv-table-triangle > tr > td` (or equivalent). Row-level shape uses `.nerv-table-triangle > td` (on `<tr>`). Row-level wins via specificity or source order because it's closer to the cell.
+**CSS cascade**: Table-level shape uses `.nerv-table.nerv-table-triangle td` → specificity (0,2,1). Row-level shape uses `.nerv-table tr.nerv-table-triangle > td` → specificity (0,2,2). Row-level wins because it has higher specificity. *(Fixed in preflight: original row-level selector `tr.nerv-table-triangle > td` at (0,1,2) would LOSE to table-level (0,2,1). Adding `.nerv-table` ancestor context bumps row-level to (0,2,2).)*
 
 ### Fill/Border Orthogonality — List Precedent
 
@@ -171,13 +171,13 @@ None — implementation approach is clear.
 5. **Geometric row types — row-level (B8–B15)**
    - Files: `src/_table.scss`
    - Changes: Each geometric shape is a class applied to `<tr>` (or row-equivalent element). The class styles the row's child `td`/`th` cells. For each shape type, implement both the row-level selector (`.nerv-table-triangle > td`) and the table-level default selector (`.nerv-table.nerv-table-triangle td` or equivalent, lower specificity so row-level wins).
-   - **Triangle** (`.nerv-table-triangle`): Cells use `clip-path: polygon()` for equilateral triangles. `:nth-child(odd)` points up (`polygon(50% 0%, 100% 100%, 0% 100%)`), `:nth-child(even)` points down (`polygon(0% 0%, 100% 0%, 50% 100%)`). Text alignment follows base. Same clip-path/border limitation as list hex shapes.
-   - **Hexagon** (`.nerv-table-hex`): Cells use hex clip-path (`polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`). Default: in-phase. `.nerv-table-hex-alt` modifier: `:nth-child(odd)` / `:nth-child(even)` on rows for alternating offsets. Same clip-path/border limitation.
-   - **Trapezoid** (`.nerv-table-trapezoid`): Cells get angled edges via `clip-path: polygon()` creating trapezoids that stretch with content. Alternating cells mirror the angle so edges tile. `--nerv-table-inset` custom property for angle control.
+   - **Triangle** (`.nerv-table-triangle`): Cells use `clip-path: polygon()` for equilateral triangles. `:nth-child(odd)` points up (`polygon(50% 0%, 100% 100%, 0% 100%)`), `:nth-child(even)` points down (`polygon(0% 0%, 100% 0%, 50% 100%)`). Text alignment follows base. Same clip-path/border limitation as list hex shapes. Row-level selector: `.nerv-table tr.nerv-table-triangle > td` (specificity (0,2,2) beats table-level (0,2,1)).
+   - **Hexagon** (`.nerv-table-hex`): Cells use hex clip-path (`polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`). Default: in-phase. `.nerv-table-hex-alt` modifier: `:nth-child(odd)` / `:nth-child(even)` on rows for alternating offsets. Same clip-path/border limitation. Row-level selector: `.nerv-table tr.nerv-table-hex > td`.
+   - **Trapezoid** (`.nerv-table-trapezoid`): Cells get angled edges via `clip-path: polygon()` creating trapezoids that stretch with content. Alternating cells mirror the angle so edges tile. `--nerv-table-inset` custom property for angle control. Row-level selector: `.nerv-table tr.nerv-table-trapezoid > td`.
 
 6. **Table-level default cascade (B16)**
    - Files: `src/_table.scss`
-   - Changes: When a shape class is on the `<table>` container, it cascades as the default for all rows. Row-level shape classes override the table default. Cascade mechanism: table-level selectors use descendant combinators (`.nerv-table.nerv-table-triangle td`); row-level selectors use child combinators on `<tr>` (`.nerv-table-triangle > td` or `tr.nerv-table-triangle > td`) which win by specificity or source order.
+   - Changes: When a shape class is on the `<table>` container, it cascades as the default for all rows. Row-level shape classes override the table default. Cascade mechanism: table-level selectors use compound class + descendant (`.nerv-table.nerv-table-triangle td` → specificity (0,2,1)); row-level selectors use ancestor + child combinator (`.nerv-table tr.nerv-table-triangle > td` → specificity (0,2,2)). Row-level wins by specificity.
 
 7. **Accessibility (B17)**
    - Files: `src/_table.scss`
@@ -222,6 +222,6 @@ No new technology — validation not required. All techniques used (`clip-path: 
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight
 - [ ] Build
 - [ ] QA

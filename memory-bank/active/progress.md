@@ -17,3 +17,9 @@ Designed `.nerv-table` base class with phosphor-outline styling and fill/border 
 **Operator feedback (plan revision 2)**: Geometric shapes are row-level modifiers, not table-level. Rows within a single table should be freely mixable (e.g. 2 triangle rows, then trapezoid, then hex). Table-level shape class sets the default; row-level class overrides. Ref page must demo mixed-row tables and table-level-default-with-row-override.
 
 **Creative decision**: Tiled hex grid variant (true honeycomb tessellation) resolved via architecture exploration. Decision: implement as `.nerv-hex-grid-tiled` variant in `_hex-grid.scss` (future enhancement), not as part of M7. Explicit FUTURE.md entry created.
+
+### Preflight — Complete (PASS)
+
+Found and fixed one specificity bug: row-level shape selectors (e.g., `tr.nerv-table-triangle > td`) had specificity (0,1,2) — lower than table-level `.nerv-table.nerv-table-triangle td` at (0,2,1). Row-level overrides would not have worked. Fix: row-level selectors now include `.nerv-table` ancestor context (`.nerv-table tr.nerv-table-triangle > td` → (0,2,2)). Plan amended in tasks.md steps 5 and 6.
+
+Convention compliance, dependency impact, conflict detection, and completeness all verified. Two advisory items noted: (1) shared fill/border/color mixin opportunity (out of scope), (2) CSS-grid table support clarification (HTML table + grid display works with current selectors).

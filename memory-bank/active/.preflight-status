@@ -1,0 +1,19 @@
+PASS
+
+## Findings
+
+1. **(P1 — fixed)** Specificity bug in row-level vs. table-level cascade. Original plan had row-level `tr.nerv-table-triangle > td` at (0,1,2) which loses to table-level `.nerv-table.nerv-table-triangle td` at (0,2,1). Fixed: row-level selectors now include `.nerv-table` ancestor (`.nerv-table tr.nerv-table-triangle > td` → (0,2,2) beats (0,2,1)). Plan amended in tasks.md steps 5 and 6.
+
+2. **(P0 — minor)** Progress.md says "17 test behaviors, 9 implementation steps" but tasks.md has 18 behaviors and 8 steps. tasks.md is authoritative. Non-blocking.
+
+3. **(P0 — verified)** Convention compliance: `_table.scss` follows `_name.scss` convention. `@forward 'table'` placement after `form` before `states` matches dependency graph. Header comment update planned. Selector naming follows `.nerv-table-*` prefix pattern. Color variant `@each` loop matches `_list.scss` and `_form.scss` precedent.
+
+4. **(P0 — verified)** No conflicts: no existing `.nerv-table-*` selectors in the codebase. No overlap with `_hex-grid.scss` (different element structure and use case). No duplication-in-waiting.
+
+5. **(P0 — verified)** Completeness: all 11 acceptance criteria have mapped implementation steps and test behaviors.
+
+## Advisory
+
+- **Shared fill/border/color mixin**: The `@each` loop over `$nerv-colors` for color variant generation is now in three files (`_list.scss`, `_form.scss`, `_table.scss`). A shared mixin would reduce duplication. Out of M7 scope — consider for future DRY refactor.
+
+- **CSS-grid table support**: Requirement 7 mentions "CSS-grid-based tables." HTML `<table>` elements with `display: grid` keep `td`/`th` in the DOM, so selectors work. Pure-`<div>` grid layouts would need a `.nerv-table-cell` class. Current plan covers `<table>` elements; the brief's intent likely covers the HTML-table-with-grid-display case, which is already handled.
