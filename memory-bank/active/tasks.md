@@ -8,6 +8,29 @@ Implement table styling with special row types: base phosphor-outline tables wit
 
 ## Pinned Info
 
+### Shape Application: Row-Level Primary, Table-Level Default
+
+Geometric shape classes (triangle, hex, trapezoid) are **row-level modifiers** applied to `<tr>` (or row-equivalent). Different rows in the same table can have different shapes, freely mixed:
+
+```html
+<!-- Row-level: each row picks its own shape -->
+<table class="nerv-table">
+  <tr class="nerv-table-triangle"><td>...</td><td>...</td></tr>
+  <tr class="nerv-table-triangle"><td>...</td><td>...</td></tr>
+  <tr class="nerv-table-trapezoid"><td>...</td><td>...</td></tr>
+  <tr class="nerv-table-hex"><td>...</td><td>...</td></tr>
+</table>
+
+<!-- Table-level default: all rows inherit shape unless overridden -->
+<table class="nerv-table nerv-table-triangle">
+  <tr><td>...</td></tr>              <!-- inherits triangle -->
+  <tr><td>...</td></tr>              <!-- inherits triangle -->
+  <tr class="nerv-table-hex"><td>...</td></tr>  <!-- overrides to hex -->
+</table>
+```
+
+**CSS cascade**: Table-level shape uses `.nerv-table-triangle > tr > td` (or equivalent). Row-level shape uses `.nerv-table-triangle > td` (on `<tr>`). Row-level wins via specificity or source order because it's closer to the cell.
+
 ### Fill/Border Orthogonality — List Precedent
 
 Tables follow the same design language as lists. A list is a 1×N table; the same fill/border/color system applies.
@@ -91,25 +114,24 @@ None — implementation approach is clear.
 **Color Variants**
 - B7: At least one `.nerv-table-{color}` variant exists (auto-generated from `$nerv-colors`) → CSS contains `.nerv-table-amber` or `.nerv-table-red` or similar with `--nerv-table-color`
 
-**Alternating Triangle Rows**
+**Geometric Row Types — Row-Level Application**
 - B8: Triangle row class exists → compiled CSS contains `.nerv-table-triangle` or equivalent
 - B9: Triangle cells use `clip-path: polygon()` → CSS contains `clip-path` with `polygon` in triangle context
 - B10: Triangles alternate up/down via `:nth-child` → CSS uses `:nth-child` for alternating triangle direction
-
-**Hexagon Rows**
 - B11: Hexagon row class exists → compiled CSS contains `.nerv-table-hex` or equivalent
 - B12: Hexagon cells use `clip-path: polygon()` matching hex shape → CSS contains hex polygon
 - B13: Hexagon rows support out-of-phase offset (alternating) → CSS uses `:nth-child` for alternating row offsets
-
-**Stretchable Trapezoid Rows**
 - B14: Trapezoid row class exists → compiled CSS contains `.nerv-table-trapezoid` or equivalent
 - B15: Trapezoid cells use `clip-path: polygon()` for angled edges → CSS contains trapezoid-related `clip-path` or `skew`
 
+**Geometric Row Types — Table-Level Default**
+- B16: Shape class on table cascades to rows → CSS contains a selector that applies triangle/hex/trapezoid clip-path from table-level class to cells (e.g. `.nerv-table-triangle td` or `.nerv-table.nerv-table-triangle > * > td`)
+
 **Accessibility**
-- B16: `prefers-contrast: more` media query targets table elements → CSS contains `prefers-contrast: more` block referencing `.nerv-table`
+- B17: `prefers-contrast: more` media query targets table elements → CSS contains `prefers-contrast: more` block referencing `.nerv-table`
 
 **Regression**
-- B17: Existing component selectors still present → `.nerv-bar-meter`, `.nerv-hex-grid`, `.nerv-list`, `.nerv-input` all present in compiled CSS
+- B18: Existing component selectors still present → `.nerv-bar-meter`, `.nerv-hex-grid`, `.nerv-list`, `.nerv-input` all present in compiled CSS
 
 ### Test Infrastructure
 
@@ -130,7 +152,7 @@ None — implementation approach is clear.
 
 2. **Write failing tests**
    - Files: `test/components.test.mjs`
-   - Changes: Add `describe('Table styling CSS')` block with all 17 test cases (B1–B17). Run tests — all new tests should fail.
+   - Changes: Add `describe('Table styling CSS')` block with all 18 test cases (B1–B18). Run tests — all new tests should fail.
 
 3. **Base table styling + fill/border modes (B1–B6)**
    - Files: `src/_table.scss`
@@ -146,30 +168,31 @@ None — implementation approach is clear.
    - Files: `src/_table.scss`
    - Changes: Auto-generate `.nerv-table-{color}` classes from `tokens.$nerv-colors` (glow-flagged entries only), setting `--nerv-table-color` and `--nerv-table-color-rgb`. Exact same `@each` loop pattern as `_list.scss`.
 
-5. **Alternating triangle rows (B8–B10)**
+5. **Geometric row types — row-level (B8–B15)**
    - Files: `src/_table.scss`
-   - Changes: Implement triangle row type (applied to row or table container). Cells use `clip-path: polygon()` for equilateral triangles. `:nth-child(odd)` points up (`polygon(50% 0%, 100% 100%, 0% 100%)`), `:nth-child(even)` points down (`polygon(0% 0%, 100% 0%, 50% 100%)`). Text alignment follows base: `align-items: flex-end` for up, `flex-start` for down. Same clip-path/border limitation as list hex shapes: borders clipped away.
+   - Changes: Each geometric shape is a class applied to `<tr>` (or row-equivalent element). The class styles the row's child `td`/`th` cells. For each shape type, implement both the row-level selector (`.nerv-table-triangle > td`) and the table-level default selector (`.nerv-table.nerv-table-triangle td` or equivalent, lower specificity so row-level wins).
+   - **Triangle** (`.nerv-table-triangle`): Cells use `clip-path: polygon()` for equilateral triangles. `:nth-child(odd)` points up (`polygon(50% 0%, 100% 100%, 0% 100%)`), `:nth-child(even)` points down (`polygon(0% 0%, 100% 0%, 50% 100%)`). Text alignment follows base. Same clip-path/border limitation as list hex shapes.
+   - **Hexagon** (`.nerv-table-hex`): Cells use hex clip-path (`polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`). Default: in-phase. `.nerv-table-hex-alt` modifier: `:nth-child(odd)` / `:nth-child(even)` on rows for alternating offsets. Same clip-path/border limitation.
+   - **Trapezoid** (`.nerv-table-trapezoid`): Cells get angled edges via `clip-path: polygon()` creating trapezoids that stretch with content. Alternating cells mirror the angle so edges tile. `--nerv-table-inset` custom property for angle control.
 
-6. **Hexagon rows (B11–B13)**
+6. **Table-level default cascade (B16)**
    - Files: `src/_table.scss`
-   - Changes: Implement hexagon row type. Cells use hex clip-path (`polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`). Default: all rows same offset (in-phase). `.nerv-table-hex-alt` modifier: `:nth-child(odd)` / `:nth-child(even)` on rows for alternating offsets (out-of-phase). Same clip-path/border limitation as hex/arrow list shapes.
+   - Changes: When a shape class is on the `<table>` container, it cascades as the default for all rows. Row-level shape classes override the table default. Cascade mechanism: table-level selectors use descendant combinators (`.nerv-table.nerv-table-triangle td`); row-level selectors use child combinators on `<tr>` (`.nerv-table-triangle > td` or `tr.nerv-table-triangle > td`) which win by specificity or source order.
 
-7. **Stretchable trapezoid rows (B14–B15)**
-   - Files: `src/_table.scss`
-   - Changes: Implement trapezoid row type. Cells get angled edges via `clip-path: polygon()` where top and bottom edges are at different widths (creating a trapezoid that stretches with content). Alternating cells mirror the angle so edges tile. May use a `--nerv-table-inset` custom property (like list `--nerv-list-inset`) for angle control.
-
-8. **Accessibility (B16)**
+7. **Accessibility (B17)**
    - Files: `src/_table.scss`
    - Changes: Add `prefers-contrast: more` block increasing border widths and fill opacity for table elements. Add `prefers-reduced-motion: reduce` block suppressing any transitions. Verify regression by running existing tests.
 
-9. **Reference page**
+8. **Reference page**
    - Files: `ref/ref-tables.html` (new)
    - Changes: Create demonstration page following `ref-lists.html` structure:
-     - Row 1: Fill & Border Modes on base rect tables (default, bordered, outline, solid)
-     - Row 2: Color variants
-     - Row 3: Triangle rows (with different fills/colors)
-     - Row 4: Hexagon rows (in-phase, out-of-phase, with different fills)
-     - Row 5: Trapezoid rows
+     - Section 1: Fill & Border Modes on base rect tables (default, bordered, outline, solid) — various colors
+     - Section 2: Color variants
+     - Section 3: Triangle rows (with different fills/colors)
+     - Section 4: Hexagon rows (in-phase, out-of-phase, with different fills)
+     - Section 5: Trapezoid rows
+     - Section 6: **Mixed-row table** — a single table mixing triangle, hex, trapezoid, and plain rows to demonstrate row-level shape mixing
+     - Section 7: **Table-level default with row override** — table with a default shape class, plus individual rows overriding to different shapes
      - Each section documents the classes used. Loads `dist/nerv.css`, uses `.nerv-panel` containers where needed.
 
 ## Technology Validation
@@ -185,6 +208,8 @@ No new technology — validation not required. All techniques used (`clip-path: 
 - **Hexagon row offset math**: Variable cell widths in table context (unlike fixed hex-grid cells). Mitigation: Use `%`-based offsets or `calc()` with custom property for cell width.
 
 - **Trapezoid edge tiling**: Maintaining seamless tiling when cells have varying widths. Mitigation: Use consistent `--nerv-table-inset` custom property across cells so clip-path angles match.
+
+- **Row-level vs. table-level specificity**: When a shape class appears on both the table and a row, the row must win. Mitigation: Table-level selectors use descendant combinators (lower specificity); row-level selectors use child combinators or `tr.class > td` (higher specificity). Source order also helps: row-level rules come after table-level rules.
 
 - **CSS property replacement (compound states)**: Solid fill mode + geometric shape both touch `background` on cells. Mitigation: Source-order cascade: fill modes before geometric shapes, shapes explicitly reset as needed (lesson from `_list.scss`).
 
