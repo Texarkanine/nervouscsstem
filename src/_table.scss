@@ -19,8 +19,7 @@
 ///
 /// Geometric row types (on <tr> or on <table> as default):
 ///   .nerv-table-triangle         — equilateral triangles alternating up/down
-///   .nerv-table-hex              — long hexagonal cells (stretch with content)
-///   .nerv-table-hex-eq           — equilateral hex (fixed aspect ratio, clips overflow)
+///   .nerv-table-hex              — hexagonal cells (stretch with content)
 ///   .nerv-table-hex-alt          — hexagonal cells with alternating row offset
 ///   .nerv-table-trapezoid        — angled trapezoid cells
 ///
@@ -165,16 +164,6 @@
   transform: translateX(1.5em);
 }
 
-// Hexagon equilateral — table-level (fixed aspect ratio, clips overflow)
-.nerv-table.nerv-table-hex-eq td,
-.nerv-table.nerv-table-hex-eq th {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  text-align: center;
-  padding: 0.6em 1.2em;
-  aspect-ratio: 1.1547;
-  overflow: hidden;
-}
-
 // Trapezoid — table-level default
 .nerv-table.nerv-table-trapezoid td,
 .nerv-table.nerv-table-trapezoid th {
@@ -234,16 +223,6 @@
   text-align: center;
   padding: 0.6em 1.2em;
   transform: translateX(1.5em);
-}
-
-// Hexagon equilateral — row-level (fixed aspect ratio, clips overflow)
-.nerv-table tr.nerv-table-hex-eq > td,
-.nerv-table tr.nerv-table-hex-eq > th {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  text-align: center;
-  padding: 0.6em 1.2em;
-  aspect-ratio: 1.1547;
-  overflow: hidden;
 }
 
 // Trapezoid — row-level

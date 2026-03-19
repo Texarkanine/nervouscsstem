@@ -875,15 +875,6 @@ describe('Table styling CSS', () => {
     );
   });
 
-  // --- Equilateral Hex ---
-
-  it('B21: .nerv-table-hex-eq class exists with aspect-ratio', () => {
-    assert.match(css, /\.nerv-table-hex-eq\b/, 'missing .nerv-table-hex-eq class');
-    const hexEqSection = css.slice(css.indexOf('.nerv-table-hex-eq'));
-    const block = hexEqSection.slice(0, 1500);
-    assert.ok(block.includes('aspect-ratio'), '.nerv-table-hex-eq should set aspect-ratio for equilateral proportions');
-  });
-
   // --- Accessibility ---
 
   it('B17: prefers-contrast: more media query targets table elements', () => {
