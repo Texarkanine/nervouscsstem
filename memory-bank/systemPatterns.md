@@ -31,6 +31,16 @@ This distinction is load-bearing for the alert cascade system.
 - **`prefers-contrast`** — High-contrast mode should increase border widths and reduce reliance on glow/shadow for element distinction.
 - **Specificity discipline** — All selectors namespaced with `.nerv-` prefix to avoid collisions when overlaid on existing UIs (the entire point of the project).
 
+## CSS Property Replacement (Not Additive)
+
+`box-shadow`, `filter`, `background`, and `text-shadow` are **replacement properties** — when the same property is set by two selectors at equal specificity, the later one completely overwrites the earlier. They do not merge. This is the single most common source of visual bugs in this design system.
+
+**Consequence for compound states:** Any element that can be in multiple pseudo-class states simultaneously (`:checked:focus`, `:hover:active`, `.modifier-a.modifier-b`) needs explicit compound selectors that manually combine all layers of shadow/filter/background into a single declaration. If `:checked` sets `box-shadow: inset ...` and `:focus` sets `box-shadow: 0 0 glow ...`, then `:checked:focus` must set `box-shadow: inset ..., 0 0 glow ...` — the union of both, in one property.
+
+**Consequence for orthogonal modifiers:** When two independent class axes (e.g., shape × fill) both touch the same property on the same element, the later axis must explicitly reset the earlier axis's value. Without an explicit override (even to `none` / `0` / `transparent`), the earlier axis's value bleeds through. See `_list.scss` for the canonical example: fill modes before shapes, with shapes explicitly overriding `background` and `border`.
+
+Instances discovered: M5 (drop-shadow not border, source-order cascade, background override, double-border bleed), M6 (checkbox checked+focus shadow collision).
+
 ## Animation Patterns
 
 - **Token-driven durations** — Every animation whose speed a consumer might want to tune gets its own `--nerv-*-duration` token (e.g., `--nerv-flicker-duration`, `--nerv-glitch-duration`). Durations use `calc(var(--nerv-*-duration) * N / var(--nerv-animation-speed))` so the global speed multiplier and per-effect tokens compose.
