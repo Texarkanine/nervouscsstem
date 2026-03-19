@@ -1,13 +1,13 @@
 # Active Context
 
 ## Current Task
-M5: Add list styling
+M6: Style web form elements
 
 ## Phase
-REFLECT — COMPLETE
+COMPLEXITY-ANALYSIS — COMPLETE
 
 ## What Was Done
-Reflected on M5 list styling task. 8 rework cycles grew the component from a 9-test hex pillbox to a 22-test system with 5 shapes, 4 fill modes, 2 rotation modifiers, skewX parallelograms, and no-glow architecture. Key insights: filter: drop-shadow() is not a border; skewX on ::before is the clean parallelogram pattern; CSS source order is the hidden third cascade axis; user-driven visual iteration beats speculative design for aesthetic components.
+Classified M6 as Level 2 (Simple Enhancement). New component set (text input, textarea, select, radio, checkbox, button) in NERV aesthetic. Self-contained in a new SCSS partial — no architectural implications.
 
 ## Next Step
-Run /niko to continue to the next milestone.
+Load the Level 2 workflow and begin planning.
