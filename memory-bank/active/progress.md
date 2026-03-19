@@ -32,6 +32,10 @@ Implemented all 8 plan steps following TDD. Created `src/_table.scss` with base 
 
 Found and fixed one trivial inconsistency: table-level `.nerv-table-hex-alt` was missing hex clip-path on cells (only had alternating row offset), while row-level hex-alt was self-contained. Fixed by adding base hex clip-path selector to table-level hex-alt. Advisory deferred: table-level vs. row-level shape property duplication could use private mixins but exists for specificity reasons. All 11 acceptance criteria verified. 256/256 tests pass, stylelint clean.
 
+### Rework (operator feedback) — Complete
+
+Operator visual review identified three adjustments: (1) table container border should be optional — geometric shapes look better without chrome. Added `.nerv-table-borderless` to strip border, glow, and cell borders. (2) Hexagons need equilateral option. Added `.nerv-table-hex-eq` with `aspect-ratio: 1.1547` and overflow clipping; default `.nerv-table-hex` remains long/stretchy. (3) Triangle tessellation gaps (diamond-shaped voids between cells) are an inherent CSS clip-path limitation — accepted as valid NERV aesthetic. Trapezoid gaps deferred (same root cause). Updated ref page with borderless triangle demos and long vs equilateral hex comparison. 3 new tests, 259/259 total pass.
+
 ### Reflect — Complete
 
 Plan accuracy was high — implementation sequence worked as specified with no reordering. Preflight's specificity bug catch prevented a confusing cascade failure during build. QA caught one real issue (hex-alt table-level missing clip-path). Key technical insight: dual-tier specificity pattern for container-default + child-override is reusable. Process insight: plans should explicitly specify "modifier" vs "standalone" semantics at every application level.

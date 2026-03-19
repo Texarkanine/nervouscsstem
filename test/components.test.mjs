@@ -847,6 +847,43 @@ describe('Table styling CSS', () => {
     assert.ok(hasTableLevel, 'at least one table-level shape selector should cascade to cells (e.g. .nerv-table.nerv-table-triangle td)');
   });
 
+  // --- Borderless ---
+
+  it('B19: .nerv-table-borderless removes container border and glow', () => {
+    assert.match(css, /\.nerv-table-borderless\b/, 'missing .nerv-table-borderless class');
+    const idx = css.indexOf('.nerv-table-borderless');
+    assert.ok(idx !== -1, '.nerv-table-borderless block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(
+      block.includes('border: 0') || block.includes('border: none') || block.includes('border-style: none'),
+      '.nerv-table-borderless should remove border'
+    );
+    assert.ok(
+      block.includes('box-shadow: none'),
+      '.nerv-table-borderless should remove box-shadow'
+    );
+  });
+
+  it('B20: .nerv-table-borderless also removes cell borders', () => {
+    const re = /\.nerv-table-borderless\s+(?:th|td)\b/;
+    assert.match(css, re, '.nerv-table-borderless should target th/td');
+    const idx = css.indexOf('.nerv-table-borderless');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(
+      block.includes('border: 0') || block.includes('border: none'),
+      '.nerv-table-borderless cells should have border removed'
+    );
+  });
+
+  // --- Equilateral Hex ---
+
+  it('B21: .nerv-table-hex-eq class exists with aspect-ratio', () => {
+    assert.match(css, /\.nerv-table-hex-eq\b/, 'missing .nerv-table-hex-eq class');
+    const hexEqSection = css.slice(css.indexOf('.nerv-table-hex-eq'));
+    const block = hexEqSection.slice(0, 1500);
+    assert.ok(block.includes('aspect-ratio'), '.nerv-table-hex-eq should set aspect-ratio for equilateral proportions');
+  });
+
   // --- Accessibility ---
 
   it('B17: prefers-contrast: more media query targets table elements', () => {
