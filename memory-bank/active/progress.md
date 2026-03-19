@@ -21,8 +21,18 @@ Implemented `_list.scss` with 6 classes (`.nerv-list` container + 5 sub-rules) +
 ### QA — Complete (PASS)
 Semantic review passed. KISS/DRY/YAGNI/Completeness/Regression/Integrity/Documentation all clean. No issues found — implementation is minimal, follows established patterns, and meets all requirements.
 
-### Post-QA Rework — Complete
-User feedback: "45-degree angled" means each item is physically rotated, pivoting at its left point so items fan out from a vertical axis. Added `--nerv-list-angle` custom property (default `0deg`), `transform: rotate(var(--nerv-list-angle))` + `transform-origin: 0% 50%` on `> li`, `.nerv-list-angled` (-45deg) and `.nerv-list-angled-reverse` (45deg) modifier classes. 4 new tests (B10–B13). Ref page updated to demo angled variants. 209 tests pass, lint/build clean.
+### Post-QA Rework (8 cycles) — Complete
+User-driven iteration expanded the component from 9 tests to 22:
+1. **Rotation**: "45-degree angled" means per-item rotation, not shape. Added `--nerv-list-angle`, `transform: rotate()`, `transform-origin: 0% 50%`. B10–B13.
+2. **Shapes + Overlap**: Added rect shape, "para" (later renamed arrow). Fixed overlap with padding. B14–B16.
+3. **Fill modes**: Added bordered, outline, solid. Started drop-shadow border saga. B17–B19.
+4. **Naming + Arrow + True para + Gap**: Renamed para→arrow, added arrow-reverse, true parallelogram via clip-path, `--nerv-list-gap`. B20–B22.
+5. **Real borders**: Switched bordered/outline from drop-shadow to real CSS `border` + box-shadow glow. Documented clip-path border limitation.
+6. **Remove ALL glow**: User confirmed 0.5 opacity background is sufficient. Stripped filter, box-shadow, glow mixin entirely. Massive simplification.
+7. **skewX for parallelogram**: Switched para from clip-path to `skewX()` on `::before` pseudo. Exact angle control, borders work, text stays straight.
+8. **Source order fix**: Reordered fill modes before shape modifiers to fix specificity bug where solid overrode para's transparent background.
 
-### Post-QA Rework 2 — Complete
-User feedback: need controllable shapes + fix angled overlap. Added three shape modes: hex (default, symmetric pointed ends), `.nerv-list-rect` (plain bordered rectangles, `clip-path: none`), `.nerv-list-para` (left point + flat right edge). Angled modifiers now set `gap: 2.5rem` to prevent overlap. 3 new tests (B14–B16). Ref page split into shapes demo + angled demo sections. 212 tests pass, lint/build clean.
+Final: 5 shapes × 4 fills × 2 rotations, 22 tests, 223 lines SCSS, zero glow/filter complexity.
+
+### Reflect — Complete
+Key insights captured: drop-shadow is not a border; skewX on ::before is the clean parallelogram pattern; source order is the hidden third cascade axis; user-driven visual iteration beats speculative design for aesthetic components.

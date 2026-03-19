@@ -4,10 +4,10 @@
 M5: Add list styling
 
 ## Phase
-BUILD - COMPLETE (post-QA rework)
+REFLECT — COMPLETE
 
 ## What Was Done
-Three shape modes: hex (default symmetric pillbox), `.nerv-list-rect` (bordered rectangles), `.nerv-list-para` (left-pointed, flat right edge). Per-item rotation via `--nerv-list-angle` with `transform-origin: 0% 50%` pivoting at left point. Angled gap increased to `2.5rem` to prevent overlap. 212 tests pass, lint/build clean.
+Reflected on M5 list styling task. 8 rework cycles grew the component from a 9-test hex pillbox to a 22-test system with 5 shapes, 4 fill modes, 2 rotation modifiers, skewX parallelograms, and no-glow architecture. Key insights: filter: drop-shadow() is not a border; skewX on ::before is the clean parallelogram pattern; CSS source order is the hidden third cascade axis; user-driven visual iteration beats speculative design for aesthetic components.
 
 ## Next Step
-Ready for reflection. Run /niko to continue.
+Run /niko to continue to the next milestone.
