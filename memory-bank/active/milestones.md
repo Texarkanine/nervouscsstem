@@ -42,6 +42,6 @@ All milestones are independent — no cross-milestone dependencies. They can be 
 - [x] M3: Add built-in gradient presets for bar meters — review NGE UIs for common color pairings, provide off-the-shelf preset classes/attributes that set `--nerv-bar-from`/`--nerv-bar-to` automatically (L2 — design research + utility classes on `_bar-meter.scss`)
 - [x] M4: Add reticle tickmarks — CSS-based measurement-ruler tickmarks along panel edges via utility classes and/or mixin (L2 — new structural component, new SCSS partial)
 - [x] M5: Add list styling — angled 45-degree pillbox helper classes with configurable color for list items (L2 — new component, new SCSS partial)
-- [ ] M6: Style web form elements — text input, textarea, select, radio, checkbox, and button in NERV aesthetic (L2 — new component set, new SCSS partial)
+- [x] M6: Style web form elements — text input, textarea, select, radio, checkbox, and button in NERV aesthetic (L2 — new component set, new SCSS partial)
 - [ ] M7: Implement table styling with special row types — base phosphor-outline tables, alternating triangle rows, hexagon rows (with in-phase/out-of-phase offset), stretchable trapezoid rows, and tiled hex grid variant decision (L3 — multiple sub-components, design decisions, new SCSS partial)
 - [ ] M8: Investigate and implement radar pulse — elements that pulse/fade on radar sweep, sync mechanism for external UI actions to radar position (L2 — extends `_radar.scss`, feasibility investigation required, possible JS orchestration)

@@ -1,46 +1,57 @@
-# Project Brief: NERV Design System — Future Features Buildout
+# Project Brief: M7 — Table Styling with Special Row Types
 
-## Overview
+## User Story
 
-Implement all planned features and enhancements documented in `planning/FUTURE.md` for the NERV CSS design system. This is a multi-feature project spanning new components, bug fixes, enhancements, and potentially new architectural patterns.
+As a developer using the NERV design system, I want to style tables with phosphor-outline aesthetics and special geometric row types (triangles, hexagons, trapezoids) so that I can create data displays that match the NGE console aesthetic.
 
-## Features
+## Use-Case(s)
 
-### 1. Reticle Tickmarks
-CSS-based tickmarks along rectangle/panel edges for measurement-ruler or targeting-reticle aesthetics. Utility classes (`.nerv-reticle-top`, `.nerv-reticle-left`, etc.) or a mixin taking edge, color, and density parameters. Pure CSS via `repeating-linear-gradient` or SVG data URIs. Fits in the structural layer alongside panels and dividers.
+### Use-Case 1: Base Phosphor-Outline Tables
+Display tabular data in a classic NERV console style with glowing phosphor borders around cells and rows.
 
-### 2. Gradient Presets
-The bar meter gradient mechanism (`--nerv-bar-from` / `--nerv-bar-to`) already works — the green-to-red gradient in `ref/ref-components.html` is visually the "rainbow" referenced in FUTURE.md. The actual need is to make common gradient pairings available as easy-to-use presets (classes or data attributes) so consumers don't have to manually set `--nerv-bar-from`/`--nerv-bar-to` each time. Review existing NGE UI references for the most common color pairings and ship a handful of built-in presets. The green→red "thermal" gradient is the most common and should be the first preset.
+### Use-Case 2: Alternating Triangle Rows
+Create tables where cells are tiled equilateral triangles (alternating up/down) with text aligned to the base, for geometric data visualization.
 
-### 3. Fix: CRT Opacity on Barberpole
-Vertical and/or green barberpole has unwanted opacity between green bands. Should be solid. Also consider: barberpoles should have square borders with glow of a configurable color (default to main barberpole color).
+### Use-Case 3: Hexagon Rows
+Display data in hexagonal cells that touch on edges, with configurable in-phase or out-of-phase offset alignment.
 
-### 4. Glitch Refinement
-Glitch styling should NEVER smoothly translate — it should JUMP between positions. Current behavior looks like a smooth moth-around-flame; desired behavior is sharp, broken-feeling discontinuous jumps.
+### Use-Case 4: Stretchable Trapezoid Rows
+Create table rows where cells expand with content, transforming from triangles into trapezoids while maintaining the geometric aesthetic.
 
-### 5. Web Forms
-Style major web form elements (text input, textarea, select, radio, checkbox, button — the basics) in the NERV aesthetic. The design system needs to support real websites, not just dashboards.
+### Use-Case 5: Tiled Hex Grid Variant
+Determine whether a true honeycomb tessellation layout should be implemented as a table variant, standalone element, or technique using existing hexagons.
 
-### 6. Lists
-Helper classes for lists with 45-degree angled pillbox styling around content. Very common NGE design element. Should allow color selection; shape options (trapezoid or elongated hexagon) may be YAGNI.
+## Requirements
 
-### 7. Tables
-Tables (both real `<table>` and CSS-grid-based) styleable as vector-like phosphor glowing outlines. Special row types:
-- **Alternating triangles** — tiled equilateral triangles (up/down) as cells. Text aligned to base.
-- **Hexagons** — touching on edges, with offset A/B for in-phase or out-of-phase alignment.
-- **Alternating stretchable triangles** — like regular triangles but cells expand with content, becoming trapezoids.
+1. Base table styling with phosphor-outline borders and glow effects
+2. Alternating triangle row type with tiled equilateral triangles (up/down pattern)
+3. Hexagon row type with configurable in-phase/out-of-phase offset
+4. Stretchable trapezoid row type that expands with content
+5. Design decision on tiled hex grid variant implementation approach
+6. Support for both real `<table>` elements and CSS-grid-based tables
+7. All styling respects `prefers-reduced-motion` and `prefers-contrast`
+8. All selectors use `.nerv-` prefix
+9. CSS-only implementation (SVG data URIs permitted, no image files)
 
-### 8. Tiled Hex Grid
-A third hex grid layout variant: true honeycomb tessellation with no gaps or overlaps. **To decide:** is this achieved with a table similar to #7? Is this its own element? Or is this just a *technique* that can be done with existing hexagons, and doesn't need to be in our style library at all?
+## Constraints
 
-### 9. Radar Pulse
-Elements (possibly just text) placed radially in the radar that pulse and fade when the radar sweep passes. At minimum, ability to sync external UI actions to radar sweep position. May not be possible with pure CSS — needs investigation.
+1. All selectors use the `.nerv-` prefix — no exceptions
+2. `prefers-reduced-motion` suppresses all new animations; static state must still look recognizably NERV
+3. `prefers-contrast` increases border widths and reduces reliance on glow/shadow for new components
+4. No image files — all visual effects via CSS; SVG data URIs in `background-image` are permitted
+5. No canvas, WebGL, or framework dependencies
+6. Token architecture preserved: ambiance tokens shift with alert state, named data tokens remain stable
+7. New SCSS partials follow the `_name.scss` convention and are `@forward`ed from `nerv.scss` before `states`
+8. Existing features and reference pages remain unbroken after implementation
+9. Stylelint + Node.js test runner must pass after implementation
 
 ## Acceptance Criteria
 
-- Fixes/refinements to existing components update the existing ref page that demonstrates them; new capabilities get demonstrated in ref pages (new sections on existing pages for small additions, new pages for substantial new features)
-- All features respect `prefers-reduced-motion` and `prefers-contrast`
-- All selectors use `.nerv-` prefix
-- No image files — CSS-only (SVG data URIs permitted)
-- Existing features remain unbroken
-- Tests pass (Stylelint + Node.js test runner)
+1. `.nerv-table` class provides base phosphor-outline styling for tables
+2. `.nerv-table-triangle` or similar provides alternating triangle row styling
+3. `.nerv-table-hex` or similar provides hexagon row styling with offset options
+4. `.nerv-table-trapezoid` or similar provides stretchable trapezoid row styling
+5. Design decision documented on tiled hex grid variant approach
+6. Reference page demonstrates all table variants
+7. All tests pass (Stylelint + Node.js test runner)
+8. Existing component tests remain unbroken
