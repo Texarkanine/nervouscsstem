@@ -8,7 +8,7 @@ complexity_level: 2
 
 ## Summary
 
-Built a list styling component with 5 shapes, 4 fill modes, per-item rotation, and color variants. The initial plan covered a basic hex pillbox in 9 tests; user-driven iteration expanded scope to 22 tests across 8 rework cycles, culminating in a much richer and architecturally cleaner component than originally planned.
+Built a list styling component with 5 shapes, 4 fill modes, per-item rotation, and color variants. The initial plan covered a basic hex pillbox in 9 tests; user-driven iteration expanded scope to 23 tests across 9 rework cycles, culminating in a much richer and architecturally cleaner component than originally planned.
 
 ## Requirements vs Outcome
 
@@ -24,7 +24,7 @@ The plan did not anticipate: per-item rotation, multiple shapes, fill modes, the
 
 ## Build & QA Observations
 
-**What went well:** TDD held up beautifully across all 8 rework cycles. Each iteration: update tests → red → implement → green. The test suite grew from 9 to 22 behaviors and caught regressions every time. The final SCSS is 223 lines of clean, well-structured code with no glow/filter complexity.
+**What went well:** TDD held up beautifully across all 9 rework cycles. Each iteration: update tests → red → implement → green. The test suite grew from 9 to 23 behaviors and caught regressions every time. The final SCSS is clean, well-structured code with no glow/filter complexity.
 
 **What was hard:** The border saga consumed 3+ rework cycles. The progression:
 1. `filter: drop-shadow()` on container → text washes out, "borders" are just glow
@@ -38,6 +38,8 @@ The user cut through the complexity faster than the implementation: "I changed b
 
 **Source-order bug:** Generic `.nerv-list-solid > li { background: color }` (fill mode) overrode `.nerv-list-para > li { background: transparent }` (shape) at equal specificity because fill modes were declared after shapes. Fix: reorder so fill modes come before shapes. This is a class of bug that doesn't show in tests (both rules exist in CSS) but breaks visual rendering.
 
+**Double-border bug (rework 9):** After reflection was "done," adding `nerv-list-bordered` to a rotated para demo revealed a double border: `.nerv-list-bordered > li` applied a rectangular border on the `<li>`, while `.nerv-list-bordered.nerv-list-para > li::before` applied the correct skewed border on the pseudo-element. Both rendered simultaneously. Fix: add `border: 0` to `.nerv-list-para > li` so the shape layer explicitly resets the fill layer's border. This is the same class of orthogonal-modifier interaction as the source-order bug — when two independent modifier axes (shape × fill) both touch the same CSS property on the same element, the shape layer must explicitly neutralize the fill layer's effect. The ref page demos caught this immediately when the bordered para combination was first tried.
+
 ## Insights
 
 ### Technical
@@ -45,6 +47,7 @@ The user cut through the complexity faster than the implementation: "I changed b
 - **`filter: drop-shadow()` is not a border.** It traces the alpha channel of ALL painted content and produces a glow, not a crisp line. It cannot be scoped to just backgrounds. For crisp phosphor borders, use real CSS `border` + `box-shadow`. On clip-path shapes, this is impossible — accept the limitation and document it.
 - **`skewX()` on `::before` is the clean parallelogram pattern.** It avoids text distortion (no counter-skew needed since the skew is on the pseudo, not the element), preserves real CSS borders (no clip-path), and provides exact angle control in degrees. When paired with rotation, `skewX(angle) == rotate(angle)` produces vertical edges.
 - **CSS source order is the hidden third axis of the cascade.** When designing orthogonal modifier systems (shapes × fills × rotations), the source order of rules determines which modifier "wins" at equal specificity. Fill modes must come before shape modifiers so shapes can override background.
+- **Orthogonal modifiers need explicit resets at every intersection.** When shape and fill are independent axes that both touch the same CSS property (e.g. `border`), the "later" axis (shape) must explicitly reset the "earlier" axis's (fill) effect — even if the shape's default is "no border." Without an explicit `border: 0`, the fill mode's border bleeds through on elements where it doesn't belong (e.g. the `<li>` of a para, where borders should only live on `::before`). This surfaced twice: once for `background` (source-order bug) and once for `border` (double-border bug). Any future modifier axis added to this system should audit every property set by existing axes.
 - **Higher opacity beats glow.** A 0.5 opacity colored background is visually stronger and more readable than a 0.12 opacity background with layered `filter: drop-shadow()` glow. Glow adds complexity (text wash-out, filter inheritance, performance) for marginal visual gain. Start with stronger backgrounds; add glow only if specifically requested.
 
 ### Process
@@ -54,4 +57,4 @@ The user cut through the complexity faster than the implementation: "I changed b
 
 ### Million-Dollar Question
 
-If shape/fill/rotation orthogonality had been a foundational assumption, the architecture would look exactly like what we ended up with: a layered cascade where (1) base sets defaults, (2) fill modes set border/background, (3) shape modifiers override clip-path/background as needed (with para using a fundamentally different rendering strategy via `::before` + `skewX`), and (4) rotation is independent. The key design decision — that clip-path shapes and transform shapes need different border strategies — would have driven the architecture from day one instead of emerging through 8 rework cycles. The `::before` pseudo-element pattern for para would have been the starting point, not the final discovery.
+If shape/fill/rotation orthogonality had been a foundational assumption, the architecture would look exactly like what we ended up with: a layered cascade where (1) base sets defaults, (2) fill modes set border/background, (3) shape modifiers override clip-path/background/border as needed (with para using a fundamentally different rendering strategy via `::before` + `skewX`), and (4) rotation is independent. The key design decision — that clip-path shapes and transform shapes need different border strategies — would have driven the architecture from day one instead of emerging through 9 rework cycles. The `::before` pseudo-element pattern for para would have been the starting point, not the final discovery. And critically, every shape modifier would have shipped with explicit resets for every property that any fill mode touches — a "defensive reset" pattern that prevents cross-axis bleed by construction rather than by discovery.

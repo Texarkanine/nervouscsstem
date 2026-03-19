@@ -575,6 +575,13 @@ describe('List styling CSS', () => {
     assert.ok(block.includes('clip-path: none'), '.nerv-list-para li should remove clip-path');
   });
 
+  it('B23: .nerv-list-para > li resets border to prevent double-border with bordered/outline', () => {
+    const paraLiRe = /\.nerv-list-para\s*>\s*li\s*\{[^}]*\}/;
+    const match = css.match(paraLiRe);
+    assert.ok(match, '.nerv-list-para > li block not found');
+    assert.ok(match[0].includes('border: 0'), '.nerv-list-para > li should reset border to 0');
+  });
+
   it('B22: --nerv-list-gap custom property declared on .nerv-list', () => {
     const idx = css.indexOf('.nerv-list {');
     assert.ok(idx !== -1, '.nerv-list block not found');
