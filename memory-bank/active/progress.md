@@ -31,3 +31,7 @@ Implemented all 8 plan steps following TDD. Created `src/_table.scss` with base 
 ### QA — Complete (PASS)
 
 Found and fixed one trivial inconsistency: table-level `.nerv-table-hex-alt` was missing hex clip-path on cells (only had alternating row offset), while row-level hex-alt was self-contained. Fixed by adding base hex clip-path selector to table-level hex-alt. Advisory deferred: table-level vs. row-level shape property duplication could use private mixins but exists for specificity reasons. All 11 acceptance criteria verified. 256/256 tests pass, stylelint clean.
+
+### Reflect — Complete
+
+Plan accuracy was high — implementation sequence worked as specified with no reordering. Preflight's specificity bug catch prevented a confusing cascade failure during build. QA caught one real issue (hex-alt table-level missing clip-path). Key technical insight: dual-tier specificity pattern for container-default + child-override is reusable. Process insight: plans should explicitly specify "modifier" vs "standalone" semantics at every application level.
