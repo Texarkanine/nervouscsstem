@@ -700,6 +700,22 @@ describe('Form styling CSS', () => {
     );
   });
 
+  it('B18: .nerv-form-red color variant exists and sets --nerv-form-color', () => {
+    assert.match(css, /\.nerv-form-red\b/, 'missing .nerv-form-red color variant');
+    const idx = css.indexOf('.nerv-form-red');
+    assert.ok(idx !== -1, '.nerv-form-red block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-form-color'), '.nerv-form-red should set --nerv-form-color');
+  });
+
+  it('B19: .nerv-form-green color variant exists and sets --nerv-form-color-rgb', () => {
+    assert.match(css, /\.nerv-form-green\b/, 'missing .nerv-form-green color variant');
+    const idx = css.indexOf('.nerv-form-green');
+    assert.ok(idx !== -1, '.nerv-form-green block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-form-color-rgb'), '.nerv-form-green should set --nerv-form-color-rgb');
+  });
+
   it('B17: regression — existing component selectors still present', () => {
     assert.match(css, /\.nerv-bar-meter\b[^-]/, 'missing .nerv-bar-meter class');
     assert.match(css, /\.nerv-label-box\b[^-]/, 'missing .nerv-label-box class');

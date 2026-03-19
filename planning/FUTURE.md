@@ -87,3 +87,15 @@ TO DECIDE: is this just the hexagon table type?
 Ability to put elements (maybe just text) in the radar radially and have them pulse and fade down when the radar scans over them, like actual radar. Not possible with CSs? find out!
 
 AT least be able to sync elements to WHERE the radar sweep is, e.g. update a value when it hits top - even if not provided by us. goal: syncing other UI actions - even if outside our kit - to the radar sweep.
+
+## Typefaces
+
+Maybe we'd like a "squished" / narrow typeface option? That feels very Japanese retrofuture UI.
+
+## Rounded Rects
+
+Most of our rectangles have sharp corners. Most of the NERV rectangles - at least the "outline, border only, black fill, text matches border" style - have roudned edges.
+
+the edges in those cases are kinda thick - matching the font weight. Not the narrow phosphor outlines of our existing vector style.
+
+We should add such support for such boxes, as part of the "foundation," demo'd after the `Glow Effects — box-shadow (.nerv-glow-*)` line.

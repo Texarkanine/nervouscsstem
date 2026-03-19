@@ -17,11 +17,18 @@
 ///   --nerv-form-color     (default: --nerv-primary)
 ///   --nerv-form-color-rgb (default: --nerv-primary-rgb)
 ///
+/// Color variants (auto-generated per glow-flagged token):
+///   .nerv-form-{color}  — override --nerv-form-color on any form element
+///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert)
 ///   --nerv-bg, --nerv-bg-rgb (background)
 ///   --nerv-border-width (border sizing)
 ///   --nerv-glow-spread, --nerv-glow-intensity (focus glow)
+///   Color values from tokens.$nerv-colors for variant generation
+
+@use 'sass:list';
+@use 'tokens';
 
 // ---------------------------------------------------------------------------
 // Internal mixins (not exposed)
@@ -229,7 +236,22 @@
 }
 
 // ---------------------------------------------------------------------------
-// 7. Accessibility
+// 7. Color variants (auto-generated from glow-flagged tokens)
+// ---------------------------------------------------------------------------
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-form-#{$name} {
+      --nerv-form-color: var(--nerv-#{$name});
+      --nerv-form-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 8. Accessibility
 // ---------------------------------------------------------------------------
 
 @media (prefers-contrast: more) {

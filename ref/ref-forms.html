@@ -168,19 +168,19 @@
   <div class="ref-row-title">Checkboxes &amp; Radios</div>
   <div class="ref-form-row">
     <div class="ref-form-group">
-      <span class="ref-form-label">System Checks (Checkbox)</span>
+      <span class="ref-form-label">System Checks — Color per Status</span>
       <div style="display: flex; flex-direction: column; gap: 0.5rem;">
         <label class="ref-check-label">
-          <input class="nerv-checkbox" type="checkbox" checked> Life Support
+          <input class="nerv-checkbox nerv-form-green" type="checkbox" checked> Life Support
         </label>
         <label class="ref-check-label">
-          <input class="nerv-checkbox" type="checkbox" checked> LCL Pressure
+          <input class="nerv-checkbox nerv-form-cyan" type="checkbox" checked> LCL Pressure
         </label>
         <label class="ref-check-label">
-          <input class="nerv-checkbox" type="checkbox"> Neural Link
+          <input class="nerv-checkbox nerv-form-amber" type="checkbox"> Neural Link
         </label>
         <label class="ref-check-label">
-          <input class="nerv-checkbox" type="checkbox"> AT Field
+          <input class="nerv-checkbox nerv-form-red" type="checkbox"> AT Field
         </label>
       </div>
     </div>
@@ -244,7 +244,7 @@
   </div>
 
   <!-- ═══ Row 6: Full Form Example ═══ -->
-  <div class="ref-row-title">Combined Form</div>
+  <div class="ref-row-title">Combined Form — Color Variants + Label-Box Buttons</div>
   <div class="ref-form-row">
     <div class="ref-form-group" style="max-width: 500px; flex: 2;">
       <form onsubmit="return false;" style="display: flex; flex-direction: column; gap: 0.8rem;">
@@ -260,12 +260,12 @@
         <textarea class="nerv-textarea" rows="3" placeholder="Additional notes..."></textarea>
         <div class="ref-inline-group">
           <label class="ref-check-label">
-            <input class="nerv-checkbox" type="checkbox"> Confirm medical clearance
+            <input class="nerv-checkbox nerv-form-green" type="checkbox"> Confirm medical clearance
           </label>
         </div>
         <div class="ref-inline-group">
-          <button class="nerv-btn" type="submit">Register Pilot</button>
-          <button class="nerv-btn" type="reset">Clear Form</button>
+          <button class="nerv-label-box" style="--nerv-label-box-color: var(--nerv-green); --nerv-label-box-color-rgb: var(--nerv-green-rgb);" type="submit"><span>Register Pilot</span></button>
+          <button class="nerv-label-box nerv-label-box-reverse" style="--nerv-label-box-color: var(--nerv-red); --nerv-label-box-color-rgb: var(--nerv-red-rgb);" type="reset"><span>Clear Form</span></button>
         </div>
       </form>
     </div>
