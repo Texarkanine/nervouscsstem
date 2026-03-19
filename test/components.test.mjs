@@ -509,48 +509,78 @@ describe('List styling CSS', () => {
     assert.ok(block.includes('clip-path: none'), '.nerv-list-rect li should set clip-path: none');
   });
 
-  it('B15: .nerv-list-para > li has clip-path polygon with flat right edge', () => {
-    assert.match(css, /\.nerv-list-para\b/, 'missing .nerv-list-para class');
-    const idx = css.indexOf('.nerv-list-para');
-    assert.ok(idx !== -1, '.nerv-list-para block not found');
+  it('B15: .nerv-list-arrow > li has clip-path polygon with left point and flat right edge', () => {
+    assert.match(css, /\.nerv-list-arrow\b[^-]/, 'missing .nerv-list-arrow class');
+    const idx = css.indexOf('.nerv-list-arrow ');
+    assert.ok(idx !== -1, '.nerv-list-arrow block not found');
     const block = css.slice(idx, idx + 500);
-    assert.ok(block.includes('clip-path'), '.nerv-list-para li should have clip-path');
-    assert.ok(block.includes('polygon'), '.nerv-list-para li should use polygon()');
-    assert.ok(block.includes('100% 0%'), '.nerv-list-para polygon should have flush top-right corner');
-    assert.ok(block.includes('100% 100%'), '.nerv-list-para polygon should have flush bottom-right corner');
+    assert.ok(block.includes('clip-path'), '.nerv-list-arrow li should have clip-path');
+    assert.ok(block.includes('polygon'), '.nerv-list-arrow li should use polygon()');
+    assert.ok(block.includes('100% 0%'), '.nerv-list-arrow polygon should have flush top-right corner');
+    assert.ok(block.includes('100% 100%'), '.nerv-list-arrow polygon should have flush bottom-right corner');
   });
 
-  it('B16: .nerv-list-angled increases gap to prevent overlap', () => {
+  it('B16: .nerv-list-angled uses --nerv-list-gap for spacing', () => {
     const idx = css.indexOf('.nerv-list-angled {');
     assert.ok(idx !== -1, '.nerv-list-angled block not found');
     const block = css.slice(idx, css.indexOf('}', idx) + 1);
-    assert.ok(block.includes('gap'), '.nerv-list-angled should set a larger gap');
+    assert.ok(block.includes('--nerv-list-gap'), '.nerv-list-angled should set --nerv-list-gap');
   });
 
-  it('B17: .nerv-list-bordered exists with enhanced drop-shadow filter', () => {
+  it('B17: .nerv-list-bordered li has real border using --nerv-border-width', () => {
     assert.match(css, /\.nerv-list-bordered\b/, 'missing .nerv-list-bordered class');
     const idx = css.indexOf('.nerv-list-bordered');
     assert.ok(idx !== -1, '.nerv-list-bordered block not found');
-    const block = css.slice(idx, css.indexOf('}', idx) + 1);
-    assert.ok(block.includes('filter'), '.nerv-list-bordered should set filter');
-    assert.ok(block.includes('drop-shadow'), '.nerv-list-bordered should use drop-shadow');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('border:'), '.nerv-list-bordered li should set real border');
+    assert.ok(block.includes('--nerv-border-width'), '.nerv-list-bordered border should use --nerv-border-width token');
   });
 
-  it('B18: .nerv-list-outline sets background: transparent on li', () => {
+  it('B18: .nerv-list-outline li has real border and --nerv-bg background', () => {
     assert.match(css, /\.nerv-list-outline\b/, 'missing .nerv-list-outline class');
     const outlineIdx = css.indexOf('.nerv-list-outline');
     assert.ok(outlineIdx !== -1, '.nerv-list-outline not found');
-    const block = css.slice(outlineIdx, outlineIdx + 600);
-    assert.ok(block.includes('transparent'), '.nerv-list-outline should set transparent background');
+    const block = css.slice(outlineIdx, outlineIdx + 800);
+    assert.ok(block.includes('border:'), '.nerv-list-outline li should set real border');
+    assert.ok(block.includes('--nerv-bg'), '.nerv-list-outline li should use --nerv-bg background');
   });
 
-  it('B19: .nerv-list-solid sets opaque background and removes glow', () => {
+  it('B19: .nerv-list-solid sets opaque background using list color', () => {
     assert.match(css, /\.nerv-list-solid\b/, 'missing .nerv-list-solid class');
     const solidIdx = css.indexOf('.nerv-list-solid');
     assert.ok(solidIdx !== -1, '.nerv-list-solid not found');
     const block = css.slice(solidIdx, solidIdx + 600);
-    assert.ok(block.includes('filter: none'), '.nerv-list-solid should remove filter');
     assert.ok(block.includes('--nerv-list-color'), '.nerv-list-solid li should use opaque list color');
+    assert.ok(block.includes('--nerv-bg'), '.nerv-list-solid li should set text to --nerv-bg');
+  });
+
+  it('B20: .nerv-list-arrow-reverse > li has clip-path polygon with flat left and pointed right', () => {
+    assert.match(css, /\.nerv-list-arrow-reverse\b/, 'missing .nerv-list-arrow-reverse class');
+    const idx = css.indexOf('.nerv-list-arrow-reverse');
+    assert.ok(idx !== -1, '.nerv-list-arrow-reverse block not found');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('clip-path'), '.nerv-list-arrow-reverse li should have clip-path');
+    assert.ok(block.includes('polygon'), '.nerv-list-arrow-reverse li should use polygon()');
+    assert.ok(block.includes('0% 0%'), '.nerv-list-arrow-reverse polygon should have flush top-left corner');
+    assert.ok(block.includes('100% 50%'), '.nerv-list-arrow-reverse polygon should have pointed right edge');
+  });
+
+  it('B21: .nerv-list-para uses skewX pseudo-element for true parallelogram', () => {
+    assert.match(css, /\.nerv-list-para\b/, 'missing .nerv-list-para class');
+    const idx = css.indexOf('.nerv-list-para');
+    assert.ok(idx !== -1, '.nerv-list-para block not found');
+    const block = css.slice(idx, idx + 1200);
+    assert.ok(block.includes('skewX'), '.nerv-list-para should use skewX transform on pseudo');
+    assert.ok(block.includes('--nerv-list-skew'), '.nerv-list-para should reference --nerv-list-skew');
+    assert.ok(block.includes('clip-path: none'), '.nerv-list-para li should remove clip-path');
+  });
+
+  it('B22: --nerv-list-gap custom property declared on .nerv-list', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-list-gap'), '.nerv-list should declare --nerv-list-gap');
+    assert.ok(block.includes('gap: var(--nerv-list-gap'), '.nerv-list should use --nerv-list-gap for gap');
   });
 });
 

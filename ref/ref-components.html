@@ -143,13 +143,13 @@
       text-transform: uppercase;
     }
 
-    /* Zone E: lists — below the main viewport */
-    .ref-zone-e {
+    /* Zone E: list demo rows — below the main viewport */
+    .ref-list-row {
       width: 1100px;
       max-width: 98vw;
       margin-top: 2rem;
       display: flex;
-      gap: 3rem;
+      gap: 2.5rem;
       justify-content: center;
       align-items: flex-start;
     }
@@ -158,6 +158,8 @@
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+      flex: 1;
+      max-width: 220px;
     }
 
     .ref-list-label {
@@ -168,13 +170,18 @@
       text-transform: uppercase;
     }
 
-    .ref-list-angled-container {
-      min-height: 18rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding-top: 6rem;
+    .ref-row-title {
+      width: 1100px;
+      max-width: 98vw;
+      margin-top: 2.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: rgba(var(--nerv-amber-rgb), 0.35);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(var(--nerv-amber-rgb), 0.15);
+      padding-bottom: 0.3rem;
     }
 
   </style>
@@ -298,11 +305,12 @@
 
   </div>
 
-  <!-- ═══ Zone E: Lists — Fill Modes ═══ -->
-  <div class="ref-zone-e">
+  <!-- ═══ Row 1: Fill / Border Combos (all rect — borders need no clip-path) ═══ -->
+  <div class="ref-row-title">Fill &amp; Border Modes (rect shape — borders require no clip-path)</div>
+  <div class="ref-list-row">
     <div class="ref-list-group">
-      <span class="ref-list-label">Default (translucent fill)</span>
-      <ul class="nerv-list">
+      <span class="ref-list-label">Translucent Fill (default) — Amber</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-amber">
         <li>Life Support</li>
         <li>Power Grid</li>
         <li>LCL Circulation</li>
@@ -311,8 +319,8 @@
     </div>
 
     <div class="ref-list-group">
-      <span class="ref-list-label">Bordered (fill + phosphor)</span>
-      <ul class="nerv-list nerv-list-bordered nerv-list-cyan">
+      <span class="ref-list-label">Bordered (fill + phosphor) — Blue</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-bordered nerv-list-blue">
         <li>Terminal Dogma</li>
         <li>Central Dogma</li>
         <li>Command Center</li>
@@ -321,8 +329,8 @@
     </div>
 
     <div class="ref-list-group">
-      <span class="ref-list-label">Outline (phosphor only)</span>
-      <ul class="nerv-list nerv-list-outline nerv-list-red">
+      <span class="ref-list-label">Outline (border only) — Red</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-outline nerv-list-red">
         <li>Pattern Blue</li>
         <li>AT Field Loss</li>
         <li>Sync Critical</li>
@@ -331,64 +339,88 @@
     </div>
 
     <div class="ref-list-group">
-      <span class="ref-list-label">Solid (opaque fill)</span>
-      <ul class="nerv-list nerv-list-solid nerv-list-green">
+      <span class="ref-list-label">Solid (opaque fill) — Green</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-solid nerv-list-green">
         <li>Launch Prep</li>
         <li>Sortie</li>
         <li>Recovery</li>
+        <li>Debrief</li>
       </ul>
     </div>
   </div>
 
-  <!-- ═══ Zone F: Lists — Shapes ═══ -->
-  <div class="ref-zone-e" style="margin-top: 2rem;">
+  <!-- ═══ Row 2: Shapes ═══ -->
+  <div class="ref-row-title">Shapes</div>
+  <div class="ref-list-row">
     <div class="ref-list-group">
-      <span class="ref-list-label">Hex (default shape)</span>
-      <ul class="nerv-list nerv-list-bordered">
+      <span class="ref-list-label">Hex (default) — Amber</span>
+      <ul class="nerv-list nerv-list-amber">
         <li>Hex Default</li>
         <li>Pointed Ends</li>
+        <li>Symmetric</li>
       </ul>
     </div>
 
     <div class="ref-list-group">
-      <span class="ref-list-label">Rect shape + Bordered</span>
-      <ul class="nerv-list nerv-list-rect nerv-list-bordered nerv-list-cyan">
+      <span class="ref-list-label">Rectangle — Blue</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-blue">
         <li>Rectangle</li>
         <li>Clean Edges</li>
+        <li>Plain Box</li>
       </ul>
     </div>
 
     <div class="ref-list-group">
-      <span class="ref-list-label">Para shape + Outline</span>
-      <ul class="nerv-list nerv-list-para nerv-list-outline nerv-list-red">
-        <li>Arrow Left</li>
+      <span class="ref-list-label">Arrow Left — Red</span>
+      <ul class="nerv-list nerv-list-arrow nerv-list-red">
+        <li>Left Point</li>
         <li>Flat Right</li>
+        <li>Tag Shape</li>
+      </ul>
+    </div>
+
+    <div class="ref-list-group">
+      <span class="ref-list-label">Arrow Right — Green</span>
+      <ul class="nerv-list nerv-list-arrow-reverse nerv-list-green">
+        <li>Flat Left</li>
+        <li>Right Point</li>
+        <li>Chevron</li>
       </ul>
     </div>
   </div>
 
-  <!-- ═══ Zone G: Lists — Angled ═══ -->
-  <div class="ref-zone-e" style="margin-top: 2rem;">
-    <div class="ref-list-group ref-list-angled-container">
-      <span class="ref-list-label">Rect / Bordered / Angled</span>
-      <ul class="nerv-list nerv-list-rect nerv-list-bordered nerv-list-cyan nerv-list-angled">
+  <!-- ═══ Row 3: Rotations ═══ -->
+  <div class="ref-row-title">Rotations</div>
+  <div class="ref-list-row" style="align-items: stretch;">
+    <div class="ref-list-group">
+      <span class="ref-list-label">Up 45° / Rect / Bordered — Amber</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-bordered nerv-list-amber nerv-list-angled">
         <li>Ayanami Rei</li>
         <li>Ikari Shinji</li>
         <li>Soryu Langley</li>
       </ul>
     </div>
 
-    <div class="ref-list-group ref-list-angled-container">
-      <span class="ref-list-label">Para / Outline / Angled</span>
-      <ol class="nerv-list nerv-list-para nerv-list-outline nerv-list-red nerv-list-angled">
+    <div class="ref-list-group">
+      <span class="ref-list-label">Down 45° / Hex — Blue</span>
+      <ul class="nerv-list nerv-list-blue nerv-list-angled-reverse" style="--nerv-list-gap: 1.5rem;">
         <li>Pattern Blue</li>
         <li>AT Field Loss</li>
-        <li>Sync Critical</li>
-      </ol>
+        <li>Core Breach</li>
+      </ul>
     </div>
 
-    <div class="ref-list-group ref-list-angled-container">
-      <span class="ref-list-label">Para / Solid / Angled Rev</span>
+    <div class="ref-list-group">
+      <span class="ref-list-label">Up 45° / Para — Red</span>
+      <ul class="nerv-list nerv-list-para nerv-list-red nerv-list-angled" style="--nerv-list-gap: 2rem;">
+        <li>Entry Plug</li>
+        <li>LCL Flood</li>
+        <li>Neural Link</li>
+      </ul>
+    </div>
+
+    <div class="ref-list-group">
+      <span class="ref-list-label">Down 45° / Para / Solid — Green</span>
       <ul class="nerv-list nerv-list-para nerv-list-solid nerv-list-green nerv-list-angled-reverse">
         <li>Launch Prep</li>
         <li>Sortie</li>

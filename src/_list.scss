@@ -1,60 +1,74 @@
 /// _list.scss — Angled pillbox list item styling.
 ///
-/// Utility class that styles list items as symmetric hexagonal pillbox shapes
-/// via `clip-path: polygon()`. The 45-degree angled ends create the
-/// characteristic NGE HUD list appearance. Color is configurable via custom
-/// properties and auto-generated color variant classes.
+/// Utility class that styles list items as geometric shapes via `clip-path:
+/// polygon()`. The default hex shape has symmetric 45-degree angled ends
+/// creating the characteristic NGE HUD list appearance. Color is configurable
+/// via custom properties and auto-generated color variant classes.
 ///
 /// The host `<ul>` or `<ol>` gets `.nerv-list`; child `<li>` elements are
-/// auto-styled with the pillbox shape and colored background fill.
-/// `filter: drop-shadow()` on the container provides the NERV glow outline
-/// (borders are incompatible with clip-path).
+/// auto-styled with the chosen shape and colored background fill.
 ///
-/// Classes:
-///   .nerv-list              — container (flex column, resets list-style)
-///   .nerv-list > li         — auto-styled pillbox children
-///   .nerv-list-rect         — rectangular items (no clip-path)
-///   .nerv-list-para         — left point + flat right edge (arrow/chevron shape)
-///   .nerv-list-bordered     — fill mode: translucent fill + strong phosphor glow border
-///   .nerv-list-outline      — fill mode: no fill + strong phosphor glow border
-///   .nerv-list-solid        — fill mode: opaque color fill, no glow
-///   .nerv-list-angled       — each item pivots -45deg at its left point (fans upward)
-///   .nerv-list-angled-reverse — each item pivots +45deg at its left point (fans downward)
-///   .nerv-list-{color}      — color variant (auto-generated per glow-flagged token)
+/// Shapes (mutually exclusive):
+///   .nerv-list > li           — hex: symmetric pointed ends (default)
+///   .nerv-list-rect           — rectangle (no clip-path)
+///   .nerv-list-arrow          — tag/arrow left: left point + flat right edge
+///   .nerv-list-arrow-reverse  — tag/arrow right: flat left + right point
+///   .nerv-list-para           — true parallelogram via skewX (exact angle control)
+///
+/// Fill modes (mutually exclusive):
+///   (default)                 — translucent color fill
+///   .nerv-list-bordered       — translucent fill + crisp phosphor border
+///   .nerv-list-outline        — crisp phosphor border, no visible fill
+///   .nerv-list-solid          — opaque fill
+///
+/// ⚠ Border visibility: bordered/outline use real CSS border. clip-path clips
+///   borders, so crisp borders only render on rect and para items. Para uses
+///   skewX (not clip-path), so borders survive. On hex/arrow shapes the border
+///   is clipped away.
+///
+/// Rotation:
+///   .nerv-list-angled         — each item pivots -45deg at left edge (fans up)
+///   .nerv-list-angled-reverse — each item pivots +45deg at left edge (fans down)
+///   .nerv-list-{color}        — color variant (auto-generated per glow-flagged token)
 ///
 /// Custom properties:
 ///   --nerv-list-color       (default: --nerv-primary)
 ///   --nerv-list-color-rgb   (default: --nerv-primary-rgb)
 ///   --nerv-list-inset       (horizontal extent of angled points, default: 0.9em)
-///   --nerv-list-angle       (per-item rotation pivoted at left point, default: 0deg)
+///   --nerv-list-angle       (per-item rotation, default: 0deg)
+///   --nerv-list-gap         (vertical spacing between items, default: 0.35rem)
+///   --nerv-list-skew        (para skew angle, default: -15deg; auto-matches rotation)
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert state)
-///   --nerv-glow-spread, --nerv-glow-intensity (drop-shadow glow)
+///   --nerv-border-width (bordered/outline modes)
+///   --nerv-bg (outline mode background)
 ///   Color values from tokens.$nerv-colors for variant generation
 
 @use 'sass:list';
 @use 'tokens';
+
+// ---------------------------------------------------------------------------
+// 1. Base container + default hex shape
+// ---------------------------------------------------------------------------
 
 .nerv-list {
   --nerv-list-color: var(--nerv-primary);
   --nerv-list-color-rgb: var(--nerv-primary-rgb);
   --nerv-list-inset: 0.9em;
   --nerv-list-angle: 0deg;
+  --nerv-list-gap: 0.35rem;
 
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  filter:
-    drop-shadow(0 0 1px var(--nerv-list-color))
-    drop-shadow(0 0 calc(var(--nerv-glow-spread) * 0.5 * var(--nerv-glow-intensity)) var(--nerv-list-color));
+  gap: var(--nerv-list-gap);
 
   > li {
     padding: 0.3em calc(var(--nerv-list-inset) + 0.5em);
-    background: rgba(var(--nerv-list-color-rgb), 0.12);
+    background: rgba(var(--nerv-list-color-rgb), 0.5);
     color: var(--nerv-list-color);
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.8rem;
@@ -74,12 +88,34 @@
   }
 }
 
+// ---------------------------------------------------------------------------
+// 2. Fill / border modifiers (BEFORE shapes so shapes can override bg)
+// ---------------------------------------------------------------------------
+
+.nerv-list-bordered > li {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-outline > li {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+  background: var(--nerv-bg);
+}
+
+.nerv-list-solid > li {
+  background: var(--nerv-list-color);
+  color: var(--nerv-bg);
+}
+
+// ---------------------------------------------------------------------------
+// 3. Shape modifiers (AFTER fill modes — para overrides bg to transparent)
+// ---------------------------------------------------------------------------
+
 .nerv-list-rect > li {
   clip-path: none;
   padding: 0.3em 0.8em;
 }
 
-.nerv-list-para > li {
+.nerv-list-arrow > li {
   clip-path: polygon(
     var(--nerv-list-inset) 0%,
     100% 0%,
@@ -89,42 +125,84 @@
   );
 }
 
-.nerv-list-bordered {
-  filter:
-    drop-shadow(0 0 1px var(--nerv-list-color))
-    drop-shadow(0 0 1px var(--nerv-list-color))
-    drop-shadow(0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) var(--nerv-list-color));
+.nerv-list-arrow-reverse > li {
+  clip-path: polygon(
+    0% 0%,
+    calc(100% - var(--nerv-list-inset)) 0%,
+    100% 50%,
+    calc(100% - var(--nerv-list-inset)) 100%,
+    0% 100%
+  );
 }
 
-.nerv-list-outline {
-  filter:
-    drop-shadow(0 0 1px var(--nerv-list-color))
-    drop-shadow(0 0 1px var(--nerv-list-color))
-    drop-shadow(0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) var(--nerv-list-color));
+// Para uses skewX on a ::before pseudo instead of clip-path. This gives exact
+// angle control (degrees, not inset ratios) and preserves real CSS borders.
+.nerv-list-para {
+  --nerv-list-skew: -15deg;
 
   > li {
+    clip-path: none;
+    position: relative;
     background: transparent;
+    padding: 0.3em 1.5em;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(var(--nerv-list-color-rgb), 0.5);
+      transform: skewX(var(--nerv-list-skew));
+      z-index: -1;
+    }
   }
 }
 
-.nerv-list-solid {
-  filter: none;
+// Para fill mode overrides — border/bg go on ::before (the visual shape)
+.nerv-list-bordered.nerv-list-para > li::before {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
 
-  > li {
+.nerv-list-outline.nerv-list-para > li::before {
+  background: var(--nerv-bg);
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-solid.nerv-list-para > li {
+  color: var(--nerv-bg);
+
+  &::before {
     background: var(--nerv-list-color);
-    color: var(--nerv-bg);
   }
 }
+
+// ---------------------------------------------------------------------------
+// 4. Rotation modifiers
+// ---------------------------------------------------------------------------
 
 .nerv-list-angled {
   --nerv-list-angle: -45deg;
-  gap: 2.5rem;
+  --nerv-list-gap: 0.8rem;
+  padding-top: 10rem;
 }
 
 .nerv-list-angled-reverse {
   --nerv-list-angle: 45deg;
-  gap: 2.5rem;
+  --nerv-list-gap: 0.8rem;
+  padding-bottom: 10rem;
 }
+
+// Para + rotation: match skew angle to rotation so edges appear vertical
+.nerv-list-para.nerv-list-angled {
+  --nerv-list-skew: -45deg;
+}
+
+.nerv-list-para.nerv-list-angled-reverse {
+  --nerv-list-skew: 45deg;
+}
+
+// ---------------------------------------------------------------------------
+// 5. Color variants (auto-generated from glow-flagged tokens)
+// ---------------------------------------------------------------------------
 
 @each $name, $vals in tokens.$nerv-colors {
   $has-glow: list.nth($vals, 3);
@@ -139,6 +217,6 @@
 
 @media (prefers-contrast: more) {
   .nerv-list > li {
-    background: rgba(var(--nerv-list-color-rgb), 0.25);
+    background: rgba(var(--nerv-list-color-rgb), 0.7);
   }
 }
