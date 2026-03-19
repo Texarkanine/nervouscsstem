@@ -168,6 +168,14 @@
       text-transform: uppercase;
     }
 
+    .ref-list-angled-container {
+      min-height: 14rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
   </style>
 </head>
 <body>
@@ -289,10 +297,10 @@
 
   </div>
 
-  <!-- ═══ Zone E: Lists ═══ -->
+  <!-- ═══ Zone E: Lists — Shapes ═══ -->
   <div class="ref-zone-e">
     <div class="ref-list-group">
-      <span class="ref-list-label">Subsystem Status — Default</span>
+      <span class="ref-list-label">Hex (default)</span>
       <ul class="nerv-list">
         <li>Life Support</li>
         <li>Power Grid</li>
@@ -302,28 +310,50 @@
     </div>
 
     <div class="ref-list-group">
-      <span class="ref-list-label">Pilot Roster — Cyan</span>
-      <ul class="nerv-list nerv-list-cyan">
+      <span class="ref-list-label">Rect — Cyan</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-cyan">
+        <li>Terminal Dogma</li>
+        <li>Central Dogma</li>
+        <li>Command Center</li>
+        <li>Cage Level</li>
+      </ul>
+    </div>
+
+    <div class="ref-list-group">
+      <span class="ref-list-label">Para — Red</span>
+      <ul class="nerv-list nerv-list-para nerv-list-red">
+        <li>Pattern Blue</li>
+        <li>AT Field Loss</li>
+        <li>Sync Critical</li>
+        <li>Core Failure</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ Zone F: Lists — Angled ═══ -->
+  <div class="ref-zone-e" style="margin-top: 3rem;">
+    <div class="ref-list-group ref-list-angled-container">
+      <span class="ref-list-label">Rect / Angled — Cyan</span>
+      <ul class="nerv-list nerv-list-rect nerv-list-cyan nerv-list-angled">
         <li>Ayanami Rei</li>
         <li>Ikari Shinji</li>
         <li>Soryu Asuka Langley</li>
       </ul>
     </div>
 
-    <div class="ref-list-group">
-      <span class="ref-list-label">Alert Queue — Red</span>
-      <ol class="nerv-list nerv-list-red">
-        <li>Pattern Blue Detected</li>
-        <li>AT Field Degradation</li>
-        <li>Sync Rate Critical</li>
-        <li>Core Containment Failure</li>
-        <li>N² Mine Authorization</li>
+    <div class="ref-list-group ref-list-angled-container">
+      <span class="ref-list-label">Para / Angled — Red</span>
+      <ol class="nerv-list nerv-list-para nerv-list-red nerv-list-angled">
+        <li>Pattern Blue</li>
+        <li>AT Field Loss</li>
+        <li>Sync Critical</li>
+        <li>Core Failure</li>
       </ol>
     </div>
 
-    <div class="ref-list-group">
-      <span class="ref-list-label">Operations — Green</span>
-      <ul class="nerv-list nerv-list-green">
+    <div class="ref-list-group ref-list-angled-container">
+      <span class="ref-list-label">Para / Angled Reverse — Green</span>
+      <ul class="nerv-list nerv-list-para nerv-list-green nerv-list-angled-reverse">
         <li>Launch Prep</li>
         <li>Sortie</li>
         <li>Recovery</li>

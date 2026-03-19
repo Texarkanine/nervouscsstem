@@ -13,12 +13,17 @@
 /// Classes:
 ///   .nerv-list              — container (flex column, resets list-style)
 ///   .nerv-list > li         — auto-styled pillbox children
+///   .nerv-list-rect         — plain bordered rectangles (no clip-path)
+///   .nerv-list-para         — left point + flat right edge (arrow/chevron shape)
+///   .nerv-list-angled       — each item pivots -45deg at its left point (fans upward)
+///   .nerv-list-angled-reverse — each item pivots +45deg at its left point (fans downward)
 ///   .nerv-list-{color}      — color variant (auto-generated per glow-flagged token)
 ///
 /// Custom properties:
 ///   --nerv-list-color       (default: --nerv-primary)
 ///   --nerv-list-color-rgb   (default: --nerv-primary-rgb)
 ///   --nerv-list-inset       (horizontal extent of angled points, default: 0.9em)
+///   --nerv-list-angle       (per-item rotation pivoted at left point, default: 0deg)
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert state)
@@ -32,6 +37,7 @@
   --nerv-list-color: var(--nerv-primary);
   --nerv-list-color-rgb: var(--nerv-primary-rgb);
   --nerv-list-inset: 0.9em;
+  --nerv-list-angle: 0deg;
 
   list-style: none;
   padding: 0;
@@ -60,7 +66,35 @@
       var(--nerv-list-inset) 100%,
       0% 50%
     );
+    transform: rotate(var(--nerv-list-angle));
+    transform-origin: 0% 50%;
   }
+}
+
+.nerv-list-rect > li {
+  clip-path: none;
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+  padding: 0.3em 0.8em;
+}
+
+.nerv-list-para > li {
+  clip-path: polygon(
+    var(--nerv-list-inset) 0%,
+    100% 0%,
+    100% 100%,
+    var(--nerv-list-inset) 100%,
+    0% 50%
+  );
+}
+
+.nerv-list-angled {
+  --nerv-list-angle: -45deg;
+  gap: 2.5rem;
+}
+
+.nerv-list-angled-reverse {
+  --nerv-list-angle: 45deg;
+  gap: 2.5rem;
 }
 
 @each $name, $vals in tokens.$nerv-colors {

@@ -467,6 +467,66 @@ describe('List styling CSS', () => {
     assert.match(css, /\.nerv-label-box\b[^-]/, 'missing .nerv-label-box class');
     assert.match(css, /\.nerv-segment-display\b/, 'missing .nerv-segment-display class');
   });
+
+  it('B10: --nerv-list-angle custom property declared on .nerv-list', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-list-angle'), '.nerv-list should declare --nerv-list-angle');
+  });
+
+  it('B11: .nerv-list li uses transform: rotate with --nerv-list-angle and origin at left point', () => {
+    const liMatch = css.match(/\.nerv-list[^{]*li\s*\{[^}]*\}/);
+    assert.ok(liMatch, '.nerv-list li block not found');
+    assert.ok(liMatch[0].includes('rotate'), '.nerv-list li should use rotate transform');
+    assert.ok(liMatch[0].includes('--nerv-list-angle'), '.nerv-list li transform should reference --nerv-list-angle');
+    assert.ok(liMatch[0].includes('transform-origin'), '.nerv-list li should set transform-origin');
+  });
+
+  it('B12: .nerv-list-angled class exists and sets --nerv-list-angle to -45deg', () => {
+    assert.match(css, /\.nerv-list-angled\b[^-]/, 'missing .nerv-list-angled class');
+    const idx = css.indexOf('.nerv-list-angled {');
+    assert.ok(idx !== -1, '.nerv-list-angled block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-list-angle'), '.nerv-list-angled should set --nerv-list-angle');
+    assert.ok(block.includes('-45deg'), '.nerv-list-angled should set angle to -45deg');
+  });
+
+  it('B13: .nerv-list-angled-reverse class exists and sets --nerv-list-angle to 45deg', () => {
+    assert.match(css, /\.nerv-list-angled-reverse\b/, 'missing .nerv-list-angled-reverse class');
+    const idx = css.indexOf('.nerv-list-angled-reverse');
+    assert.ok(idx !== -1, '.nerv-list-angled-reverse block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-list-angle'), '.nerv-list-angled-reverse should set --nerv-list-angle');
+    assert.ok(block.includes('45deg'), '.nerv-list-angled-reverse should set angle to 45deg');
+  });
+
+  it('B14: .nerv-list-rect > li removes clip-path and adds border', () => {
+    assert.match(css, /\.nerv-list-rect\b/, 'missing .nerv-list-rect class');
+    const idx = css.indexOf('.nerv-list-rect');
+    assert.ok(idx !== -1, '.nerv-list-rect block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('clip-path: none'), '.nerv-list-rect li should set clip-path: none');
+    assert.ok(block.includes('border'), '.nerv-list-rect li should add border');
+  });
+
+  it('B15: .nerv-list-para > li has clip-path polygon with flat right edge', () => {
+    assert.match(css, /\.nerv-list-para\b/, 'missing .nerv-list-para class');
+    const idx = css.indexOf('.nerv-list-para');
+    assert.ok(idx !== -1, '.nerv-list-para block not found');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('clip-path'), '.nerv-list-para li should have clip-path');
+    assert.ok(block.includes('polygon'), '.nerv-list-para li should use polygon()');
+    assert.ok(block.includes('100% 0%'), '.nerv-list-para polygon should have flush top-right corner');
+    assert.ok(block.includes('100% 100%'), '.nerv-list-para polygon should have flush bottom-right corner');
+  });
+
+  it('B16: .nerv-list-angled increases gap to prevent overlap', () => {
+    const idx = css.indexOf('.nerv-list-angled {');
+    assert.ok(idx !== -1, '.nerv-list-angled block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('gap'), '.nerv-list-angled should set a larger gap');
+  });
 });
 
 describe('Regression — Phase 1–4', () => {

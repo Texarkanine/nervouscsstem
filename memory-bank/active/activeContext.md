@@ -4,10 +4,10 @@
 M5: Add list styling
 
 ## Phase
-QA - COMPLETE
+BUILD - COMPLETE (post-QA rework)
 
 ## What Was Done
-Semantic QA review passed. All 7 review constraints clean: KISS (no over-engineering), DRY (reuses @each pattern), YAGNI (no speculative code), Completeness (all requirements met), Regression (matches established patterns), Integrity (no debug artifacts), Documentation (all updated).
+Three shape modes: hex (default symmetric pillbox), `.nerv-list-rect` (bordered rectangles), `.nerv-list-para` (left-pointed, flat right edge). Per-item rotation via `--nerv-list-angle` with `transform-origin: 0% 50%` pivoting at left point. Angled gap increased to `2.5rem` to prevent overlap. 212 tests pass, lint/build clean.
 
 ## Next Step
-Reflect phase will now run automatically.
+Ready for reflection. Run /niko to continue.

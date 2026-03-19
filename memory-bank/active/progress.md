@@ -20,3 +20,9 @@ Implemented `_list.scss` with 6 classes (`.nerv-list` container + 5 sub-rules) +
 
 ### QA — Complete (PASS)
 Semantic review passed. KISS/DRY/YAGNI/Completeness/Regression/Integrity/Documentation all clean. No issues found — implementation is minimal, follows established patterns, and meets all requirements.
+
+### Post-QA Rework — Complete
+User feedback: "45-degree angled" means each item is physically rotated, pivoting at its left point so items fan out from a vertical axis. Added `--nerv-list-angle` custom property (default `0deg`), `transform: rotate(var(--nerv-list-angle))` + `transform-origin: 0% 50%` on `> li`, `.nerv-list-angled` (-45deg) and `.nerv-list-angled-reverse` (45deg) modifier classes. 4 new tests (B10–B13). Ref page updated to demo angled variants. 209 tests pass, lint/build clean.
+
+### Post-QA Rework 2 — Complete
+User feedback: need controllable shapes + fix angled overlap. Added three shape modes: hex (default, symmetric pointed ends), `.nerv-list-rect` (plain bordered rectangles, `clip-path: none`), `.nerv-list-para` (left point + flat right edge). Angled modifiers now set `gap: 2.5rem` to prevent overlap. 3 new tests (B14–B16). Ref page split into shapes demo + angled demo sections. 212 tests pass, lint/build clean.
