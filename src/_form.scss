@@ -217,15 +217,9 @@
 @media (prefers-contrast: more) {
   .nerv-input,
   .nerv-textarea,
-  .nerv-select {
-    border-width: calc(var(--nerv-border-width) + 1px);
-  }
-
+  .nerv-select,
   .nerv-checkbox,
-  .nerv-radio {
-    border-width: calc(var(--nerv-border-width) + 1px);
-  }
-
+  .nerv-radio,
   .nerv-btn {
     border-width: calc(var(--nerv-border-width) + 1px);
   }

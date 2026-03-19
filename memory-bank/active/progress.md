@@ -17,3 +17,6 @@ All checks passed. Convention compliance (`.nerv-` prefix, `_form.scss` naming, 
 
 ### Build — Complete
 Implemented `_form.scss` with 6 element classes (`.nerv-input`, `.nerv-textarea`, `.nerv-select`, `.nerv-checkbox`, `.nerv-radio`, `.nerv-btn`) + shared `_form-base` mixin. 2 custom properties (`--nerv-form-color`, `--nerv-form-color-rgb`). `prefers-contrast` + `prefers-reduced-motion` support. 17 new tests in `test/components.test.mjs`. Ref page `ref/ref-forms.html` with 6 demo sections. All 236 tests pass, lint and build clean. Minor deviations: mixin over extend (CSS output compatibility), parametrized bg (lint fix), fixed pre-existing fragile list test.
+
+### QA — Complete (PASS)
+Semantic review passed. One trivial fix applied: consolidated three separate prefers-contrast selector groups into one (DRY). KISS/YAGNI/Completeness/Regression/Integrity/Documentation all clean. Select arrow SVG uses hardcoded amber — known platform limitation of CSS custom properties in SVG data URIs, acceptable for V1.
