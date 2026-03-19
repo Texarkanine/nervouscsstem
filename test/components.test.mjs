@@ -450,10 +450,8 @@ describe('List styling CSS', () => {
   });
 
   it('B7: prefers-contrast: more media query targets .nerv-list items', () => {
-    const contrastIdx = css.lastIndexOf('prefers-contrast: more');
-    assert.ok(contrastIdx !== -1, 'prefers-contrast: more media query not found');
-    const contrastBlock = css.slice(contrastIdx, contrastIdx + 600);
-    assert.ok(contrastBlock.includes('.nerv-list'), 'prefers-contrast block should reference .nerv-list');
+    const re = /prefers-contrast:\s*more\)[^}]*\.nerv-list/;
+    assert.match(css, re, 'a prefers-contrast: more block should reference .nerv-list');
   });
 
   it('B8: .nerv-list li background uses rgba with --nerv-list-color-rgb', () => {
@@ -588,6 +586,124 @@ describe('List styling CSS', () => {
     const block = css.slice(idx, idx + 800);
     assert.ok(block.includes('--nerv-list-gap'), '.nerv-list should declare --nerv-list-gap');
     assert.ok(block.includes('gap: var(--nerv-list-gap'), '.nerv-list should use --nerv-list-gap for gap');
+  });
+});
+
+describe('Form styling CSS', () => {
+  it('B1: .nerv-input class exists with border and background styling', () => {
+    assert.match(css, /\.nerv-input\b[^-]/, 'missing .nerv-input class');
+    const idx = css.indexOf('.nerv-input {');
+    assert.ok(idx !== -1, '.nerv-input block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('border'), '.nerv-input should have border styling');
+    assert.ok(block.includes('background'), '.nerv-input should have background styling');
+  });
+
+  it('B2: .nerv-input declares --nerv-form-color custom property', () => {
+    const idx = css.indexOf('.nerv-input {');
+    assert.ok(idx !== -1, '.nerv-input block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-form-color'), '.nerv-input should declare --nerv-form-color');
+  });
+
+  it('B3: .nerv-input:focus styles exist with box-shadow glow', () => {
+    assert.match(css, /\.nerv-input:focus\b/, 'missing .nerv-input:focus in compiled CSS');
+    const idx = css.indexOf('.nerv-input:focus');
+    assert.ok(idx !== -1, '.nerv-input:focus block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('box-shadow'), '.nerv-input:focus should have box-shadow glow');
+  });
+
+  it('B4: .nerv-input::placeholder styles exist', () => {
+    assert.match(css, /\.nerv-input::placeholder\b/, 'missing .nerv-input::placeholder in compiled CSS');
+  });
+
+  it('B5: .nerv-textarea class exists with border styling', () => {
+    assert.match(css, /\.nerv-textarea\b[^-]/, 'missing .nerv-textarea class');
+    const idx = css.indexOf('.nerv-textarea {');
+    assert.ok(idx !== -1, '.nerv-textarea block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('border'), '.nerv-textarea should have border styling');
+  });
+
+  it('B6: .nerv-textarea:focus exists with box-shadow glow', () => {
+    assert.match(css, /\.nerv-textarea:focus\b/, 'missing .nerv-textarea:focus in compiled CSS');
+    const idx = css.indexOf('.nerv-textarea:focus');
+    assert.ok(idx !== -1, '.nerv-textarea:focus block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('box-shadow'), '.nerv-textarea:focus should have box-shadow glow');
+  });
+
+  it('B7: .nerv-select class exists with appearance: none', () => {
+    assert.match(css, /\.nerv-select\b[^-]/, 'missing .nerv-select class');
+    const idx = css.indexOf('.nerv-select {');
+    assert.ok(idx !== -1, '.nerv-select block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('appearance'), '.nerv-select should set appearance');
+  });
+
+  it('B8: .nerv-select uses background-image for custom dropdown arrow', () => {
+    const idx = css.indexOf('.nerv-select {');
+    assert.ok(idx !== -1, '.nerv-select block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('background-image'), '.nerv-select should use background-image for arrow');
+    assert.ok(block.includes('url('), '.nerv-select background-image should use url()');
+  });
+
+  it('B9: .nerv-checkbox class exists with appearance: none', () => {
+    assert.match(css, /\.nerv-checkbox\b[^-]/, 'missing .nerv-checkbox class');
+    const idx = css.indexOf('.nerv-checkbox {');
+    assert.ok(idx !== -1, '.nerv-checkbox block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('appearance'), '.nerv-checkbox should set appearance');
+  });
+
+  it('B10: .nerv-checkbox:checked styling exists', () => {
+    assert.match(css, /\.nerv-checkbox:checked\b/, 'missing .nerv-checkbox:checked in compiled CSS');
+  });
+
+  it('B11: .nerv-radio class exists with appearance: none', () => {
+    assert.match(css, /\.nerv-radio\b[^-]/, 'missing .nerv-radio class');
+    const idx = css.indexOf('.nerv-radio {');
+    assert.ok(idx !== -1, '.nerv-radio block not found');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(block.includes('appearance'), '.nerv-radio should set appearance');
+  });
+
+  it('B12: .nerv-radio:checked styling exists', () => {
+    assert.match(css, /\.nerv-radio:checked\b/, 'missing .nerv-radio:checked in compiled CSS');
+  });
+
+  it('B13: .nerv-btn class exists with border and background', () => {
+    assert.match(css, /\.nerv-btn\b[^-]/, 'missing .nerv-btn class');
+    const idx = css.indexOf('.nerv-btn {');
+    assert.ok(idx !== -1, '.nerv-btn block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('border'), '.nerv-btn should have border styling');
+    assert.ok(block.includes('background'), '.nerv-btn should have background styling');
+  });
+
+  it('B14: .nerv-btn:hover styles exist', () => {
+    assert.match(css, /\.nerv-btn:hover\b/, 'missing .nerv-btn:hover in compiled CSS');
+  });
+
+  it('B15: .nerv-btn:focus-visible styles exist', () => {
+    assert.match(css, /\.nerv-btn:focus-visible\b/, 'missing .nerv-btn:focus-visible in compiled CSS');
+  });
+
+  it('B16: prefers-contrast: more media query targets form elements', () => {
+    const contrastBlocks = css.split('prefers-contrast: more');
+    const lastBlock = contrastBlocks[contrastBlocks.length - 1];
+    assert.ok(
+      lastBlock.includes('.nerv-input') || lastBlock.includes('.nerv-btn') || lastBlock.includes('.nerv-select'),
+      'last prefers-contrast: more block should reference form elements'
+    );
+  });
+
+  it('B17: regression — existing component selectors still present', () => {
+    assert.match(css, /\.nerv-bar-meter\b[^-]/, 'missing .nerv-bar-meter class');
+    assert.match(css, /\.nerv-label-box\b[^-]/, 'missing .nerv-label-box class');
+    assert.match(css, /\.nerv-list\b[^-]/, 'missing .nerv-list class');
   });
 });
 
