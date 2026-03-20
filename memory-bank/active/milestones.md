@@ -44,4 +44,4 @@ All milestones are independent — no cross-milestone dependencies. They can be 
 - [x] M5: Add list styling — angled 45-degree pillbox helper classes with configurable color for list items (L2 — new component, new SCSS partial)
 - [x] M6: Style web form elements — text input, textarea, select, radio, checkbox, and button in NERV aesthetic (L2 — new component set, new SCSS partial)
 - [x] M7: Implement table styling with special row types — base phosphor-outline tables, alternating triangle rows, hexagon rows (with in-phase/out-of-phase offset), stretchable trapezoid rows, and tiled hex grid variant decision (L3 — multiple sub-components, design decisions, new SCSS partial)
-- [ ] M8: Investigate and implement radar pulse — elements that pulse/fade on radar sweep, sync mechanism for external UI actions to radar position (L2 — extends `_radar.scss`, feasibility investigation required, possible JS orchestration)
+- [x] M8: Investigate and implement radar pulse — elements that pulse/fade on radar sweep, sync mechanism for external UI actions to radar position (L2 — extends `_radar.scss`, feasibility investigation required, possible JS orchestration)
