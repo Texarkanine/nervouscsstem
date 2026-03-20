@@ -23,3 +23,7 @@ Implemented M8: blip pulse SCSS, `initRadarSweepSync` + `init()` opt-in, seven n
 ## QA — Complete (PASS)
 
 KISS/DRY/YAGNI check clean; requirements traced to code and tests; ref caption documents phase properties.
+
+## Reflect — Complete
+
+Level 2 reflection recorded in `memory-bank/active/reflection/reflection-nerv-m8-radar-pulse.md` (2025-03-20). Key lessons: single-loop + `animation-delay` for aligned cold start; polar vs Cartesian for correct bearing-time; companion `docs/radar.md` for non-obvious timing.
