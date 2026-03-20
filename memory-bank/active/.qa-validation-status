@@ -2,12 +2,8 @@ PASS
 
 ## Findings
 
-1. **(Trivial — fixed)** Table-level `.nerv-table-hex-alt` was missing hex clip-path on cells. Row-level hex-alt was self-contained (included clip-path + offset), but table-level only applied row offset via `tr:nth-child(even)` without hex cell clipping. The ref page used hex-alt standalone on a table, so cells would not have rendered as hexagons. Fix: added base hex clip-path selector to table-level hex-alt, making it self-contained at both levels.
+1. **(Verified)** Plan requirements met: `.nerv-radar-blip` with sweep-matched period, `--nerv-radar-blip-phase`, reduced-motion and contrast handling, opt-in `data-nerv-radar-sync` + `NERV.initRadarSweepSync`, ref demo and `patterns.test.mjs` coverage.
 
-2. **(Advisory — deferred)** Table-level and row-level geometric shape selectors duplicate clip-path/padding/text-align values. Private SCSS mixins within `_table.scss` could reduce this. However, the duplication serves a specific CSS specificity purpose (table-level at (0,2,1), row-level at (0,2,2)) and was anticipated by the preflight advisory. Deferred to future DRY refactor.
+2. **(Verified)** No debug debris; style matches existing `nerv.js` (var, function declarations, prefers-reduced-motion guard).
 
-3. **(Verified)** Pre-existing form test B16 fix is correct — changed from brittle "last block" positional check to robust regex match for "any block containing form elements." The original test broke because `_table.scss` added a new `prefers-contrast: more` block after forms.
-
-4. **(Verified)** All 11 acceptance criteria implemented. No stubs, TODOs, or placeholder values.
-
-5. **(Verified)** Code style matches `_list.scss` precedent — doc comment structure, section comments, `@each` loop pattern, fill mode ordering, selector naming.
+3. **(Advisory)** `--nerv-radar-sweep-phase` is useful for JS consumers; CSS blips use phase property directly — document relationship on ref page (done in caption).

@@ -4,7 +4,8 @@
  * Provides DOM manipulation that CSS alone cannot achieve:
  * scanline overlay injection, hex cell state cycling, grid axis labels,
  * ghost-segment population, bar meter fill activation / generation,
- * label box group radio toggle, and MAGI panel dynamic grid columns.
+ * label box group radio toggle, MAGI panel dynamic grid columns,
+ * and optional radar sweep phase sync for CSS/JS consumers.
  *
  * UMD-lite: works as a classic <script> tag (window.NERV) and as a
  * Node.js/CJS module (require/import). No build step required.
@@ -64,6 +65,11 @@
         NERV.initBarMeters();
         NERV.initLabelBoxGroups();
         NERV.initMagiPanels();
+
+        var syncRadars = document.querySelectorAll('.nerv-radar[data-nerv-radar-sync]');
+        for (var r = 0; r < syncRadars.length; r++) {
+          NERV.initRadarSweepSync(syncRadars[r]);
+        }
       };
 
       if (document.readyState === 'loading') {
@@ -259,6 +265,67 @@
      *
      * @param {HTMLElement} container - Element to attach axis labels to
      */
+    /**
+     * Drives `--nerv-radar-sweep-phase` (0–1) on a `.nerv-radar` element from the
+     * Web Animations API timeline of its child `.nerv-radar-sweep`, so external UI
+     * can read phase via `getComputedStyle(radarEl).getPropertyValue(...)`.
+     * No-ops when `prefers-reduced-motion` is set or WAAPI is unavailable.
+     *
+     * @param {HTMLElement} radarEl - Element with class `nerv-radar` containing `.nerv-radar-sweep`
+     */
+    initRadarSweepSync: function initRadarSweepSync(radarEl) {
+      if (!radarEl || typeof document === 'undefined') return;
+      if (prefersReducedMotion()) return;
+
+      var sweep = radarEl.querySelector('.nerv-radar-sweep');
+      if (!sweep) return;
+      if (radarEl.__nervRadarSyncActive) return;
+      radarEl.__nervRadarSyncActive = true;
+
+      function tick() {
+        var phase = 0;
+
+        if (typeof sweep.getAnimations === 'function') {
+          var anims = sweep.getAnimations();
+          for (var i = 0; i < anims.length; i++) {
+            var a = anims[i];
+            if (a.playState === 'idle') continue;
+
+            var ctRaw = a.currentTime;
+            if (ctRaw === null || ctRaw === undefined) continue;
+
+            var ctNum =
+              typeof ctRaw === 'number'
+                ? ctRaw
+                : typeof ctRaw === 'object' && ctRaw !== null && 'value' in ctRaw
+                  ? Number(ctRaw.value)
+                  : Number(ctRaw);
+            if (isNaN(ctNum)) continue;
+
+            var eff = a.effect;
+            if (!eff || typeof eff.getComputedTiming !== 'function') continue;
+
+            var ctiming = eff.getComputedTiming();
+            var dur = ctiming.duration;
+            if (typeof dur === 'number' && dur > 0 && dur !== Infinity) {
+              phase = ((ctNum % dur) + dur) % dur / dur;
+              break;
+            }
+          }
+        }
+
+        radarEl.style.setProperty('--nerv-radar-sweep-phase', String(phase));
+
+        if (typeof requestAnimationFrame === 'function') {
+          requestAnimationFrame(tick);
+        }
+      }
+
+      if (typeof requestAnimationFrame === 'function') {
+        requestAnimationFrame(tick);
+      }
+    },
+
     initGridLabels: function initGridLabels(container) {
       if (!container || typeof document === 'undefined') return;
 

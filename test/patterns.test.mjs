@@ -294,6 +294,46 @@ describe('Radar CSS', () => {
     );
     assert.ok(hasRadarSuppression, 'prefers-reduced-motion should suppress radar sweep');
   });
+
+  // M8 — radar blip pulse (sweep-period sync)
+  it('.nerv-radar-blip class exists under radar scope', () => {
+    assert.match(css, /\.nerv-radar\s+\.nerv-radar-blip\b/, 'expected .nerv-radar .nerv-radar-blip selector');
+  });
+
+  it('@keyframes nerv-radar-blip-pulse exists', () => {
+    assert.match(css, /@keyframes\s+nerv-radar-blip-pulse\b/, 'missing nerv-radar-blip-pulse keyframes');
+  });
+
+  it('.nerv-radar-blip animation duration matches sweep timing (uses --nerv-radar-duration)', () => {
+    const idx = css.indexOf('.nerv-radar-blip');
+    assert.ok(idx >= 0, '.nerv-radar-blip should appear in compiled CSS');
+    const section = css.slice(idx, idx + 900);
+    assert.ok(
+      section.includes('--nerv-radar-duration') && section.includes('--nerv-animation-speed'),
+      '.nerv-radar-blip should use same duration calc as sweep'
+    );
+  });
+
+  it('.nerv-radar-blip supports phase alignment via --nerv-radar-blip-phase', () => {
+    const idx = css.indexOf('.nerv-radar-blip');
+    const section = css.slice(idx, idx + 900);
+    assert.ok(
+      section.includes('--nerv-radar-blip-phase'),
+      'animation-delay should reference --nerv-radar-blip-phase for sweep alignment'
+    );
+  });
+
+  it('prefers-reduced-motion suppresses radar blip pulse', () => {
+    const reducedMotionBlocks = css.split('prefers-reduced-motion');
+    const hasBlipSuppression = reducedMotionBlocks.some((block) => block.includes('nerv-radar-blip'));
+    assert.ok(hasBlipSuppression, 'prefers-reduced-motion should suppress .nerv-radar-blip animation');
+  });
+
+  it('prefers-contrast strengthens radar blip visibility', () => {
+    const contrastBlocks = css.split('prefers-contrast');
+    const hasBlipContrast = contrastBlocks.some((block) => block.includes('nerv-radar-blip'));
+    assert.ok(hasBlipContrast, 'prefers-contrast: more should adjust .nerv-radar-blip');
+  });
 });
 
 describe('nerv.js API surface', () => {
@@ -311,6 +351,11 @@ describe('nerv.js API surface', () => {
     assert.equal(typeof NERV.injectScanlines, 'function', 'NERV.injectScanlines should be a function');
     assert.equal(typeof NERV.initHexFlicker, 'function', 'NERV.initHexFlicker should be a function');
     assert.equal(typeof NERV.initGridLabels, 'function', 'NERV.initGridLabels should be a function');
+    assert.equal(
+      typeof NERV.initRadarSweepSync,
+      'function',
+      'NERV.initRadarSweepSync should be a function'
+    );
   });
 });
 

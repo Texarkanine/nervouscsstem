@@ -188,10 +188,29 @@
       <div class="ref-center">
         <span class="ref-center-label">Tactical Scope — Sector VII</span>
         <div class="ref-radar-container">
-          <div class="nerv-radar">
+          <div class="nerv-radar" data-nerv-radar-sync>
             <div class="nerv-radar-sweep"></div>
+            <span
+              class="nerv-radar-blip"
+              style="top: 18%; left: 62%; --nerv-radar-blip-phase: 0.12;"
+              title="Blip A — phase 0.12"
+              aria-hidden="true"></span>
+            <span
+              class="nerv-radar-blip"
+              style="top: 55%; left: 28%; --nerv-radar-blip-phase: 0.55;"
+              title="Blip B — phase 0.55"
+              aria-hidden="true"></span>
+            <span
+              class="nerv-radar-blip"
+              style="top: 72%; left: 58%; --nerv-radar-blip-phase: 0.78;"
+              title="Blip C — phase 0.78"
+              aria-hidden="true"></span>
           </div>
         </div>
+        <span class="ref-center-label" style="font-size: 0.55rem; max-width: 18rem;">
+          Blips use <code style="font-size: 0.65em;">--nerv-radar-blip-phase</code> (0–1) to align pulse peaks with sweep bearing.
+          <code style="font-size: 0.65em;">data-nerv-radar-sync</code> drives <code style="font-size: 0.65em;">--nerv-radar-sweep-phase</code> for scripts.
+        </span>
         <span class="ref-center-label nerv-flicker" style="color: var(--nerv-green);">
           Range: 120km &middot; Mode: Active
         </span>

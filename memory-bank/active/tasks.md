@@ -1,224 +1,80 @@
-# Task: M7 — Table Styling with Special Row Types
+# Task: M8 — Radar pulse (sweep-synced pulse/fade)
 
-* Task ID: nerv-m7-tables
-* Complexity: Level 3
-* Type: Feature (new component set)
+* Task ID: nerv-m8-radar-pulse
+* Complexity: Level 2
+* Type: Simple enhancement (radar subsystem + optional JS sync)
 
-Implement table styling with special row types: base phosphor-outline tables with fill/border mode orthogonality (following `_list.scss` precedent), auto-generated color variants from `$nerv-colors`, alternating triangle rows, hexagon rows (with in-phase/out-of-phase offset), and stretchable trapezoid rows. Note: Tiled hex grid variant deferred to future hex-grid enhancement (see FUTURE.md).
+Extend the existing concentric radar (`.nerv-radar`, `.nerv-radar-sweep`) so child or adjacent “blip” elements can pulse/fade in phase with the sweep rotation. Add a **documented** way for external scripts to read or subscribe to sweep phase so UI outside the CSS can stay aligned.
 
-## Pinned Info
+**Feasibility (locked for build):**
 
-### Shape Application: Row-Level Primary, Table-Level Default
-
-Geometric shape classes (triangle, hex, trapezoid) are **row-level modifiers** applied to `<tr>` (or row-equivalent). Different rows in the same table can have different shapes, freely mixed:
-
-```html
-<!-- Row-level: each row picks its own shape -->
-<table class="nerv-table">
-  <tr class="nerv-table-triangle"><td>...</td><td>...</td></tr>
-  <tr class="nerv-table-triangle"><td>...</td><td>...</td></tr>
-  <tr class="nerv-table-trapezoid"><td>...</td><td>...</td></tr>
-  <tr class="nerv-table-hex"><td>...</td><td>...</td></tr>
-</table>
-
-<!-- Table-level default: all rows inherit shape unless overridden -->
-<table class="nerv-table nerv-table-triangle">
-  <tr><td>...</td></tr>              <!-- inherits triangle -->
-  <tr><td>...</td></tr>              <!-- inherits triangle -->
-  <tr class="nerv-table-hex"><td>...</td></tr>  <!-- overrides to hex -->
-</table>
-```
-
-**CSS cascade**: Table-level shape uses `.nerv-table.nerv-table-triangle td` → specificity (0,2,1). Row-level shape uses `.nerv-table tr.nerv-table-triangle > td` → specificity (0,2,2). Row-level wins because it has higher specificity. *(Fixed in preflight: original row-level selector `tr.nerv-table-triangle > td` at (0,1,2) would LOSE to table-level (0,2,1). Adding `.nerv-table` ancestor context bumps row-level to (0,2,2).)*
-
-### Fill/Border Orthogonality — List Precedent
-
-Tables follow the same design language as lists. A list is a 1×N table; the same fill/border/color system applies.
-
-```
-_list.scss pattern (canonical):
-  Fill modes (mutually exclusive, on container):
-    (default)         → translucent color fill (rgba 0.5)
-    .nerv-*-bordered  → translucent fill + phosphor border
-    .nerv-*-outline   → border only, bg = --nerv-bg (no fill)
-    .nerv-*-solid     → opaque fill, color = --nerv-bg (cutout text)
-
-  Color variants (auto-generated from $nerv-colors, glow-flagged only):
-    .nerv-*-{color}   → --nerv-*-color: var(--nerv-{color})
-                         --nerv-*-color-rgb: var(--nerv-{color}-rgb)
-
-  ⚠ clip-path clips borders: bordered/outline only render crisp borders
-    on shapes that don't use clip-path (rect, para/skew). On clipped
-    shapes (hex, arrow, triangle), borders are invisible.
-```
-
-The table component replaces `*` with `table`, replicating this exact system.
-
-## Component Analysis
-
-### Affected Components
-
-- **`src/_table.scss` (new)**: New SCSS partial containing all table styling classes. Follows `_name.scss` convention, `@forward`ed from `nerv.scss` after `form` and before `states`. Responsibilities: base table styling, fill/border mode modifiers, color variant generation, triangle/hexagon/trapezoid row variants, accessibility support.
-
-- **`src/nerv.scss`**: Add `@forward 'table'` after `form` and before `states`. Update header comment chain to include `table`.
-
-- **`test/components.test.mjs`**: Add test cases for all table behaviors.
-
-- **`ref/ref-tables.html` (new)**: New reference page demonstrating all table variants, fill modes, and color combinations.
-
-- **No changes to existing components**: Tables are a new component set. No boundary changes.
-
-### Cross-Module Dependencies
-
-- **Tokens (`_tokens.scss`)**: Consumes `--nerv-primary`, `--nerv-primary-rgb`, `--nerv-bg`, `--nerv-border-width`, `--nerv-glow-spread`, `--nerv-glow-intensity`. Uses `tokens.$nerv-colors` map for auto-generated color variants. No changes to tokens required.
-
-- **Glow mixin (`_glow.scss`)**: May use `@include glow.nerv-glow()` for table container border glow. No changes required.
-
-- **Hex grid (`_hex-grid.scss`)**: Hexagon table rows reuse the hex clip-path pattern independently. No changes required.
-
-### Boundary Changes
-
-None — all table classes are new.
-
-### Invariants & Constraints
-
-- All selectors use `.nerv-` prefix
-- `prefers-reduced-motion` suppresses animations; static state recognizably NERV
-- `prefers-contrast` increases border widths and reduces glow reliance
-- No image files — CSS-only (SVG data URIs permitted)
-- Token architecture preserved
-- Fill/border/color follows list precedent (`_list.scss`)
-- clip-path clips borders: crisp borders only on non-clipped cell shapes
-- Existing features remain unbroken; Stylelint + Node.js test runner must pass
-
-## Open Questions
-
-- [x] **Tiled hex grid variant decision** → **Resolved**: Implement as `.nerv-hex-grid-tiled` in `_hex-grid.scss` (future enhancement), not M7. (See `memory-bank/active/creative/creative-tiled-hex-grid-variant.md`)
-
-None — implementation approach is clear.
+- **CSS layer:** Use the same timing function as the sweep: `calc(var(--nerv-radar-duration) / var(--nerv-animation-speed))` so any new `@keyframes` stay period-matched. For blips at **known** angular positions, expose a custom property (e.g. `--nerv-radar-pulse-delay`) converted to `animation-delay` so peaks align with sweep passage (document the convention in SCSS comments).
+- **JS layer (only if required for acceptance):** If arbitrary positions or external consumers need a single source of truth, add `NERV.initRadarSweepSync(radarEl)` (or similar) that uses the Web Animations API on the sweep element’s rotation animation to write a normalized phase (0–1) to a data attribute or `--nerv-radar-sweep-phase` on the radar root. No drawing — orchestration only, matching `systemPatterns.md`.
 
 ## Test Plan (TDD)
 
 ### Behaviors to Verify
 
-**Base Table Styling**
-- B1: `.nerv-table` class exists with border and background styling → compiled CSS contains `.nerv-table` rule with `border`
-- B2: `.nerv-table` declares `--nerv-table-color` and `--nerv-table-color-rgb` custom properties → CSS block contains both
-- B3: `.nerv-table th` and `.nerv-table td` have border styling → CSS contains `.nerv-table th` or `.nerv-table td` with `border`
-
-**Fill/Border Modes**
-- B4: `.nerv-table-bordered` adds border to cells → CSS contains `.nerv-table-bordered` with `border`
-- B5: `.nerv-table-outline` sets border + dark bg → CSS contains `.nerv-table-outline` with `border` and `background`
-- B6: `.nerv-table-solid` sets opaque fill and cutout text → CSS contains `.nerv-table-solid` with `background` referencing `--nerv-table-color` and `color` referencing `--nerv-bg`
-
-**Color Variants**
-- B7: At least one `.nerv-table-{color}` variant exists (auto-generated from `$nerv-colors`) → CSS contains `.nerv-table-amber` or `.nerv-table-red` or similar with `--nerv-table-color`
-
-**Geometric Row Types — Row-Level Application**
-- B8: Triangle row class exists → compiled CSS contains `.nerv-table-triangle` or equivalent
-- B9: Triangle cells use `clip-path: polygon()` → CSS contains `clip-path` with `polygon` in triangle context
-- B10: Triangles alternate up/down via `:nth-child` → CSS uses `:nth-child` for alternating triangle direction
-- B11: Hexagon row class exists → compiled CSS contains `.nerv-table-hex` or equivalent
-- B12: Hexagon cells use `clip-path: polygon()` matching hex shape → CSS contains hex polygon
-- B13: Hexagon rows support out-of-phase offset (alternating) → CSS uses `:nth-child` for alternating row offsets
-- B14: Trapezoid row class exists → compiled CSS contains `.nerv-table-trapezoid` or equivalent
-- B15: Trapezoid cells use `clip-path: polygon()` for angled edges → CSS contains trapezoid-related `clip-path` or `skew`
-
-**Geometric Row Types — Table-Level Default**
-- B16: Shape class on table cascades to rows → CSS contains a selector that applies triangle/hex/trapezoid clip-path from table-level class to cells (e.g. `.nerv-table-triangle td` or `.nerv-table.nerv-table-triangle > * > td`)
-
-**Accessibility**
-- B17: `prefers-contrast: more` media query targets table elements → CSS contains `prefers-contrast: more` block referencing `.nerv-table`
-
-**Regression**
-- B18: Existing component selectors still present → `.nerv-bar-meter`, `.nerv-hex-grid`, `.nerv-list`, `.nerv-input` all present in compiled CSS
+- [Radar pulse class exists]: compiled CSS contains a new `.nerv-` radar-related pulse/blip selector scoped under or adjacent to `.nerv-radar` (exact name TBD in build) → pattern is present and prefixed.
+- [Pulse shares sweep period]: new animation duration uses the same `calc(var(--nerv-radar-duration) / var(--nerv-animation-speed))` pattern as `.nerv-radar-sweep` → string match in compiled CSS near the new rule.
+- [Reduced motion]: `prefers-reduced-motion: reduce` disables the new pulse animation (or sets opacity to a static readable state) → reduced-motion block mentions the new selector or shares a parent rule that zeroes animation.
+- [Contrast]: if pulse relies on low-opacity fades, `prefers-contrast: more` increases visibility (opacity/border/glow) → block exists and references new selectors or inherited radar context.
+- [Regression]: existing radar tests (behaviors 19–25 in `patterns.test.mjs`) still pass — sweep, keyframes, duration token, reduced motion for sweep unchanged in meaning.
+- [JS API — conditional]: if a `NERV.*` sync API is shipped → `test/patterns.test.mjs` (or parallel describe) asserts exported function name and `typeof === 'function'` alongside existing `NERV.init` checks; if pure CSS only → skip API test but add one extra CSS contract test instead.
 
 ### Test Infrastructure
 
 - Framework: Node.js built-in test runner (`node --test`)
-- Test location: `test/components.test.mjs`
-- Conventions: `describe` blocks per component, `it` blocks named `B{N}: description`, CSS output inspection via `assert.match` / `assert.ok` + string search on compiled `dist/nerv.css`
-- New test files: none (append to `test/components.test.mjs`)
-
-### Integration Tests
-
-- None required — tables are a new component set with no cross-component integration beyond token consumption.
+- Test location: `test/patterns.test.mjs` (radar + nerv.js API); `test/components.test.mjs` only if a cross-cutting selector assertion fits better there
+- Conventions: `describe`/`it`, load compiled `dist/nerv.css` via existing helper pattern in `patterns.test.mjs`
+- New test files: none planned
 
 ## Implementation Plan
 
-1. **Stub + Register**
-   - Files: `src/_table.scss` (new, empty), `src/nerv.scss`
-   - Changes: Create empty `_table.scss` with doc comment. Add `@forward 'table'` to `nerv.scss` after `form` and before `states`. Update `nerv.scss` header comment chain to include `table`.
+1. **Spike / ref demo layout (optional TDD aid)**  
+   - Files: `ref/ref-patterns.html`  
+   - Changes: Add a small radar subsection with 2–3 sample blips using the new classes (can land after CSS exists in same PR).
 
-2. **Write failing tests**
-   - Files: `test/components.test.mjs`
-   - Changes: Add `describe('Table styling CSS')` block with all 18 test cases (B1–B18). Run tests — all new tests should fail.
+2. **Failing CSS contract tests**  
+   - Files: `test/patterns.test.mjs`  
+   - Changes: Add `it(...)` cases for pulse selector presence, period `calc`, and reduced-motion branch; run tests — new tests fail until CSS exists.
 
-3. **Base table styling + fill/border modes (B1–B6)**
-   - Files: `src/_table.scss`
-   - Changes: Implement following the `_list.scss` cascade pattern:
-     - **Base**: `.nerv-table` declares `--nerv-table-color` / `--nerv-table-color-rgb` defaulting to `--nerv-primary`. Container gets phosphor border + glow. Cells (`th`, `td`) get translucent fill (`rgba(--nerv-table-color-rgb, 0.5)`), border, and HUD typography.
-     - **Fill modes** (BEFORE geometric shapes in source order, same as lists):
-       - `.nerv-table-bordered` — adds `border: var(--nerv-border-width) solid var(--nerv-table-color)` on cells
-       - `.nerv-table-outline` — border on cells + `background: var(--nerv-bg)` (no fill)
-       - `.nerv-table-solid` — `background: var(--nerv-table-color)` + `color: var(--nerv-bg)` (opaque fill, cutout text)
-   - `@use 'sass:list'` and `@use 'tokens'` for color variant generation.
+3. **SCSS — pulse/blip layer**  
+   - Files: `src/_radar.scss`, optionally `src/_tokens.scss` (only if a dedicated `--nerv-radar-pulse-*` token is clearer than reusing duration)  
+   - Changes: Document tokens in file header; add keyframes (e.g. `nerv-radar-pulse`) and class(es) for blips; use `animation-delay: var(--nerv-radar-pulse-delay, 0s)`; nest under `.nerv-radar` where possible for specificity; mirror `prefers-reduced-motion` and `prefers-contrast: more` patterns used elsewhere in the repo.
 
-4. **Color variants (B7)**
-   - Files: `src/_table.scss`
-   - Changes: Auto-generate `.nerv-table-{color}` classes from `tokens.$nerv-colors` (glow-flagged entries only), setting `--nerv-table-color` and `--nerv-table-color-rgb`. Exact same `@each` loop pattern as `_list.scss`.
+4. **JS sync (branch)**  
+   - Files: `src/nerv.js`  
+   - Changes: If acceptance needs external phase: implement WAAPI-based sync helper, call from `init()` only when matching `[data-nerv-radar-sync]` or explicit init (prefer opt-in to avoid unexpected rAF on every page). Update module header comment.  
+   - If investigation during build proves CSS-only sufficient: delete this step from execution and record rationale in `progress.md`.
 
-5. **Geometric row types — row-level (B8–B15)**
-   - Files: `src/_table.scss`
-   - Changes: Each geometric shape is a class applied to `<tr>` (or row-equivalent element). The class styles the row's child `td`/`th` cells. For each shape type, implement both the row-level selector (`.nerv-table-triangle > td`) and the table-level default selector (`.nerv-table.nerv-table-triangle td` or equivalent, lower specificity so row-level wins).
-   - **Triangle** (`.nerv-table-triangle`): Cells use `clip-path: polygon()` for equilateral triangles. `:nth-child(odd)` points up (`polygon(50% 0%, 100% 100%, 0% 100%)`), `:nth-child(even)` points down (`polygon(0% 0%, 100% 0%, 50% 100%)`). Text alignment follows base. Same clip-path/border limitation as list hex shapes. Row-level selector: `.nerv-table tr.nerv-table-triangle > td` (specificity (0,2,2) beats table-level (0,2,1)).
-   - **Hexagon** (`.nerv-table-hex`): Cells use hex clip-path (`polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`). Default: in-phase. `.nerv-table-hex-alt` modifier: `:nth-child(odd)` / `:nth-child(even)` on rows for alternating offsets. Same clip-path/border limitation. Row-level selector: `.nerv-table tr.nerv-table-hex > td`.
-   - **Trapezoid** (`.nerv-table-trapezoid`): Cells get angled edges via `clip-path: polygon()` creating trapezoids that stretch with content. Alternating cells mirror the angle so edges tile. `--nerv-table-inset` custom property for angle control. Row-level selector: `.nerv-table tr.nerv-table-trapezoid > td`.
+5. **Conditional API tests**  
+   - Files: `test/patterns.test.mjs`  
+   - Changes: Assert new export(s) if step 4 shipped.
 
-6. **Table-level default cascade (B16)**
-   - Files: `src/_table.scss`
-   - Changes: When a shape class is on the `<table>` container, it cascades as the default for all rows. Row-level shape classes override the table default. Cascade mechanism: table-level selectors use compound class + descendant (`.nerv-table.nerv-table-triangle td` → specificity (0,2,1)); row-level selectors use ancestor + child combinator (`.nerv-table tr.nerv-table-triangle > td` → specificity (0,2,2)). Row-level wins by specificity.
-
-7. **Accessibility (B17)**
-   - Files: `src/_table.scss`
-   - Changes: Add `prefers-contrast: more` block increasing border widths and fill opacity for table elements. Add `prefers-reduced-motion: reduce` block suppressing any transitions. Verify regression by running existing tests.
-
-8. **Reference page**
-   - Files: `ref/ref-tables.html` (new)
-   - Changes: Create demonstration page following `ref-lists.html` structure:
-     - Section 1: Fill & Border Modes on base rect tables (default, bordered, outline, solid) — various colors
-     - Section 2: Color variants
-     - Section 3: Triangle rows (with different fills/colors)
-     - Section 4: Hexagon rows (in-phase, out-of-phase, with different fills)
-     - Section 5: Trapezoid rows
-     - Section 6: **Mixed-row table** — a single table mixing triangle, hex, trapezoid, and plain rows to demonstrate row-level shape mixing
-     - Section 7: **Table-level default with row override** — table with a default shape class, plus individual rows overriding to different shapes
-     - Each section documents the classes used. Loads `dist/nerv.css`, uses `.nerv-panel` containers where needed.
+6. **Ref page polish + verification**  
+   - Files: `ref/ref-patterns.html`  
+   - Changes: Final demo copy; ensure radar section still matches “patterns page” scope.  
+   - Run: `npm run build`, `npm run lint` / stylelint per `package.json`, full `node --test`.
 
 ## Technology Validation
 
-No new technology — validation not required. All techniques used (`clip-path: polygon()`, `:nth-child()` selectors, CSS Grid/Flexbox, `@each` loop over `$nerv-colors`) are established patterns in this project.
+No new technology — validation not required. Web Animations API is browser built-in; if used, note graceful no-op when `getAnimations` is unavailable (keep static CSS pulse).
+
+## Dependencies
+
+- Existing tokens: `--nerv-radar-duration`, `--nerv-animation-speed`, `--nerv-primary-rgb`
+- Compiled CSS output consumed by tests
 
 ## Challenges & Mitigations
 
-- **clip-path clips borders**: Same limitation as lists. Bordered/outline fill modes render crisp borders only on base rectangular cells. Triangle/hex/trapezoid cells clip borders away. Mitigation: Document the limitation (same as list doc comment). Optionally explore `::before` pseudo-element approach (like list para) for shapes that need borders, but only if achievable without excessive complexity.
-
-- **Triangle text alignment**: Equilateral triangles have narrow bases; text may overflow. Mitigation: Use `overflow-wrap: break-word`, generous padding, `text-align: center`, minimum cell dimensions.
-
-- **Hexagon row offset math**: Variable cell widths in table context (unlike fixed hex-grid cells). Mitigation: Use `%`-based offsets or `calc()` with custom property for cell width.
-
-- **Trapezoid edge tiling**: Maintaining seamless tiling when cells have varying widths. Mitigation: Use consistent `--nerv-table-inset` custom property across cells so clip-path angles match.
-
-- **Row-level vs. table-level specificity**: When a shape class appears on both the table and a row, the row must win. Mitigation: Table-level selectors use descendant combinators (lower specificity); row-level selectors use child combinators or `tr.class > td` (higher specificity). Source order also helps: row-level rules come after table-level rules.
-
-- **CSS property replacement (compound states)**: Solid fill mode + geometric shape both touch `background` on cells. Mitigation: Source-order cascade: fill modes before geometric shapes, shapes explicitly reset as needed (lesson from `_list.scss`).
-
-- **`@use` for token map**: Need `@use 'sass:list'` and `@use 'tokens'` for the `@each` color variant loop. Mitigation: Established pattern, used identically in `_list.scss` and `_form.scss`.
+- **Arbitrary blip angles vs pure CSS:** Mitigation — document `--nerv-radar-pulse-delay` convention; offer JS phase publisher for dynamic UIs.
+- **Multiple sweeps on one page:** Mitigation — scope sync helper per radar root element; CSS uses nearest `.nerv-radar` ancestor.
+- **WAAPI / browser gaps:** Mitigation — feature-detect; fall back to CSS-only periodic pulse without phase lock.
 
 ## Status
 
-- [x] Component analysis complete
-- [x] Open questions resolved (creative phase complete)
+- [x] Initialization complete
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete

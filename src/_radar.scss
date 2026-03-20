@@ -9,6 +9,9 @@
 /// Classes:
 ///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
 ///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
+///   .nerv-radar-blip  — Absolutely positioned dot; opacity pulses on the same period as
+///                       the sweep. Set `--nerv-radar-blip-phase` (0–1) so the pulse peak
+///                       aligns with a bearing around the disc (0 = top/dead ahead, clockwise).
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
@@ -117,8 +120,53 @@
   }
 }
 
+@keyframes nerv-radar-blip-pulse {
+  0%,
+  100% {
+    opacity: var(--nerv-radar-blip-opacity-min, 0.35);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.nerv-radar .nerv-radar-blip {
+  position: absolute;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin: -0.225rem 0 0 -0.225rem;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(var(--nerv-primary-rgb), 0.95);
+  box-shadow: 0 0 0.3rem rgba(var(--nerv-primary-rgb), 0.55);
+  animation:
+    nerv-radar-blip-pulse
+    calc(var(--nerv-radar-duration) / var(--nerv-animation-speed))
+    linear
+    infinite;
+  animation-delay: calc(
+    -1 * var(--nerv-radar-blip-phase, 0) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nerv-radar-sweep {
     animation: none;
+  }
+
+  .nerv-radar .nerv-radar-blip {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nerv-radar .nerv-radar-blip {
+    --nerv-radar-blip-opacity-min: 0.65;
+
+    box-shadow:
+      0 0 0 1px rgba(var(--nerv-primary-rgb), 0.9),
+      0 0 0.4rem rgba(var(--nerv-primary-rgb), 0.75);
   }
 }

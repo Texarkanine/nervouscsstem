@@ -1,21 +1,14 @@
 # Active Context
 
 ## Current Task
-M7: Implement table styling with special row types
+M8: Radar pulse — sweep-synced blips + JS phase sync
 
 ## Phase
-REFLECT — complete
+QA — complete
 
 ## What Was Done
-Completed full reflection on M7 lifecycle. Key outcomes:
-- Original plan delivered base table styling, fill modes, color variants correctly
-- Geometric shapes underwent significant rework: hex/trapezoid removed (sub-pixel gaps), parallelogram added (skewX, full fill mode support)
-- Three rework passes driven by operator visual review, resolved by `/refresh` diagnostic
-- Final offering: Rectangle (all fill modes), Parallelogram (all fill modes via `::before`), Triangle (clip-path, borderless only)
-- Added ruled dividers, uniform modifier, per-cell/row color overrides, mixed-table demos
-
-## Reflection Written
-`memory-bank/active/reflection/reflection-nerv-m7-tables.md`
+- **Build:** Added `.nerv-radar-blip` in `src/_radar.scss` (`nerv-radar-blip-pulse` keyframes, same duration calc as sweep, `--nerv-radar-blip-phase` for bearing alignment, reduced-motion + contrast). Added `NERV.initRadarSweepSync` in `src/nerv.js` (WAAPI → `--nerv-radar-sweep-phase` on radar root; wired from `init()` for `.nerv-radar[data-nerv-radar-sync]` only). Tests in `test/patterns.test.mjs`. Ref demo in `ref/ref-patterns.html`.
+- **QA:** Semantic review PASS — matches brief and plan; no stubs or debug noise.
 
 ## Next Step
-Run `/niko-archive` to create the archive document and finalize the current project.
+Run `/niko-reflect` (Level 2), then continue M8 milestone closure or run `/niko` again after reflection to advance L4 checklist.

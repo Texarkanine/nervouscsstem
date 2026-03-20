@@ -1,66 +1,37 @@
-# Project Brief: M7 — Table Styling with Special Row Types
+# Project Brief: M8 — Radar pulse
 
 ## User Story
 
-As a developer using the NERV design system, I want to style tables with phosphor-outline aesthetics, configurable fill/border modes, color variants, and special geometric row types (triangles, hexagons, trapezoids) so that I can create data displays that match the NGE console aesthetic — following the same design language established by `.nerv-list`.
+As a developer building NERV-styled HUDs, I want radar-adjacent elements to pulse or fade in time with the radar sweep, and I want a documented way to keep that sync when external UI (or scripts) drive or observe radar position, so that contacts and alerts feel mechanically tied to the sweep rather than floating independently.
 
 ## Use-Case(s)
 
-### Use-Case 1: Base Tables with Fill/Border Modes
-Display tabular data in NERV console style. Tables follow the same fill/border orthogonality as lists: default translucent fill, bordered (fill + phosphor border), outline (border only, dark bg), and solid (opaque fill, cutout text). A list is just a 1xN table — the design language should be unified.
+### Use-Case 1: Swept contact highlights
 
-### Use-Case 2: Color Variants
-Apply per-table color overrides via auto-generated `.nerv-table-{color}` classes (from `$nerv-colors`), exactly as lists use `.nerv-list-{color}`.
+Blips, labels, or markers inside or around a radar should brighten or fade as the sweep passes their angular region (or share the same rhythmic period as the sweep for a cohesive look).
 
-### Use-Case 3: Alternating Triangle Rows
-Create tables where cells are tiled equilateral triangles (alternating up/down) with text aligned to the base, for geometric data visualization.
+### Use-Case 2: External sync
 
-### Use-Case 4: Hexagon Rows
-Display data in hexagonal cells that touch on edges, with configurable in-phase or out-of-phase offset alignment.
-
-### Use-Case 5: Stretchable Trapezoid Rows
-Create table rows where cells expand with content, transforming from triangles into trapezoids while maintaining the geometric aesthetic.
+Application code outside the stylesheet should be able to align actions (e.g. sound, state changes) or custom visuals with the current sweep phase without reimplementing timing math inconsistently.
 
 ## Requirements
 
-1. Base table styling with phosphor-outline borders and glow effects
-2. Fill mode modifiers following list precedent:
-   - `(default)` — translucent color fill on cells
-   - `.nerv-table-bordered` — translucent fill + phosphor border on cells
-   - `.nerv-table-outline` — border only, dark bg (no visible fill)
-   - `.nerv-table-solid` — opaque fill, cutout text (`color: --nerv-bg`)
-3. Color variant classes auto-generated from `$nerv-colors` (`.nerv-table-{color}`)
-4. Alternating triangle row type with tiled equilateral triangles (up/down pattern)
-5. Hexagon row type with configurable in-phase/out-of-phase offset
-6. Stretchable trapezoid row type that expands with content
-7. Support for both real `<table>` elements and CSS-grid-based tables
-8. All styling respects `prefers-reduced-motion` and `prefers-contrast`
-9. All selectors use `.nerv-` prefix
-10. CSS-only implementation (SVG data URIs permitted, no image files)
+1. Extend existing radar styling in `src/_radar.scss` (no parallel radar system).
+2. Respect `prefers-reduced-motion: reduce` — pulsing animations off; static appearance still reads as NERV radar context.
+3. Respect `prefers-contrast: more` if new glow/opacity effects are introduced (stronger borders / less reliance on faint fades where applicable).
+4. All new selectors use the `.nerv-` prefix.
+5. CSS-first: prefer tokens, keyframes, and custom properties; add JS in `src/nerv.js` only if pure CSS cannot satisfy sync or external API requirements.
+6. No image files; no canvas/WebGL; SVG data URIs in CSS allowed if needed.
+7. Reference demo on the existing radar page/section (`ref/ref-patterns.html` or the file that already hosts `.nerv-radar`).
+8. Automated tests (Stylelint + `node --test`) remain green; new behaviors covered in the existing test style (compiled CSS string checks and/or `nerv.js` API checks).
 
 ## Constraints
 
-1. All selectors use the `.nerv-` prefix — no exceptions
-2. `prefers-reduced-motion` suppresses all new animations; static state must still look recognizably NERV
-3. `prefers-contrast` increases border widths and reduces reliance on glow/shadow for new components
-4. No image files — all visual effects via CSS; SVG data URIs in `background-image` are permitted
-5. No canvas, WebGL, or framework dependencies
-6. Token architecture preserved: ambiance tokens shift with alert state, named data tokens remain stable
-7. New SCSS partials follow the `_name.scss` convention and are `@forward`ed from `nerv.scss` before `states`
-8. Existing features and reference pages remain unbroken after implementation
-9. Stylelint + Node.js test runner must pass after implementation
-10. Fill/border/color system follows list precedent (`_list.scss`); same clip-path vs. border limitations apply (clip-path clips borders — crisp borders only render on rectangular cells)
+Cross-milestone invariants from `memory-bank/active/milestones.md` apply (tokens, reduced motion, contrast, no images, SCSS partial conventions, `@forward` order, ref page strategy).
 
 ## Acceptance Criteria
 
-1. `.nerv-table` class provides base phosphor-outline styling for tables with translucent fill on cells
-2. `.nerv-table-bordered` adds phosphor border to cells (translucent fill + border)
-3. `.nerv-table-outline` provides border-only, dark-bg (no visible fill) cells
-4. `.nerv-table-solid` provides opaque fill with cutout text on cells
-5. `.nerv-table-{color}` classes auto-generated from `$nerv-colors`
-6. `.nerv-table-triangle` or similar provides alternating triangle row styling
-7. `.nerv-table-hex` or similar provides hexagon row styling with offset options
-8. `.nerv-table-trapezoid` or similar provides stretchable trapezoid row styling
-9. Reference page demonstrates all table variants, fill modes, and color combinations
-10. All tests pass (Stylelint + Node.js test runner)
-11. Existing component tests remain unbroken
+1. Documented investigation outcome (in plan / implementation notes): chosen sync strategy and tradeoffs.
+2. At least one consumer-facing class or pattern for “pulse with radar” is implemented and demonstrated.
+3. If JS is required: a small, documented API on `NERV` (or extension of `init`) for sync/phase — with tests; if JS is not required: tests still cover new CSS contracts.
+4. `npm run build`, Stylelint, and full `node --test` pass.
