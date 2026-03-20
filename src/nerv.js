@@ -68,7 +68,11 @@
 
         var syncRadars = document.querySelectorAll('.nerv-radar[data-nerv-radar-sync]');
         for (var r = 0; r < syncRadars.length; r++) {
-          NERV.initRadarSweepSync(syncRadars[r]);
+          var radarRoot = syncRadars[r];
+          if (radarRoot.hasAttribute('data-nerv-radar-auto-blips')) {
+            NERV.initRadarBlipAutoLayout(radarRoot);
+          }
+          NERV.initRadarSweepSync(radarRoot);
         }
       };
 
@@ -260,11 +264,77 @@
     },
 
     /**
-     * Generates axis label span elements along grid container edges.
-     * Labels are positioned absolutely along X (bottom) and Y (left) axes.
+     * Sets `--nerv-radar-blip-phase` on each `.nerv-radar-blip` from its position: bearing
+     * (clockwise from top, 0–1) plus `--nerv-radar-blip-range-lag` × normalized radius so
+     * farther contacts peak slightly after the sweep passes that bearing. Skips elements with
+     * `data-nerv-radar-manual-phase`.
      *
-     * @param {HTMLElement} container - Element to attach axis labels to
+     * @param {HTMLElement} radarEl - `.nerv-radar` container
      */
+    layoutRadarBlips: function layoutRadarBlips(radarEl) {
+      if (!radarEl || typeof document === 'undefined') return;
+
+      var rr = radarEl.getBoundingClientRect();
+      var cx = rr.left + rr.width / 2;
+      var cy = rr.top + rr.height / 2;
+      var radius = Math.min(rr.width, rr.height) / 2;
+      if (radius <= 0) return;
+
+      var lagStr =
+        typeof getComputedStyle !== 'undefined'
+          ? getComputedStyle(radarEl).getPropertyValue('--nerv-radar-blip-range-lag').trim()
+          : '';
+      var rangeLag = parseFloat(lagStr);
+      if (isNaN(rangeLag)) rangeLag = 0.07;
+
+      var blips = radarEl.querySelectorAll('.nerv-radar-blip');
+      for (var i = 0; i < blips.length; i++) {
+        var b = blips[i];
+        if (b.hasAttribute('data-nerv-radar-manual-phase')) continue;
+
+        var br = b.getBoundingClientRect();
+        var bx = br.left + br.width / 2;
+        var by = br.top + br.height / 2;
+        var dx = bx - cx;
+        var dy = by - cy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var bearing = Math.atan2(dx, -dy);
+        if (bearing < 0) bearing += 2 * Math.PI;
+        var bearingNorm = bearing / (2 * Math.PI);
+        var rNorm = Math.min(Math.max(dist / radius, 0), 1);
+        var phase = bearingNorm + rangeLag * rNorm;
+        phase -= Math.floor(phase);
+        b.style.setProperty('--nerv-radar-blip-phase', String(phase));
+      }
+    },
+
+    /**
+     * Re-runs `layoutRadarBlips` on resize. Pair with `data-nerv-radar-auto-blips` on the radar.
+     *
+     * @param {HTMLElement} radarEl - `.nerv-radar` container
+     */
+    initRadarBlipAutoLayout: function initRadarBlipAutoLayout(radarEl) {
+      if (!radarEl || typeof document === 'undefined') return;
+      if (prefersReducedMotion()) return;
+
+      function run() {
+        NERV.layoutRadarBlips(radarEl);
+      }
+
+      run();
+      if (typeof requestAnimationFrame === 'function') {
+        requestAnimationFrame(run);
+      }
+
+      if (typeof ResizeObserver !== 'undefined') {
+        if (radarEl.__nervBlipResizeRo) {
+          radarEl.__nervBlipResizeRo.disconnect();
+        }
+        radarEl.__nervBlipResizeRo = new ResizeObserver(run);
+        radarEl.__nervBlipResizeRo.observe(radarEl);
+      }
+    },
+
     /**
      * Drives `--nerv-radar-sweep-phase` (0–1) on a `.nerv-radar` element from the
      * Web Animations API timeline of its child `.nerv-radar-sweep`, so external UI
@@ -326,6 +396,12 @@
       }
     },
 
+    /**
+     * Generates axis label span elements along grid container edges.
+     * Labels are positioned absolutely along X (bottom) and Y (left) axes.
+     *
+     * @param {HTMLElement} container - Element to attach axis labels to
+     */
     initGridLabels: function initGridLabels(container) {
       if (!container || typeof document === 'undefined') return;
 

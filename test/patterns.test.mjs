@@ -323,6 +323,23 @@ describe('Radar CSS', () => {
     );
   });
 
+  it('.nerv-radar-blip animation-delay offsets by 0.5 turn so peak matches sweep (not trailing)', () => {
+    const idx = css.indexOf('.nerv-radar-blip');
+    const section = css.slice(idx, idx + 900);
+    assert.ok(
+      section.includes('0.5') && section.includes('--nerv-radar-blip-phase'),
+      'delay should use (phase - 0.5) scaling so keyframe peak aligns with sweep bearing'
+    );
+  });
+
+  it('--nerv-radar-blip-range-lag token exists in compiled CSS', () => {
+    assert.match(
+      css,
+      /--nerv-radar-blip-range-lag\s*:/,
+      'range-lag token should be defined for JS + echo-delay tuning'
+    );
+  });
+
   it('prefers-reduced-motion suppresses radar blip pulse', () => {
     const reducedMotionBlocks = css.split('prefers-reduced-motion');
     const hasBlipSuppression = reducedMotionBlocks.some((block) => block.includes('nerv-radar-blip'));
@@ -355,6 +372,16 @@ describe('nerv.js API surface', () => {
       typeof NERV.initRadarSweepSync,
       'function',
       'NERV.initRadarSweepSync should be a function'
+    );
+    assert.equal(
+      typeof NERV.layoutRadarBlips,
+      'function',
+      'NERV.layoutRadarBlips should be a function'
+    );
+    assert.equal(
+      typeof NERV.initRadarBlipAutoLayout,
+      'function',
+      'NERV.initRadarBlipAutoLayout should be a function'
     );
   });
 });

@@ -10,14 +10,23 @@
 ///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
 ///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
 ///   .nerv-radar-blip  — Absolutely positioned dot; opacity pulses on the same period as
-///                       the sweep. Set `--nerv-radar-blip-phase` (0–1) so the pulse peak
-///                       aligns with a bearing around the disc (0 = top/dead ahead, clockwise).
+///                       the sweep. `--nerv-radar-blip-phase` (0–1) is the bearing (clockwise
+///                       from top) where the pulse should peak when the sweep passes; delay is
+///                       derived as (phase − 0.5) × period so the 50% keyframe lines up with the
+///                       sweep (opacity peak is not half a turn late). Optional
+///                       `--nerv-radar-blip-range-lag` (turns, default on `.nerv-radar`) adds
+///                       phase proportional to normalized range so farther contacts peak slightly
+///                       later (echo-delay stylization). Use `NERV.layoutRadarBlips` or
+///                       `data-nerv-radar-auto-blips` to set phase from pixel position.
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
 ///   --nerv-animation-speed
 
 .nerv-radar {
+  // Fraction of one rotation to add per unit radius (hub → bezel) for echo-delay on blip peaks.
+  --nerv-radar-blip-range-lag: 0.07;
+
   position: relative;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -146,7 +155,7 @@
     linear
     infinite;
   animation-delay: calc(
-    -1 * var(--nerv-radar-blip-phase, 0) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
+    (var(--nerv-radar-blip-phase, 0) - 0.5) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
   );
 }
 
