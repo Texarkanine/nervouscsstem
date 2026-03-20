@@ -4,6 +4,7 @@ Pure-CSS design system with minimal vanilla JS orchestration. SCSS (Dart Sass) i
 
 ## Environment Setup
 
+- **Git LFS** — Reference PNGs live under `docs/img/` and `planning/selected-ref-images/` and are stored via [Git LFS](https://git-lfs.com/). After clone, run `git lfs install` once per machine; use `git lfs pull` if images are missing.
 - Node.js required (for Dart Sass via npm)
 - `npm install` to fetch the `sass` dev dependency
 - No other tooling or frameworks
