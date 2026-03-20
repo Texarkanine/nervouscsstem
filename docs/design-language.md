@@ -15,7 +15,6 @@ Evenly-spaced plus-sign (`+`) crosshairs arranged in a grid pattern, superimpose
 | ![](img/svC4Ejk.png) | NGE-10 00:07:11 | Canonical form: white crosshairs over live satellite feed with DEPTH/PRESSURE readout |
 | ![](img/Ii2qJE4.png) | NGE-12 00:09:41 | Green crosshairs over orbital view during Angel approach |
 | ![](img/7NR0I9R.png) | NGE-12 00:09:39 | Green crosshairs on command center holographic display with trajectory text overlay |
-| ![](img/Njqu6kQ.png) | NGE-6 00:04:45 | Crosshairs over cross-section schematic, showing the pattern extends beyond camera feeds |
 
 ---
 
@@ -79,7 +78,7 @@ Hexagonal tessellation used as the underlying geometry for network status displa
 |-----------|--------|-------|
 | ![](img/O135US9.png) | EoE 00:07:17 | NETWORK STATUS ANALYSIS — cyan hex grid with numbered nodes, BREAK and DISCONNECTED labels |
 | ![](img/udvUehQ.png) | EoE 00:07:19 | Same network, moments later — more BREAK labels propagating across the grid |
-| ![](img/RtL6Byc.png) | NGE-9 00:04:23 | Hexagonal EMERGENCY panels on physical command center displays — hex motif in hardware |
+| ![](img/TSZIP8p.png) | EoE 00:07:43 | Hex grid with MAGI-01 nodes, WARNING and SECURITY BREACH labels propagating across sectors |
 | ![](img/Q5LJykb.png) | EoE 00:07:35 | Global MAGI defense network with diamond-rotated MAGI status indicators at each city node |
 
 ---
@@ -144,8 +143,6 @@ Grainy, heavily scanlined monochrome video with visible interlacing artifacts, t
 |-----------|--------|-------|
 | ![](img/gt2ZUBU.png) | EoE 00:13:29 | F-46b LIVE feed — extreme scanline degradation with timecode 07:23:21:80 |
 | ![](img/2T49Xkl.png) | EoE 00:13:31 | Same camera with I.D Comparison overlay identifying IKARI.SHINJI, 1st.C, EVA-01 PILOT |
-| ![](img/OO7O6rF.png) | EoE 00:13:55 | CCTV angle during JSSDF incursion |
-| ![](img/NSL0YAK.png) | EoE 00:14:27 | Additional surveillance angle with same visual treatment |
 
 ---
 
@@ -170,7 +167,6 @@ Crosshairs, registration grids, and annotation callouts superimposed directly ov
 |-----------|--------|-------|
 | ![](img/0BM2iet.png) | NGE-4 00:08:29 | Rei Ayanami face scan with grid, triangular markers, and REI AYANAMI AGE 14 SAMPLE 0001 data box |
 | ![](img/N8sR6Us.png) | NGE-3 00:17:27 | Personnel identification through glass display — mirrored text with photo ID overlays |
-| ![](img/mimMSj0.png) | NGE-4 00:08:27 | Variant biometric scan framing |
 | ![](img/vJ8PCoZ.png) | NGE-22 00:07:13 | SORYU ASUKA LANGLEY data card with CODE, SUB, X-LINK, Y-LINK numerical identifiers |
 
 ---
@@ -184,7 +180,6 @@ Semi-transparent rectangular data panels suspended in three-dimensional space at
 | ![](img/PeBlKKx.png) | EoE 00:03:53 | EVA status panels floating in 3D above command center — EVA-01/02/03/04 with 待機/抹消 states |
 | ![](img/7NR0I9R.png) | NGE-12 00:09:39 | Holographic text banner (EAST INDIAN OCEAN SEGMENT / SATELLITE TRAJECTORY) over bridge viewport |
 | ![](img/Ii2qJE4.png) | NGE-12 00:09:41 | Same viewport — holographic layer composited over real-world view through window |
-| ![](img/88tEExT.png) | NGE-13 00:06:33 | Command center with large floating status panels visible behind operators at workstations |
 
 ---
 
@@ -235,8 +230,7 @@ Human or Eva body outlines rendered as solid-fill or wireframe figures, used to 
 |-----------|--------|-------|
 | ![](img/M0bvTs1.png) | NGE-13 00:03:43 | Three green pilot silhouettes in entry plug cross-sections with TEST PLUG and SUBJECT labels |
 | ![](img/IWZTOZT.png) | NGE-1 00:18:51 | EVA-01 full body schematic with POSITION listing (R-01 L-01 through R-21 L-21) and ACCORD status |
-| ![](img/xpXqrIF.png) | EoE 00:55:39 | Psychographic variant — chaotic trace silhouette with exponential sync curve |
-| ![](img/VzuAwvB.png) | EoE 01:06:31 | Null/void symbol for pilot status — the silhouette's absence as data point |
+| ![](img/mimMSj0.png) | NGE-4 00:08:27 | Thermal wireframe body scan — multicolor heat map over polygonal mesh with crosshair grid |
 
 ---
 
@@ -247,9 +241,6 @@ A grid of repeated status tags — typically "LOCKED" — overlaid across a syst
 | Reference | Source | Notes |
 |-----------|--------|-------|
 | ![](img/er1k2Ug.png) | EoE 00:07:47 | Dozens of LOCKED tags in green/orange/red overlaying system map — MAGI lockdown during invasion |
-| ![](img/TSZIP8p.png) | EoE 00:07:43 | Related display during same sequence |
-| ![](img/vv72le8.png) | EoE 00:07:41 | Cascading lock status propagation |
-| ![](img/4QL1EAF.png) | EoE 00:07:01 | Pre-lockdown state of the same system map |
 
 ---
 
@@ -274,7 +265,7 @@ The NERV command bridge seen from above, with operators at individual workstatio
 |-----------|--------|-------|
 | ![](img/o2GoRaR.png) | NGE-10 00:08:47 | Overhead view: five distinct workstation colors in pyramidal arrangement |
 | ![](img/88tEExT.png) | NGE-13 00:06:33 | Bridge from behind operators — floating panels and workstation screens visible |
-| ![](img/hU1TStq.png) | NGE-20 00:03:07 | Eva cage with red indicator light grid — the color-coding extends to facility lighting |
+| ![](img/88tEExT.png) | NGE-13 00:06:33 | Command bridge from behind — colored wall displays flanking MAGI core, operator workstations below |
 | ![](img/QiO6Qub.png) | NGE-24 00:02:49 | Gendo silhouetted against wall display — the command hierarchy visualized as spatial position |
 
 ---
@@ -286,9 +277,9 @@ When NERV enters crisis mode, the entire visual palette collapses to red. Screen
 | Reference | Source | Notes |
 |-----------|--------|-------|
 | ![](img/RtL6Byc.png) | NGE-9 00:04:23 | Full red-monochrome emergency state — hexagonal EMERGENCY panels, red-lit command center |
+| ![](img/vv72le8.png) | EoE 00:07:41 | Hexagonal EMERGENCY wallpaper behind character — the red mode consuming physical space |
 | ![](img/mUwrLH1.png) | NGE-13 00:12:07 | INTRUDER TRACE PATH — red monochrome with circuit-board background texture |
 | ![](img/2GSN18J.png) | NGE-19 00:16:15 | WARNING / REFUSED / DUMMYPLUG REI-00 — deep red on red |
-| ![](img/Qrql43u.png) | NGE-13 00:06:31 | ALERT state — the reddest red |
 
 ---
 
@@ -300,7 +291,6 @@ Dense, non-functional text and numerical strings used as visual texture — hex 
 |-----------|--------|-------|
 | ![](img/mUwrLH1.png) | NGE-13 00:12:07 | Hex dump array above INTRUDER TRACE PATH — rows of digits as visual texture |
 | ![](img/6kGwpjD.png) | NGE-13 00:13:17 | Assembly-like code columns flanking system architecture — plausible but decorative |
-| ![](img/N8sR6Us.png) | NGE-3 00:17:27 | Green scrolling text reflected in glass — personal data as ambient data-wash |
 | ![](img/TkOO9fF.png) | NGE-11 00:05:19 | Dense bar-code-like patterns — abstract data as pure visual rhythm |
 
 ---
@@ -315,6 +305,102 @@ Two-axis calibrated grids rendered in slight perspective or with deliberate conv
 | ![](img/DZ42SSa.png) | NGE-20 00:05:13 | Axis-grid with cascading DISCONNECT/REFUSED status blocks — warm-to-cool gradient data |
 | ![](img/rvsHbYJ.png) | NGE-13 00:11:41 | Horizontal axis (-3 to +3) with scale bar — Angel pattern display |
 | ![](img/xpXqrIF.png) | EoE 00:55:39 | Full calibrated grid for Psychographic Display — crosshair marks at grid intersections |
+
+---
+
+## 25. Eva Neural Connection Map
+
+A full-screen anatomical readout mapping the neural interface between pilot and Eva unit. The Eva's body is rendered as a translucent silhouette (blue-white, centered) with four flanking text columns: SYNAPSE-L (left connections), MOTOR NEURON (center-left, body part listings from THYROID GLAND down to CARPALS), SPINAL CORD (center-right), and PROTO NEURON (right, mirroring with KNEECAP down to FEMORAL ARTERY). Additional subsystem labels — SGL 00, NOR 01, PG1, SENSORY ROOT, AXON CELL-B — are stacked alongside. A red/magenta waveform trace runs vertically along the left edge representing neural signal data. The unit designation (PROTO TYPE EVA-00) appears prominently at bottom-center. This is NERV's deepest visualization of the pilot-Eva bond: every named body part mapped to its synthetic counterpart.
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/wcIp8VE.png) | NGE-13 00:06:19 | Canonical form: full layout with all four text columns, Eva-00 silhouette, red trace |
+| ![](img/OukNbNR.png) | NGE-5 00:19:35 | Same composition, different moment — anatomical listings fully legible |
+| ![](img/9jAZG2y.png) | NGE-14 00:17:59 | Wider shot showing red/purple waveform trace column on left edge |
+| ![](img/rCuxhRO.png) | NGE-14 00:16:35 | Close-up variant with MOTOR NEURON body part list fully readable |
+
+---
+
+## 26. Angel Genetic Analysis Screen
+
+The recurring display used when MAGI performs genetic analysis on an Angel. A grid of multicolored vertical bar patterns resembling real gel electrophoresis results fills the main area, labeled "Nth ANGEL pattern: blue" in red text at top. Binary strings (0100110100...) border the top and bottom edges. A sidebar sometimes shows numbered nucleotide base pair listings (ATTG, CTCA, TATG...). A secondary panel may show a pixelated body scan of the Angel. The bars themselves are rendered in greens, blues, reds, yellows — the only polychrome display in the entire NERV visual language. This screen appears every time an Angel is first detected and classified.
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/ScjGpEV.png) | NGE-14 00:05:11 | 4th ANGEL — full display with numbered nucleotide sidebar |
+| ![](img/ga4MzuJ.png) | NGE-5 00:06:33 | 4th ANGEL — wider frame showing binary border strings |
+| ![](img/OBuMT8A.png) | NGE-9 00:03:27 | 6th ANGEL — split screen with gel on left, pixelated Angel body scan on right |
+| ![](img/oj4K1Sr.png) | NGE-9 00:03:28 | 6th ANGEL — same display, wider frame |
+
+---
+
+## 27. Geofront Armor Layer Descent Display
+
+A side-view cross-section showing the Geofront's horizontal armor layers as numbered blue sawtooth/wave-pattern bands (01, 02... 22+), stacked vertically with brown earth between them. A pink/magenta striped vertical column (barber-pole pattern) represents the descending object (Eva or Angel) punching through the layers. The sky/surface is pink at top; GEO FRONT appears at the bottom. Crosshair registration marks appear in both the ground and sky zones. A 予想図 (forecast diagram) cartouche labels the display. This is the show's "elevator shaft" visualization — communicating pure vertical position through counted barrier layers.
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/Njqu6kQ.png) | NGE-6 00:04:45 | Upper layers with crosshairs and barber-pole column beginning descent |
+| ![](img/L5Jy5Ff.png) | NGE-6 00:05:03 | Mid-depth: layers 08–10 with crosshairs, column passing through |
+| ![](img/clGX1a9.png) | NGE-6 00:05:05 | Bottom: layers 21–22, GEO FRONT label, column reaching the void |
+
+---
+
+## 28. SEELE Monolith Conference
+
+The visual representation of SEELE's remote committee meetings: tall, dark, rectangular monolith shapes arranged in a circle or arc, each displaying only a member number (SEELE 01 through SEELE 12) and SOUND ONLY in red text on the otherwise featureless black surface. No faces, no video feeds — just numbered black slabs with red text. The monoliths float in a black void. This is Anno's visual translation of "faceless power" — the humans controlling the fate of humanity are literally less visually present than a laptop error screen. The SOUND ONLY label reuses the same language as the blue communication card but inverts every aspect: red not blue, black not light, monumental not utilitarian.
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/HrOTgTd.png) | NGE-21 00:02:55 | Single SEELE 03 monolith — the form in isolation |
+
+---
+
+## 29. Armor Layer Breach Progress Display
+
+A diagonal grid showing NERV HQ's physical defense layers being penetrated by an Angel. Each cell represents a PARTINTION [sic] No. and ARMOR PLATE numbered sequentially, with a color-coded SAFETY LEVEL bar (green = intact, shifting through yellow/amber to red/cyan as breach progresses). Red downward-pointing chevron arrows (▼▼▼) indicate the direction of penetration. As the Angel descends, CENTRAL DOGMA location labels appear in the lower cells. This is the "fortress is falling" display — each cell that goes red is another layer between the Angel and Terminal Dogma that no longer exists.
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/z9siV87.png) | NGE-19 00:10:13 | PARTINTION No. 17–19 with green/red bars, red downward chevrons |
+| ![](img/8NQPZvM.png) | NGE-24 00:14:21 | Blue DAMAGED / CONDITION:BLUE cartouche overlaid on breached section |
+| ![](img/WgPSDJd.png) | NGE-24 00:16:57 | CENTRAL DOGMA labels emerging as breach reaches critical depth |
+| ![](img/mhEtwU8.png) | NGE-24 00:16:39 | 17th ANGEL PROCEEDING cartouche over green lattice with red/amber layer bars |
+
+---
+
+## 30. Multi-Camera Surveillance Wall
+
+A grid of live camera feeds from observation stations around Tokyo-3, each labeled with a station number (S.S. NO.23-12-A) and Japanese location identifier (第23警戒群 / 第12光学観測所 Side-B). The feeds show real-world imagery (mountains, infrastructure, coastline). As the threat approaches, individual panels are overwritten with orange SIGNAL LOST cartouches and red WARNING labels — the camera grid becomes a map of the incoming destruction's footprint. Distinct from the single CCTV feed (§11): this is the *matrix* of feeds, and the compositional power comes from watching them fail one by one.
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/bXKShF4.png) | EoE 00:11:13 | Multiple SIGNAL LOST overlays propagating across the camera grid |
+
+---
+
+## 31. Repeating Text Wallpaper
+
+A single sentence or word repeated in rows to fill the entire display surface — not as an overlay but as the *sole content* of the screen. Distinct from the Full-Bleed Status Card (§3), which uses a single word at maximum scale. The wallpaper uses normal-sized text and achieves its impact through sheer repetition: the same message, dozens of times, tiling the display like a pattern. Known instances: COMPUTERS HAVE OPTED FOR SELF DESTRUCTION (red, filling the command center ceiling projection), FEHLER (German for "error," red, spiraling behind Asuka in the entry plug), DELETED (red, filling a laptop screen). The effect is less "urgent notification" and more "the system is stuck in a loop."
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/ByzTdQ6.png) | NGE-13 00:18:49 | COMPUTERS HAVE OPTED FOR SELF DESTRUCTION — mirrored on ceiling display, green topo below |
+| ![](img/eom6gka.png) | NGE-13 00:19:39 | Same message, different angle — scale of repetition visible |
+| ![](img/0WzwffM.png) | NGE-8 00:12:05 | FEHLER FEHLER FEHLER spiraling behind Asuka — cylindrical display topology |
+| ![](img/a9ZPerb.png) | EoE 00:06:55 | DELETED filling laptop display panels over amber data text |
+
+---
+
+## 32. Green-on-Black Terminal Display
+
+Maya Ibuki's workstation screens use a distinct green-on-black palette — not the amber-on-black (§16) that dominates NERV's main displays. The green terminals show source code (C-like function signatures: GetStringWork, MyString, LenxCheck), small embedded graphs with colored line traces, and structured data layouts. The green references 1970s–80s phosphor terminal aesthetics (VT100, IBM 3278) rather than the 1980s–90s amber instrumentation that NERV's main systems channel. The distinction is functional: green terminals are for *programming and analysis* (Ritsuko and Maya's domain), amber terminals are for *operations and command* (the bridge crew's domain).
+
+| Reference | Source | Notes |
+|-----------|--------|-------|
+| ![](img/SBVPMTU.png) | NGE-13 00:01:43 | Maya's screen: green C-like code with embedded graph, structured layout |
+| ![](img/UI8kbU9.png) | NGE-13 00:01:51 | Same terminal type from wider angle — green code display behind Maya and Ritsuko |
+| ![](img/kZDLpII.png) | NGE-23 00:06:39 | Ritsuko at green terminal with code and schematic diagram |
 
 ---
 
@@ -336,3 +422,8 @@ NERV's command center is dark. Screens float in darkness. The black isn't empty 
 
 ### Mechanical Honesty
 When NERV needs a countdown timer, it doesn't render one on a screen — it builds a physical seven-segment LED display with mode buttons. When it needs a switch, the switch has a safety cover. The commitment to representing physical interface hardware alongside digital displays creates a layered, believable technology stack.
+
+---
+
+*Taxonomy compiled from 271 reference frames spanning NGE episodes 1–24 and The End of Evangelion.*
+*Source album: https://imgur.com/a/mvW7g*
