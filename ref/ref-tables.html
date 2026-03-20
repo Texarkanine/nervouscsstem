@@ -267,11 +267,11 @@
     </div>
   </div>
 
-  <!-- ═══ Section 6: Mixed-Row Table ═══ -->
-  <div class="ref-row-title">Mixed-Row Table — Different Shapes Per Row</div>
+  <!-- ═══ Section 6: Mixed Tables ═══ -->
+  <div class="ref-row-title">Mixed Tables</div>
   <div class="ref-table-row">
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Triangle → Para → Plain — Amber</span>
+      <span class="ref-table-label">Mixed Shapes — Triangle → Para → Plain — Amber</span>
       <table class="nerv-table nerv-table-amber">
         <tr class="nerv-table-triangle"><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td></tr>
         <tr class="nerv-table-triangle"><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td></tr>
@@ -279,27 +279,43 @@
         <tr><td>▭ Plain</td><td>▭ Plain</td><td>▭ Plain</td><td>▭ Plain</td></tr>
       </table>
     </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Mixed Colors — Orange table, per-cell green/red overrides</span>
+      <table class="nerv-table nerv-table-bordered nerv-table-orange">
+        <thead><tr><th>Unit</th><th>Status</th><th>Sync</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>EVA-01</td><td class="nerv-table-green">Online</td><td>98.2%</td><td>Standby</td></tr>
+          <tr><td>EVA-02</td><td class="nerv-table-red">Offline</td><td class="nerv-table-red">0.0%</td><td class="nerv-table-red">Emergency</td></tr>
+          <tr><td>EVA-05</td><td class="nerv-table-green">Online</td><td>72.1%</td><td>Deploy</td></tr>
+          <tr><td>EVA-08</td><td>Standby</td><td class="nerv-table-green">88.7%</td><td>Ready</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- ═══ Section 7: Table-Level Default with Row Override ═══ -->
-  <div class="ref-row-title">Table-Level Default with Row Override</div>
+  <!-- ═══ Section 7: Per-Row Color Overrides ═══ -->
+  <div class="ref-row-title">Per-Row Color Overrides</div>
   <div class="ref-table-row">
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Table default: Para — Row override: Triangle — Cyan</span>
-      <table class="nerv-table nerv-table-para nerv-table-cyan">
-        <tr><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td></tr>
-        <tr><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td></tr>
-        <tr class="nerv-table-triangle"><td>Override △</td><td>Override △</td><td>Override △</td><td>Override △</td></tr>
-        <tr><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td></tr>
+      <span class="ref-table-label">Para — Cyan table, red alert row</span>
+      <table class="nerv-table nerv-table-para nerv-table-ruled nerv-table-cyan">
+        <tr><td>Sector 1</td><td>Clear</td><td>Normal</td><td>Patrol</td></tr>
+        <tr class="nerv-table-red"><td>Sector 3</td><td>Breach</td><td>Critical</td><td>Evacuate</td></tr>
+        <tr><td>Sector 5</td><td>Clear</td><td>Normal</td><td>Patrol</td></tr>
+        <tr><td>Sector 7</td><td>Clear</td><td>Normal</td><td>Patrol</td></tr>
       </table>
     </div>
 
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Table default: Triangle — Row override: Para — Red Borderless</span>
-      <table class="nerv-table nerv-table-borderless nerv-table-triangle nerv-table-red">
-        <tr><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td></tr>
-        <tr class="nerv-table-para"><td>Override ▱</td><td>Override ▱</td><td>Override ▱</td><td>Override ▱</td></tr>
-        <tr><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td></tr>
+      <span class="ref-table-label">Bordered — Orange table, green status row</span>
+      <table class="nerv-table nerv-table-bordered nerv-table-orange">
+        <thead><tr><th>Phase</th><th>Target</th><th>Status</th><th>ETA</th></tr></thead>
+        <tbody>
+          <tr><td>Launch</td><td>EVA-01</td><td>Pending</td><td>00:45</td></tr>
+          <tr class="nerv-table-green"><td>Deploy</td><td>EVA-02</td><td>Complete</td><td>—</td></tr>
+          <tr><td>Recovery</td><td>EVA-05</td><td>Pending</td><td>02:10</td></tr>
+        </tbody>
       </table>
     </div>
   </div>

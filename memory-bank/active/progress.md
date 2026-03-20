@@ -47,3 +47,11 @@ Systematic diagnosis (`/refresh`) of persistent sub-pixel gaps between geometric
 **Decision**: Only use `clip-path` when gap is invisible AND borderless looks good. Use `transform`-based techniques for shapes that need borders.
 
 **Removed**: hex, hex-alt (punt to future `_hex-grid.scss`), trapezoid (unreliable). **Added**: parallelogram via `skewX` on `::before` (proven `_list.scss` pattern — no gaps, borders survive). Added `.nerv-table-uniform` modifier to suppress default alternation on both para and triangle. Para gets full fill-mode support (bordered/outline/solid on `::before`). Triangle + para with alternating default = free visual variety. 260/260 tests pass.
+
+### Reflect — Complete
+
+Full lifecycle reflection written to `memory-bank/active/reflection/reflection-nerv-m7-tables.md`. Key insights:
+
+**Technical**: `clip-path` on adjacent table cells produces unfixable sub-pixel gaps (severity ~ horizontal contact area). `skewX` on `::before` is the reliable technique — no gaps, borders survive, all fill modes work. Per-row alternation is more natural than per-cell for table geometric shapes.
+
+**Process**: Visual testing at multiple zoom levels should be mandatory after implementing `clip-path` shapes. The `/refresh` diagnostic was the turning point — broke out of incremental fix cycles to reach the correct architectural decision. Rework passes should be batched to minimize verification overhead.

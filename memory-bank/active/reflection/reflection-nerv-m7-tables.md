@@ -8,45 +8,75 @@ complexity_level: 3
 
 ## Summary
 
-Implemented `.nerv-table` component with phosphor-outline base styling, four fill modes (default translucent, bordered, outline, solid), auto-generated color variants, and three geometric row types (triangle, hexagon, trapezoid) with dual-tier cascade (table-level default + row-level override). All 11 acceptance criteria met, 18 new tests pass, 256/256 total suite. One trivial QA fix applied.
+Built `_table.scss` providing phosphor-outline table styling with fill/border/color orthogonality, parallelogram (skewX) and triangle (clip-path) geometric row types, ruled dividers, per-row color overrides, and a reference page. Succeeded after significant rework — the original geometric shape offering (hex, hex-alt, trapezoid, triangle) was cut down to two reliable shapes through iterative visual testing and systematic diagnosis of browser rendering limitations.
 
 ## Requirements vs Outcome
 
-All requirements delivered as specified. No gaps, no descoped items, no additions beyond the plan. The fill/border/color system matches `_list.scss` precedent exactly. Geometric shapes support both row-level and table-level application as planned. The creative decision (tiled hex grid deferred to `_hex-grid.scss`) was respected.
+The original brief called for triangle, hexagon, and trapezoid geometric row types. The final delivery dropped hexagon and trapezoid, and added parallelogram:
+
+| Original Requirement | Outcome |
+|---|---|
+| Base table + fill modes + color variants | ✓ Delivered as planned |
+| Triangle rows (alternating up/down) | ✓ Delivered (clip-path, borderless) |
+| Hexagon rows (in-phase / out-of-phase) | ✗ Cut — sub-pixel gaps unfixable in tables, punt to `_hex-grid.scss` |
+| Trapezoid rows | ✗ Cut — clip-path unreliable across zoom levels |
+| — | ✓ Added: Parallelogram rows (skewX, full fill mode support) |
+| — | ✓ Added: `.nerv-table-uniform` modifier (suppress alternation) |
+| — | ✓ Added: `.nerv-table-ruled` / `.nerv-table-dark-border` (configurable dividers) |
+| — | ✓ Added: Per-row and per-cell color overrides |
+| — | ✓ Added: Geometric tables auto-borderless |
+
+The scope change was operator-driven and architecturally sound. The parallelogram is arguably more useful than hex/trapezoid were — it supports all fill modes because it uses `transform` instead of `clip-path`.
 
 ## Plan Accuracy
 
-The plan was highly accurate. The implementation sequence (stub → tests → base → fill modes → colors → shapes → accessibility → ref page) worked exactly as specified with no reordering needed. The identified challenges all materialized as expected:
-- **Specificity cascade** was the primary design concern — the preflight phase caught and fixed a specificity bug before build started, saving time.
-- **clip-path clips borders** was documented in the plan and handled by noting it in the doc comment (matching list precedent).
-- **CSS property replacement** was anticipated but didn't cause friction — fill modes before shapes in source order, with shapes not needing to reset fill properties.
+The initial plan was structurally correct for what it attempted — the 8-step implementation sequence, test plan, file list, and cascade design all worked. Where the plan failed was in **not anticipating the browser rendering limitation** that would invalidate half the geometric shapes.
 
-One surprise: the pre-existing form test B16 broke because it checked the "last" `prefers-contrast: more` block. This was a brittle test that the plan couldn't have anticipated. The fix (regex for "any matching block") was trivial.
+The plan noted "clip-path clips borders" as a known limitation but treated it as cosmetic. It did not identify that `clip-path` on adjacent `<td>` elements produces sub-pixel rendering gaps at row boundaries — a fundamental issue that no CSS can fix. This wasn't discoverable during planning (it requires visual testing at multiple zoom levels), but the plan could have included a "visual verification checkpoint" after the first geometric shape was implemented.
 
 ## Creative Phase Review
 
-One creative decision (tiled hex grid variant → `_hex-grid.scss` future enhancement). Held up perfectly — the decision cleanly separated table hex rows (variable-width, in table context) from hex grid tiling (fixed-width, in grid context). No friction during build.
+One creative decision was made: deferring tiled hex grid to `_hex-grid.scss`. This decision **held up perfectly** and was vindicated by the subsequent removal of hex from tables entirely. The creative phase correctly identified that hexagonal grids are architecturally wrong for `<table>` elements (1D row-based layout vs. 2D tessellation).
+
+No creative phase was run for the parallelogram addition — it was driven by operator brainstorming during rework. In hindsight, a creative phase exploring "which geometric shapes can be reliably rendered in table cells?" at the start would have saved significant rework.
 
 ## Build & QA Observations
 
-**Build went smoothly:** The `_list.scss` precedent made implementation straightforward — the pattern was clear and well-established. The TDD cycle worked cleanly: all 18 tests failed in red phase, then all passed after implementation. The only unexpected issue was the form test B16 breakage, which was a pre-existing fragility.
+**Build**: Went smoothly for the initial implementation. TDD caught one pre-existing test fragility (form test B16's "last block" assumption). The `_list.scss` parallelogram pattern translated cleanly to tables.
 
-**QA caught one real issue:** Table-level `.nerv-table-hex-alt` was missing hex clip-path on cells (only applied row offset). Row-level hex-alt was self-contained. This would have caused visual bugs for anyone using hex-alt standalone at table level. The ref page had this exact usage, so visual testing would have caught it too, but QA found it through code review.
+**QA**: Caught one real issue (hex-alt table-level missing clip-path). Otherwise clean.
+
+**Rework (the real story)**: Three major rework passes after operator visual review:
+1. Borderless modifier, hex-eq (equilateral hex attempt) — hex-eq dropped due to table layout overriding `aspect-ratio`
+2. Geometric shape overhaul via `/refresh` — systematic diagnosis, removed hex/hex-alt/trapezoid, added parallelogram
+3. Alternation fix (per-row not per-cell), ruled dividers, dark-border alias, per-cell/row color overrides, mixed tables demos
+
+The rework was productive but expensive. Each pass required test updates, ref page updates, SCSS changes, and full suite verification.
 
 ## Cross-Phase Analysis
 
-**Preflight → Build:** Preflight caught the specificity bug (row-level selectors at (0,1,2) losing to table-level at (0,2,1)). Without this catch, the entire row-level override mechanism would have silently failed — row shapes wouldn't override table defaults. This would have been a confusing bug to diagnose during build.
+**Planning → Build**: The plan's failure to identify sub-pixel gaps as a risk didn't cause build problems (build went fine), but it caused extensive post-build rework. The plan assumed all `clip-path` shapes would work in tables.
 
-**Plan → Build:** The plan's two-tier cascade mechanism (section 5 row-level, section 6 table-level) was well-specified and translated directly to code. The explicit specificity calculations in the plan prevented guesswork.
+**Creative → Rework**: The creative decision to defer hex-grid was vindicated. If we'd tried to build tiled hex grids in tables, we'd have hit the same rendering wall plus the tessellation problem.
 
-**Build → QA:** The hex-alt inconsistency that QA caught was a gap in the plan — the plan described hex-alt as a "modifier" but didn't specify that table-level hex-alt should also include base hex clip-path. The row-level implementation naturally included it (because a standalone row class must be self-contained), but the table-level implementation followed the "modifier" framing literally.
+**QA → Rework**: QA passed on the initial build, but the operator's visual review (a higher bar than automated tests) drove three rework passes. Automated tests verify CSS output structure, not visual rendering quality. The gap between "CSS is correct" and "visual result is correct" was the entire rework story.
+
+**`/refresh` → Resolution**: The systematic re-diagnosis using `/refresh` was the turning point. Instead of continuing to tweak padding/borders/border-collapse, stepping back to ask "which shapes actually work?" led to the right architectural decision.
 
 ## Insights
 
 ### Technical
 
-- **Dual-tier specificity pattern for cascade overrides**: When a CSS class needs to work both as a container-level default and a child-level override, the two selectors need carefully managed specificity. Using `.container.modifier descendant` for the default tier and `.container child.modifier > descendant` for the override tier provides a clean 1-step specificity gap. This pattern is reusable for any component with container-level defaults and per-item overrides.
+- **`clip-path` on adjacent table cells produces browser-level sub-pixel gaps that are unfixable with CSS.** The severity correlates with the shape's horizontal contact area: hexagons worst (50% horizontal span at top/bottom), trapezoids visible, triangles invisible (point contact). This is a fundamental browser rendering characteristic, not a CSS bug. Only use `clip-path` in tables when the gap is either invisible or aesthetically acceptable.
+
+- **`skewX` on `::before` is the reliable geometric shape technique for tables.** It produces no rendering gaps (the pseudo extends from `inset: 0`), borders survive (they're on the pseudo-element, not clipped), and all fill modes work by targeting `::before`. The `overflow: visible` default on table cells means the skewed shape extends beyond the cell boundary — this creates visual overlap between cells, which is actually the desired effect for seamless parallelogram rows. (Note: `overflow: hidden` clips the skew and breaks the shape — do not use it.)
+
+- **Per-row alternation (`tr:nth-child(even)`) is more natural than per-cell alternation for table geometric shapes.** All cells in a row should present a unified visual direction; rows alternate to create rhythm.
 
 ### Process
 
-- **"Modifier" vs "standalone" semantics need explicit specification in plans**: When a class is described as a "modifier" in the plan, the plan should explicitly state whether it's standalone or requires a companion class — and whether that contract is the same at every application level (container vs. child). The hex-alt inconsistency arose because "modifier" was interpreted differently at each level.
+- **Visual testing at multiple zoom levels should be a mandatory checkpoint after implementing any `clip-path` shape in a layout context.** Automated tests verify CSS structure but cannot detect sub-pixel rendering artifacts. A single visual check at 100%, 110%, and 90% zoom would have caught the hex gap issue before the full shape suite was built.
+
+- **The `/refresh` diagnostic workflow is highly effective for breaking out of incremental fix cycles.** Three attempts to fix hex gaps with padding/border/collapse adjustments failed. `/refresh` forced a step back to root-cause analysis, which led to the correct architectural decision (remove hex, add para) in one pass. **When you've tried the same class of fix twice and it hasn't worked, stop and `/refresh`.**
+
+- **Rework passes should be batched.** The three rework passes each required full test suite + build verification. If all operator feedback had been collected before starting rework, we could have done it in one pass. The workflow should encourage "collect all visual feedback → batch rework" rather than "fix one thing → show → fix another thing → show."
