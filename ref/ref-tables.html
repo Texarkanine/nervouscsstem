@@ -189,53 +189,80 @@
     </div>
   </div>
 
-  <!-- ═══ Section 4: Hexagon Rows ═══ -->
-  <div class="ref-row-title">Hexagon Rows (clip-path — borders clipped away)</div>
+  <!-- ═══ Section 4: Parallelogram Rows ═══ -->
+  <div class="ref-row-title">Parallelogram Rows (skewX — borders survive)</div>
   <div class="ref-table-row">
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Table-Level Hex — Cyan</span>
-      <table class="nerv-table nerv-table-hex nerv-table-cyan">
-        <tr><td>Hex A</td><td>Hex B</td><td>Hex C</td><td>Hex D</td></tr>
-        <tr><td>Hex E</td><td>Hex F</td><td>Hex G</td><td>Hex H</td></tr>
+      <span class="ref-table-label">Para — Cyan — Alternating (default)</span>
+      <table class="nerv-table nerv-table-para nerv-table-cyan nerv-table-ruled">
+        <tr><td>Sector 7</td><td>Active</td><td>Nominal</td><td>Clear</td></tr>
+        <tr><td>Sector 9</td><td>Standby</td><td>Warning</td><td>Monitor</td></tr>
+        <tr><td>Sector 12</td><td>Offline</td><td>N/A</td><td>Locked</td></tr>
       </table>
     </div>
 
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Hex-Alt (out-of-phase) — Green</span>
-      <table class="nerv-table nerv-table-hex-alt nerv-table-green">
-        <tr><td>Row 1A</td><td>Row 1B</td><td>Row 1C</td><td>Row 1D</td></tr>
-        <tr><td>Row 2A</td><td>Row 2B</td><td>Row 2C</td><td>Row 2D</td></tr>
-        <tr><td>Row 3A</td><td>Row 3B</td><td>Row 3C</td><td>Row 3D</td></tr>
+      <span class="ref-table-label">Para — Orange — Uniform (all same skew)</span>
+      <table class="nerv-table nerv-table-para nerv-table-uniform nerv-table-orange nerv-table-ruled">
+        <tr><td>Entry Plug</td><td>Inserted</td><td>Sealed</td><td>Ready</td></tr>
+        <tr><td>LCL Flood</td><td>Complete</td><td>Pressure OK</td><td>Go</td></tr>
       </table>
     </div>
   </div>
 
   <div class="ref-table-row">
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Hex — Red Solid — Borderless</span>
-      <table class="nerv-table nerv-table-borderless nerv-table-hex nerv-table-solid nerv-table-red">
-        <tr><td>A-01</td><td>B-02</td><td>C-03</td><td>D-04</td><td>E-05</td></tr>
-        <tr><td>F-06</td><td>G-07</td><td>H-08</td><td>I-09</td><td>J-10</td></tr>
+      <span class="ref-table-label">Para — Green — Bordered (borders on ::before)</span>
+      <table class="nerv-table nerv-table-para nerv-table-bordered nerv-table-green">
+        <tr><td>A10 Nerve</td><td>Active</td><td>98.2%</td><td>Stable</td></tr>
+        <tr><td>Sync Rate</td><td>78.3%</td><td>Rising</td><td>Optimal</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Blue — Outline</span>
+      <table class="nerv-table nerv-table-para nerv-table-outline nerv-table-blue">
+        <tr><td>Hull Int.</td><td>100%</td><td>Armor</td><td>Intact</td></tr>
+        <tr><td>Pwr Cell</td><td>04:58</td><td>Drain</td><td>Normal</td></tr>
       </table>
     </div>
   </div>
 
-  <!-- ═══ Section 5: Trapezoid Rows ═══ -->
-  <div class="ref-row-title">Trapezoid Rows (clip-path — borders clipped away)</div>
   <div class="ref-table-row">
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Table-Level Trapezoid — Orange</span>
-      <table class="nerv-table nerv-table-trapezoid nerv-table-orange">
-        <tr><td>Trap A</td><td>Trap B</td><td>Trap C</td><td>Trap D</td></tr>
-        <tr><td>Trap E</td><td>Trap F</td><td>Trap G</td><td>Trap H</td></tr>
+      <span class="ref-table-label">Para — Red Solid — Ruled (thick)</span>
+      <table class="nerv-table nerv-table-para nerv-table-solid nerv-table-red nerv-table-ruled" style="--nerv-table-rule-width: 3px">
+        <tr><td>ALERT</td><td>Berserk</td><td>Control</td><td>Lost</td></tr>
+        <tr><td>EVAC</td><td>Sector 3</td><td>Status</td><td>Critical</td></tr>
       </table>
     </div>
 
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Row-Level Trapezoid — Blue Solid</span>
-      <table class="nerv-table nerv-table-solid nerv-table-blue">
-        <tr class="nerv-table-trapezoid"><td>Alpha</td><td>Beta</td><td>Gamma</td><td>Delta</td></tr>
-        <tr class="nerv-table-trapezoid"><td>Epsilon</td><td>Zeta</td><td>Eta</td><td>Theta</td></tr>
+      <span class="ref-table-label">Para — Amber — Ruled (red color)</span>
+      <table class="nerv-table nerv-table-para nerv-table-amber nerv-table-ruled" style="--nerv-table-rule-color: var(--nerv-red); --nerv-table-rule-width: 5px">
+        <tr><td>Cage 01</td><td>Open</td><td>EVA-01</td><td>Standby</td></tr>
+        <tr><td>Cage 02</td><td>Sealed</td><td>EVA-02</td><td>Deploy</td></tr>
+        <tr><td>Cage 05</td><td>Locked</td><td>EVA-05</td><td>Maintenance</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Section 5: Triangle + Uniform ═══ -->
+  <div class="ref-row-title">Triangle Uniform Modifier</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Triangle — Cyan — Uniform (all point up)</span>
+      <table class="nerv-table nerv-table-borderless nerv-table-triangle nerv-table-uniform nerv-table-cyan">
+        <tr><td>▲1</td><td>▲2</td><td>▲3</td><td>▲4</td><td>▲5</td><td>▲6</td></tr>
+        <tr><td>▲7</td><td>▲8</td><td>▲9</td><td>▲10</td><td>▲11</td><td>▲12</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Triangle — Red Solid — Alternating (default)</span>
+      <table class="nerv-table nerv-table-borderless nerv-table-triangle nerv-table-solid nerv-table-red">
+        <tr><td>△01</td><td>▽02</td><td>△03</td><td>▽04</td></tr>
+        <tr><td>△05</td><td>▽06</td><td>△07</td><td>▽08</td></tr>
       </table>
     </div>
   </div>
@@ -244,12 +271,11 @@
   <div class="ref-row-title">Mixed-Row Table — Different Shapes Per Row</div>
   <div class="ref-table-row">
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Triangle → Hex → Trapezoid → Plain — Amber</span>
+      <span class="ref-table-label">Triangle → Para → Plain — Amber</span>
       <table class="nerv-table nerv-table-amber">
         <tr class="nerv-table-triangle"><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td></tr>
         <tr class="nerv-table-triangle"><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td></tr>
-        <tr class="nerv-table-hex"><td>⬡ Hex</td><td>⬡ Hex</td><td>⬡ Hex</td><td>⬡ Hex</td></tr>
-        <tr class="nerv-table-trapezoid"><td>⏢ Trap</td><td>⏢ Trap</td><td>⏢ Trap</td><td>⏢ Trap</td></tr>
+        <tr class="nerv-table-para"><td>▱ Para</td><td>▱ Para</td><td>▱ Para</td><td>▱ Para</td></tr>
         <tr><td>▭ Plain</td><td>▭ Plain</td><td>▭ Plain</td><td>▭ Plain</td></tr>
       </table>
     </div>
@@ -259,21 +285,21 @@
   <div class="ref-row-title">Table-Level Default with Row Override</div>
   <div class="ref-table-row">
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Table default: Triangle — Row overrides: Hex, Trapezoid — Cyan</span>
-      <table class="nerv-table nerv-table-triangle nerv-table-cyan">
-        <tr><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td></tr>
-        <tr><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td></tr>
-        <tr class="nerv-table-hex"><td>Override ⬡</td><td>Override ⬡</td><td>Override ⬡</td><td>Override ⬡</td></tr>
-        <tr class="nerv-table-trapezoid"><td>Override ⏢</td><td>Override ⏢</td><td>Override ⏢</td><td>Override ⏢</td></tr>
+      <span class="ref-table-label">Table default: Para — Row override: Triangle — Cyan</span>
+      <table class="nerv-table nerv-table-para nerv-table-cyan">
+        <tr><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td></tr>
+        <tr><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td></tr>
+        <tr class="nerv-table-triangle"><td>Override △</td><td>Override △</td><td>Override △</td><td>Override △</td></tr>
+        <tr><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td><td>Inherit ▱</td></tr>
       </table>
     </div>
 
     <div class="ref-table-group ref-table-wide">
-      <span class="ref-table-label">Table default: Hex — Row override: Triangle — Red Outline</span>
-      <table class="nerv-table nerv-table-hex nerv-table-outline nerv-table-red">
-        <tr><td>Inherit ⬡</td><td>Inherit ⬡</td><td>Inherit ⬡</td><td>Inherit ⬡</td></tr>
-        <tr class="nerv-table-triangle"><td>Override △</td><td>Override △</td><td>Override △</td><td>Override △</td></tr>
-        <tr><td>Inherit ⬡</td><td>Inherit ⬡</td><td>Inherit ⬡</td><td>Inherit ⬡</td></tr>
+      <span class="ref-table-label">Table default: Triangle — Row override: Para — Red Borderless</span>
+      <table class="nerv-table nerv-table-borderless nerv-table-triangle nerv-table-red">
+        <tr><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td></tr>
+        <tr class="nerv-table-para"><td>Override ▱</td><td>Override ▱</td><td>Override ▱</td><td>Override ▱</td></tr>
+        <tr><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td><td>Inherit △</td></tr>
       </table>
     </div>
   </div>

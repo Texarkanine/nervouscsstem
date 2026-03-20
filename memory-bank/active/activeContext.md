@@ -4,22 +4,40 @@
 M7: Implement table styling with special row types
 
 ## Phase
-BUILD — rework pass complete (operator feedback)
+BUILD — rework pass 2 complete (geometric shape overhaul)
 
 ## What Was Done
-Rework based on operator visual review:
-- Added `.nerv-table-borderless` — strips container border, glow, and cell borders for clean geometric shapes
-- Added `.nerv-table-hex-eq` — equilateral hex with fixed `aspect-ratio: 1.1547`, clips overflow (vs default long-hex that stretches)
-- Triangle gap behavior accepted as-is (clip-path on individual cells creates diamond gaps — CSS limitation)
-- Trapezoid gap behavior deferred (same root cause as triangles)
-- Updated ref page: triangle demos now borderless, hex section shows long vs equilateral, added solid+borderless combos
-- 3 new tests (B19-B21), 259/259 total pass, lint clean
+Major rework based on systematic diagnosis of sub-pixel rendering gaps:
 
-## Decisions Made (operator)
-- Triangle tessellation gaps accepted — valid NERV aesthetic, just different from initial vision
-- Table borders should be optional — geometric shapes look better without container chrome
-- Hexagons need equilateral option with text clipping vs stretchy long-hex default
-- Trapezoid gap fix deferred to after triangle decision (now settled)
+### Removed from tables:
+- **Hex / Hex-alt** — sub-pixel gaps clearly visible at row boundaries (clip-path on adjacent cells), architecturally wrong for tables (punt to future `_hex-grid.scss`)
+- **Trapezoid** — clip-path unreliable across zoom levels, same gap issue
+- **`border-collapse: collapse` hack** — was an attempted fix for gaps, no longer needed
+
+### Added:
+- **Parallelogram** (`.nerv-table-para`) — `skewX` on `::before` pseudo-element (same proven pattern as `_list.scss`). No clip-path = no sub-pixel gaps, and borders survive all fill modes.
+- **`.nerv-table-uniform`** modifier — suppresses alternating direction on both triangle and para. Default behavior alternates (even cells flip direction).
+- **Para fill-mode overrides** — bordered, outline, solid all correctly target `::before` pseudo-element.
+
+### Key principle established:
+Only use `clip-path` when (a) the visual result is correct AND (b) the borderless aesthetic is cool enough. Transform-based shapes get full fill mode support.
+
+### Shape × Fill Mode matrix:
+| Shape         | default | bordered | outline | solid | borderless |
+|---------------|---------|----------|---------|-------|------------|
+| Rectangle     | ✓       | ✓        | ✓       | ✓     | ✓          |
+| Parallelogram | ✓       | ✓        | ✓       | ✓     | ✓          |
+| Triangle      | ✓       | —        | —       | ✓     | ✓          |
+
+## Files Modified
+- `src/_table.scss` — removed hex/hex-alt/trapezoid, added para + uniform
+- `test/components.test.mjs` — replaced B11-B16 with para/uniform tests
+- `ref/ref-tables.html` — replaced hex/trap demos with para demos
+
+## Verification
+- Lint: clean
+- Build: clean
+- Tests: 260/260 pass, 0 fail
 
 ## Next Step
-Run /niko to continue to the next milestone.
+Visual review of parallelogram rendering in ref page, then continue workflow.

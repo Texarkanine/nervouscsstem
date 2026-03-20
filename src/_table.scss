@@ -2,14 +2,21 @@
 ///
 /// Provides base table styling following the same fill/border/color design
 /// language as `_list.scss`. Tables support fill mode modifiers, auto-generated
-/// color variants from `$nerv-colors`, and geometric row types (triangle,
-/// hexagon, trapezoid) applied at the row or table level.
+/// color variants from `$nerv-colors`, and geometric row types applied at the
+/// row or table level.
 ///
 /// Base classes:
 ///   .nerv-table                  — base phosphor-outline table
 ///
 /// Container modifiers:
 ///   .nerv-table-borderless       — removes container border, glow, and cell borders
+///   .nerv-table-uniform          — suppress alternating direction on geometric shapes
+///   .nerv-table-ruled            — uniform rule lines between cells (para: on ::before)
+///   .nerv-table-dark-border      — alias for .nerv-table-ruled (dark borders, common case)
+///
+/// Rule-line custom properties (scoped to .nerv-table-ruled / .nerv-table-dark-border):
+///   --nerv-table-rule-color      (default: --nerv-void / #000)
+///   --nerv-table-rule-width      (default: --nerv-border-width)
 ///
 /// Fill modes (mutually exclusive, on container):
 ///   (default)                    — translucent color fill on cells
@@ -18,10 +25,8 @@
 ///   .nerv-table-solid            — opaque fill, cutout text
 ///
 /// Geometric row types (on <tr> or on <table> as default):
-///   .nerv-table-triangle         — equilateral triangles alternating up/down
-///   .nerv-table-hex              — hexagonal cells (stretch with content)
-///   .nerv-table-hex-alt          — hexagonal cells with alternating row offset
-///   .nerv-table-trapezoid        — angled trapezoid cells
+///   .nerv-table-para             — parallelogram via skewX on ::before (borders survive)
+///   .nerv-table-triangle         — alternating up/down triangles via clip-path (borderless)
 ///
 /// Color variants (auto-generated from $nerv-colors):
 ///   .nerv-table-{color}          — sets --nerv-table-color
@@ -29,10 +34,11 @@
 /// Custom properties:
 ///   --nerv-table-color           (default: --nerv-primary)
 ///   --nerv-table-color-rgb       (default: --nerv-primary-rgb)
-///   --nerv-table-inset           (trapezoid angle control, default: 10%)
+///   --nerv-table-skew            (parallelogram angle, default: -12deg)
 ///
 /// ⚠ clip-path clips borders: bordered/outline only render crisp borders
-///   on base rectangular cells. Triangle/hex/trapezoid cells clip borders away.
+///   on rectangular and parallelogram cells. Triangle cells clip borders away.
+///   Para uses skewX (not clip-path), so borders survive — matching _list.scss.
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-bg, --nerv-border-width,
@@ -108,6 +114,35 @@
   }
 }
 
+// Geometric tables are always borderless — no container chrome.
+.nerv-table.nerv-table-para,
+.nerv-table.nerv-table-triangle {
+  border: 0;
+  box-shadow: none;
+}
+
+// Ruled — uniform rule lines between cells (configurable color/width)
+// .nerv-table-dark-border is an alias for the common case (dark, default width).
+.nerv-table.nerv-table-ruled,
+.nerv-table.nerv-table-dark-border {
+  --nerv-table-rule-color: var(--nerv-void, #000);
+  --nerv-table-rule-width: var(--nerv-border-width);
+}
+
+.nerv-table.nerv-table-ruled th,
+.nerv-table.nerv-table-ruled td,
+.nerv-table.nerv-table-dark-border th,
+.nerv-table.nerv-table-dark-border td {
+  border: var(--nerv-table-rule-width) solid var(--nerv-table-rule-color);
+}
+
+.nerv-table-ruled.nerv-table-para td::before,
+.nerv-table-ruled.nerv-table-para th::before,
+.nerv-table-dark-border.nerv-table-para td::before,
+.nerv-table-dark-border.nerv-table-para th::before {
+  border: var(--nerv-table-rule-width) solid var(--nerv-table-rule-color);
+}
+
 // ---------------------------------------------------------------------------
 // 3. Color variants (auto-generated from glow-flagged tokens)
 // ---------------------------------------------------------------------------
@@ -128,64 +163,91 @@
 //    .nerv-table.nerv-table-{shape} td → specificity (0,2,1)
 // ---------------------------------------------------------------------------
 
-// Triangle — table-level default
+// --- Parallelogram (skewX on ::before — borders survive) ---
+
+.nerv-table.nerv-table-para {
+  --nerv-table-skew: -12deg;
+}
+
+.nerv-table.nerv-table-para td,
+.nerv-table.nerv-table-para th {
+  position: relative;
+  background: transparent;
+  border: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--nerv-table-color-rgb), 0.5);
+    transform: skewX(var(--nerv-table-skew));
+    z-index: -1;
+  }
+}
+
+.nerv-table.nerv-table-para th::before {
+  background: rgba(var(--nerv-table-color-rgb), 0.65);
+}
+
+// Default alternation: even ROWS skew the other way (all cells in a row match)
+.nerv-table.nerv-table-para tr:nth-child(even) td::before,
+.nerv-table.nerv-table-para tr:nth-child(even) th::before {
+  transform: skewX(calc(-1 * var(--nerv-table-skew)));
+}
+
+// Uniform modifier: all rows skew the same direction
+.nerv-table.nerv-table-para.nerv-table-uniform tr:nth-child(even) td::before,
+.nerv-table.nerv-table-para.nerv-table-uniform tr:nth-child(even) th::before {
+  transform: skewX(var(--nerv-table-skew));
+}
+
+// --- Parallelogram fill-mode overrides (border/bg go on ::before) ---
+
+.nerv-table-bordered.nerv-table-para td::before,
+.nerv-table-bordered.nerv-table-para th::before {
+  border: var(--nerv-border-width) solid var(--nerv-table-color);
+}
+
+.nerv-table-outline.nerv-table-para td::before,
+.nerv-table-outline.nerv-table-para th::before {
+  background: var(--nerv-bg);
+  border: var(--nerv-border-width) solid var(--nerv-table-color);
+}
+
+.nerv-table-solid.nerv-table-para td,
+.nerv-table-solid.nerv-table-para th {
+  color: var(--nerv-bg);
+}
+
+.nerv-table-solid.nerv-table-para td::before,
+.nerv-table-solid.nerv-table-para th::before {
+  background: var(--nerv-table-color);
+}
+
+// --- Triangle (clip-path — borders clipped, borderless only) ---
+
 .nerv-table.nerv-table-triangle td,
 .nerv-table.nerv-table-triangle th {
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  border: 0;
   text-align: center;
   padding: 1.2em 0.5em 0.4em;
   overflow-wrap: break-word;
 }
 
+// Default alternation: even cells point down
 .nerv-table.nerv-table-triangle td:nth-child(even),
 .nerv-table.nerv-table-triangle th:nth-child(even) {
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   padding: 0.4em 0.5em 1.2em;
 }
 
-// Hexagon — table-level default
-.nerv-table.nerv-table-hex td,
-.nerv-table.nerv-table-hex th {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  text-align: center;
-  padding: 0.6em 1.2em;
-}
-
-// Hexagon alt — table-level (standalone: hex clip-path + alternating row offset)
-.nerv-table.nerv-table-hex-alt td,
-.nerv-table.nerv-table-hex-alt th {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  text-align: center;
-  padding: 0.6em 1.2em;
-}
-
-.nerv-table.nerv-table-hex-alt tr:nth-child(even) td,
-.nerv-table.nerv-table-hex-alt tr:nth-child(even) th {
-  transform: translateX(1.5em);
-}
-
-// Trapezoid — table-level default
-.nerv-table.nerv-table-trapezoid td,
-.nerv-table.nerv-table-trapezoid th {
-  --nerv-table-inset: 10%;
-  clip-path: polygon(
-    var(--nerv-table-inset) 0%,
-    calc(100% - var(--nerv-table-inset)) 0%,
-    100% 100%,
-    0% 100%
-  );
-  text-align: center;
-  padding: 0.4em 1em;
-}
-
-.nerv-table.nerv-table-trapezoid td:nth-child(even),
-.nerv-table.nerv-table-trapezoid th:nth-child(even) {
-  clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    calc(100% - var(--nerv-table-inset)) 100%,
-    var(--nerv-table-inset) 100%
-  );
+// Uniform modifier: all cells point up (same clip-path, no override needed —
+// the :nth-child(even) rule is defeated by higher specificity)
+.nerv-table.nerv-table-triangle.nerv-table-uniform td:nth-child(even),
+.nerv-table.nerv-table-triangle.nerv-table-uniform th:nth-child(even) {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  padding: 1.2em 0.5em 0.4em;
 }
 
 // ---------------------------------------------------------------------------
@@ -193,10 +255,34 @@
 //    .nerv-table tr.nerv-table-{shape} > td → specificity (0,2,2)
 // ---------------------------------------------------------------------------
 
-// Triangle — row-level
+// --- Parallelogram — row-level ---
+
+.nerv-table tr.nerv-table-para > td,
+.nerv-table tr.nerv-table-para > th {
+  position: relative;
+  background: transparent;
+  border: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--nerv-table-color-rgb), 0.5);
+    transform: skewX(var(--nerv-table-skew, -12deg));
+    z-index: -1;
+  }
+}
+
+.nerv-table tr.nerv-table-para > th::before {
+  background: rgba(var(--nerv-table-color-rgb), 0.65);
+}
+
+// --- Triangle — row-level ---
+
 .nerv-table tr.nerv-table-triangle > td,
 .nerv-table tr.nerv-table-triangle > th {
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  border: 0;
   text-align: center;
   padding: 1.2em 0.5em 0.4em;
   overflow-wrap: break-word;
@@ -206,47 +292,6 @@
 .nerv-table tr.nerv-table-triangle > th:nth-child(even) {
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
   padding: 0.4em 0.5em 1.2em;
-}
-
-// Hexagon — row-level
-.nerv-table tr.nerv-table-hex > td,
-.nerv-table tr.nerv-table-hex > th {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  text-align: center;
-  padding: 0.6em 1.2em;
-}
-
-// Hexagon alt offset — row-level (even rows get transform offset)
-.nerv-table tr.nerv-table-hex-alt > td,
-.nerv-table tr.nerv-table-hex-alt > th {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  text-align: center;
-  padding: 0.6em 1.2em;
-  transform: translateX(1.5em);
-}
-
-// Trapezoid — row-level
-.nerv-table tr.nerv-table-trapezoid > td,
-.nerv-table tr.nerv-table-trapezoid > th {
-  --nerv-table-inset: 10%;
-  clip-path: polygon(
-    var(--nerv-table-inset) 0%,
-    calc(100% - var(--nerv-table-inset)) 0%,
-    100% 100%,
-    0% 100%
-  );
-  text-align: center;
-  padding: 0.4em 1em;
-}
-
-.nerv-table tr.nerv-table-trapezoid > td:nth-child(even),
-.nerv-table tr.nerv-table-trapezoid > th:nth-child(even) {
-  clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    calc(100% - var(--nerv-table-inset)) 100%,
-    var(--nerv-table-inset) 100%
-  );
 }
 
 // ---------------------------------------------------------------------------

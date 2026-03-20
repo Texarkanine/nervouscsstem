@@ -795,56 +795,88 @@ describe('Table styling CSS', () => {
   });
 
   it('B9: triangle cells use clip-path: polygon()', () => {
-    const triangleSection = css.slice(css.indexOf('.nerv-table-triangle'));
-    const block = triangleSection.slice(0, 1500);
-    assert.ok(block.includes('clip-path'), 'triangle context should contain clip-path');
-    assert.ok(block.includes('polygon'), 'triangle context should contain polygon');
+    const re = /\.nerv-table\.nerv-table-triangle\s+(?:td|th)[^}]*clip-path[^}]*polygon/s;
+    assert.match(css, re, 'triangle cell selector should contain clip-path: polygon()');
   });
 
   it('B10: triangles alternate up/down via :nth-child', () => {
-    const triangleSection = css.slice(css.indexOf('.nerv-table-triangle'));
-    const block = triangleSection.slice(0, 2000);
-    assert.ok(block.includes('nth-child'), 'triangle rows should use :nth-child for alternating direction');
+    const re = /\.nerv-table-triangle[^}]*nth-child/s;
+    assert.match(css, re, 'triangle rows should use :nth-child for alternating direction');
   });
 
-  it('B11: hexagon row class exists in compiled CSS', () => {
-    assert.match(css, /\.nerv-table-hex\b/, 'missing .nerv-table-hex class in compiled CSS');
+  // --- Parallelogram ---
+
+  it('B11: parallelogram class exists with skewX on ::before', () => {
+    assert.match(css, /\.nerv-table-para\b/, 'missing .nerv-table-para class');
+    const re = /\.nerv-table\.nerv-table-para\s+(?:td|th)[^}]*::before[^}]*skewX/s;
+    assert.match(css, re, 'para cells should have ::before with skewX');
   });
 
-  it('B12: hexagon cells use clip-path: polygon() matching hex shape', () => {
-    const hexSection = css.slice(css.indexOf('.nerv-table-hex'));
-    const block = hexSection.slice(0, 1500);
-    assert.ok(block.includes('clip-path'), 'hex context should contain clip-path');
-    assert.ok(block.includes('polygon'), 'hex context should contain polygon');
+  it('B12: para alternates skew direction on even rows by default', () => {
+    const re = /\.nerv-table-para\s+tr:nth-child\(even\)\s+(?:td|th)::before[^}]*calc\(-1/s;
+    assert.match(css, re, 'even rows should invert the skew angle via tr:nth-child(even)');
   });
 
-  it('B13: hexagon rows support out-of-phase offset via :nth-child', () => {
-    const hexAltPresent = css.includes('.nerv-table-hex-alt') || css.includes('nerv-table-hex');
-    assert.ok(hexAltPresent, 'should have hex-alt or hex modifier for alternating offsets');
-    const hexSection = css.slice(css.indexOf('.nerv-table-hex'));
-    const block = hexSection.slice(0, 3000);
-    assert.ok(block.includes('nth-child'), 'hex rows should use :nth-child for alternating row offsets');
+  it('B13: para + bordered puts border on ::before', () => {
+    const re = /\.nerv-table-bordered\.nerv-table-para\b.*?::before/s;
+    assert.match(css, re, 'bordered + para should target ::before');
+    const idx = css.indexOf('.nerv-table-bordered.nerv-table-para');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('border:') || block.includes('border-width'), 'bordered para ::before should have a border');
   });
 
-  it('B14: trapezoid row class exists in compiled CSS', () => {
-    assert.match(css, /\.nerv-table-trapezoid\b/, 'missing .nerv-table-trapezoid class in compiled CSS');
+  it('B14: para + outline puts border + bg on ::before', () => {
+    const re = /\.nerv-table-outline\.nerv-table-para\b.*?::before/s;
+    assert.match(css, re, 'outline + para should target ::before');
+    const idx = css.indexOf('.nerv-table-outline.nerv-table-para');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-bg'), 'outline para ::before should reference --nerv-bg');
+    assert.ok(block.includes('border:') || block.includes('border-width'), 'outline para ::before should have a border');
   });
 
-  it('B15: trapezoid cells use clip-path: polygon() for angled edges', () => {
-    const trapSection = css.slice(css.indexOf('.nerv-table-trapezoid'));
-    const block = trapSection.slice(0, 1500);
-    assert.ok(block.includes('clip-path'), 'trapezoid context should contain clip-path');
-    assert.ok(block.includes('polygon'), 'trapezoid context should contain polygon');
+  it('B15: para + solid puts opaque bg on ::before and cutout text on cell', () => {
+    const solidParaCell = /\.nerv-table-solid\.nerv-table-para\s+(?:td|th)/;
+    assert.match(css, solidParaCell, 'solid + para should target cells');
+    const idx = css.indexOf('.nerv-table-solid.nerv-table-para');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-bg'), 'solid para should reference --nerv-bg for cutout text');
+    assert.ok(block.includes('--nerv-table-color'), 'solid para ::before should use --nerv-table-color for bg');
+  });
+
+  // --- Uniform Modifier ---
+
+  it('B16: .nerv-table-uniform suppresses para alternation', () => {
+    const re = /\.nerv-table-para\.nerv-table-uniform\b/;
+    assert.match(css, re, 'uniform + para compound selector should exist');
+  });
+
+  it('B16b: .nerv-table-uniform suppresses triangle alternation', () => {
+    const re = /\.nerv-table-triangle\.nerv-table-uniform\b/;
+    assert.match(css, re, 'uniform + triangle compound selector should exist');
+  });
+
+  // --- Ruled ---
+
+  it('B16d: .nerv-table-ruled adds rule lines with configurable custom properties', () => {
+    assert.match(css, /\.nerv-table-ruled\b/, 'missing .nerv-table-ruled class');
+    const idx = css.indexOf('.nerv-table-ruled');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-table-rule-color'), 'ruled should define --nerv-table-rule-color');
+    assert.ok(block.includes('--nerv-table-rule-width'), 'ruled should define --nerv-table-rule-width');
+  });
+
+  it('B16e: .nerv-table-ruled targets para ::before', () => {
+    const re = /\.nerv-table-ruled\.nerv-table-para\b.*?::before/s;
+    assert.match(css, re, 'ruled + para should target ::before');
   });
 
   // --- Geometric Row Types: Table-Level Default ---
 
-  it('B16: shape class on table cascades to rows via descendant selector', () => {
+  it('B16c: shape class on table cascades to rows via descendant selector', () => {
     const tableTriangle = css.match(/\.nerv-table\.nerv-table-triangle\s+(?:td|th)/);
-    const tableHex = css.match(/\.nerv-table\.nerv-table-hex\s+(?:td|th)/);
-    const tableTrap = css.match(/\.nerv-table\.nerv-table-trapezoid\s+(?:td|th)/);
-    const hasTableLevel = tableTriangle || tableHex || tableTrap;
-    assert.ok(hasTableLevel, 'at least one table-level shape selector should cascade to cells (e.g. .nerv-table.nerv-table-triangle td)');
+    const tablePara = css.match(/\.nerv-table\.nerv-table-para\s+(?:td|th)/);
+    const hasTableLevel = tableTriangle || tablePara;
+    assert.ok(hasTableLevel, 'at least one table-level shape selector should cascade to cells');
   });
 
   // --- Borderless ---

@@ -39,3 +39,11 @@ Operator visual review identified three adjustments: (1) table container border 
 ### Reflect — Complete
 
 Plan accuracy was high — implementation sequence worked as specified with no reordering. Preflight's specificity bug catch prevented a confusing cascade failure during build. QA caught one real issue (hex-alt table-level missing clip-path). Key technical insight: dual-tier specificity pattern for container-default + child-override is reusable. Process insight: plans should explicitly specify "modifier" vs "standalone" semantics at every application level.
+
+### Rework 2 (geometric shape overhaul) — Complete
+
+Systematic diagnosis (`/refresh`) of persistent sub-pixel gaps between geometric table rows. Root cause: `clip-path` on adjacent `<td>` elements creates browser-level rendering gaps at row boundaries — unfixable with CSS (changes with zoom level, `border-collapse: collapse` doesn't eliminate it). Severity correlates with shape's horizontal contact area: hex worst (50% span), trapezoid visible, triangle invisible (point contact).
+
+**Decision**: Only use `clip-path` when gap is invisible AND borderless looks good. Use `transform`-based techniques for shapes that need borders.
+
+**Removed**: hex, hex-alt (punt to future `_hex-grid.scss`), trapezoid (unreliable). **Added**: parallelogram via `skewX` on `::before` (proven `_list.scss` pattern — no gaps, borders survive). Added `.nerv-table-uniform` modifier to suppress default alternation on both para and triangle. Para gets full fill-mode support (bordered/outline/solid on `::before`). Triangle + para with alternating default = free visual variety. 260/260 tests pass.
