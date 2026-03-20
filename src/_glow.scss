@@ -3,6 +3,9 @@
 /// Uses tokens.$nerv-colors map to auto-generate per-color glow classes.
 /// The --nerv-glow-intensity token (defined in _tokens.scss) scales all
 /// glow effects and is reduced under prefers-contrast: more.
+///
+/// `.nerv-glow-text-{name}` sets text-shadow only; pair with `.nerv-text-{name}`
+/// for `color: var(--nerv-{name})` so copy matches the glow (see ref-foundation).
 
 @use 'sass:list';
 @use 'tokens';
@@ -38,6 +41,10 @@
 
     .nerv-glow-text-#{$name} {
       @include nerv-glow-text(--nerv-#{$name}, --nerv-#{$name}-rgb);
+    }
+
+    .nerv-text-#{$name} {
+      color: var(--nerv-#{$name});
     }
   }
 }

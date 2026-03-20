@@ -9,12 +9,12 @@
 /// Classes:
 ///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
 ///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
-///   .nerv-radar-blip  — Starts **off** (`opacity: 0`) until `animation-delay` elapses; delay is
-///                       `(phase + sweep_align) × sweep_period` so the first frame aligns with the
-///                       **first** sweep pass at that bearing, then loops. Each cycle: snap hit at 0%,
-///                       hold, decay to resting then floor, hold dim until loop snaps again at 0%.
-///                       (Pure CSS cannot attach a different one-shot keyframe track then a shorter
-///                       loop — this single track + delay + cold start is the pattern.)
+///   .nerv-radar-blip  — Dot is `::before`; optional label in flex flow. `(left, top)` = contact
+///                       center; `translate(-50%,-50%)` centers the box. Cold `opacity: 0` until
+///                       delay `(phase + sweep_align) × period`; loop hits at 0%, tail fully transparent.
+///                       Labels: `.nerv-radar-blip-label-{right|left|above|below}`, `-nowrap`,
+///                       `-align-end`; tokens `--nerv-radar-blip-label-max-width`, `-line-height`,
+///                       `-text-align`, `-gap`.
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
@@ -25,8 +25,14 @@
   --nerv-radar-blip-orbit: calc(50% - 0.9rem);
   // Trim if conic leading edge and `rotate(0)` disagree (unitless turns, e.g. 0.01 or -0.02).
   --nerv-radar-blip-sweep-align: 0;
-  // Dim floor before sweep hit (linear fade down from --nerv-radar-blip-opacity-min).
-  --nerv-radar-blip-opacity-floor: 0.12;
+  // Post-hit decay targets (default fully invisible between sweeps).
+  --nerv-radar-blip-opacity-min: 0;
+  --nerv-radar-blip-opacity-floor: 0;
+  // Label box (when blip contains text)
+  --nerv-radar-blip-label-gap: 0.35rem;
+  --nerv-radar-blip-label-max-width: none;
+  --nerv-radar-blip-label-line-height: 1.2;
+  --nerv-radar-blip-label-text-align: start;
 
   container-type: size;
 
@@ -143,31 +149,38 @@
   }
 
   14% {
-    opacity: var(--nerv-radar-blip-opacity-min, 0.35);
+    opacity: var(--nerv-radar-blip-opacity-min, 0);
   }
 
   38% {
-    opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
+    opacity: var(--nerv-radar-blip-opacity-floor, 0);
   }
 
   99.99% {
-    opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
+    opacity: var(--nerv-radar-blip-opacity-floor, 0);
   }
 
   100% {
-    opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
+    opacity: var(--nerv-radar-blip-opacity-floor, 0);
   }
 }
 
 .nerv-radar .nerv-radar-blip {
   position: absolute;
-  width: 0.45rem;
-  height: 0.45rem;
-  margin: -0.225rem 0 0 -0.225rem;
-  border-radius: 50%;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--nerv-radar-blip-label-gap);
+  max-width: var(--nerv-radar-blip-label-max-width);
+  margin: 0;
+  padding: 0;
   pointer-events: none;
-  background: rgba(var(--nerv-primary-rgb), 0.95);
-  box-shadow: 0 0 0.3rem rgba(var(--nerv-primary-rgb), 0.55);
+  line-height: var(--nerv-radar-blip-label-line-height);
+  text-align: var(--nerv-radar-blip-label-text-align);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  // Anchor: (left, top) = contact center (same as polar orbit origin intent).
+  transform: translate(-50%, -50%);
   // Invisible until delay: first sample = 0% keyframe = first sweep hit.
   opacity: 0;
   animation:
@@ -178,6 +191,39 @@
   animation-delay: calc(
     (var(--nerv-radar-blip-phase, 0) + var(--nerv-radar-blip-sweep-align, 0)) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
   );
+
+  &::before {
+    content: '';
+    flex: 0 0 0.45rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: rgba(var(--nerv-primary-rgb), 0.95);
+    box-shadow: 0 0 0.3rem rgba(var(--nerv-primary-rgb), 0.55);
+  }
+}
+
+// Label sits to the right of the dot (default row). Other sides:
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-left {
+  flex-direction: row-reverse;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-above {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-below {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-nowrap {
+  white-space: nowrap;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-align-end {
+  text-align: end;
 }
 
 // True polar placement: bearing matches pulse phase (same turn value).
@@ -206,11 +252,13 @@
 
 @media (prefers-contrast: more) {
   .nerv-radar .nerv-radar-blip {
-    --nerv-radar-blip-opacity-min: 0.65;
-    --nerv-radar-blip-opacity-floor: 0.4;
+    --nerv-radar-blip-opacity-min: 0.55;
+    --nerv-radar-blip-opacity-floor: 0.28;
 
-    box-shadow:
-      0 0 0 1px rgba(var(--nerv-primary-rgb), 0.9),
-      0 0 0.4rem rgba(var(--nerv-primary-rgb), 0.75);
+    &::before {
+      box-shadow:
+        0 0 0 1px rgba(var(--nerv-primary-rgb), 0.9),
+        0 0 0.4rem rgba(var(--nerv-primary-rgb), 0.75);
+    }
   }
 }

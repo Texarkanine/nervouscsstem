@@ -370,6 +370,27 @@ describe('Radar CSS', () => {
     const hasBlipContrast = contrastBlocks.some((block) => block.includes('nerv-radar-blip'));
     assert.ok(hasBlipContrast, 'prefers-contrast: more should adjust .nerv-radar-blip');
   });
+
+  it('.nerv-radar-blip phosphor dot lives on ::before (labels in flex flow)', () => {
+    assert.match(
+      css,
+      /\.nerv-radar\s+\.nerv-radar-blip::before\b/,
+      'blip disc should be ::before so inner text does not stretch the glow'
+    );
+  });
+});
+
+describe('Text color utilities (pair with nerv-glow-text-*)', () => {
+  it('.nerv-text-green sets color from token', () => {
+    assert.match(css, /\.nerv-text-green\b/, 'expected .nerv-text-green utility');
+    const idx = css.indexOf('.nerv-text-green');
+    assert.ok(idx >= 0, '.nerv-text-green should exist');
+    const block = css.slice(idx, idx + 120);
+    assert.ok(
+      block.includes('var(--nerv-green)'),
+      '.nerv-text-green should set color: var(--nerv-green)'
+    );
+  });
 });
 
 describe('nerv.js API surface', () => {

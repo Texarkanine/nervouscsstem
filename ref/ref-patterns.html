@@ -196,10 +196,10 @@
               title="Blip A — auto phase from bearing + range lag"
               aria-hidden="true"></span>
             <span
-              class="nerv-radar-blip"
-              style="top: 55%; left: 28%;"
-              title="Blip B — auto phase from bearing + range lag"
-              aria-hidden="true"></span>
+              class="nerv-radar-blip nerv-radar-blip-label-below nerv-type-hud nerv-glow-text-green nerv-text-green"
+              style="top: 55%; left: 28%; --nerv-radar-blip-label-max-width: 5.5rem;"
+              title="Blip B — label below dot; nerv-text-green pairs with nerv-glow-text-green"
+              aria-hidden="true">EVA-02</span>
             <span
               class="nerv-radar-blip"
               style="top: 72%; left: 58%;"
@@ -207,11 +207,11 @@
               aria-hidden="true"></span>
           </div>
         </div>
-        <span class="ref-center-label" style="font-size: 0.55rem; max-width: 22rem;">
-          <code style="font-size: 0.65em;">data-nerv-radar-auto-blips</code> sets each blip’s
-          <code style="font-size: 0.65em;">--nerv-radar-blip-phase</code> from its angle + range (see
-          <code style="font-size: 0.65em;">--nerv-radar-blip-range-lag</code>). Pulse peaks line up with the sweep; farther blips peak slightly later.
-          <code style="font-size: 0.65em;">data-nerv-radar-sync</code> still drives <code style="font-size: 0.65em;">--nerv-radar-sweep-phase</code>.
+        <span class="ref-center-label" style="font-size: 0.55rem; max-width: 24rem;">
+          <code style="font-size: 0.65em;">data-nerv-radar-auto-blips</code> sets Cartesian blip phase from bearing.
+          Dot is <code style="font-size: 0.65em;">::before</code>; use <code style="font-size: 0.65em;">.nerv-radar-blip-label-*</code> and
+          <code style="font-size: 0.65em;">--nerv-radar-blip-label-max-width</code> for labels.
+          Glow text needs <code style="font-size: 0.65em;">.nerv-text-{color}</code> (e.g. <code style="font-size: 0.65em;">nerv-text-green</code>) — <code style="font-size: 0.65em;">nerv-glow-text-*</code> is shadow only.
         </span>
         <span class="ref-center-label nerv-flicker" style="color: var(--nerv-green);">
           Range: 120km &middot; Mode: Active
