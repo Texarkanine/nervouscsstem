@@ -38,13 +38,7 @@ A third hex grid layout variant (extending `_hex-grid.scss`) where hexagons perf
 - **Default (overlapping)**: Rows overlap via negative margin for tight honeycomb
 - **Spaced**: Non-overlapping, corner-touching with triangular gaps
 
-The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math. This belongs in `_hex-grid.scss` as a spacing modifier (like `.nerv-hex-grid-spaced`) rather than in the table component, because hex-grid uses fixed cell widths that make exact tessellation math straightforward. (Decision from M7 creative phase — see `memory-bank/active/creative/creative-tiled-hex-grid-variant.md`)
-
-## Radar Pulse
-
-Ability to put elements (maybe just text) in the radar radially and have them pulse and fade down when the radar scans over them, like actual radar. Not possible with CSS? Find out!
-
-At least be able to sync elements to WHERE the radar sweep is, e.g. update a value when it hits top - even if not provided by us. Goal: syncing other UI actions - even if outside our kit - to the radar sweep.
+The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math. This belongs in `_hex-grid.scss` as a spacing modifier (like `.nerv-hex-grid-spaced`) rather than in the table component, because hex-grid uses fixed cell widths that make exact tessellation math straightforward. (Decision from M7: table-based hex rows were dropped; true tessellation belongs in `_hex-grid.scss` — see [`20260320-nerv-future-features.md`](../memory-bank/archive/systems/20260320-nerv-future-features.md).)
 
 ## Typefaces
 
@@ -60,12 +54,6 @@ We should add such support for such boxes, as part of the "foundation," demo'd a
 
 ---
 
-## Completed (implemented in milestones)
+## Recently shipped (reference)
 
-- ~~Reticle Tickmarks~~ — M4
-- ~~Gradient Presets~~ — M3
-- ~~Fix: CRT opacity on barberpole~~ — M1
-- ~~Glitch Refinement~~ — M2
-- ~~Web Forms~~ — M6
-- ~~Lists~~ — M5
-- ~~Tables~~ — M7 (in progress)
+Milestones M1–M8 from `nerv-future-features` (barberpole through radar pulse + sweep sync) are recorded in [`memory-bank/archive/systems/20260320-nerv-future-features.md`](../memory-bank/archive/systems/20260320-nerv-future-features.md).
