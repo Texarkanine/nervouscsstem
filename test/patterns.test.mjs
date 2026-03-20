@@ -323,26 +323,39 @@ describe('Radar CSS', () => {
     );
   });
 
-  it('.nerv-radar-blip animation-delay offsets by 0.5 turn so peak matches sweep (not trailing)', () => {
-    const idx = css.indexOf('.nerv-radar-blip');
-    const section = css.slice(idx, idx + 900);
+  it('.nerv-radar-blip uses phase×period delay (first frame = first sweep hit; cold start opacity 0)', () => {
+    const idx = css.indexOf('.nerv-radar .nerv-radar-blip');
+    assert.ok(idx >= 0, 'blip rule block should exist');
+    const section = css.slice(idx, idx + 950);
     assert.ok(
-      section.includes('0.5') && section.includes('--nerv-radar-blip-phase'),
-      'delay should use (phase - 0.5) scaling so keyframe peak aligns with sweep bearing'
+      section.includes('opacity: 0'),
+      'blips should start off until animation-delay elapses'
+    );
+    assert.ok(
+      section.includes('--nerv-radar-blip-phase') && section.includes('animation-delay'),
+      'delay should be derived from phase + sweep_align × period'
+    );
+    assert.ok(
+      !section.includes('- 0.5'),
+      'delay should not use legacy (phase - 0.5) offset; hit is at keyframe 0%'
     );
   });
 
-  it('--nerv-radar-blip-opacity-floor used in blip keyframes (pre-hit fade)', () => {
+  it('--nerv-radar-blip-opacity-floor used in blip keyframes (dim tail before loop snap)', () => {
     const kfIdx = css.indexOf('@keyframes nerv-radar-blip-pulse');
     assert.ok(kfIdx >= 0, 'nerv-radar-blip-pulse keyframes should exist');
-    const kfSection = css.slice(kfIdx, kfIdx + 550);
+    const kfSection = css.slice(kfIdx, kfIdx + 600);
     assert.ok(
       kfSection.includes('--nerv-radar-blip-opacity-floor'),
-      'keyframes should dim into floor before sweep hit'
+      'keyframes should use dim floor in the tail of each cycle'
     );
     assert.ok(
-      kfSection.includes('49.99%'),
-      'keyframes should use a tight step before 50% for snap hit'
+      kfSection.includes('0%') && kfSection.includes('opacity: 1'),
+      'hit should be at loop start (0%) so delay aligns first sweep pass'
+    );
+    assert.ok(
+      kfSection.includes('99.99%'),
+      'keyframes should hold floor until loop boundary'
     );
   });
 

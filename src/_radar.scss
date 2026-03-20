@@ -9,10 +9,12 @@
 /// Classes:
 ///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
 ///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
-///   .nerv-radar-blip  — Contact dot: dims into a pre-hit fade, then a **step** to full opacity
-///                       when the sweep passes (50% keyframe, aligned via delay), brief hold,
-///                       then fades back to resting opacity. Not a smooth triangle “ramp up” with
-///                       the sweep wedge. Phase / polar / auto-blip docs: see tokens below.
+///   .nerv-radar-blip  — Starts **off** (`opacity: 0`) until `animation-delay` elapses; delay is
+///                       `(phase + sweep_align) × sweep_period` so the first frame aligns with the
+///                       **first** sweep pass at that bearing, then loops. Each cycle: snap hit at 0%,
+///                       hold, decay to resting then floor, hold dim until loop snaps again at 0%.
+///                       (Pure CSS cannot attach a different one-shot keyframe track then a shorter
+///                       loop — this single track + delay + cold start is the pattern.)
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
@@ -131,29 +133,29 @@
 }
 
 @keyframes nerv-radar-blip-pulse {
+  // Loop boundary = sweep pass: 100% (floor) → 0% (hit) is a discrete jump each revolution.
   0% {
+    opacity: 1;
+  }
+
+  3% {
+    opacity: 1;
+  }
+
+  14% {
     opacity: var(--nerv-radar-blip-opacity-min, 0.35);
   }
 
-  36% {
+  38% {
     opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
   }
 
-  // Dim hold, then ~step to full at 50% (linear tween over 0.01% of cycle).
-  49.99% {
+  99.99% {
     opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  52.5% {
-    opacity: 1;
   }
 
   100% {
-    opacity: var(--nerv-radar-blip-opacity-min, 0.35);
+    opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
   }
 }
 
@@ -166,13 +168,15 @@
   pointer-events: none;
   background: rgba(var(--nerv-primary-rgb), 0.95);
   box-shadow: 0 0 0.3rem rgba(var(--nerv-primary-rgb), 0.55);
+  // Invisible until delay: first sample = 0% keyframe = first sweep hit.
+  opacity: 0;
   animation:
     nerv-radar-blip-pulse
     calc(var(--nerv-radar-duration) / var(--nerv-animation-speed))
     linear
     infinite;
   animation-delay: calc(
-    (var(--nerv-radar-blip-phase, 0) + var(--nerv-radar-blip-sweep-align, 0) - 0.5) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
+    (var(--nerv-radar-blip-phase, 0) + var(--nerv-radar-blip-sweep-align, 0)) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
   );
 }
 
