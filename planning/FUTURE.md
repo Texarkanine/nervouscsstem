@@ -38,7 +38,7 @@ A third hex grid layout variant (extending `_hex-grid.scss`) where hexagons perf
 - **Default (overlapping)**: Rows overlap via negative margin for tight honeycomb
 - **Spaced**: Non-overlapping, corner-touching with triangular gaps
 
-The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math. This belongs in `_hex-grid.scss` as a spacing modifier (like `.nerv-hex-grid-spaced`) rather than in the table component, because hex-grid uses fixed cell widths that make exact tessellation math straightforward. (Decision from M7: table-based hex rows were dropped; true tessellation belongs in `_hex-grid.scss` — see [`20260320-nerv-future-features.md`](../memory-bank/archive/systems/20260320-nerv-future-features.md).)
+The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math. **Architecture decision (M7 creative phase, still valid):** implement as `.nerv-hex-grid-tiled` in `_hex-grid.scss`, not as a table row type — full options analysis and implementation notes are in [`planning/tiled-hex-grid-variant.md`](tiled-hex-grid-variant.md). For what actually shipped in M7 (tables without hex rows, tessellation still open), see the capstone summary in [`memory-bank/archive/systems/20260320-nerv-future-features.md`](../memory-bank/archive/systems/20260320-nerv-future-features.md).
 
 ## Typefaces
 
