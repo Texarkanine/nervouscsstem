@@ -9,23 +9,24 @@
 /// Classes:
 ///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
 ///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
-///   .nerv-radar-blip  — Absolutely positioned dot; opacity pulses on the same period as
-///                       the sweep. `--nerv-radar-blip-phase` (0–1) is the bearing (clockwise
-///                       from top) where the pulse should peak when the sweep passes; delay is
-///                       derived as (phase − 0.5) × period so the 50% keyframe lines up with the
-///                       sweep (opacity peak is not half a turn late). Optional
-///                       `--nerv-radar-blip-range-lag` (turns, default on `.nerv-radar`) adds
-///                       phase proportional to normalized range so farther contacts peak slightly
-///                       later (echo-delay stylization). Use `NERV.layoutRadarBlips` or
-///                       `data-nerv-radar-auto-blips` to set phase from pixel position.
+///   .nerv-radar-blip  — Contact dot: dims into a pre-hit fade, then a **step** to full opacity
+///                       when the sweep passes (50% keyframe, aligned via delay), brief hold,
+///                       then fades back to resting opacity. Not a smooth triangle “ramp up” with
+///                       the sweep wedge. Phase / polar / auto-blip docs: see tokens below.
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
 ///   --nerv-animation-speed
 
 .nerv-radar {
-  // Fraction of one rotation to add per unit radius (hub → bezel) for echo-delay on blip peaks.
-  --nerv-radar-blip-range-lag: 0.07;
+  // Radial distance from disc center to polar blips (before border/rim clipping).
+  --nerv-radar-blip-orbit: calc(50% - 0.9rem);
+  // Trim if conic leading edge and `rotate(0)` disagree (unitless turns, e.g. 0.01 or -0.02).
+  --nerv-radar-blip-sweep-align: 0;
+  // Dim floor before sweep hit (linear fade down from --nerv-radar-blip-opacity-min).
+  --nerv-radar-blip-opacity-floor: 0.12;
+
+  container-type: size;
 
   position: relative;
   aspect-ratio: 1;
@@ -130,13 +131,29 @@
 }
 
 @keyframes nerv-radar-blip-pulse {
-  0%,
-  100% {
+  0% {
     opacity: var(--nerv-radar-blip-opacity-min, 0.35);
+  }
+
+  36% {
+    opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
+  }
+
+  // Dim hold, then ~step to full at 50% (linear tween over 0.01% of cycle).
+  49.99% {
+    opacity: var(--nerv-radar-blip-opacity-floor, 0.12);
   }
 
   50% {
     opacity: 1;
+  }
+
+  52.5% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: var(--nerv-radar-blip-opacity-min, 0.35);
   }
 }
 
@@ -155,8 +172,21 @@
     linear
     infinite;
   animation-delay: calc(
-    (var(--nerv-radar-blip-phase, 0) - 0.5) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
+    (var(--nerv-radar-blip-phase, 0) + var(--nerv-radar-blip-sweep-align, 0) - 0.5) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
   );
+}
+
+// True polar placement: bearing matches pulse phase (same turn value).
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-polar {
+  --nerv-radar-blip-phase: var(--nerv-radar-blip-bear-turn, 0);
+
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--nerv-radar-blip-bear-turn, 0) * 1turn))
+    translateY(calc(-1 * var(--nerv-radar-blip-orbit)));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -173,6 +203,7 @@
 @media (prefers-contrast: more) {
   .nerv-radar .nerv-radar-blip {
     --nerv-radar-blip-opacity-min: 0.65;
+    --nerv-radar-blip-opacity-floor: 0.4;
 
     box-shadow:
       0 0 0 1px rgba(var(--nerv-primary-rgb), 0.9),

@@ -264,10 +264,9 @@
     },
 
     /**
-     * Sets `--nerv-radar-blip-phase` on each `.nerv-radar-blip` from its position: bearing
-     * (clockwise from top, 0–1) plus `--nerv-radar-blip-range-lag` × normalized radius so
-     * farther contacts peak slightly after the sweep passes that bearing. Skips elements with
-     * `data-nerv-radar-manual-phase`.
+     * Sets `--nerv-radar-blip-phase` on each `.nerv-radar-blip` from pixel position: bearing
+     * only (clockwise from top, 0–1). Radius does not change hit timing along a ray. Skips
+     * `data-nerv-radar-manual-phase` and `.nerv-radar-blip-polar` (phase from CSS).
      *
      * @param {HTMLElement} radarEl - `.nerv-radar` container
      */
@@ -280,31 +279,21 @@
       var radius = Math.min(rr.width, rr.height) / 2;
       if (radius <= 0) return;
 
-      var lagStr =
-        typeof getComputedStyle !== 'undefined'
-          ? getComputedStyle(radarEl).getPropertyValue('--nerv-radar-blip-range-lag').trim()
-          : '';
-      var rangeLag = parseFloat(lagStr);
-      if (isNaN(rangeLag)) rangeLag = 0.07;
-
       var blips = radarEl.querySelectorAll('.nerv-radar-blip');
       for (var i = 0; i < blips.length; i++) {
         var b = blips[i];
         if (b.hasAttribute('data-nerv-radar-manual-phase')) continue;
+        if (b.classList.contains('nerv-radar-blip-polar')) continue;
 
         var br = b.getBoundingClientRect();
         var bx = br.left + br.width / 2;
         var by = br.top + br.height / 2;
         var dx = bx - cx;
         var dy = by - cy;
-        var dist = Math.sqrt(dx * dx + dy * dy);
         var bearing = Math.atan2(dx, -dy);
         if (bearing < 0) bearing += 2 * Math.PI;
         var bearingNorm = bearing / (2 * Math.PI);
-        var rNorm = Math.min(Math.max(dist / radius, 0), 1);
-        var phase = bearingNorm + rangeLag * rNorm;
-        phase -= Math.floor(phase);
-        b.style.setProperty('--nerv-radar-blip-phase', String(phase));
+        b.style.setProperty('--nerv-radar-blip-phase', String(bearingNorm));
       }
     },
 

@@ -332,11 +332,17 @@ describe('Radar CSS', () => {
     );
   });
 
-  it('--nerv-radar-blip-range-lag token exists in compiled CSS', () => {
-    assert.match(
-      css,
-      /--nerv-radar-blip-range-lag\s*:/,
-      'range-lag token should be defined for JS + echo-delay tuning'
+  it('--nerv-radar-blip-opacity-floor used in blip keyframes (pre-hit fade)', () => {
+    const kfIdx = css.indexOf('@keyframes nerv-radar-blip-pulse');
+    assert.ok(kfIdx >= 0, 'nerv-radar-blip-pulse keyframes should exist');
+    const kfSection = css.slice(kfIdx, kfIdx + 550);
+    assert.ok(
+      kfSection.includes('--nerv-radar-blip-opacity-floor'),
+      'keyframes should dim into floor before sweep hit'
+    );
+    assert.ok(
+      kfSection.includes('49.99%'),
+      'keyframes should use a tight step before 50% for snap hit'
     );
   });
 
