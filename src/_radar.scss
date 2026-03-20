@@ -1,24 +1,26 @@
-/// _radar.scss — Concentric circle radar display pattern.
+/// _radar.scss — Tactical radar disc, rotating sweep, and phased blips.
 ///
-/// Concentric ring pattern with radial division lines and optional
-/// animated sweep arm. Uses radial-gradient hard stops for rings,
-/// pseudo-elements for division lines, and conic-gradient for sweep.
+/// **Long-form narrative:** `docs/radar.md` (timing model, polar vs Cartesian, JS hooks, a11y).
 ///
-/// The sweep fade trails BEHIND the bright leading edge (clockwise).
+/// **Visual stack:** rings + crosshairs + 45° lines on `.nerv-radar` (`::before` / `::after`);
+/// conic “wedge” on `.nerv-radar-sweep` rotated by `@keyframes nerv-radar-sweep`. Sweep trails
+/// *behind* the bright leading edge (clockwise).
 ///
-/// Classes:
-///   .nerv-radar       — Container: concentric rings, radial lines, circular shape
-///   .nerv-radar-sweep — Animated sweep arm (conic-gradient rotation)
-///   .nerv-radar-blip  — Dot is `::before`; optional label in flex flow. `(left, top)` = contact
-///                       center; `translate(-50%,-50%)` centers the box. Cold `opacity: 0` until
-///                       delay `(phase + sweep_align) × period`; loop hits at 0%, tail fully transparent.
-///                       Labels: `.nerv-radar-blip-label-{right|left|above|below}`, `-nowrap`,
-///                       `-align-end`; tokens `--nerv-radar-blip-label-max-width`, `-line-height`,
-///                       `-text-align`, `-gap`.
+/// **Blip timing (one CSS loop, no separate intro):** element starts `opacity: 0` until
+/// `animation-delay` elapses. Delay = `(phase + sweep_align) × period` where `period` matches
+/// the sweep. First sample at local 0% = hit (`opacity: 1`); then short hold, long linear fade
+/// to `--nerv-radar-blip-opacity-floor`, hold through 100%, then loop jumps to next hit at 0%.
 ///
-/// Tokens consumed:
-///   --nerv-primary, --nerv-primary-rgb, --nerv-radar-duration,
-///   --nerv-animation-speed
+/// **Placement:** Cartesian — `top`/`left` % + `translate(-50%,-50%)` (contact = dot center;
+/// `NERV.layoutRadarBlips` sets `--nerv-radar-blip-phase` from bearing only). Polar —
+/// `.nerv-radar-blip-polar` + `--nerv-radar-blip-bear-turn` wires phase to `rotate` + `translateY(-orbit)`.
+///
+/// **Classes:** `.nerv-radar`, `.nerv-radar-sweep`, `.nerv-radar-blip` (dot `::before`, label in flex).
+/// Label modifiers: `.nerv-radar-blip-label-{left|above|below}`, `-nowrap`, `-align-end`.
+///
+/// **Tokens (see also `docs/radar.md` §4):** `--nerv-primary`, `--nerv-primary-rgb`,
+/// `--nerv-radar-duration`, `--nerv-animation-speed`; on `.nerv-radar` defaults for blip orbit,
+/// sweep align, opacity floor, label layout.
 
 .nerv-radar {
   // Radial distance from disc center to polar blips (before border/rim clipping).
@@ -109,6 +111,8 @@
   }
 }
 
+// --- Sweep (same period expression as blip pulse; align with --nerv-radar-blip-sweep-align if needed) ---
+
 .nerv-radar-sweep {
   position: absolute;
   inset: 0;
@@ -137,6 +141,8 @@
   }
 }
 
+// --- Blip pulse: 0% = hit each revolution; 2.5%–93% = fade (tweak stops to change hold vs decay) ---
+
 @keyframes nerv-radar-blip-pulse {
   // Loop boundary = sweep pass: 100% (floor) → 0% (hit) is a discrete jump each revolution.
   0% {
@@ -157,6 +163,8 @@
     opacity: var(--nerv-radar-blip-opacity-floor, 0);
   }
 }
+
+// --- Blip box: flex label + ::before dot; delay aligns first 0% keyframe to sweep ---
 
 .nerv-radar .nerv-radar-blip {
   position: absolute;
