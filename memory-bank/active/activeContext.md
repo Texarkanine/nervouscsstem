@@ -30,5 +30,10 @@ REFLECT COMPLETE
 - Base does not set `box-shadow` to allow free composition with `.nerv-glow-*`
 - `font-weight: 400` (not 600) — only weight loaded for Barlow/NERV Mixed
 
+## Creative Phase (Standalone)
+- Open question: Multi-line fixed cartouche interior structure (table vs span vs other)
+- Decision: **Optional Table (Hybrid)** — `<span>` for single-content, `<table>` for multi-cell grids
+- Documented in `memory-bank/active/creative/creative-cartouche-multiline-structure.md`
+
 ## Next Step
-Run /niko-archive to create the archive document and finalize the current project.
+Implement the multi-line cartouche feature per the creative decision, or run /niko-archive to finalize the base cartouche task first.

@@ -36,3 +36,10 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
 - Clean execution, no notable process insights
 - Technical insight: composite font-face pattern (NERV Mixed) should be a token if reused
 - Million-dollar: --nerv-font-mixed CSS custom property in _tokens.scss for future DRY
+
+### Creative (Standalone) — Multi-Line Cartouche Interior Structure — COMPLETE
+- Explored 4 options: Always-Table, Optional Table (Hybrid), Span-Only Rows, Nested Cartouches
+- **Decision: Option B — Optional Table (Hybrid)** with high confidence
+- Single-content stays as `<span>` (unchanged); multi-cell layouts use raw `<table>` (no `.nerv-table` class)
+- Span-only rows (Option C) disqualified: cannot reproduce reference image's two-column first row
+- Documented in `memory-bank/active/creative/creative-cartouche-multiline-structure.md`
