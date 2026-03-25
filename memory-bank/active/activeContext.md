@@ -4,7 +4,7 @@
 Status Cartouche Element
 
 ## Phase
-QA — COMPLETE (PASS)
+REFLECT COMPLETE
 
 ## What Was Done
 - Created `src/_cartouche.scss` — base flex cartouche, fixed modifier, color variants, accessibility
@@ -31,4 +31,4 @@ QA — COMPLETE (PASS)
 - `font-weight: 400` (not 600) — only weight loaded for Barlow/NERV Mixed
 
 ## Next Step
-Reflect phase.
+Run /niko-archive to create the archive document and finalize the current project.

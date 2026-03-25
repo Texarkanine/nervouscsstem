@@ -31,3 +31,8 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
   1. Duplicate `display` property removed from .nerv-cartouche-fixed > *
   2. nerv.scss header comment updated with cartouche in dependency chain
   3. Dead padX/padY variables removed from initCartouches
+
+### Reflect — COMPLETE
+- Clean execution, no notable process insights
+- Technical insight: composite font-face pattern (NERV Mixed) should be a token if reused
+- Million-dollar: --nerv-font-mixed CSS custom property in _tokens.scss for future DRY
