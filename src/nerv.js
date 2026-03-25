@@ -250,13 +250,23 @@
           var inner = el.firstElementChild;
           if (!inner) continue;
 
-          inner.style.transform = 'none';
-          var contentW = inner.scrollWidth;
-          var contentH = inner.scrollHeight;
           var boxW = el.clientWidth;
           var boxH = el.clientHeight;
+          if (boxW <= 0 || boxH <= 0) continue;
 
-          if (contentW > 0 && contentH > 0 && boxW > 0 && boxH > 0) {
+          inner.style.transform = 'none';
+          inner.style.width = 'auto';
+          inner.style.height = 'auto';
+          inner.style.position = 'absolute';
+
+          var contentW = inner.scrollWidth;
+          var contentH = inner.scrollHeight;
+
+          inner.style.width = '';
+          inner.style.height = '';
+          inner.style.position = '';
+
+          if (contentW > 0 && contentH > 0) {
             var sx = boxW / contentW;
             var sy = boxH / contentH;
             el.style.setProperty('--nerv-cartouche-sx', String(sx));
