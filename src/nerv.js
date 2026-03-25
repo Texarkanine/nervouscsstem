@@ -253,17 +253,6 @@
           inner.style.transform = 'none';
           var contentW = inner.scrollWidth;
           var contentH = inner.scrollHeight;
-
-          var padStyle = typeof getComputedStyle !== 'undefined'
-            ? getComputedStyle(inner)
-            : null;
-          var padX = padStyle
-            ? parseFloat(padStyle.paddingLeft) + parseFloat(padStyle.paddingRight)
-            : 0;
-          var padY = padStyle
-            ? parseFloat(padStyle.paddingTop) + parseFloat(padStyle.paddingBottom)
-            : 0;
-
           var boxW = el.clientWidth;
           var boxH = el.clientHeight;
 

@@ -25,3 +25,9 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
 - Full suite: 286 tests, 0 failures
 - Build: both normal and minified succeed
 - No regressions detected
+
+### QA — COMPLETE (PASS)
+- 3 trivial findings, all fixed inline:
+  1. Duplicate `display` property removed from .nerv-cartouche-fixed > *
+  2. nerv.scss header comment updated with cartouche in dependency chain
+  3. Dead padX/padY variables removed from initCartouches

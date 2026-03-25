@@ -1,0 +1,6 @@
+PASS
+
+Findings (all trivial, all fixed):
+1. Duplicate `display` property in .nerv-cartouche-fixed > * — removed dead `display: block`
+2. nerv.scss header comment missing `cartouche` in dependency chain — updated
+3. Dead `padX`/`padY` variables in initCartouches — removed

@@ -120,4 +120,4 @@ No new technology — validation not required. Uses existing SCSS/Dart Sass comp
 - [x] Technology validation complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA
