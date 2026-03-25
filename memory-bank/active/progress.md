@@ -9,3 +9,8 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
 ### Complexity Analysis — COMPLETE
 - Determined Level 2 (Simple Enhancement)
 - New self-contained CSS component following established codebase patterns
+
+### Plan — COMPLETE
+- 14 behaviors to verify, 13 implementation steps
+- Files: `src/_cartouche.scss` (new), `src/nerv.scss`, `src/nerv.js`, `ref/ref-foundation.html`, `test/components.test.mjs`
+- Key decision: fixed variant uses JS orchestration for X/Y text scaling (consistent with existing patterns)
