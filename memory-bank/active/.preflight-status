@@ -1,0 +1,7 @@
+PASS
+
+Findings:
+- FIXED: font-weight amended from 600 to 400 (only weight loaded for Barlow Condensed / NERV Mixed)
+- FOLDED IN: --nerv-cartouche-radius custom property for rounded vs sharp rectangle support
+
+No blocking issues found.

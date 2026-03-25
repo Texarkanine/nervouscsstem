@@ -60,7 +60,8 @@ New `.nerv-cartouche` CSS component — the iconic single-color bordered frame e
      - `border: var(--nerv-border-width) solid var(--nerv-cartouche-color);`
      - `padding: 0.15em 0.6em;`
      - Font: `font-family: 'NERV Mixed', 'Shippori Mincho B1', 'Barlow Condensed', sans-serif;`
-     - `font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;`
+     - `font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em;`
+     - `--nerv-cartouche-radius` custom property (default small radius; set to 0 for sharp rectangle)
      - `color: var(--nerv-cartouche-color); white-space: nowrap;`
 
 7. **Implement fixed cartouche modifier**

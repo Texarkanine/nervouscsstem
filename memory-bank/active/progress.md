@@ -14,3 +14,7 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
 - 14 behaviors to verify, 13 implementation steps
 - Files: `src/_cartouche.scss` (new), `src/nerv.scss`, `src/nerv.js`, `ref/ref-foundation.html`, `test/components.test.mjs`
 - Key decision: fixed variant uses JS orchestration for X/Y text scaling (consistent with existing patterns)
+
+### Preflight — COMPLETE (PASS)
+- Amended font-weight from 600 to 400 (only weight loaded)
+- Folded in --nerv-cartouche-radius custom property for rounded/sharp variants
