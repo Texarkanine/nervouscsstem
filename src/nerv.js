@@ -65,6 +65,7 @@
         NERV.initBarMeters();
         NERV.initLabelBoxGroups();
         NERV.initMagiPanels();
+        NERV.initCartouches();
 
         var syncRadars = document.querySelectorAll('.nerv-radar[data-nerv-radar-sync]');
         for (var r = 0; r < syncRadars.length; r++) {
@@ -227,6 +228,60 @@
         if (systems.length > 0) {
           panels[i].style.gridTemplateColumns = 'repeat(' + systems.length + ', 1fr)';
         }
+      }
+    },
+
+    /**
+     * Measures text inside `.nerv-cartouche-fixed` elements and sets
+     * `--nerv-cartouche-sx` / `--nerv-cartouche-sy` so the inner content
+     * stretches to fill the cartouche dimensions. Waits for fonts to load
+     * before measuring. Safe to call multiple times (re-measures).
+     *
+     * @param {HTMLElement} [container=document] - Scope for element lookup
+     */
+    initCartouches: function initCartouches(container) {
+      if (typeof document === 'undefined') return;
+      var scope = container || document;
+
+      function measure() {
+        var cartouches = scope.querySelectorAll('.nerv-cartouche-fixed');
+        for (var i = 0; i < cartouches.length; i++) {
+          var el = cartouches[i];
+          var inner = el.firstElementChild;
+          if (!inner) continue;
+
+          inner.style.transform = 'none';
+          var contentW = inner.scrollWidth;
+          var contentH = inner.scrollHeight;
+
+          var padStyle = typeof getComputedStyle !== 'undefined'
+            ? getComputedStyle(inner)
+            : null;
+          var padX = padStyle
+            ? parseFloat(padStyle.paddingLeft) + parseFloat(padStyle.paddingRight)
+            : 0;
+          var padY = padStyle
+            ? parseFloat(padStyle.paddingTop) + parseFloat(padStyle.paddingBottom)
+            : 0;
+
+          var boxW = el.clientWidth;
+          var boxH = el.clientHeight;
+
+          if (contentW > 0 && contentH > 0 && boxW > 0 && boxH > 0) {
+            var sx = boxW / contentW;
+            var sy = boxH / contentH;
+            el.style.setProperty('--nerv-cartouche-sx', String(sx));
+            el.style.setProperty('--nerv-cartouche-sy', String(sy));
+          }
+
+          inner.style.transform = '';
+        }
+      }
+
+      if (typeof document.fonts !== 'undefined' && typeof document.fonts.ready !== 'undefined') {
+        document.fonts.ready.then(measure);
+      } else {
+        measure();
       }
     },
 

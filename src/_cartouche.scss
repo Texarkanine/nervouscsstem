@@ -1,0 +1,85 @@
+/// _cartouche.scss — Status cartouche framing device.
+///
+/// The single most prolific atomic element in the NERV visual language:
+/// a single-color bordered rectangle enclosing a status word or short phrase.
+/// Two variants:
+///   - **Flex** (default): cartouche sizes to fit its text content.
+///   - **Fixed** (.nerv-cartouche-fixed): explicit dimensions; JS orchestration
+///     (NERV.initCartouches) scales text to fill via --nerv-cartouche-sx/sy.
+///
+/// Color variants auto-generated from tokens.$nerv-colors (glow-flagged).
+/// Uses the NERV Mixed font stack for JP/EN bilingual support.
+
+@use 'sass:list';
+@use 'tokens';
+
+// ---------------------------------------------------------------------------
+// Base — flex cartouche (default)
+// ---------------------------------------------------------------------------
+
+.nerv-cartouche {
+  --nerv-cartouche-color: var(--nerv-primary);
+  --nerv-cartouche-color-rgb: var(--nerv-primary-rgb);
+  --nerv-cartouche-radius: 2px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--nerv-border-width) solid var(--nerv-cartouche-color);
+  border-radius: var(--nerv-cartouche-radius);
+  padding: 0.15em 0.6em;
+  font-family: 'NERV Mixed', 'Shippori Mincho B1', 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--nerv-cartouche-color);
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+// ---------------------------------------------------------------------------
+// Fixed variant — text stretches to fill container dimensions
+// ---------------------------------------------------------------------------
+
+.nerv-cartouche-fixed {
+  overflow: hidden;
+  padding: 0;
+
+  > * {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1));
+    transform-origin: center;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.1em 0.3em;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Color variants — auto-generated from $nerv-colors (glow-flagged entries)
+// ---------------------------------------------------------------------------
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-cartouche-#{$name} {
+      --nerv-cartouche-color: var(--nerv-#{$name});
+      --nerv-cartouche-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Accessibility
+// ---------------------------------------------------------------------------
+
+@media (prefers-contrast: more) {
+  .nerv-cartouche {
+    border-width: calc(var(--nerv-border-width) + 1px);
+  }
+}

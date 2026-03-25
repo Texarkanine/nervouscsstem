@@ -18,3 +18,10 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
 ### Preflight — COMPLETE (PASS)
 - Amended font-weight from 600 to 400 (only weight loaded)
 - Folded in --nerv-cartouche-radius custom property for rounded/sharp variants
+
+### Build — COMPLETE
+- All implementation steps completed
+- 14 new tests, all passing
+- Full suite: 286 tests, 0 failures
+- Build: both normal and minified succeed
+- No regressions detected

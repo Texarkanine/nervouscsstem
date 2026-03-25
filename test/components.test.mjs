@@ -924,6 +924,123 @@ describe('Table styling CSS', () => {
   });
 });
 
+describe('Cartouche CSS', () => {
+  // B1
+  it('.nerv-cartouche base class exists with display: inline-flex', () => {
+    assert.match(css, /\.nerv-cartouche\b[^-]/, 'missing .nerv-cartouche class');
+    const idx = css.indexOf('.nerv-cartouche {');
+    assert.ok(idx !== -1, '.nerv-cartouche block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('display: inline-flex'), '.nerv-cartouche should use display: inline-flex');
+  });
+
+  // B2
+  it('.nerv-cartouche declares --nerv-cartouche-color custom property', () => {
+    const idx = css.indexOf('.nerv-cartouche {');
+    assert.ok(idx !== -1, '.nerv-cartouche block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-cartouche-color'), '.nerv-cartouche should declare --nerv-cartouche-color');
+  });
+
+  // B3
+  it('.nerv-cartouche declares --nerv-cartouche-color-rgb custom property', () => {
+    const idx = css.indexOf('.nerv-cartouche {');
+    assert.ok(idx !== -1, '.nerv-cartouche block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('--nerv-cartouche-color-rgb'), '.nerv-cartouche should declare --nerv-cartouche-color-rgb');
+  });
+
+  // B4
+  it('.nerv-cartouche uses the mixed font stack', () => {
+    const idx = css.indexOf('.nerv-cartouche {');
+    assert.ok(idx !== -1, '.nerv-cartouche block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(
+      block.includes('NERV Mixed') || block.includes('Barlow Condensed'),
+      '.nerv-cartouche should reference NERV Mixed or Barlow Condensed font'
+    );
+  });
+
+  // B5
+  it('.nerv-cartouche has text-transform: uppercase', () => {
+    const idx = css.indexOf('.nerv-cartouche {');
+    assert.ok(idx !== -1, '.nerv-cartouche block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('text-transform: uppercase'), '.nerv-cartouche should use text-transform: uppercase');
+  });
+
+  // B6
+  it('.nerv-cartouche has border referencing --nerv-cartouche-color', () => {
+    const idx = css.indexOf('.nerv-cartouche {');
+    assert.ok(idx !== -1, '.nerv-cartouche block not found');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('border'), '.nerv-cartouche should have border');
+    assert.ok(block.includes('--nerv-cartouche-color'), 'border should reference --nerv-cartouche-color');
+  });
+
+  // B7
+  it('.nerv-cartouche-fixed class exists in compiled CSS', () => {
+    assert.match(css, /\.nerv-cartouche-fixed\b/, 'missing .nerv-cartouche-fixed class');
+  });
+
+  // B8
+  it('.nerv-cartouche-fixed inner content uses transform with scale and custom properties', () => {
+    const re = /\.nerv-cartouche-fixed[^}]*>.*?\{[^}]*transform[^}]*scale/s;
+    const hasScale = re.test(css) ||
+      (css.includes('.nerv-cartouche-fixed') && css.includes('--nerv-cartouche-sx'));
+    assert.ok(hasScale, '.nerv-cartouche-fixed should have scale transform referencing custom properties');
+  });
+
+  // B9
+  it('.nerv-cartouche-fixed sets white-space: nowrap', () => {
+    const idx = css.indexOf('.nerv-cartouche-fixed');
+    assert.ok(idx !== -1, '.nerv-cartouche-fixed not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('white-space: nowrap'), '.nerv-cartouche-fixed should set white-space: nowrap');
+  });
+
+  // B10
+  it('.nerv-cartouche-red color variant exists and sets --nerv-cartouche-color', () => {
+    assert.match(css, /\.nerv-cartouche-red\b/, 'missing .nerv-cartouche-red color variant');
+    const idx = css.indexOf('.nerv-cartouche-red');
+    assert.ok(idx !== -1, '.nerv-cartouche-red block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-cartouche-color'), '.nerv-cartouche-red should set --nerv-cartouche-color');
+  });
+
+  // B11
+  it('.nerv-cartouche-green color variant exists and sets --nerv-cartouche-color', () => {
+    assert.match(css, /\.nerv-cartouche-green\b/, 'missing .nerv-cartouche-green color variant');
+    const idx = css.indexOf('.nerv-cartouche-green');
+    assert.ok(idx !== -1, '.nerv-cartouche-green block not found');
+    const block = css.slice(idx, css.indexOf('}', idx) + 1);
+    assert.ok(block.includes('--nerv-cartouche-color'), '.nerv-cartouche-green should set --nerv-cartouche-color');
+  });
+
+  // B12
+  it('prefers-contrast: more media query targets .nerv-cartouche', () => {
+    const contrastRe = /prefers-contrast:\s*more\)[^}]*\.nerv-cartouche/;
+    assert.match(css, contrastRe, 'a prefers-contrast: more block should reference .nerv-cartouche');
+  });
+
+  // B14
+  it('regression — existing component selectors still present', () => {
+    assert.match(css, /\.nerv-bar-meter\b[^-]/, 'missing .nerv-bar-meter class');
+    assert.match(css, /\.nerv-list\b[^-]/, 'missing .nerv-list class');
+    assert.match(css, /\.nerv-table\b[^-]/, 'missing .nerv-table class');
+  });
+});
+
+describe('nerv.js — initCartouches API', () => {
+  // B13
+  it('NERV.initCartouches is a function', async () => {
+    const mod = await import(resolve(ROOT, 'src/nerv.js'));
+    const NERV = mod.NERV || (mod.default && mod.default.NERV);
+    assert.ok(NERV, 'module should export NERV object');
+    assert.equal(typeof NERV.initCartouches, 'function', 'NERV.initCartouches should be a function');
+  });
+});
+
 describe('Regression — Phase 1–4', () => {
   // Behavior 26
   it('Foundation tokens still present', () => {

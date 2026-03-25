@@ -259,5 +259,38 @@
     </div>
   </section>
 
+  <!-- Status Cartouche — Flex (default) -->
+  <section>
+    <div class="ref-label">Status Cartouche — flex (.nerv-cartouche / .nerv-cartouche-{color})</div>
+    <div class="ref-row">
+      <span class="nerv-cartouche nerv-cartouche-red">IDENTIFIED</span>
+      <span class="nerv-cartouche nerv-cartouche-amber">CAPTURE</span>
+      <span class="nerv-cartouche nerv-cartouche-green">NOMINAL</span>
+      <span class="nerv-cartouche nerv-cartouche-cyan">CONDITION BLUE</span>
+      <span class="nerv-cartouche nerv-cartouche-steel">PILOT VANISHED</span>
+      <span class="nerv-cartouche">DEFAULT</span>
+    </div>
+    <div class="ref-row" style="margin-top: 0.75rem;">
+      <span class="nerv-cartouche nerv-cartouche-red nerv-glow-red">LOCKED</span>
+      <span class="nerv-cartouche nerv-cartouche-amber nerv-glow-amber">SIGNAL LOST</span>
+      <span class="nerv-cartouche nerv-cartouche-red" style="--nerv-cartouche-radius: 0;">REFUSED</span>
+      <span class="nerv-cartouche nerv-cartouche-green" style="--nerv-cartouche-radius: 0;">OPEN</span>
+      <span class="nerv-cartouche nerv-cartouche-blue">活動限界</span>
+    </div>
+  </section>
+
+  <!-- Status Cartouche — Fixed (text stretches to fill) -->
+  <section>
+    <div class="ref-label">Status Cartouche — fixed (.nerv-cartouche-fixed, JS: NERV.initCartouches)</div>
+    <div class="ref-row">
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-red" style="width: 180px; height: 36px;"><span>IDENTIFIED</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-amber" style="width: 120px; height: 36px;"><span>CAPTURE</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-green" style="width: 200px; height: 28px;"><span>OPERATING</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 240px; height: 40px;"><span>OBJECT: EVA-01</span></span>
+    </div>
+  </section>
+
+  <script src="../src/nerv.js"></script>
+  <script>NERV.initCartouches();</script>
 </body>
 </html>
