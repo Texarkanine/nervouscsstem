@@ -4,15 +4,12 @@
 Cartouche Multi-Line Table Support (Rework)
 
 ## Phase
-QA - COMPLETE (PASS)
+REFLECT COMPLETE
 
 ## What Was Done
-- Fixed JS measurement bug: `scrollWidth`/`scrollHeight` → `Range.getBoundingClientRect()` for accurate text dimensions when cells are wider than content
-- Updated `_cartouche.scss` header doc to mention table mode
-
-## Files Modified (QA)
-- `src/nerv.js` — measureTable: Range-based text measurement
-- `src/_cartouche.scss` — header doc update
+- Reflected on cartouche-table-mode task
+- Key insight: scrollWidth/scrollHeight unreliable for measuring text smaller than its container; Range.getBoundingClientRect() is the correct API
+- Million-dollar: unified Range-based measurement for all initCartouches modes
 
 ## Next Step
-Reflect phase runs automatically.
+Run /niko-archive to create the archive document and finalize the current project.
