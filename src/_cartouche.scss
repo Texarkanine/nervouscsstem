@@ -77,7 +77,7 @@
   color: inherit;
   font: inherit;
   transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1));
-  transform-origin: center;
+  transform-origin: left center;
 }
 
 // ---------------------------------------------------------------------------

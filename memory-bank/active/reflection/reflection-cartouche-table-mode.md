@@ -8,35 +8,38 @@ complexity_level: 2
 
 ## Summary
 
-Extended the fixed cartouche component with table-mode support for multi-cell grid layouts. CSS + JS changes, 6 new tests, 6 demo cartouches on the ref page. All requirements met, QA caught one measurement bug fixed inline.
+Extended the fixed cartouche with table-mode multi-cell support. CSS structural rules, JS per-cell scaling via Range API, 6 demos, 6 new tests. All requirements met. Three significant issues surfaced across the workflow — none caught by automated tests, all caught by later phases or visual inspection.
 
 ## Requirements vs Outcome
 
-Every requirement from the rework brief was delivered: CSS table/td structural rules, JS per-cell scaling, broken example replaced, and all four reference imagery patterns (1×2 column, data panel, LIVE+JP, LOCKED/OPEN) reproduced as table-mode demos. One bonus demo (LIVE+PICTURE) added naturally.
+Every requirement delivered: CSS table/td rules, JS per-cell scaling, broken example replaced, all four reference imagery patterns reproduced. One bonus demo (LIVE+PICTURE) added. The post-reflect `transform-origin` fix was a rendering correctness issue, not a missing requirement.
 
 ## Plan Accuracy
 
-The plan was accurate on file scope, step sequence, and CSS design. Two things it missed:
+The plan's file scope and step sequence were correct. Three things it got wrong:
 
-1. Preflight caught the `> *` transform bleeding onto `<table>` — correctly amended before build.
-2. The plan described cell measurement as "extend the span-mode pattern to iterate `<td>` elements" which implied `scrollWidth`/`scrollHeight` would work. It doesn't — table cells redistribute surplus width, making `scrollWidth === clientWidth` when the cell is wider than its content.
+1. **Preflight caught**: `> *` transform bleeds onto `<table>` — amended with `transform: none`.
+2. **QA caught**: `scrollWidth`/`scrollHeight` can't measure text smaller than its container — fixed with `Range.getBoundingClientRect()`.
+3. **Visual inspection caught (post-reflect)**: `transform-origin: center` is wrong for left-aligned table cell content — fixed with `left center`. The preflight phase actually made this worse by explicitly codifying `center` as a finding.
 
 ## Build & QA Observations
 
-Build was smooth: CSS rules dropped in cleanly, JS refactored into `measureSpan`/`measureTable` helpers without issue. The pre-existing lint error (`0.00em`) was a minor surprise.
-
-QA caught the measurement bug — the most significant finding of the entire task. The fix (swap to `Range.getBoundingClientRect()`) was trivial, but the *understanding* of why `scrollWidth` fails in table context was non-obvious.
+Build was clean. QA caught the measurement API bug — the most architecturally significant finding. But the most visually impactful bug (`transform-origin`) survived all automated phases: tests, lint, build, and QA. It was immediately obvious in the first screenshot.
 
 ## Insights
 
 ### Technical
 
-`scrollWidth`/`scrollHeight` can never be less than `clientWidth`/`clientHeight`. They measure the scrollable content area, which includes container padding/space. For measuring text content that may be smaller than its container (the normal case for text-stretching), `Range.getBoundingClientRect()` is the correct API — it measures the actual rendered content dimensions regardless of container size.
+1. `scrollWidth`/`scrollHeight` can never be less than `clientWidth`/`clientHeight`. For measuring text that may be smaller than its container, `Range.getBoundingClientRect()` is the correct API.
+
+2. `transform-origin` must match content alignment. Span mode's `center` origin works because `inline-flex + justify-content: center` positions the text at the element's center. Table cells left-align text by default — scaling from `center` pushes the left half outside the element boundary, where `overflow: hidden` clips it. The fix is `left center`.
 
 ### Process
 
-Nothing notable.
+Automated CSS-string tests verify property *presence*, not rendering *correctness*. The ref page is the actual QA surface for visual components — it must be visually inspected, not just built. This task's three bugs were caught by three different mechanisms (preflight code review, QA semantic review, human screenshot), none by automated tests.
 
 ### Million-Dollar Question
 
-If table mode had been assumed from the start, `initCartouches` would use `Range.getBoundingClientRect()` as a unified measurement strategy for ALL modes. The current split — `offsetWidth`/`offsetHeight` for span mode, Range for table mode — works but is an artifact of incremental development. A single `Range.selectNodeContents(target).getBoundingClientRect()` call works correctly in both contexts and would eliminate the two-path measurement logic.
+When porting CSS from one layout context to another, every property needs a "context audit" against the new context's defaults. A checklist: Does the `transform-origin` match where content is positioned? Does the `overflow` model differ? Does the parent's `display` type change child behavior? In this case, a single question — "where does text start in a table cell vs. a flex child?" — would have prevented the `transform-origin` bug at plan time.
+
+The unified Range measurement insight from the prior reflect still holds: `Range.selectNodeContents(target).getBoundingClientRect()` works in both span and table contexts, eliminating the two-path measurement logic.

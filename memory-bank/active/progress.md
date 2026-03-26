@@ -91,6 +91,9 @@ Implementing the multi-line/multi-cell table support for fixed cartouches, as de
   1. JS measureTable used scrollWidth/scrollHeight (wrong API) — switched to Range.getBoundingClientRect() for accurate text measurement when cells are wider than content
   2. _cartouche.scss header doc updated to mention table mode
 
-### Rework — Reflect — COMPLETE
-- Key insight: scrollWidth/scrollHeight can never be less than clientWidth/clientHeight — unsuitable for measuring content smaller than its container
-- Million-dollar: unified Range-based measurement for all initCartouches modes would eliminate the two-path measurement logic
+### Rework — Reflect — COMPLETE (updated)
+- Post-reflect visual fix: `transform-origin: center` → `left center` on table cells (text is left-aligned in td, not centered like span mode)
+- Key insight 1: scrollWidth/scrollHeight unsuitable for measuring content smaller than its container — use Range API
+- Key insight 2: transform-origin must match content alignment — center works for centered flex children, left center for left-aligned table cells
+- Process insight: three bugs caught by three different mechanisms (preflight, QA, screenshot) — none by automated tests
+- Million-dollar: "context audit" checklist when porting CSS across layout contexts; unified Range measurement for all modes
