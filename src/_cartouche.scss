@@ -6,6 +6,8 @@
 ///   - **Flex** (default): cartouche sizes to fit its text content.
 ///   - **Fixed** (.nerv-cartouche-fixed): explicit dimensions; JS orchestration
 ///     (NERV.initCartouches) scales text to fill via --nerv-cartouche-sx/sy.
+///     Fixed supports an optional **table mode**: a raw `<table>` child enables
+///     multi-cell grid layouts with independent per-cell text scaling.
 ///
 /// Color variants auto-generated from tokens.$nerv-colors (glow-flagged).
 /// Uses the NERV Mixed font stack for JP/EN bilingual support.

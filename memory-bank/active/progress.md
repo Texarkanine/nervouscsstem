@@ -85,3 +85,8 @@ Implementing the multi-line/multi-cell table support for fixed cartouches, as de
 - Full suite: 293 tests, 0 failures
 - Build, minify, lint all pass
 - 1 deviation: fixed pre-existing lint error in cartouche base padding
+
+### Rework — QA — COMPLETE (PASS)
+- 2 findings, both fixed inline:
+  1. JS measureTable used scrollWidth/scrollHeight (wrong API) — switched to Range.getBoundingClientRect() for accurate text measurement when cells are wider than content
+  2. _cartouche.scss header doc updated to mention table mode

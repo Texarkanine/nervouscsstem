@@ -266,16 +266,21 @@
       function measureTable(table) {
         var cells = table.querySelectorAll('td');
         for (var j = 0; j < cells.length; j++) {
-          var td = cells[j];
-          td.style.transform = 'none';
+          cells[j].style.transform = 'none';
         }
 
         for (var k = 0; k < cells.length; k++) {
           var cell = cells[k];
           var cellW = cell.clientWidth;
           var cellH = cell.clientHeight;
-          var textW = cell.scrollWidth;
-          var textH = cell.scrollHeight;
+
+          var range = document.createRange();
+          range.selectNodeContents(cell);
+          var rect = range.getBoundingClientRect();
+          range.detach();
+
+          var textW = rect.width;
+          var textH = rect.height;
 
           if (cellW > 0 && cellH > 0 && textW > 0 && textH > 0) {
             cell.style.setProperty('--nerv-cartouche-sx', String(cellW / textW));

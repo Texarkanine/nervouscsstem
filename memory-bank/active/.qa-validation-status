@@ -1,0 +1,5 @@
+PASS
+
+Findings (2, both fixed inline):
+1. JS measureTable used scrollWidth/scrollHeight — gives cell dimensions, not text dimensions, when cells are wider than text. Fixed: switched to Range.getBoundingClientRect() for accurate text content measurement.
+2. _cartouche.scss header doc didn't mention table mode. Fixed: added table mode note to Fixed variant description.
