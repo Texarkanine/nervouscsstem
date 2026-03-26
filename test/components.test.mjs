@@ -951,13 +951,13 @@ describe('Cartouche CSS', () => {
   });
 
   // B4
-  it('.nerv-cartouche uses the mixed font stack', () => {
+  it('.nerv-cartouche uses the NERV Cartouche / Antonio font stack', () => {
     const idx = css.indexOf('.nerv-cartouche {');
     assert.ok(idx !== -1, '.nerv-cartouche block not found');
     const block = css.slice(idx, idx + 600);
     assert.ok(
-      block.includes('NERV Mixed') || block.includes('Barlow Condensed'),
-      '.nerv-cartouche should reference NERV Mixed or Barlow Condensed font'
+      block.includes('NERV Cartouche') || block.includes('Antonio'),
+      '.nerv-cartouche should reference NERV Cartouche or Antonio font'
     );
   });
 
@@ -985,11 +985,13 @@ describe('Cartouche CSS', () => {
   });
 
   // B8
-  it('.nerv-cartouche-fixed inner content uses transform with scale and custom properties', () => {
+  it('.nerv-cartouche-fixed inner content uses transform with scale and translateY custom properties', () => {
     const re = /\.nerv-cartouche-fixed[^}]*>.*?\{[^}]*transform[^}]*scale/s;
     const hasScale = re.test(css) ||
       (css.includes('.nerv-cartouche-fixed') && css.includes('--nerv-cartouche-sx'));
     assert.ok(hasScale, '.nerv-cartouche-fixed should have scale transform referencing custom properties');
+    const hasTy = css.includes('--nerv-cartouche-ty');
+    assert.ok(hasTy, '.nerv-cartouche-fixed transform should reference --nerv-cartouche-ty for vertical centering');
   });
 
   // B9

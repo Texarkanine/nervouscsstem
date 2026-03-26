@@ -27,6 +27,6 @@ Automated checks via Node.js built-in test runner (`node --test`) in `test/`. St
 
 The design system specification lives in `planning/VISION.md`. Phase plans in `planning/PHASE1.md` through `planning/PHASE6.md` decompose the vision into implementable milestones.
 
-**Font stack**: Shippori Mincho B1 (display), Barlow Condensed (HUD), IBM Plex Mono (monospace), DSEG7 Classic (seven-segment). All OFL-licensed, loaded via CDN by default.
+**Font stack**: Shippori Mincho B1 (display), Barlow Condensed (HUD), Antonio (cartouche), IBM Plex Mono (monospace), DSEG7 Classic (seven-segment). All OFL-licensed, loaded via CDN by default. `NERV Mixed` (Barlow Condensed + Shippori, unicode-range) handles general JP/EN HUD text; `NERV Cartouche` (Antonio + Shippori, unicode-range) handles cartouche-specific text.
 
 **Key constraints**: No image files, no `<canvas>`, no WebGL. All `.nerv-` prefixed selectors. `prefers-reduced-motion` and `prefers-contrast` respected.

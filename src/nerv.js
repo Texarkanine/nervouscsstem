@@ -234,8 +234,9 @@
     /**
      * Measures text inside `.nerv-cartouche-fixed` elements and sets
      * `--nerv-cartouche-sx` / `--nerv-cartouche-sy` so the inner content
-     * stretches to fill the cartouche dimensions. Waits for fonts to load
-     * before measuring. Safe to call multiple times (re-measures).
+     * stretches to fill the cartouche dimensions, plus `--nerv-cartouche-ty`
+     * to correct for font-metric vertical centering offset. Waits for fonts
+     * to load before measuring. Safe to call multiple times (re-measures).
      *
      * @param {HTMLElement} [container=document] - Scope for element lookup
      */
@@ -243,7 +244,43 @@
       if (typeof document === 'undefined') return;
       var scope = container || document;
 
-      function measureSpan(el, inner) {
+      /**
+       * Uses Canvas TextMetrics to measure how far the actual glyph ink center
+       * sits below the line-box center. Returns pixels; positive = ink below
+       * center. Falls back to 0 if the browser lacks actualBoundingBox metrics.
+       *
+       * @param {HTMLElement} element - Element whose text + font to measure
+       * @param {CanvasRenderingContext2D} ctx - Reusable canvas context
+       * @returns {number} Offset in line-box pixels (pre-scale)
+       */
+      function inkCenterOffset(element, ctx) {
+        var text = element.textContent || '';
+        if (!text.trim()) return 0;
+
+        var cs = getComputedStyle(element);
+        ctx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+
+        var m = ctx.measureText(text);
+        if (typeof m.actualBoundingBoxAscent === 'undefined') return 0;
+
+        var inkAsc = m.actualBoundingBoxAscent;
+        var inkDesc = m.actualBoundingBoxDescent;
+
+        var fontAsc = (typeof m.fontBoundingBoxAscent !== 'undefined')
+          ? m.fontBoundingBoxAscent : parseFloat(cs.fontSize) * 0.8;
+        var fontDesc = (typeof m.fontBoundingBoxDescent !== 'undefined')
+          ? m.fontBoundingBoxDescent : parseFloat(cs.fontSize) * 0.2;
+
+        var lh = parseFloat(cs.lineHeight);
+        if (isNaN(lh) || lh <= 0) lh = parseFloat(cs.fontSize);
+
+        var baselineFromTop = (lh + fontAsc - fontDesc) / 2;
+        var inkCenterFromTop = baselineFromTop - (inkAsc - inkDesc) / 2;
+
+        return inkCenterFromTop - lh / 2;
+      }
+
+      function measureSpan(el, inner, ctx) {
         var boxW = el.clientWidth;
         var boxH = el.clientHeight;
         if (boxW <= 0 || boxH <= 0) return;
@@ -256,14 +293,16 @@
         if (contentW > 0 && contentH > 0) {
           var sx = boxW / contentW;
           var sy = boxH / contentH;
+          var ty = -inkCenterOffset(inner, ctx);
           el.style.setProperty('--nerv-cartouche-sx', String(sx));
           el.style.setProperty('--nerv-cartouche-sy', String(sy));
+          el.style.setProperty('--nerv-cartouche-ty', String(ty) + 'px');
         }
 
         inner.style.transform = '';
       }
 
-      function measureTable(table) {
+      function measureTable(table, ctx) {
         var cells = table.querySelectorAll('td');
         for (var j = 0; j < cells.length; j++) {
           cells[j].style.transform = 'none';
@@ -283,8 +322,15 @@
           var textH = rect.height;
 
           if (cellW > 0 && cellH > 0 && textW > 0 && textH > 0) {
+            var cellRect = cell.getBoundingClientRect();
+            var lineCenterY = rect.top + rect.height / 2;
+            var cellCenterY = cellRect.top + cellRect.height / 2;
+            var cellOffset = cellCenterY - lineCenterY;
+            var inkOff = inkCenterOffset(cell, ctx);
+            var ty = cellOffset - inkOff;
             cell.style.setProperty('--nerv-cartouche-sx', String(cellW / textW));
             cell.style.setProperty('--nerv-cartouche-sy', String(cellH / textH));
+            cell.style.setProperty('--nerv-cartouche-ty', String(ty) + 'px');
           }
 
           cell.style.transform = '';
@@ -292,15 +338,17 @@
       }
 
       function measure() {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
         var cartouches = scope.querySelectorAll('.nerv-cartouche-fixed');
         for (var i = 0; i < cartouches.length; i++) {
           var el = cartouches[i];
           var table = el.querySelector('table');
           if (table) {
-            measureTable(table);
+            measureTable(table, ctx);
           } else {
             var inner = el.firstElementChild;
-            if (inner) measureSpan(el, inner);
+            if (inner) measureSpan(el, inner, ctx);
           }
         }
       }

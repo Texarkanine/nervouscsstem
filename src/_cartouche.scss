@@ -10,7 +10,7 @@
 ///     multi-cell grid layouts with independent per-cell text scaling.
 ///
 /// Color variants auto-generated from tokens.$nerv-colors (glow-flagged).
-/// Uses the NERV Mixed font stack for JP/EN bilingual support.
+/// Uses the NERV Cartouche composite font (Antonio for Latin, Shippori for CJK).
 
 @use 'sass:list';
 @use 'tokens';
@@ -31,7 +31,7 @@
   border: var(--nerv-cartouche-border-width) solid var(--nerv-cartouche-color);
   border-radius: var(--nerv-cartouche-radius);
   padding: 0 0.3em 0.1em;
-  font-family: 'NERV Mixed', 'Shippori Mincho B1', 'Barlow Condensed', sans-serif;
+  font-family: 'NERV Cartouche', 'Shippori Mincho B1', 'Antonio', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -48,11 +48,12 @@
   overflow: hidden;
   padding: 0;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1;
 
   > * {
     white-space: nowrap;
-    transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1));
+    transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1))
+               translateY(var(--nerv-cartouche-ty, 0px));
     transform-origin: center;
   }
 }
@@ -76,7 +77,8 @@
   overflow: hidden;
   color: inherit;
   font: inherit;
-  transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1));
+  transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1))
+             translateY(var(--nerv-cartouche-ty, 0px));
   transform-origin: left center;
 }
 

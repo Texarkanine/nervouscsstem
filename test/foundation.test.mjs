@@ -76,6 +76,30 @@ describe('Color map output verification', () => {
   });
 });
 
+describe('Font-face declarations', () => {
+  before(() => {
+    if (!css) {
+      execSync('npm run build', { cwd: ROOT, stdio: 'pipe' });
+      css = readFileSync(DIST_CSS, 'utf-8');
+    }
+  });
+
+  it('declares @font-face for Antonio', () => {
+    assert.match(css, /font-family:\s*["']?Antonio["']?/, 'missing @font-face for Antonio');
+  });
+
+  it('declares @font-face for NERV Cartouche composite', () => {
+    assert.match(css, /font-family:\s*["']?NERV Cartouche["']?/, 'missing @font-face for NERV Cartouche');
+  });
+
+  it('NERV Cartouche @font-face uses unicode-range for Latin', () => {
+    const idx = css.indexOf('NERV Cartouche');
+    assert.ok(idx !== -1, 'NERV Cartouche not found');
+    const block = css.slice(Math.max(0, idx - 200), idx + 400);
+    assert.ok(block.includes('unicode-range'), 'NERV Cartouche should declare unicode-range for Latin subset');
+  });
+});
+
 describe('Color map → glow class verification', () => {
   before(() => {
     if (!css) {
