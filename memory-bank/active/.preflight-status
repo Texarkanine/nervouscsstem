@@ -1,3 +1,0 @@
-PASS
-
-Plan aligns with systemPatterns (SCSS partials, compiled dist/nerv.css, node tests on compiled CSS). Touchpoints: _typography.scss (@font-face), _cartouche.scss (font-family), test/components.test.mjs, techContext.md. No JS. Antonio lacks CJK — Shippori fallback required and documented.

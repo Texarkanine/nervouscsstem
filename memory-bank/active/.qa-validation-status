@@ -1,3 +1,0 @@
-PASS
-
-QA semantic review complete. All requirements met. No debug artifacts, no dead code, no magic numbers. Canvas measureText usage is measurement-only (never rendered), consistent with "no canvas painting" constraint. 296/296 tests pass. Operator visually confirmed fixed cartouches centered correctly.
