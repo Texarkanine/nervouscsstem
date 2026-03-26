@@ -1,6 +1,0 @@
-PASS
-
-Findings (2, both amended into plan):
-1. (MEDIUM) Added `transform: none` to `.nerv-cartouche-fixed > table` — overrides inherited `> *` transform
-2. (LOW) Added explicit `transform-origin: center` to td rule spec
-3. Added B6 test: table element overrides `> *` transform with `transform: none`
