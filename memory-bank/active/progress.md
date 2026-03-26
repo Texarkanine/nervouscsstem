@@ -72,3 +72,9 @@ Implementing the multi-line/multi-cell table support for fixed cartouches, as de
 - 5 behaviors to verify, 8 implementation steps
 - Files: `src/_cartouche.scss`, `src/nerv.js`, `ref/ref-foundation.html`, `test/components.test.mjs`
 - No new dependencies, no design decisions needed (creative phase already decided Option B)
+
+### Rework — Preflight — COMPLETE (PASS)
+- 2 findings, both amended into plan:
+  1. Added `transform: none` to `> table` to override `> *` rule's transform
+  2. Added explicit `transform-origin: center` to td spec
+- Added B6 test for transform override

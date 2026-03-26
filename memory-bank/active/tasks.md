@@ -15,7 +15,8 @@ Extend the existing fixed cartouche component with table-mode support for multi-
 - **B3**: `.nerv-cartouche-fixed > table td` exists with `padding: 0` and `white-space: nowrap` → cells are purely structural
 - **B4**: `.nerv-cartouche-fixed > table td` has `transform` referencing `--nerv-cartouche-sx` and `--nerv-cartouche-sy` → per-cell scale via custom properties
 - **B5**: `.nerv-cartouche-fixed > table td` inherits color (`color: inherit`) → text color from cartouche frame
-- **B6**: Regression — all existing cartouche tests still pass (covered by existing B1–B15 in Cartouche CSS describe block)
+- **B6**: `.nerv-cartouche-fixed > table` overrides the `> *` transform with `transform: none`
+- **B7**: Regression — all existing cartouche tests still pass (covered by existing B1–B15 in Cartouche CSS describe block)
 
 ### Edge Cases
 
@@ -35,7 +36,7 @@ Extend the existing fixed cartouche component with table-mode support for multi-
 ### Step 1: Stub Tests
 
 - Files: `test/components.test.mjs`
-- Changes: Add 5 empty test cases (B1–B5) inside a new `describe('Cartouche table-mode CSS')` block after the existing `Cartouche CSS` block
+- Changes: Add 6 empty test cases (B1–B6) inside a new `describe('Cartouche table-mode CSS')` block after the existing `Cartouche CSS` block
 
 ### Step 2: Stub CSS Interface
 
@@ -56,8 +57,8 @@ Extend the existing fixed cartouche component with table-mode support for multi-
 
 - Files: `src/_cartouche.scss`
 - Changes: Fill out table/td rules:
-  - `.nerv-cartouche-fixed > table`: `width: 100%; height: 100%; border-collapse: collapse;`
-  - `.nerv-cartouche-fixed > table td`: `padding: 0; border: none; background: transparent; white-space: nowrap; overflow: hidden; color: inherit; font: inherit;` + per-cell transform
+  - `.nerv-cartouche-fixed > table`: `width: 100%; height: 100%; border-collapse: collapse; transform: none;` (override `> *` rule)
+  - `.nerv-cartouche-fixed > table td`: `padding: 0; border: none; background: transparent; white-space: nowrap; overflow: hidden; color: inherit; font: inherit; transform-origin: center;` + per-cell transform
 
 ### Step 6: Implement JS Table-Mode
 

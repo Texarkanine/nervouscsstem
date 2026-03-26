@@ -4,7 +4,7 @@
 Cartouche Multi-Line Table Support (Rework)
 
 ## Phase
-PLAN - COMPLETE
+PREFLIGHT - COMPLETE (PASS)
 
 ## What Was Done
 - 5 new behaviors to verify (B1–B5), plus regression coverage from existing tests
@@ -18,4 +18,4 @@ PLAN - COMPLETE
 - Demo cartouches replicate 4 reference imagery patterns: 1×2 column, 4-row data panel, LIVE+JP source, LOCKED/OPEN states
 
 ## Next Step
-Preflight validation runs automatically.
+Build phase begins. TDD: stub tests → stub interface → implement tests → run (expect fail) → implement code → run (expect pass).
