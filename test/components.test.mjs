@@ -970,12 +970,13 @@ describe('Cartouche CSS', () => {
   });
 
   // B6
-  it('.nerv-cartouche has border referencing --nerv-cartouche-color', () => {
+  it('.nerv-cartouche has border with --nerv-cartouche-border-width and --nerv-cartouche-color', () => {
     const idx = css.indexOf('.nerv-cartouche {');
     assert.ok(idx !== -1, '.nerv-cartouche block not found');
-    const block = css.slice(idx, idx + 600);
+    const block = css.slice(idx, idx + 800);
     assert.ok(block.includes('border'), '.nerv-cartouche should have border');
     assert.ok(block.includes('--nerv-cartouche-color'), 'border should reference --nerv-cartouche-color');
+    assert.ok(block.includes('--nerv-cartouche-border-width'), 'border should use --nerv-cartouche-border-width (thick stroke)');
   });
 
   // B7
@@ -1021,6 +1022,18 @@ describe('Cartouche CSS', () => {
   it('prefers-contrast: more media query targets .nerv-cartouche', () => {
     const contrastRe = /prefers-contrast:\s*more\)[^}]*\.nerv-cartouche/;
     assert.match(css, contrastRe, 'a prefers-contrast: more block should reference .nerv-cartouche');
+  });
+
+  // B15: flex cartouche uses bold font-weight for synthetic-bold "fuzzy" look
+  it('.nerv-cartouche base has font-weight 700 or bold', () => {
+    const idx = css.indexOf('.nerv-cartouche {');
+    assert.ok(idx !== -1, '.nerv-cartouche block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(
+      block.includes('font-weight: 700') || block.includes('font-weight: bold') ||
+      block.includes('font-weight:700') || block.includes('font-weight:bold'),
+      '.nerv-cartouche should use font-weight 700/bold for synthetic bold'
+    );
   });
 
   // B14

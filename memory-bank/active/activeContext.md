@@ -4,36 +4,29 @@
 Status Cartouche Element
 
 ## Phase
-REFLECT COMPLETE
+REFLECT COMPLETE (refinements)
 
-## What Was Done
-- Created `src/_cartouche.scss` — base flex cartouche, fixed modifier, color variants, accessibility
-- Registered in `src/nerv.scss` after `status-text`, before `list`
-- Added `NERV.initCartouches()` to `src/nerv.js` with font-aware measurement
-- Added demo sections to `ref/ref-foundation.html` (flex + fixed + glow composition + JP text)
-- 14 new tests in `test/components.test.mjs` — all passing
-- Full suite: 286 tests, 0 failures
-- Build: both `build` and `build:min` succeed
+## What Was Done (Refinements)
+- `font-weight: 700` on flex cartouches — synthetic bold for "fuzzy CRT" feel
+- Proportional border-width: `--nerv-cartouche-border-width` changed from `2px` to `0.15em`
+- Vertical centering: asymmetric padding `0 0.3em 0.1em` + `line-height: 1` on flex
+- Fixed variant isolation: `font-weight: 400` + `line-height: 1.1` to prevent base changes from affecting JS scaling
+- High-contrast border updated: `3px` → `0.18em`
+- Test B15 updated (scaleY → font-weight 700), B16 removed (no longer needed)
+- Creative decision: multi-line fixed cartouche uses Optional Table (Hybrid) — not yet implemented
 
-## Files Modified
-- `src/_cartouche.scss` (NEW)
-- `src/nerv.scss` (added @forward)
-- `src/nerv.js` (added initCartouches)
-- `ref/ref-foundation.html` (added demo sections)
-- `test/components.test.mjs` (added cartouche + initCartouches tests)
+## Files Modified (Refinements)
+- `src/_cartouche.scss` (typography, border units, fixed variant isolation)
+- `test/components.test.mjs` (B15 updated, B16 removed)
+- `memory-bank/active/creative/creative-cartouche-multiline-structure.md` (NEW)
+- `memory-bank/active/reflection/reflection-cartouche-refinements.md` (NEW)
 
-## Key Decisions
-- Font stack: `NERV Mixed` → `Shippori Mincho B1` → `Barlow Condensed` for JP/EN support
-- Fixed variant uses JS orchestration (`NERV.initCartouches`) for independent X/Y text scaling
-- `--nerv-cartouche-radius` custom property for rounded (default 2px) vs sharp (0) rectangle
-- Color variants auto-generated from `$nerv-colors` glow-flagged entries
-- Base does not set `box-shadow` to allow free composition with `.nerv-glow-*`
-- `font-weight: 400` (not 600) — only weight loaded for Barlow/NERV Mixed
-
-## Creative Phase (Standalone)
-- Open question: Multi-line fixed cartouche interior structure (table vs span vs other)
-- Decision: **Optional Table (Hybrid)** — `<span>` for single-content, `<table>` for multi-cell grids
-- Documented in `memory-bank/active/creative/creative-cartouche-multiline-structure.md`
+## Key Decisions (Refinements)
+- scaleY on flex cartouches REJECTED — layout/visual mismatch causes unpredictable overflow
+- Synthetic bold (font-weight: 700) ACCEPTED — user liked the "fuzzy" look
+- Border-width in `em` not `px` — scales proportionally with font-size
+- Flex and fixed variants need independent typography tuning (line-height, font-weight)
+- Multi-line: Optional Table (Hybrid) — `<span>` for simple, `<table>` for multi-cell grids
 
 ## Next Step
-Implement the multi-line cartouche feature per the creative decision, or run /niko-archive to finalize the base cartouche task first.
+Run /niko-archive to create the archive document and finalize the current project.

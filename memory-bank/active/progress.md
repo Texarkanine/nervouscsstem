@@ -43,3 +43,16 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
 - Single-content stays as `<span>` (unchanged); multi-cell layouts use raw `<table>` (no `.nerv-table` class)
 - Span-only rows (Option C) disqualified: cannot reproduce reference image's two-column first row
 - Documented in `memory-bank/active/creative/creative-cartouche-multiline-structure.md`
+
+### Refinements — COMPLETE
+- Iterative visual tuning driven by user feedback
+- Synthetic bold (font-weight: 700) on flex cartouches for CRT feel
+- Proportional border-width via em units (0.15em default)
+- Vertical centering fixes: asymmetric padding (flex) + tuned line-height (fixed)
+- Fixed variant typography isolated from base (font-weight: 400, line-height: 1.1)
+- scaleY on flex cartouches explored and rejected (layout/visual overflow risk)
+
+### Reflect (Refinements) — COMPLETE
+- Key insight: transform is visual-only; scaleY on flow elements causes unpredictable overflow
+- Key insight: uppercase centering in flex containers is variant-dependent (flex vs fixed need different line-heights)
+- Million-dollar: CSS text-box-trim will solve uppercase centering at the root when browser support lands

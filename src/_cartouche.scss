@@ -21,21 +21,21 @@
   --nerv-cartouche-color: var(--nerv-primary);
   --nerv-cartouche-color-rgb: var(--nerv-primary-rgb);
   --nerv-cartouche-radius: 0.4em;
-  --nerv-cartouche-border-width: 2px;
+  --nerv-cartouche-border-width: 0.15em;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: var(--nerv-cartouche-border-width) solid var(--nerv-cartouche-color);
   border-radius: var(--nerv-cartouche-radius);
-  padding: 0.15em 0.6em;
+  padding: 0.00em 0.3em 0.1em;
   font-family: 'NERV Mixed', 'Shippori Mincho B1', 'Barlow Condensed', sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--nerv-cartouche-color);
   white-space: nowrap;
-  line-height: 1.2;
+  line-height: 1;
 }
 
 // ---------------------------------------------------------------------------
@@ -45,6 +45,8 @@
 .nerv-cartouche-fixed {
   overflow: hidden;
   padding: 0;
+  font-weight: 400;
+  line-height: 1.1;
 
   > * {
     white-space: nowrap;
@@ -74,6 +76,6 @@
 
 @media (prefers-contrast: more) {
   .nerv-cartouche {
-    --nerv-cartouche-border-width: 3px;
+    --nerv-cartouche-border-width: 0.18em;
   }
 }
