@@ -42,3 +42,23 @@ Color follows `$nerv-colors` / glow-flagged tokens (same pattern as `.nerv-glow-
 - `.nerv-` namespace prefix
 - Respect `prefers-reduced-motion` and `prefers-contrast`
 - Must support mixed Japanese/English text
+
+## Rework — Multi-Line Table Support for Fixed Cartouches
+
+Implement the **Optional Table (Hybrid)** design from `creative-cartouche-multiline-structure.md`:
+
+### CSS Changes
+- `.nerv-cartouche-fixed > table`: fills cartouche frame (`width: 100%; height: 100%; border-collapse: collapse`)
+- `.nerv-cartouche-fixed > table td`: purely structural cells (no padding, no border, transparent bg, inherits color/font), each with its own `transform: scale(...)` via per-cell CSS custom properties
+
+### JS Changes
+- `initCartouches`: detect `el.querySelector('table')` → table mode iterates `<td>` elements, measuring each cell's natural text vs rendered cell dimensions, setting per-cell `--nerv-cartouche-sx`/`--nerv-cartouche-sy`
+- Span mode (existing single-child behavior) unchanged
+
+### Reference Page Updates
+- Remove the broken multi-span example at ref-foundation.html:302-306
+- Add new demo row with table-mode cartouches:
+  1. At least one 1×2 column fixed cartouche showing different text horizontal compression per cell
+  2. Complex multi-cell cartouche replicating OBJECT: EVA-01 data panel (ref: `v5IGB8l.png`)
+  3. Complex multi-cell cartouche replicating LIVE badge + Japanese source ID (ref: `JZhvj02.png`, `1bfh9W4.png`)
+  4. Multi-cell cartouche showing LOCKED + OPEN adjacent states (ref: `IL7a4b7.png`)

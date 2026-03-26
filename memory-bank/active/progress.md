@@ -56,3 +56,10 @@ Create a new `.nerv-cartouche` CSS component with flex (default) and fixed varia
 - Key insight: transform is visual-only; scaleY on flow elements causes unpredictable overflow
 - Key insight: uppercase centering in flex containers is variant-dependent (flex vs fixed need different line-heights)
 - Million-dollar: CSS text-box-trim will solve uppercase centering at the root when browser support lands
+
+### Rework Initiated
+Implementing the multi-line/multi-cell table support for fixed cartouches, as designed in the creative phase (Option B: Optional Table Hybrid). Scope:
+- CSS additions for `.nerv-cartouche-fixed > table` and `td` styling
+- JS changes to `initCartouches` for table-mode per-cell scaling
+- Replace broken multi-line example in ref-foundation.html with proper table-mode demos
+- New demo row: 1×2 column cartouche with varied text compression, plus complex multi-cell cartouches replicating reference imagery (OBJECT: EVA-01 data panel, LIVE badge with source ID, MAGNIFICATION / LIVE, LOCKED + OPEN states)
