@@ -52,6 +52,18 @@ The edges in those cases are kinda thick - matching the font weight. Not the nar
 
 We should add such support for such boxes, as part of the "foundation," demo'd after the `Glow Effects — box-shadow (.nerv-glow-*)` line.
 
+## Psycographic Display
+
+A graph on a grid, with labelled axes and a text box insert... OH NO, THE LINES ARE ALL SQUIGGLY! AND ANIMATED!
+
+We should have a way to have a "graph" with 
+
+- axes tickmarks
+- axes labels
+- an fixed path SVG or SVGs graphed on it with bright phosphor outlines
+- animating a clean loop of one or more of those line sets (e.g. sine wave flowing by)
+- moneyshot: a messy squigglemass (see reference image) for when shit goes sideways. Typically you'd activate this when the system went "critical" (integrate with alert state system)
+
 ---
 
 ## Recently shipped (reference)

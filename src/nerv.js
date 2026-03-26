@@ -243,30 +243,60 @@
       if (typeof document === 'undefined') return;
       var scope = container || document;
 
+      function measureSpan(el, inner) {
+        var boxW = el.clientWidth;
+        var boxH = el.clientHeight;
+        if (boxW <= 0 || boxH <= 0) return;
+
+        inner.style.transform = 'none';
+
+        var contentW = inner.offsetWidth;
+        var contentH = inner.offsetHeight;
+
+        if (contentW > 0 && contentH > 0) {
+          var sx = boxW / contentW;
+          var sy = boxH / contentH;
+          el.style.setProperty('--nerv-cartouche-sx', String(sx));
+          el.style.setProperty('--nerv-cartouche-sy', String(sy));
+        }
+
+        inner.style.transform = '';
+      }
+
+      function measureTable(table) {
+        var cells = table.querySelectorAll('td');
+        for (var j = 0; j < cells.length; j++) {
+          var td = cells[j];
+          td.style.transform = 'none';
+        }
+
+        for (var k = 0; k < cells.length; k++) {
+          var cell = cells[k];
+          var cellW = cell.clientWidth;
+          var cellH = cell.clientHeight;
+          var textW = cell.scrollWidth;
+          var textH = cell.scrollHeight;
+
+          if (cellW > 0 && cellH > 0 && textW > 0 && textH > 0) {
+            cell.style.setProperty('--nerv-cartouche-sx', String(cellW / textW));
+            cell.style.setProperty('--nerv-cartouche-sy', String(cellH / textH));
+          }
+
+          cell.style.transform = '';
+        }
+      }
+
       function measure() {
         var cartouches = scope.querySelectorAll('.nerv-cartouche-fixed');
         for (var i = 0; i < cartouches.length; i++) {
           var el = cartouches[i];
-          var inner = el.firstElementChild;
-          if (!inner) continue;
-
-          var boxW = el.clientWidth;
-          var boxH = el.clientHeight;
-          if (boxW <= 0 || boxH <= 0) continue;
-
-          inner.style.transform = 'none';
-
-          var contentW = inner.offsetWidth;
-          var contentH = inner.offsetHeight;
-
-          if (contentW > 0 && contentH > 0) {
-            var sx = boxW / contentW;
-            var sy = boxH / contentH;
-            el.style.setProperty('--nerv-cartouche-sx', String(sx));
-            el.style.setProperty('--nerv-cartouche-sy', String(sy));
+          var table = el.querySelector('table');
+          if (table) {
+            measureTable(table);
+          } else {
+            var inner = el.firstElementChild;
+            if (inner) measureSpan(el, inner);
           }
-
-          inner.style.transform = '';
         }
       }
 

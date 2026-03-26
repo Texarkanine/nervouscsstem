@@ -78,3 +78,10 @@ Implementing the multi-line/multi-cell table support for fixed cartouches, as de
   1. Added `transform: none` to `> table` to override `> *` rule's transform
   2. Added explicit `transform-origin: center` to td spec
 - Added B6 test for transform override
+
+### Rework — Build — COMPLETE
+- All 8 implementation steps completed
+- 6 new tests (B1–B6), all passing
+- Full suite: 293 tests, 0 failures
+- Build, minify, lint all pass
+- 1 deviation: fixed pre-existing lint error in cartouche base padding

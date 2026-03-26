@@ -254,8 +254,20 @@
   <!-- drop-shadow Glow -->
   <section>
     <div class="ref-label">Glow Effects — filter: drop-shadow (.nerv-glow-drop)</div>
-    <div class="nerv-glow-drop" style="display: inline-block; padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-primary); clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);">
-      <span class="nerv-type-hud" style="color: var(--nerv-amber);">DROP SHADOW</span>
+    <div class="ref-label">Glow Effects — box-shadow (.nerv-glow-*)</div>
+    <div class="ref-row">
+      <div class="nerv-glow-drop" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-amber);">
+        <span class="nerv-type-hud" style="color: var(--nerv-amber);">.nerv-glow</span>
+      </div>
+      <div class="nerv-glow-drop-red" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-red);">
+        <span class="nerv-type-hud" style="color: var(--nerv-red);">.nerv-glow-red</span>
+      </div>
+      <div class="nerv-glow-drop-green" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-green);">
+        <span >.nerv-glow-green</span>
+      </div>
+      <div class="nerv-glow-drop-cyan" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-cyan);">
+        <span class="nerv-type-hud" style="color: var(--nerv-cyan);">.nerv-glow-cyan</span>
+      </div>
     </div>
   </section>
 
@@ -273,8 +285,8 @@
     <div class="ref-row" style="margin-top: 0.75rem;">
       <span class="nerv-cartouche nerv-cartouche-red nerv-glow-red">LOCKED</span>
       <span class="nerv-cartouche nerv-cartouche-amber nerv-glow-amber">SIGNAL LOST</span>
-      <span class="nerv-cartouche nerv-cartouche-red" style="--nerv-cartouche-radius: 0;">REFUSED</span>
-      <span class="nerv-cartouche nerv-cartouche-green" style="--nerv-cartouche-radius: 0;">OPEN</span>
+      <span class="nerv-cartouche nerv-cartouche-red">REFUSED</span>
+      <span class="nerv-cartouche nerv-cartouche-green">OPEN</span>
       <span class="nerv-cartouche nerv-cartouche-blue">活動限界</span>
     </div>
   </section>
@@ -283,10 +295,54 @@
   <section>
     <div class="ref-label">Status Cartouche — fixed (.nerv-cartouche-fixed, JS: NERV.initCartouches)</div>
     <div class="ref-row">
-      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-red" style="width: 180px; height: 36px;"><span>IDENTIFIED</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-red" style="width: 180px; height: 36px;"><span>識別 IDENTIFIED</span></span>
       <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-amber" style="width: 120px; height: 36px;"><span>CAPTURE</span></span>
       <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-green" style="width: 200px; height: 28px;"><span>OPERATING</span></span>
-      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 240px; height: 40px;"><span>OBJECT: EVA-01</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 240px; height: 36px;"><span>OBJECT: EVA-01</span></span>
+    </div>
+  </section>
+
+  <!-- Status Cartouche — Fixed table-mode (multi-cell) -->
+  <section>
+    <div class="ref-label">Status Cartouche — fixed table-mode (.nerv-cartouche-fixed + &lt;table&gt;, JS: NERV.initCartouches)</div>
+    <div class="ref-row">
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 240px; height: 36px;">
+        <table><tr><td>OBJECT :</td><td>EVA-01</td></tr></table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 280px; height: 100px;">
+        <table>
+          <tr><td>OBJECT :</td><td>EVA-01</td></tr>
+          <tr><td colspan="2">ENTRY PLUG : INTERIOR</td></tr>
+          <tr><td colspan="2">DIRECT CONNECTION NO. 316</td></tr>
+          <tr><td colspan="2">PILOT VANISHED</td></tr>
+        </table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-amber" style="width: 220px; height: 50px;">
+        <table>
+          <tr><td>LIVE</td><td>第22警戒群</td></tr>
+          <tr><td colspan="2">MAGNIFICATION ×10⁵</td></tr>
+        </table>
+      </span>
+    </div>
+    <div class="ref-row" style="margin-top: 0.75rem;">
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-red" style="width: 160px; height: 50px;">
+        <table>
+          <tr><td>LOCKED</td></tr>
+          <tr><td>TARGET: 6TH</td></tr>
+        </table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-green" style="width: 160px; height: 50px;">
+        <table>
+          <tr><td>OPEN</td></tr>
+          <tr><td>GATE 07-A</td></tr>
+        </table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-amber" style="width: 200px; height: 50px;">
+        <table>
+          <tr><td>LIVE</td><td>PICTURE ×01</td></tr>
+          <tr><td colspan="2">FROM KIKU-07</td></tr>
+        </table>
+      </span>
     </div>
   </section>
 

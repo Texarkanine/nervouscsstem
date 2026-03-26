@@ -1044,6 +1044,61 @@ describe('Cartouche CSS', () => {
   });
 });
 
+describe('Cartouche table-mode CSS', () => {
+  function findBlock(selector) {
+    const idx = css.indexOf(selector);
+    assert.ok(idx !== -1, `${selector} block not found in compiled CSS`);
+    const closeIdx = css.indexOf('}', idx);
+    return css.slice(idx, closeIdx + 1);
+  }
+
+  // B1: table fills cartouche frame
+  it('.nerv-cartouche-fixed > table has width: 100% and height: 100%', () => {
+    const block = findBlock('.nerv-cartouche-fixed > table');
+    assert.ok(block.includes('width: 100%'), 'table should have width: 100%');
+    assert.ok(block.includes('height: 100%'), 'table should have height: 100%');
+  });
+
+  // B2: no extra spacing between cells
+  it('.nerv-cartouche-fixed > table has border-collapse: collapse', () => {
+    const block = findBlock('.nerv-cartouche-fixed > table');
+    assert.ok(block.includes('border-collapse: collapse'), 'table should have border-collapse: collapse');
+  });
+
+  // B3: cells are purely structural
+  it('.nerv-cartouche-fixed > table td has padding: 0 and white-space: nowrap', () => {
+    const re = /\.nerv-cartouche-fixed > table td\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-cartouche-fixed > table td block not found');
+    assert.ok(match[0].includes('padding: 0'), 'td should have padding: 0');
+    assert.ok(match[0].includes('white-space: nowrap'), 'td should have white-space: nowrap');
+  });
+
+  // B4: per-cell scale via custom properties
+  it('.nerv-cartouche-fixed > table td has transform with --nerv-cartouche-sx/sy', () => {
+    const re = /\.nerv-cartouche-fixed > table td\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-cartouche-fixed > table td block not found');
+    assert.ok(match[0].includes('transform'), 'td should have transform');
+    assert.ok(match[0].includes('--nerv-cartouche-sx'), 'td transform should reference --nerv-cartouche-sx');
+    assert.ok(match[0].includes('--nerv-cartouche-sy'), 'td transform should reference --nerv-cartouche-sy');
+  });
+
+  // B5: text color inherited from cartouche frame
+  it('.nerv-cartouche-fixed > table td has color: inherit', () => {
+    const re = /\.nerv-cartouche-fixed > table td\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-cartouche-fixed > table td block not found');
+    assert.ok(match[0].includes('color: inherit'), 'td should have color: inherit');
+  });
+
+  // B6: table overrides > * transform
+  it('.nerv-cartouche-fixed > table has transform: none', () => {
+    const block = findBlock('.nerv-cartouche-fixed > table');
+    assert.ok(block.includes('transform: none'), 'table should have transform: none to override > * rule');
+  });
+});
+
 describe('nerv.js — initCartouches API', () => {
   // B13
   it('NERV.initCartouches is a function', async () => {

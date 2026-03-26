@@ -28,7 +28,7 @@
   justify-content: center;
   border: var(--nerv-cartouche-border-width) solid var(--nerv-cartouche-color);
   border-radius: var(--nerv-cartouche-radius);
-  padding: 0.00em 0.3em 0.1em;
+  padding: 0 0.3em 0.1em;
   font-family: 'NERV Mixed', 'Shippori Mincho B1', 'Barlow Condensed', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
@@ -53,6 +53,29 @@
     transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1));
     transform-origin: center;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Table mode — multi-cell grid inside fixed cartouche
+// ---------------------------------------------------------------------------
+
+.nerv-cartouche-fixed > table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  transform: none;
+}
+
+.nerv-cartouche-fixed > table td {
+  padding: 0;
+  border: none;
+  background: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  color: inherit;
+  font: inherit;
+  transform: scale(var(--nerv-cartouche-sx, 1), var(--nerv-cartouche-sy, 1));
+  transform-origin: center;
 }
 
 // ---------------------------------------------------------------------------
