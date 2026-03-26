@@ -4,13 +4,13 @@
 Glow Drop-Shadow Color Variants Bug Fix
 
 ## Phase
-BUILD - COMPLETE
+QA - COMPLETE (PASS)
 
 ## What Was Done
-- Added `.nerv-glow-drop-{name}` generation to the `@each` loop in `src/_glow.scss`
-- Added failing test first (TDD), confirmed red, then applied fix, confirmed green
-- All 272 tests pass (0 regressions); both `build` and `build:min` succeed
-- Ref HTML already had correct class names — no changes needed
+- QA review found 2 trivial issues, both fixed:
+  1. DRY: Extracted `@mixin nerv-glow-drop` to match existing mixin pattern
+  2. Documentation: Updated file and loop comments to mention `.nerv-glow-drop-{name}`
+- All 272 tests pass, both builds succeed
 
 ## Next Step
-QA phase
+Done — Level 1 wrap-up (commit and clean up)

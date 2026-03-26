@@ -11,5 +11,10 @@ Add missing `.nerv-glow-drop-{name}` color variant generation to the `@each` loo
 ### Build — COMPLETE
 - Root cause: `@each` loop generated `.nerv-glow-{name}` and `.nerv-glow-text-{name}` but not `.nerv-glow-drop-{name}`
 - Test added: "each glow-flagged color has a .nerv-glow-drop-{name} class" in `test/foundation.test.mjs`
-- Fix: 5-line addition inside existing `@each` loop
+- Fix: added `.nerv-glow-drop-#{$name}` generation inside existing `@each` loop
 - 272 tests pass, 0 regressions, both builds succeed
+
+### QA — COMPLETE (PASS)
+- 2 trivial findings, both fixed:
+  1. DRY: Extracted `@mixin nerv-glow-drop($color-var)` — matches existing pattern for `nerv-glow` and `nerv-glow-text` mixins
+  2. Documentation: Updated file-level doc comment and loop comment to mention `.nerv-glow-drop-{name}`
