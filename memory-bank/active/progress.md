@@ -67,3 +67,8 @@ Implementing the multi-line/multi-cell table support for fixed cartouches, as de
 ### Rework — Complexity Analysis — COMPLETE
 - Determined Level 2 (Simple Enhancement) — same scope as original task
 - Extending existing cartouche component with table mode, no architectural changes
+
+### Rework — Plan — COMPLETE
+- 5 behaviors to verify, 8 implementation steps
+- Files: `src/_cartouche.scss`, `src/nerv.js`, `ref/ref-foundation.html`, `test/components.test.mjs`
+- No new dependencies, no design decisions needed (creative phase already decided Option B)

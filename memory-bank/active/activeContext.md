@@ -4,13 +4,18 @@
 Cartouche Multi-Line Table Support (Rework)
 
 ## Phase
-COMPLEXITY-ANALYSIS - COMPLETE
+PLAN - COMPLETE
 
 ## What Was Done
-- Complexity determined: Level 2 (Simple Enhancement)
-- Rework of existing cartouche component — adding table mode for multi-cell fixed cartouches
-- Design already decided in creative phase: Option B (Optional Table Hybrid)
-- Scope: SCSS additions, JS initCartouches extension, ref-foundation.html demo row, tests
+- 5 new behaviors to verify (B1–B5), plus regression coverage from existing tests
+- 8-step implementation plan: stub tests → stub CSS → implement tests → verify fail → implement CSS → implement JS → update ref page → full suite
+- Files affected: `src/_cartouche.scss`, `src/nerv.js`, `ref/ref-foundation.html`, `test/components.test.mjs`
+- No new dependencies or technology
+
+## Key Decisions
+- Table-mode tests use CSS string matching (same pattern as all existing component tests)
+- JS DOM behavior not directly tested (no JSDOM infrastructure) — covered by visual verification on ref page
+- Demo cartouches replicate 4 reference imagery patterns: 1×2 column, 4-row data panel, LIVE+JP source, LOCKED/OPEN states
 
 ## Next Step
-Load Level 2 workflow → PLAN phase
+Preflight validation runs automatically.
