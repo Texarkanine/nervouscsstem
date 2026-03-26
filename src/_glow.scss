@@ -43,6 +43,12 @@
       @include nerv-glow-text(--nerv-#{$name}, --nerv-#{$name}-rgb);
     }
 
+    .nerv-glow-drop-#{$name} {
+      filter:
+        drop-shadow(0 0 2px var(--nerv-#{$name}))
+        drop-shadow(0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) var(--nerv-#{$name}));
+    }
+
     .nerv-text-#{$name} {
       color: var(--nerv-#{$name});
     }

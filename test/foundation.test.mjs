@@ -134,6 +134,13 @@ describe('Color map → glow class verification', () => {
     assert.match(css, /\.nerv-glow-drop\b/, 'missing .nerv-glow-drop class');
   });
 
+  it('each glow-flagged color has a .nerv-glow-drop-{name} class', () => {
+    for (const name of GLOW_COLORS) {
+      const re = new RegExp(`\\.nerv-glow-drop-${name}\\b`);
+      assert.ok(re.test(css), `missing .nerv-glow-drop-${name} class`);
+    }
+  });
+
   it('prefers-contrast reduces glow intensity', () => {
     assert.match(css, /prefers-contrast:\s*more/, 'missing prefers-contrast media query');
     const contrastBlock = css.slice(css.indexOf('prefers-contrast'));

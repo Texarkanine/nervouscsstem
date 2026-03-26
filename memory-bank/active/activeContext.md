@@ -4,12 +4,13 @@
 Glow Drop-Shadow Color Variants Bug Fix
 
 ## Phase
-COMPLEXITY-ANALYSIS - COMPLETE
+BUILD - COMPLETE
 
 ## What Was Done
-- Complexity Level 1 (Quick Bug Fix) determined
-- Single component affected: `src/_glow.scss` — the `@each` loop generates box-shadow and text-shadow color variants but omits drop-shadow variants
-- Ref HTML already references the missing classes (`.nerv-glow-drop-red`, etc.)
+- Added `.nerv-glow-drop-{name}` generation to the `@each` loop in `src/_glow.scss`
+- Added failing test first (TDD), confirmed red, then applied fix, confirmed green
+- All 272 tests pass (0 regressions); both `build` and `build:min` succeed
+- Ref HTML already had correct class names — no changes needed
 
 ## Next Step
-Load Level 1 workflow
+QA phase
