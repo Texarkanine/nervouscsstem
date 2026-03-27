@@ -40,6 +40,7 @@
       rgba(var(--nerv-gradient-from-rgb), var(--nerv-gradient-opacity)),
       rgba(var(--nerv-gradient-to-rgb), var(--nerv-gradient-opacity))
     );
+  background-origin: border-box;
 }
 
 // Presets — named data tokens (stable, cascade-independent)
@@ -74,6 +75,7 @@
       rgba(var(--nerv-cyan-rgb), var(--nerv-gradient-opacity, 1)),
       rgba(var(--nerv-blue-rgb), var(--nerv-gradient-opacity, 1))
     );
+  background-origin: border-box;
 }
 
 // Composable from/to modifier classes — auto-generated from $nerv-colors map.
