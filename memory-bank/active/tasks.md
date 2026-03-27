@@ -110,4 +110,4 @@ CDN URLs confirmed:
 - [x] Technology validation complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA
