@@ -4,13 +4,15 @@
 M3: Rainbow Gradients — Reusable gradient utility classes for backgrounds
 
 ## Phase
-PLAN - COMPLETE
+PREFLIGHT - COMPLETE
 
 ## What Was Done
-- Assessed current gradient state: bar meter has `color-mix()` two-color gradient system but it's component-locked. No reusable background gradient utilities exist.
-- Operator clarified: "rainbow gradient" = the thermal-style color sweeps (green→red etc.), not hue-wheel rainbows. Primary use case: easy background gradients on containers using NERV color tokens.
-- Planned 8-step implementation: new `_gradient.scss` module with base `.nerv-gradient` class (custom properties for from/to/direction/opacity), 4 presets matching bar meter combos, 1 multi-stop rainbow, ref page demos.
-- Uses `rgba()` + `--nerv-*-rgb` tokens for opacity — proven pattern from hex grid/scanlines.
+- Plan validated against codebase reality. Convention compliance, dependency impact, conflict detection all clean.
+- Operator additions during preflight:
+  1. Cascade-responsive default: bare `.nerv-gradient` uses ambiance tokens (`--nerv-primary-rgb` → `--nerv-bg-rgb`), shifts with alert state
+  2. Presets and `from`/`to` modifiers pin to named data tokens (stable)
+  3. `ref/ref-alert-cascade.html` gets a gradient demo showing cascade behavior
+- Radical innovation: auto-generated `.nerv-gradient-from-{color}` / `.nerv-gradient-to-{color}` composable modifier classes (follows `_glow.scss` `@each` pattern)
 
 ## Next Step
-Preflight validation, then build.
+Build phase — TDD implementation.

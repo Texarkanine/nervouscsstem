@@ -6,18 +6,22 @@
 
 Implement a reusable gradient utility module (`_gradient.scss`) that makes it easy to apply smooth `linear-gradient` backgrounds between any two built-in NERV color tokens, with presets for the canonical NGE gradient combinations already proven in the bar meter system. Consumers apply a single class (preset) or a class + two custom properties (custom) to any container element.
 
+**Cascade behavior**: A bare `.nerv-gradient` (no preset, no `from`/`to` modifiers) defaults to ambiance tokens (`--nerv-primary-rgb` → `--nerv-bg-rgb`), making it cascade-responsive — the gradient shifts with alert state. Presets and auto-generated `from`/`to` modifier classes pin to named data tokens (stable, unaffected by alert state). This follows the existing ambiance-vs-data token architecture.
+
 ## Test Plan (TDD)
 
 ### Behaviors to Verify
 
 - B1 (class exists): `.nerv-gradient` base class exists in compiled CSS with `linear-gradient`
-- B2 (custom properties): `.nerv-gradient` references `--nerv-gradient-from`, `--nerv-gradient-to`, and `--nerv-gradient-direction`
-- B3 (preset — thermal): `.nerv-gradient-thermal` sets `--nerv-gradient-from` to `--nerv-green` and `--nerv-gradient-to` to `--nerv-red`
-- B4 (preset — energy): `.nerv-gradient-energy` sets `--nerv-gradient-from` to `--nerv-cyan` and `--nerv-gradient-to` to `--nerv-blue`
-- B5 (preset — warning): `.nerv-gradient-warning` sets `--nerv-gradient-from` to `--nerv-amber` and `--nerv-gradient-to` to `--nerv-red`
-- B6 (preset — field): `.nerv-gradient-field` sets `--nerv-gradient-from` to `--nerv-void` and `--nerv-gradient-to` to `--nerv-amber`
+- B2 (custom properties): `.nerv-gradient` references `--nerv-gradient-from-rgb`, `--nerv-gradient-to-rgb`, and `--nerv-gradient-direction`
+- B3 (preset — thermal): `.nerv-gradient-thermal` sets `--nerv-gradient-from-rgb` to `--nerv-green-rgb` and `--nerv-gradient-to-rgb` to `--nerv-red-rgb`
+- B4 (preset — energy): `.nerv-gradient-energy` sets `--nerv-gradient-from-rgb` to `--nerv-cyan-rgb` and `--nerv-gradient-to-rgb` to `--nerv-blue-rgb`
+- B5 (preset — warning): `.nerv-gradient-warning` sets `--nerv-gradient-from-rgb` to `--nerv-amber-rgb` and `--nerv-gradient-to-rgb` to `--nerv-red-rgb`
+- B6 (preset — field): `.nerv-gradient-field` sets `--nerv-gradient-from-rgb` to `--nerv-void-rgb` and `--nerv-gradient-to-rgb` to `--nerv-amber-rgb`
 - B7 (preset — rainbow): `.nerv-gradient-rainbow` exists with a multi-stop hue sweep (not just two-color)
 - B8 (opacity): `.nerv-gradient` references `--nerv-gradient-opacity`
+- B9 (from/to modifiers): `.nerv-gradient-from-{color}` and `.nerv-gradient-to-{color}` auto-generated for each glow-flagged token color (composable class approach, same pattern as `_glow.scss`)
+- B10 (cascade-responsive default): `.nerv-gradient` base class defaults reference ambiance tokens (`--nerv-primary-rgb`, `--nerv-bg-rgb`) so a bare gradient responds to alert state
 - Edge E1 (no regression): Foundation tokens, effects, and structural selectors still present
 
 ### Test Infrastructure
@@ -50,17 +54,20 @@ Implement a reusable gradient utility module (`_gradient.scss`) that makes it ea
 6. **Implement `_gradient.scss`**
    - Files: `src/_gradient.scss`
    - Changes:
-     - Custom properties: `--nerv-gradient-from` (default `--nerv-amber`), `--nerv-gradient-to` (default `--nerv-red`), `--nerv-gradient-direction` (default `to right`), `--nerv-gradient-opacity` (default `1`)
-     - `.nerv-gradient` base class: `background: linear-gradient(var(--nerv-gradient-direction), rgba(from var(--nerv-gradient-from) r g b / var(--nerv-gradient-opacity)), rgba(from var(--nerv-gradient-to) r g b / var(--nerv-gradient-opacity)))`
-     - Fallback: if relative color syntax isn't broadly supported, use a stacked approach with a gradient + opacity on a pseudo-element, or simply document that opacity is controlled via the container's own `opacity` property. Alternatively, use the existing `--nerv-*-rgb` token pattern.
-     - Presets: `.nerv-gradient-thermal`, `.nerv-gradient-energy`, `.nerv-gradient-warning`, `.nerv-gradient-field` — each sets `--nerv-gradient-from`/`--nerv-gradient-to`
-     - `.nerv-gradient-rainbow`: multi-stop linear-gradient through red→amber→green→cyan→blue using named NERV tokens
+     - `@use 'tokens'` to access `$nerv-colors` map
+     - Custom properties: `--nerv-gradient-from-rgb` (default `--nerv-primary-rgb` — ambiance, cascade-responsive), `--nerv-gradient-to-rgb` (default `--nerv-bg-rgb` — ambiance, cascade-responsive), `--nerv-gradient-direction` (default `to right`), `--nerv-gradient-opacity` (default `1`)
+     - `.nerv-gradient` base class: `background: linear-gradient(var(--nerv-gradient-direction), rgba(var(--nerv-gradient-from-rgb), var(--nerv-gradient-opacity)), rgba(var(--nerv-gradient-to-rgb), var(--nerv-gradient-opacity)))` — uses the proven `rgba()` + `--nerv-*-rgb` pattern
+     - `@each` loop over `$nerv-colors` (glow-flagged only): generates `.nerv-gradient-from-{name}` (sets `--nerv-gradient-from-rgb`) and `.nerv-gradient-to-{name}` (sets `--nerv-gradient-to-rgb`) — composable modifier classes
+     - Presets: `.nerv-gradient-thermal`, `.nerv-gradient-energy`, `.nerv-gradient-warning`, `.nerv-gradient-field` — each sets `--nerv-gradient-from-rgb`/`--nerv-gradient-to-rgb`
+     - `.nerv-gradient-rainbow`: multi-stop linear-gradient through red→amber→green→cyan→blue using named NERV `-rgb` tokens with opacity
 
 7. **Run tests — expect passes** (TDD green)
 
-8. **Add ref page demo**
-   - Files: `ref/ref-patterns.html`
-   - Changes: Add a gradient demo section showing presets as background containers (with content layered on top), plus a custom gradient example
+8. **Add ref page demos**
+   - Files: `ref/ref-patterns.html`, `ref/ref-alert-cascade.html`
+   - Changes:
+     - `ref/ref-patterns.html`: Add gradient demo section showing presets as background containers with content layered on top, plus a custom `from`/`to` modifier example
+     - `ref/ref-alert-cascade.html`: Add a bare `.nerv-gradient` container that visibly shifts with alert state (demonstrates cascade-responsive behavior)
 
 ## Technology Validation
 
@@ -68,7 +75,8 @@ No new technology — validation not required. Uses standard CSS `linear-gradien
 
 ## Dependencies
 
-- `_tokens.scss` — consumes `--nerv-*` and `--nerv-*-rgb` custom properties (CSS-level, no `@use` needed)
+- `_tokens.scss` — consumes `--nerv-*-rgb` custom properties at CSS level; uses `@use 'tokens'` for `$nerv-colors` map (auto-generation loop)
+- `_states.scss` — no code dependency, but cascade behavior relies on `_states.scss` overriding `--nerv-primary-rgb` and `--nerv-bg-rgb` for alert states (already happens)
 
 ## Challenges & Mitigations
 
@@ -81,6 +89,6 @@ No new technology — validation not required. Uses standard CSS `linear-gradien
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight
 - [ ] Build
 - [ ] QA
