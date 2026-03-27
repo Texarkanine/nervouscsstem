@@ -12,3 +12,4 @@ Assess rainbow gradient current state and implement reusable gradient mixin/util
 - **2026-03-27**: Build phase complete. 8/8 steps done. 322 tests passing (10 new). 4 files modified/created. No deviations from plan.
 - **2026-03-27**: QA phase PASS. One trivial fix: `nerv.scss` comment header updated to include `gradient` in dependency graph. No substantive issues.
 - **2026-03-27**: Reflect phase complete. Key insight: ambiance-vs-data token split naturally creates cascade-responsive vs. stable gradient behavior with zero extra code.
+- **2026-03-27**: Post-reflect fix: 1px dark edge at gradient container borders caused by `background` shorthand resetting `background-origin` to `padding-box`. Fixed with explicit `background-origin: border-box`. Reflection updated.

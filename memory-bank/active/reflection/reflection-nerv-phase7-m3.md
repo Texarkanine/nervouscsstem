@@ -8,7 +8,7 @@ complexity_level: 2
 
 ## Summary
 
-Built a reusable gradient utility module (`_gradient.scss`) with cascade-responsive defaults, 5 presets, and auto-generated composable from/to modifier classes. Clean execution — first-try green on all 10 tests, trivial-only QA finding.
+Built a reusable gradient utility module (`_gradient.scss`) with cascade-responsive defaults, 5 presets, and auto-generated composable from/to modifier classes. Clean execution — first-try green on all 10 tests, trivial-only QA finding. Post-reflect fix for 1px dark edge artifact at border boundaries.
 
 ## Requirements vs Outcome
 
@@ -26,6 +26,7 @@ Build was clean. TDD cycle worked perfectly — 10 red → implementation → 10
 
 ### Technical
 - The ambiance-vs-data token split naturally yields cascade-responsive vs. stable behavior without extra code. By defaulting `.nerv-gradient` to `--nerv-primary-rgb` / `--nerv-bg-rgb`, alert cascade integration is free — the same principle that makes `.nerv-glow` (ambiance) shift with state while `.nerv-glow-red` (data) doesn't.
+- The `background` shorthand resets `background-origin` to `padding-box`. When a gradient container has a border, this creates a 1px gap where the page background bleeds through — the gradient starts inside the border, not at the outer edge. Fix: explicitly set `background-origin: border-box`. This is the same family of CSS replacement gotcha documented in `systemPatterns.md` (property-reset side effects).
 
 ### Process
 - Nothing notable beyond the value of early operator clarification on ambiguous feature names.
