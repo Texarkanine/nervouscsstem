@@ -8,9 +8,9 @@ REFLECT COMPLETE
 
 ## What Was Done
 - Full implementation of M2: `.nerv-hex-grid-tiled` true honeycomb tessellation
-- 311 tests passing (5 new), clean QA, reflection written
-- Precision fix: 0.866 constant for stylelint compliance
-- Key insight: flat-top hex tessellation geometry is counterintuitive (same-row hexes don't share edges)
+- Added `.nerv-hex-grid-solid` fill modifier (opaque fills, black border/text) — operator feedback
+- Switched `initHexFlicker` to opt-in via `data-nerv-hex-flicker` — operator feedback
+- 312 tests passing (6 new), clean QA, reflection updated with rework insights
 
 ## Next Step
 Run `/niko` to continue to the next milestone.
