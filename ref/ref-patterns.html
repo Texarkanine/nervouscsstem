@@ -148,6 +148,7 @@
       text-transform: uppercase;
       letter-spacing: 0.2em;
     }
+
   </style>
 </head>
 <body>
@@ -224,7 +225,7 @@
       <div class="ref-hex-area">
         <!-- Tiled (honeycomb, overlapping rows) -->
         <span class="ref-hex-label">Tiled — Honeycomb</span>
-        <div class="nerv-hex-grid">
+        <div class="nerv-hex-grid" data-nerv-hex-flicker>
           <div class="nerv-hex-row">
             <div class="nerv-hex-cell nerv-hex-danger"><span class="nerv-glitch nerv-blink" data-text="SHINJI">SHINJI</span></div>
             <div class="nerv-hex-cell nerv-hex-warn">ASUKA</div>
@@ -247,7 +248,7 @@
 
         <!-- Spaced variant (non-overlapping, boosted fills) -->
         <span class="ref-hex-label" style="margin-top: 0.5rem;">Spaced — Fuel Bundle</span>
-        <div class="nerv-hex-grid nerv-hex-grid-spaced nerv-hex-grid-filled">
+        <div class="nerv-hex-grid nerv-hex-grid-spaced nerv-hex-grid-filled" data-nerv-hex-flicker>
           <div class="nerv-hex-row">
             <div class="nerv-hex-cell nerv-hex-safe">EVA-01</div>
             <div class="nerv-hex-cell nerv-hex-safe">HANGAR</div>
@@ -300,9 +301,9 @@
         </div>
         <div class="nerv-hex-row">
           <div class="nerv-hex-cell nerv-hex-danger"></div>
-          <div class="nerv-hex-cell nerv-hex-warn">SEC-7</div>
+          <div class="nerv-hex-cell nerv-hex-warn nerv-flicker-staccato">SEC-7</div>
           <div class="nerv-hex-cell nerv-hex-danger"></div>
-          <div class="nerv-hex-cell nerv-hex-danger">DENY</div>
+          <div class="nerv-hex-cell nerv-hex-danger nerv-flicker">DENY</div>
         </div>
         <div class="nerv-hex-row">
           <div class="nerv-hex-cell nerv-hex-danger"></div>
@@ -320,6 +321,44 @@
     </div>
     <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: var(--nerv-red); text-transform: uppercase; letter-spacing: 0.3em; margin-top: 0.25rem;" class="nerv-blink">
       ⚠ Area Sealed — Authorization Required
+    </div>
+  </div>
+
+  <!-- Tiled hex grid — solid fills (library class, no inline overrides) -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-hex-grid-tiled .nerv-hex-grid-solid — Lockout Wall
+    </div>
+    <div style="display: inline-block; overflow: hidden; padding: 0.5rem;">
+      <div class="nerv-hex-grid nerv-hex-grid-tiled nerv-hex-grid-solid">
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">SEC-7</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger nerv-flicker-fast">DENY</div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger nerv-blink">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: var(--nerv-red); text-transform: uppercase; letter-spacing: 0.3em; margin-top: 0.25rem;" class="nerv-blink">
+      ⚠ Sector Lockout — Breach Detected
     </div>
   </div>
 

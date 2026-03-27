@@ -51,7 +51,7 @@
       var run = function () {
         NERV.injectScanlines();
 
-        var hexGrids = document.querySelectorAll('.nerv-hex-grid');
+        var hexGrids = document.querySelectorAll('.nerv-hex-grid[data-nerv-hex-flicker]');
         for (var i = 0; i < hexGrids.length; i++) {
           NERV.initHexFlicker(hexGrids[i]);
         }
@@ -99,6 +99,7 @@
 
     /**
      * Randomly cycles hex cell states at irregular intervals.
+     * Opt-in: NERV.init() only targets grids with data-nerv-hex-flicker.
      * Respects prefers-reduced-motion — skips entirely if active.
      *
      * @param {HTMLElement} container - Element containing .nerv-hex-cell elements

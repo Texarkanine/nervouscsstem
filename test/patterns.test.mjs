@@ -279,6 +279,28 @@ describe('Hex grid CSS', () => {
       '.nerv-hex-grid-filled danger fill should exist (composable with tiled)'
     );
   });
+
+  it('.nerv-hex-grid-solid sets opaque fills, black border, and black text', () => {
+    assert.match(css, /\.nerv-hex-grid-solid\b/, 'missing .nerv-hex-grid-solid class');
+
+    const cellIdx = css.indexOf('.nerv-hex-grid-solid .nerv-hex-cell');
+    assert.ok(cellIdx >= 0, '.nerv-hex-grid-solid .nerv-hex-cell should exist');
+    const cellSection = css.slice(cellIdx, cellIdx + 200);
+    assert.ok(cellSection.includes('--nerv-void'), 'solid text color should use --nerv-void (black)');
+
+    const beforeIdx = css.indexOf('.nerv-hex-grid-solid .nerv-hex-cell::before');
+    assert.ok(beforeIdx >= 0, 'solid border pseudo-element should exist');
+    const beforeSection = css.slice(beforeIdx, beforeIdx + 200);
+    assert.ok(beforeSection.includes('--nerv-void'), 'solid border should use --nerv-void (black)');
+
+    const afterIdx = css.indexOf('.nerv-hex-grid-solid .nerv-hex-cell::after');
+    assert.ok(afterIdx >= 0, 'solid fill pseudo-element should exist');
+
+    const dangerIdx = css.indexOf('.nerv-hex-grid-solid .nerv-hex-danger::after');
+    assert.ok(dangerIdx >= 0, 'solid danger fill should exist');
+    const dangerSection = css.slice(dangerIdx, dangerIdx + 200);
+    assert.ok(dangerSection.includes('--nerv-red'), 'solid danger should use --nerv-red');
+  });
 });
 
 describe('Radar CSS', () => {

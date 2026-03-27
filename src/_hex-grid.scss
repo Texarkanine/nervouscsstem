@@ -15,6 +15,7 @@
 ///   .nerv-hex-grid-tiled  — Spacing modifier: true honeycomb tessellation (no gaps, no overlaps)
 ///   .nerv-hex-grid-spaced — Spacing modifier: non-overlapping, corner-touching with gaps
 ///   .nerv-hex-grid-filled — Fill modifier: saturated active fills (combinable with any spacing)
+///   .nerv-hex-grid-solid  — Fill modifier: fully opaque fills, black border + text
 ///   .nerv-hex-row         — A row of hex cells; odd rows offset for honeycomb stacking
 ///   .nerv-hex-cell        — Individual hexagonal cell
 ///   .nerv-hex-danger      — Red state (uses --nerv-red)
@@ -199,4 +200,32 @@ $_hex-tiled-overlap: $_hex-cell-height * 0.5;
       rgba(var(--nerv-green-rgb), 0.3),
       rgba(var(--nerv-green-rgb), 0.3)
     );
+}
+
+// === Solid variant: fully opaque fills, black border ring, black text ===
+
+.nerv-hex-grid-solid .nerv-hex-cell {
+  color: var(--nerv-void);
+}
+
+.nerv-hex-grid-solid .nerv-hex-cell::before {
+  background: var(--nerv-void);
+}
+
+.nerv-hex-grid-solid .nerv-hex-cell::after {
+  background-color: var(--nerv-primary);
+  background-image: none;
+  box-shadow: none;
+}
+
+.nerv-hex-grid-solid .nerv-hex-danger::after {
+  background-color: var(--nerv-red);
+}
+
+.nerv-hex-grid-solid .nerv-hex-warn::after {
+  background-color: var(--nerv-amber);
+}
+
+.nerv-hex-grid-solid .nerv-hex-safe::after {
+  background-color: var(--nerv-green);
 }
