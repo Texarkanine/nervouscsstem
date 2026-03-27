@@ -4,11 +4,12 @@
 NERV Design System — Phase 7 Feature Expansion
 
 ## Phase
-COMPLEXITY-ANALYSIS - COMPLETE
+PLAN - COMPLETE
 
 ## What Was Done
-- Complexity level determined: **Level 4** (Complex System)
-- Rationale: 10+ distinct features spanning new SCSS modules, JS generation/orchestration, SVG creation, a major list nesting structural fix, typography additions, and doc reorganization. Each feature is individually L2-L3; together they form a multi-milestone project requiring decomposition.
+- Complexity analysis: Level 4 determined
+- Milestone list generated: 9 milestones (4× L2, 3× L3, 1× L2 doc-only, 1× dependency on M6)
+- Cross-milestone invariants defined (prefix discipline, alert cascade compat, accessibility, no image/canvas, no regression, SCSS convention, ref page coverage)
 
 ## Next Step
-Load Level 4 workflow → Plan phase (generate milestones)
+Preflight to validate the milestone list
