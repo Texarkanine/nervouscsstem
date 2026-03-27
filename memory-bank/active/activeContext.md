@@ -4,13 +4,14 @@
 M2: Tiled Hex Grid — True honeycomb tessellation in `_hex-grid.scss`
 
 ## Phase
-PLAN - COMPLETE
+BUILD - COMPLETE
 
 ## What Was Done
-- Complexity Level 2 determined
-- Plan complete: 8 implementation steps, 3 source files, 5 behaviors to test
-- Geometry: W/2 gap, 3W/4 offset, −H/2 overlap for perfect flat-top tessellation
-- Architecture decision from M7 creative phase confirmed: `.nerv-hex-grid-tiled` in `_hex-grid.scss`
+- 8/8 implementation steps completed
+- 311 tests passing (5 new: B1–B5 for tiled variant)
+- Files modified: `src/_hex-grid.scss`, `test/patterns.test.mjs`, `ref/ref-patterns.html`
+- Precision fix: reduced `$_hex-cell-height` constant from 0.8660254 to 0.866 to satisfy stylelint `number-max-precision` (output: −34.64px vs −34.641016px; sub-pixel difference negligible)
+- No deviations from plan
 
 ## Next Step
-Preflight validation, then build.
+QA review will now run automatically.

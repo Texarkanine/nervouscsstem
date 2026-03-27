@@ -11,7 +11,8 @@
 /// use negative margin-top to eliminate triangular gaps.
 ///
 /// Classes:
-///   .nerv-hex-grid        — Container (default: honeycomb tiled, overlapping rows)
+///   .nerv-hex-grid        — Container (default: honeycomb, overlapping rows)
+///   .nerv-hex-grid-tiled  — Spacing modifier: true honeycomb tessellation (no gaps, no overlaps)
 ///   .nerv-hex-grid-spaced — Spacing modifier: non-overlapping, corner-touching with gaps
 ///   .nerv-hex-grid-filled — Fill modifier: saturated active fills (combinable with any spacing)
 ///   .nerv-hex-row         — A row of hex cells; odd rows offset for honeycomb stacking
@@ -29,6 +30,16 @@
 $_hex-clip: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 $_hex-cell-width: 80px;
 $_hex-row-overlap: 15px;
+
+// Tiled tessellation geometry (flat-top regular hex, side s = W/2):
+//   H   = W × √3/2  ≈ 69.28px  (cell height)
+//   gap = W / 2      = 40px     (within-row bounding-box gap)
+//   off = 3W / 4     = 60px     (odd-row horizontal offset)
+//   ovl = H / 2      ≈ 34.64px  (row-to-row vertical overlap)
+$_hex-cell-height: $_hex-cell-width * 0.866;
+$_hex-tiled-gap: $_hex-cell-width * 0.5;
+$_hex-tiled-offset: $_hex-cell-width * 0.75;
+$_hex-tiled-overlap: $_hex-cell-height * 0.5;
 
 .nerv-hex-grid {
   display: flex;
@@ -56,6 +67,23 @@ $_hex-row-overlap: 15px;
 
 .nerv-hex-grid-spaced > .nerv-hex-row:not(:first-child) {
   margin-top: 4px;
+}
+
+// Tiled variant: true honeycomb tessellation (no gaps, no overlaps).
+// Uses flat-top hex geometry: W/2 row gap, 3W/4 odd-row offset,
+// −H/2 row overlap where H = W × √3/2. Adjacent-row hexes share
+// diagonal edges exactly; same-row triangular voids are filled by
+// offset-row cells. Top/bottom rows have natural zigzag edges.
+.nerv-hex-grid-tiled > .nerv-hex-row {
+  gap: $_hex-tiled-gap;
+}
+
+.nerv-hex-grid-tiled > .nerv-hex-row:nth-child(odd) {
+  margin-left: $_hex-tiled-offset;
+}
+
+.nerv-hex-grid-tiled > .nerv-hex-row:not(:first-child) {
+  margin-top: -#{$_hex-tiled-overlap};
 }
 
 .nerv-hex-cell {

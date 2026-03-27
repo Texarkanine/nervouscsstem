@@ -285,6 +285,44 @@
     </div>
   </div>
 
+  <!-- Tiled hex grid — true tessellation (lockout hex-wall) -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-hex-grid-tiled — Lockout Hex Wall
+    </div>
+    <div style="display: inline-block; overflow: hidden; padding: 0.5rem;">
+      <div class="nerv-hex-grid nerv-hex-grid-tiled nerv-hex-grid-filled">
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-warn">SEC-7</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">DENY</div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: var(--nerv-red); text-transform: uppercase; letter-spacing: 0.3em; margin-top: 0.25rem;" class="nerv-blink">
+      ⚠ Area Sealed — Authorization Required
+    </div>
+  </div>
+
   <!-- Grid mark variant comparison -->
   <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; padding: 0 2rem;">
     <div style="text-align: center;">

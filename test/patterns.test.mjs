@@ -227,6 +227,58 @@ describe('Hex grid CSS', () => {
       'hex state classes should apply inset box-shadow for glow (no cross-cell bleed)'
     );
   });
+
+  // B1: .nerv-hex-grid-tiled class exists in compiled CSS
+  it('.nerv-hex-grid-tiled class exists', () => {
+    assert.match(css, /\.nerv-hex-grid-tiled\b/, 'missing .nerv-hex-grid-tiled class');
+  });
+
+  // B2: Tiled rows use wider gap than default (W/2 = 40px for 80px cells)
+  it('.nerv-hex-grid-tiled rows use tessellation gap (wider than default)', () => {
+    const tiledIdx = css.indexOf('.nerv-hex-grid-tiled');
+    assert.ok(tiledIdx >= 0, '.nerv-hex-grid-tiled should exist');
+    const tiledSection = css.slice(tiledIdx, tiledIdx + 600);
+    assert.ok(
+      /gap:\s*40px/.test(tiledSection),
+      'tiled rows should use gap: 40px (W/2 for 80px cells)'
+    );
+  });
+
+  // B3: Tiled odd-row margin-left is 3/4 cell width (60px)
+  it('.nerv-hex-grid-tiled odd-row offset is 3/4 cell width', () => {
+    const tiledOddIdx = css.indexOf('.nerv-hex-grid-tiled > .nerv-hex-row:nth-child(odd)');
+    assert.ok(tiledOddIdx >= 0, 'tiled odd-row selector should exist');
+    const tiledOddSection = css.slice(tiledOddIdx, tiledOddIdx + 300);
+    assert.ok(
+      /margin-left:\s*60px/.test(tiledOddSection),
+      'tiled odd-row margin-left should be 60px (3W/4 for 80px cells)'
+    );
+  });
+
+  // B4: Tiled rows use negative margin-top for tessellation overlap
+  it('.nerv-hex-grid-tiled rows use negative margin-top for tessellation', () => {
+    const tiledNotFirstIdx = css.indexOf('.nerv-hex-grid-tiled > .nerv-hex-row:not(:first-child)');
+    assert.ok(tiledNotFirstIdx >= 0, 'tiled not-first-child row selector should exist');
+    const tiledNotFirstSection = css.slice(tiledNotFirstIdx, tiledNotFirstIdx + 300);
+    assert.ok(
+      /margin-top:\s*-34\.6/.test(tiledNotFirstSection),
+      'tiled row overlap should be ~-34.64px (−H/2 for tessellation)'
+    );
+  });
+
+  // B5: Tiled variant composes with .nerv-hex-grid-filled
+  it('.nerv-hex-grid-tiled composes with .nerv-hex-grid-filled', () => {
+    assert.match(
+      css,
+      /\.nerv-hex-grid-filled\s+\.nerv-hex-cell::after/,
+      '.nerv-hex-grid-filled cell fill should exist (composable with tiled)'
+    );
+    assert.match(
+      css,
+      /\.nerv-hex-grid-filled\s+\.nerv-hex-danger::after/,
+      '.nerv-hex-grid-filled danger fill should exist (composable with tiled)'
+    );
+  });
 });
 
 describe('Radar CSS', () => {
