@@ -8,28 +8,37 @@ complexity_level: 2
 
 ## Summary
 
-Added VT323 DOS/BIOS boot-screen font with `.nerv-type-boot` utility class, and two new grid mark pattern variants (`.nerv-grid-marks-x` rotated-cross, `.nerv-grid-marks-hex` hexagonal honeycomb) with auto-generated color variants. All requirements delivered, 306 tests pass, clean QA with 2 minor documentation fixes.
+Added VT323 DOS/BIOS boot-screen font with `.nerv-type-boot` utility class (including `white-space: pre-wrap`), and two new grid mark pattern variants (`.nerv-grid-marks-x` discrete rotated-cross, `.nerv-grid-marks-hex` equilateral honeycomb) with auto-generated color variants. All requirements delivered after significant post-build rework: SVG geometry corrections for both pattern variants, `pre-wrap` addition, ref page layout/colorization, and a `pre-wrap` + HTML indentation interaction fix.
 
 ## Requirements vs Outcome
 
-Every requirement delivered exactly as specified. No gaps, no additions, no descoping. The three deliverables (font, × variant, hex variant) each got full implementation, color variant generation, test coverage, and ref page demos.
+Every original requirement delivered as specified. Post-build, several rework items surfaced from operator review:
+- **Ref page layout** (`ref-patterns.html`): Grid mark comparison section moved from beside the main viewport to below it — the side-by-side layout squished unpleasantly.
+- **Boot text colorization** (`ref-foundation.html`): Demo colorized with data-green base + per-MAGI-system named colors (amber, orange, amber-dark).
+- **`white-space: pre-wrap`** added to `.nerv-type-boot` so `&nbsp;` isn't needed for column alignment in boot-screen text. Then `&nbsp;`/`<br>` entities removed from ref demos in favor of literal whitespace.
+- **× mark geometry** fixed: shortened diagonal lines to create discrete crosses instead of continuous diagonals spanning tiles.
+- **Hex grid geometry** rewritten: replaced overlapping hexagons with a mathematically correct equilateral flat-top honeycomb (side=20, tile 60×34.64px).
+- **`pre-wrap` indentation gotcha** (`ref-panels.html`): When the boot text was reused inside an indented HTML structure, the HTML source indentation was rendered as literal leading spaces. Fixed by making content flush-left inside the `<div>`.
 
 ## Plan Accuracy
 
-The 8-step plan was accurate — correct files, correct sequence, correct scope. TDD cycles 2–3 (× and hex) were naturally combined since both target `_grid-marks.scss` with the same structural pattern, which was more efficient without sacrificing rigor. No challenges materialized; the SVG encoding pattern was already proven by the existing crosshair mixin.
+The 8-step plan was accurate for the initial build — correct files, correct sequence, correct scope. However, the plan underestimated the geometry precision needed for the SVG patterns (× and hex), and did not anticipate the `white-space: pre-wrap` side-effect when `.nerv-type-boot` content appears in indented HTML templates. These all surfaced as operator feedback after the initial build/QA/reflect cycle.
 
 ## Build & QA Observations
 
-Build was clean on first pass for all features. QA caught two documentation omissions: the `_grid-marks.scss` file header comment and the `techContext.md` font stack. Both trivial — the kind of thing that's easy to forget when the code works perfectly but the surrounding documentation hasn't caught up.
+Initial build was clean on first pass. QA caught two documentation omissions (file header, techContext font stack). The more substantive issues — SVG geometry correctness, `pre-wrap` interaction with HTML indentation — were caught by the operator during visual review of the ref pages, not by automated tests. This is expected: geometric aesthetics and whitespace rendering are inherently visual concerns that CSS unit tests can't fully cover.
 
 ## Insights
 
 ### Technical
-- Node.js test runner's `--test-name-pattern` filter skips `before()` hooks in non-matching describe blocks. When tests rely on a module-scoped variable initialized by an earlier suite's `before()`, filtered runs produce false negatives. Full-file runs are the reliable path; filtered runs require a manual pre-build step.
+- **`white-space: pre-wrap` preserves HTML source indentation.** When a `pre-wrap` element is nested inside indented HTML, all leading spaces from the source formatting become visible rendered whitespace. CSS cannot distinguish "HTML indentation" from "intentional content spaces." The convention for `pre-wrap`/`<pre>`-like elements is: content must be flush-left inside the tag, with the closing tag on the last content line to avoid trailing blank lines.
+- Node.js test runner's `--test-name-pattern` filter skips `before()` hooks in non-matching describe blocks. When tests rely on a module-scoped variable initialized by an earlier suite's `before()`, filtered runs produce false negatives. Full-file runs are the reliable path.
+- SVG data-URI honeycomb tessellation requires precise geometry: for equilateral flat-top hexagons with side `s`, the tile must be exactly `3s × s√3`. A single `<path>` drawing one complete hexagon plus two edge-bridging segments is more maintainable than multiple overlapping `<polygon>` elements.
 
 ### Process
-- Nothing notable — L2 classification was accurate and the workflow overhead was proportionate to the task.
+- Visual/aesthetic correctness of SVG patterns and whitespace behavior cannot be caught by regex-based CSS tests alone. For geometry-sensitive features, operator visual review of ref pages is an essential QA step that should be explicitly planned.
+- Post-reflect rework happened because the ref page demos weren't exercised in realistic contexts (e.g., the boot text inside an indented panel). Dogfooding new utility classes in multiple ref pages during the initial build would have caught these issues earlier.
 
 ### Million-Dollar Question
 
-If grid mark variants had been foundational, a factory mixin `nerv-grid-marks-pattern-bg($pattern, $rgb)` with pattern dispatch would be the natural abstraction. But with three simple, self-contained SVG templates, separate mixins are actually more transparent and no less maintainable. The factory approach would add indirection without reducing code volume. The current flat design is the right call.
+If `white-space: pre-wrap` had been a foundational assumption for `.nerv-type-boot` from the start, the ref page templates would have been authored with flush-left content blocks from day one — no rework needed. The current design (pre-wrap baked into the class) is correct for a terminal/boot-screen font; the lesson is that any `pre`-family whitespace mode demands discipline in HTML authoring, and ref page demos should demonstrate the class in both standalone and nested contexts to surface these interactions early.
