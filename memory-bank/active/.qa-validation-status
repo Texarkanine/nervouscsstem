@@ -1,5 +1,0 @@
-PASS
-
-Findings (all trivial, all fixed):
-1. DRY: Extracted `@mixin nerv-glow-drop($color-var)` to match existing pattern for box-shadow and text-shadow mixins. Default `.nerv-glow-drop` and loop-generated variants now both use the mixin.
-2. Documentation: Updated file-level doc comment to list `.nerv-glow-drop-{name}` alongside the other generated class families. Updated loop comment to mention all three class types.
