@@ -1,17 +1,14 @@
 # Active Context
 
 ## Current Task
-M1: Foundation — DOS/BIOS Font + Grid Mark Variants
+M2: Tiled Hex Grid — True honeycomb tessellation in `_hex-grid.scss`
 
 ## Phase
-REFLECT COMPLETE
+COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
-- Full implementation of M1: VT323 font, × grid marks, hex grid marks
-- 306 tests passing (9 new), clean QA, reflection written
-- 2 QA fixes: documentation header and techContext font stack
-- Post-build rework: ref page layout, boot text colorization, `white-space: pre-wrap` addition, × geometry fix (discrete crosses), hex geometry rewrite (equilateral honeycomb), `pre-wrap` + HTML indentation fix in ref-panels.html
-- Reflection updated to capture rework insights
+- Complexity Level 2 determined: self-contained additive SCSS module, single subsystem (`_hex-grid.scss`)
+- M1 milestone marked complete and sub-run ephemeral files cleaned up
 
 ## Next Step
-Run `/niko` to continue to the next milestone.
+Load Level 2 workflow and begin PLAN phase.

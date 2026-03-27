@@ -27,15 +27,16 @@
 }
 
 /// Generates an SVG data URI × (rotated-cross) background in the given RGB color.
-/// Diagonal lines at 45° with a small center circle — the rotated variant of the + crosshair.
+/// Discrete × marks centered at each grid point (not continuous diagonals).
 @mixin nerv-grid-marks-x-bg($rgb) {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cline x1='0' y1='0' x2='40' y2='40' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='40' y1='0' x2='0' y2='40' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3Ccircle cx='20' cy='20' r='1.5' fill='none' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.25'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cline x1='15' y1='15' x2='25' y2='25' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='25' y1='15' x2='15' y2='25' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3Ccircle cx='20' cy='20' r='1.5' fill='none' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.25'/%3E%3C/svg%3E");
 }
 
 /// Generates an SVG data URI hexagonal grid background in the given RGB color.
-/// Flat-top hex outlines tiled in a honeycomb pattern. Tile size: 60×52 (√3 ratio).
+/// Equilateral flat-top honeycomb, side s=20. Tile = 3s × s√3 = 60 × 34.64.
+/// One center hex path + two edge-bridging segments for seamless tiling.
 @mixin nerv-grid-marks-hex-bg($rgb) {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,2 55,15 55,37 30,50 5,37 5,15' fill='none' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3Cpolygon points='60,28 85,41 85,63 60,76 35,63 35,41' fill='none' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3Cpolygon points='0,28 25,41 25,63 0,76 -25,63 -25,41' fill='none' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='34.64'%3E%3Cpath d='M20,0 L40,0 L50,17.32 L40,34.64 L20,34.64 L10,17.32 Z M0,17.32 L10,17.32 M50,17.32 L60,17.32' fill='none' stroke='rgb(#{$rgb})' stroke-width='0.5' opacity='0.15'/%3E%3C/svg%3E");
 }
 
 $_white-rgb: list.nth(map.get(tokens.$nerv-colors, 'white'), 2);
@@ -59,7 +60,7 @@ $_white-rgb: list.nth(map.get(tokens.$nerv-colors, 'white'), 2);
 .nerv-grid-marks-hex {
   @include nerv-grid-marks-hex-bg($_white-rgb);
   background-repeat: repeat;
-  background-size: 60px 52px;
+  background-size: 60px 34.64px;
   background-position: center center;
   pointer-events: none;
 }
