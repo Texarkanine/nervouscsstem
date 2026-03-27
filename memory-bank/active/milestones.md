@@ -14,37 +14,34 @@
 
 ```mermaid
 graph LR
-    M1["M1: Doc Cleanup"]
-    M2["M2: Foundation<br>(Font + Grid Marks)"]
-    M3["M3: Tiled Hex Grid"]
-    M4["M4: Rainbow Gradients"]
-    M5["M5: Data Background"]
-    M6["M6: List Nesting"]
-    M7["M7: Psychographic<br>+ NCM"]
-    M8["M8: Topo Map"]
-    M9["M9: Custom Dropdown"]
+    M1["M1: Foundation<br>(Font + Grid Marks)"]
+    M2["M2: Tiled Hex Grid"]
+    M3["M3: Rainbow Gradients"]
+    M4["M4: Data Background"]
+    M5["M5: List Nesting"]
+    M6["M6: Psychographic<br>+ NCM"]
+    M7["M7: Topo Map"]
+    M8["M8: Custom Dropdown"]
 
-    M6 --> M9
+    M5 --> M8
 
     style M1 fill:#2a5,stroke:#fff
     style M2 fill:#2a5,stroke:#fff
     style M3 fill:#2a5,stroke:#fff
     style M4 fill:#2a5,stroke:#fff
-    style M5 fill:#2a5,stroke:#fff
+    style M5 fill:#c72,stroke:#fff
     style M6 fill:#c72,stroke:#fff
     style M7 fill:#c72,stroke:#fff
-    style M8 fill:#c72,stroke:#fff
-    style M9 fill:#2a5,stroke:#fff
+    style M8 fill:#2a5,stroke:#fff
 ```
 
-All milestones are independent except M9 (Custom Dropdown), which uses `.nerv-list` items and should execute after M6 (List Nesting Overhaul) to build on the stabilized list structure.
+All milestones are independent except M8 (Custom Dropdown), which uses `.nerv-list` items and should execute after M5 (List Nesting Overhaul) to build on the stabilized list structure.
 
-- [ ] M1: Reorganize and deduplicate `docs/atomic-elements.md` and `docs/design-language.md` — proper atom vs. composition categorization, remove redundancy, verify cross-references (est. L2)
-- [ ] M2: Add DOS/BIOS monospace boot-screen font to `_typography.scss`; add `×` rotated-cross grid marks variant and hex-grid background pattern to `_grid-marks.scss` (est. L2)
-- [ ] M3: Implement `.nerv-hex-grid-tiled` true honeycomb tessellation in `_hex-grid.scss` with no gaps/overlaps, verified to support the lockout hex-wall use case (est. L2)
-- [ ] M4: Assess rainbow gradient current state and implement reusable gradient mixin/utility classes (`.nerv-rainbow-bg` etc.) with configurable hue range, direction, and opacity (est. L2)
-- [ ] M5: Create data background module (`.nerv-data-bg`) with binary and DNA fill modes, seamless scroll animation, and criticality-driven speed escalation (est. L2)
-- [ ] M6: Overhaul list nesting in `_list.scss` — fix contained sublists and indented non-contained sublists for all shape/rotation combinations including angled variants (est. L3)
-- [ ] M7: Build psychographic display (full x/y graph with SVG traces, axis grid, squigglemass chaos mode) and neural channel monitor (narrow vertical waveform variant with Richter-scale amplitude), both with criticality-escalating animation (est. L3)
-- [ ] M8: Create seedable JS-generated SVG green wireframe topographic map background fill with map-like contour generation and deterministic output per seed (est. L3)
-- [ ] M9: Implement custom dropdown (`.nerv-dropdown`) with JS interaction layer (open/close, arrow keys, selection, ARIA) and CSS states, built from `.nerv-list` and `.nerv-panel` (est. L2)
+- [ ] M1: Add DOS/BIOS monospace boot-screen font to `_typography.scss`; add `×` rotated-cross grid marks variant and hex-grid background pattern to `_grid-marks.scss` (est. L2)
+- [ ] M2: Implement `.nerv-hex-grid-tiled` true honeycomb tessellation in `_hex-grid.scss` with no gaps/overlaps, verified to support the lockout hex-wall use case (est. L2)
+- [ ] M3: Assess rainbow gradient current state and implement reusable gradient mixin/utility classes (`.nerv-rainbow-bg` etc.) with configurable hue range, direction, and opacity (est. L2)
+- [ ] M4: Create data background module (`.nerv-data-bg`) with binary and DNA fill modes, seamless scroll animation, and criticality-driven speed escalation (est. L2)
+- [ ] M5: Overhaul list nesting in `_list.scss` — fix contained sublists and indented non-contained sublists for all shape/rotation combinations including angled variants (est. L3)
+- [ ] M6: Build psychographic display (full x/y graph with SVG traces, axis grid, squigglemass chaos mode) and neural channel monitor (narrow vertical waveform variant with Richter-scale amplitude), both with criticality-escalating animation (est. L3)
+- [ ] M7: Create seedable JS-generated SVG green wireframe topographic map background fill with map-like contour generation and deterministic output per seed (est. L3)
+- [ ] M8: Implement custom dropdown (`.nerv-dropdown`) with JS interaction layer (open/close, arrow keys, selection, ARIA) and CSS states, built from `.nerv-list` and `.nerv-panel` (est. L2)
