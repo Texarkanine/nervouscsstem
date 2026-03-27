@@ -1,15 +1,9 @@
-# Progress: M2 — Tiled Hex Grid
+# Progress: M3 — Rainbow Gradients
 
-Implement `.nerv-hex-grid-tiled` true honeycomb tessellation in `_hex-grid.scss` with no gaps/overlaps, verified to support the lockout hex-wall use case.
+Assess rainbow gradient current state and implement reusable gradient mixin/utility classes (`.nerv-rainbow-bg` etc.) with configurable hue range, direction, and opacity.
 
 **Complexity:** Level 2
 
 ## History
 
-- **2026-03-27**: Complexity analysis complete. Level 2 determined — self-contained additive SCSS module in a single subsystem.
-- **2026-03-27**: Plan phase complete. 8 steps, 5 behaviors, 3 files. Tessellation geometry: W/2 gap, 3W/4 offset, −H/2 row overlap. No new dependencies.
-- **2026-03-27**: Preflight PASS. Convention compliance verified, no conflicts, all requirements mapped. Advisory: `overflow: hidden` clip option deferred (consumer concern).
-- **2026-03-27**: Build phase complete. 8/8 steps done. 311 tests passing (5 new). 3 files modified. Precision fix for stylelint compliance. No deviations from plan.
-- **2026-03-27**: QA phase PASS. No issues found — clean implementation against plan.
-- **2026-03-27**: Reflect phase complete. Key insight: flat-top hex tessellation geometry (same-row hexes don't share edges). Stylelint precision constraint noted for future geometric constants.
-- **2026-03-27**: Post-reflect rework: added `.nerv-hex-grid-solid` fill modifier (opaque fills, black border/text) to library — operator flagged inline ref-page CSS as a design gap. Switched `initHexFlicker` to opt-in via `data-nerv-hex-flicker` — operator flagged random cycling on static lockout demos. 312 tests passing. Reflection updated.
+- **2026-03-27**: Complexity analysis complete. Level 2 determined — self-contained additive SCSS module in a single subsystem (gradient mixin + utility classes).

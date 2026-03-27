@@ -38,7 +38,7 @@ graph LR
 All milestones are independent except M8 (Custom Dropdown), which uses `.nerv-list` items and should execute after M5 (List Nesting Overhaul) to build on the stabilized list structure.
 
 - [x] M1: Add DOS/BIOS monospace boot-screen font to `_typography.scss`; add `×` rotated-cross grid marks variant and hex-grid background pattern to `_grid-marks.scss` (est. L2)
-- [ ] M2: Implement `.nerv-hex-grid-tiled` true honeycomb tessellation in `_hex-grid.scss` with no gaps/overlaps, verified to support the lockout hex-wall use case (est. L2)
+- [x] M2: Implement `.nerv-hex-grid-tiled` true honeycomb tessellation in `_hex-grid.scss` with no gaps/overlaps, verified to support the lockout hex-wall use case (est. L2)
 - [ ] M3: Assess rainbow gradient current state and implement reusable gradient mixin/utility classes (`.nerv-rainbow-bg` etc.) with configurable hue range, direction, and opacity (est. L2)
 - [ ] M4: Create data background module (`.nerv-data-bg`) with binary and DNA fill modes, seamless scroll animation, and criticality-driven speed escalation (est. L2)
 - [ ] M5: Overhaul list nesting in `_list.scss` — fix contained sublists and indented non-contained sublists for all shape/rotation combinations including angled variants (est. L3)
