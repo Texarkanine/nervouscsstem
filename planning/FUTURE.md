@@ -40,18 +40,6 @@ A third hex grid layout variant (extending `_hex-grid.scss`) where hexagons perf
 
 The "tiled" variant would eliminate both overlaps and gaps via precise sizing and offset math. **Architecture decision (M7 creative phase, still valid):** implement as `.nerv-hex-grid-tiled` in `_hex-grid.scss`, not as a table row type — full options analysis and implementation notes are in [`planning/tiled-hex-grid-variant.md`](tiled-hex-grid-variant.md). For what actually shipped in M7 (tables without hex rows, tessellation still open), see the capstone summary in [`memory-bank/archive/systems/20260320-nerv-future-features.md`](../memory-bank/archive/systems/20260320-nerv-future-features.md).
 
-## Typefaces
-
-Maybe we'd like a "squished" / narrow typeface option? That feels very Japanese retrofuture UI.
-
-## Rounded Rects
-
-Most of our rectangles have sharp corners. Most of the NERV rectangles - at least the "outline, border only, black fill, text matches border" style - have rounded edges.
-
-The edges in those cases are kinda thick - matching the font weight. Not the narrow phosphor outlines of our existing vector style.
-
-We should add such support for such boxes, as part of the "foundation," demo'd after the `Glow Effects — box-shadow (.nerv-glow-*)` line.
-
 ## Psycographic Display
 
 A graph on a grid, with labelled axes and a text box insert... OH NO, THE LINES ARE ALL SQUIGGLY! AND ANIMATED!
@@ -62,7 +50,7 @@ We should have a way to have a "graph" with
 - axes labels
 - an fixed path SVG or SVGs graphed on it with bright phosphor outlines
 - animating a clean loop of one or more of those line sets (e.g. sine wave flowing by)
-- moneyshot: a messy squigglemass (see reference image) for when shit goes sideways. Typically you'd activate this when the system went "critical" (integrate with alert state system)
+- moneyshot: a messy squigglemass (see reference image) for when shit goes sideways. Typically you'd activate this when the system went "critical" (integrate with alert state system). BONUS, if feasible: graph "intensifies" (faster scroll, higher frequency/amplitude?) as criticality escalates, goes psychographic squiggle at max. This is not a data display - this is a visual decoration!
 
 ---
 
