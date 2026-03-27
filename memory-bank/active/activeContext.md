@@ -1,18 +1,14 @@
 # Active Context
 
 ## Current Task
-NERV Design System — Phase 7 Feature Expansion
+M1: Foundation — DOS/BIOS Font + Grid Mark Variants
 
 ## Phase
-PREFLIGHT - COMPLETE (PASS with ADVISORY)
+COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
-- L4 preflight validated milestone plan against codebase reality
-- Convention compliance: all proposed modules align with existing patterns
-- Dependency impact: M6 (list nesting) is the only milestone modifying existing behavior; M9 sequenced after it
-- No conflicts detected; no duplication-in-waiting
-- All requirements mapped to milestones with no gaps
-- Advisory: shared criticality-aware JS utility recommended (implementation detail, not a new milestone)
+- Classified M1 as Level 2: two additive enhancements to existing modules (`_typography.scss` and `_grid-marks.scss`), low risk, no architectural implications
+- Decision tree path: not a bug fix → adding small feature → touches multiple components → L2
 
 ## Next Step
-Operator review of milestone plan. When approved, run `/niko` to begin M1 execution.
+Load Level 2 workflow and begin planning phase.
