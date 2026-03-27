@@ -81,7 +81,7 @@
       z-index: 1;
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto auto auto;
+      grid-template-rows: auto auto auto auto;
       width: 100%;
       gap: 2px;
       padding: 1rem;
@@ -280,8 +280,17 @@
         </div>
       </div>
 
-      <!-- Zone E: Stripe bars -->
-      <div class="ref-zone-e">
+      <!-- Zone E: Gradient (cascade-responsive) + Stripe bars -->
+      <div style="grid-column: 1 / 13; grid-row: 3; display: flex; gap: 1rem; padding: 0.5rem 2rem; align-items: center;">
+        <div class="nerv-gradient" style="flex: 1; height: 2.5rem; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-primary-rgb), 0.2);">
+          <span class="nerv-type-hud" style="font-size: 0.6rem; letter-spacing: 0.15em; color: var(--nerv-primary); text-shadow: 0 0 4px rgba(0,0,0,0.8);">CASCADE-RESPONSIVE GRADIENT</span>
+        </div>
+        <div class="nerv-gradient nerv-gradient-thermal" style="flex: 1; height: 2.5rem; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-primary-rgb), 0.2);">
+          <span class="nerv-type-hud" style="font-size: 0.6rem; letter-spacing: 0.15em; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">THERMAL (STABLE)</span>
+        </div>
+      </div>
+
+      <div class="ref-zone-e" style="grid-row: 4;">
         <div class="nerv-stripe nerv-stripe-animated" style="height: 0.6rem;"></div>
         <div class="nerv-stripe nerv-stripe-animated nerv-stripe-red nerv-stripe-transparent" style="height: 0.5rem;"></div>
       </div>

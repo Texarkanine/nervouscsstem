@@ -1,0 +1,93 @@
+/// _gradient.scss — Reusable linear-gradient background utilities.
+///
+/// Smooth linear-gradient backgrounds between any two NERV color tokens.
+/// The base `.nerv-gradient` class defaults to ambiance tokens and shifts
+/// with the alert cascade. Presets and composable from/to modifier classes
+/// pin to named data tokens (stable, cascade-independent).
+///
+/// Classes:
+///   .nerv-gradient               — base gradient (cascade-responsive by default)
+///   .nerv-gradient-thermal       — preset: green → red
+///   .nerv-gradient-energy        — preset: cyan → blue
+///   .nerv-gradient-warning       — preset: amber → red
+///   .nerv-gradient-field         — preset: void → amber
+///   .nerv-gradient-rainbow       — preset: multi-stop hue sweep
+///   .nerv-gradient-from-{color}  — composable: set gradient start color
+///   .nerv-gradient-to-{color}    — composable: set gradient end color
+///
+/// Custom properties:
+///   --nerv-gradient-from-rgb     Gradient start (RGB triplet, default: --nerv-primary-rgb)
+///   --nerv-gradient-to-rgb       Gradient end   (RGB triplet, default: --nerv-bg-rgb)
+///   --nerv-gradient-direction    Gradient axis   (default: to right)
+///   --nerv-gradient-opacity      Gradient alpha  (default: 1)
+///
+/// Tokens consumed:
+///   --nerv-primary-rgb, --nerv-bg-rgb (ambiance — cascade-responsive defaults)
+///   --nerv-{color}-rgb (named data tokens — used by presets and from/to modifiers)
+
+@use 'sass:list';
+@use 'tokens';
+
+.nerv-gradient {
+  --nerv-gradient-from-rgb: var(--nerv-primary-rgb);
+  --nerv-gradient-to-rgb: var(--nerv-bg-rgb);
+  --nerv-gradient-direction: to right;
+  --nerv-gradient-opacity: 1;
+
+  background:
+    linear-gradient(
+      var(--nerv-gradient-direction),
+      rgba(var(--nerv-gradient-from-rgb), var(--nerv-gradient-opacity)),
+      rgba(var(--nerv-gradient-to-rgb), var(--nerv-gradient-opacity))
+    );
+}
+
+// Presets — named data tokens (stable, cascade-independent)
+
+.nerv-gradient-thermal {
+  --nerv-gradient-from-rgb: var(--nerv-green-rgb);
+  --nerv-gradient-to-rgb: var(--nerv-red-rgb);
+}
+
+.nerv-gradient-energy {
+  --nerv-gradient-from-rgb: var(--nerv-cyan-rgb);
+  --nerv-gradient-to-rgb: var(--nerv-blue-rgb);
+}
+
+.nerv-gradient-warning {
+  --nerv-gradient-from-rgb: var(--nerv-amber-rgb);
+  --nerv-gradient-to-rgb: var(--nerv-red-rgb);
+}
+
+.nerv-gradient-field {
+  --nerv-gradient-from-rgb: var(--nerv-void-rgb);
+  --nerv-gradient-to-rgb: var(--nerv-amber-rgb);
+}
+
+.nerv-gradient-rainbow {
+  background:
+    linear-gradient(
+      var(--nerv-gradient-direction, to right),
+      rgba(var(--nerv-red-rgb), var(--nerv-gradient-opacity, 1)),
+      rgba(var(--nerv-amber-rgb), var(--nerv-gradient-opacity, 1)),
+      rgba(var(--nerv-green-rgb), var(--nerv-gradient-opacity, 1)),
+      rgba(var(--nerv-cyan-rgb), var(--nerv-gradient-opacity, 1)),
+      rgba(var(--nerv-blue-rgb), var(--nerv-gradient-opacity, 1))
+    );
+}
+
+// Composable from/to modifier classes — auto-generated from $nerv-colors map.
+// Same @each pattern as _glow.scss. Pins to named data tokens (stable).
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-gradient-from-#{$name} {
+      --nerv-gradient-from-rgb: var(--nerv-#{$name}-rgb);
+    }
+
+    .nerv-gradient-to-#{$name} {
+      --nerv-gradient-to-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
+}

@@ -500,6 +500,99 @@ describe('nerv.js API surface', () => {
   });
 });
 
+describe('Gradient utilities', () => {
+  // B1: .nerv-gradient base class exists with linear-gradient
+  it('.nerv-gradient class exists with linear-gradient', () => {
+    assert.match(css, /\.nerv-gradient\b[^-]/, 'missing .nerv-gradient class');
+    const idx = css.indexOf('.nerv-gradient {');
+    assert.ok(idx >= 0, '.nerv-gradient block should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('linear-gradient'), '.nerv-gradient should use linear-gradient');
+  });
+
+  // B2: custom properties referenced
+  it('.nerv-gradient references --nerv-gradient-from-rgb, --nerv-gradient-to-rgb, --nerv-gradient-direction', () => {
+    const idx = css.indexOf('.nerv-gradient {');
+    assert.ok(idx >= 0, '.nerv-gradient block should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-gradient-from-rgb'), 'should reference --nerv-gradient-from-rgb');
+    assert.ok(block.includes('--nerv-gradient-to-rgb'), 'should reference --nerv-gradient-to-rgb');
+    assert.ok(block.includes('--nerv-gradient-direction'), 'should reference --nerv-gradient-direction');
+  });
+
+  // B3: thermal preset
+  it('.nerv-gradient-thermal sets from green-rgb to red-rgb', () => {
+    assert.match(css, /\.nerv-gradient-thermal\b/, 'missing .nerv-gradient-thermal class');
+    const idx = css.indexOf('.nerv-gradient-thermal');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('--nerv-green-rgb'), 'thermal from should be --nerv-green-rgb');
+    assert.ok(block.includes('--nerv-red-rgb'), 'thermal to should be --nerv-red-rgb');
+  });
+
+  // B4: energy preset
+  it('.nerv-gradient-energy sets from cyan-rgb to blue-rgb', () => {
+    assert.match(css, /\.nerv-gradient-energy\b/, 'missing .nerv-gradient-energy class');
+    const idx = css.indexOf('.nerv-gradient-energy');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('--nerv-cyan-rgb'), 'energy from should be --nerv-cyan-rgb');
+    assert.ok(block.includes('--nerv-blue-rgb'), 'energy to should be --nerv-blue-rgb');
+  });
+
+  // B5: warning preset
+  it('.nerv-gradient-warning sets from amber-rgb to red-rgb', () => {
+    assert.match(css, /\.nerv-gradient-warning\b/, 'missing .nerv-gradient-warning class');
+    const idx = css.indexOf('.nerv-gradient-warning');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('--nerv-amber-rgb'), 'warning from should be --nerv-amber-rgb');
+    assert.ok(block.includes('--nerv-red-rgb'), 'warning to should be --nerv-red-rgb');
+  });
+
+  // B6: field preset
+  it('.nerv-gradient-field sets from void-rgb to amber-rgb', () => {
+    assert.match(css, /\.nerv-gradient-field\b/, 'missing .nerv-gradient-field class');
+    const idx = css.indexOf('.nerv-gradient-field');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('--nerv-void-rgb'), 'field from should be --nerv-void-rgb');
+    assert.ok(block.includes('--nerv-amber-rgb'), 'field to should be --nerv-amber-rgb');
+  });
+
+  // B7: rainbow preset (multi-stop)
+  it('.nerv-gradient-rainbow exists with multiple color stops', () => {
+    assert.match(css, /\.nerv-gradient-rainbow\b/, 'missing .nerv-gradient-rainbow class');
+    const idx = css.indexOf('.nerv-gradient-rainbow');
+    const block = css.slice(idx, idx + 600);
+    assert.ok(block.includes('linear-gradient'), 'rainbow should use linear-gradient');
+    const rgbMatches = block.match(/--nerv-\w+-rgb/g) || [];
+    assert.ok(rgbMatches.length >= 4, `rainbow should have >= 4 color token references, found ${rgbMatches.length}`);
+  });
+
+  // B8: opacity support
+  it('.nerv-gradient references --nerv-gradient-opacity', () => {
+    const idx = css.indexOf('.nerv-gradient {');
+    assert.ok(idx >= 0, '.nerv-gradient block should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-gradient-opacity'), 'should reference --nerv-gradient-opacity');
+  });
+
+  // B9: auto-generated from/to modifier classes
+  it('.nerv-gradient-from-{color} and .nerv-gradient-to-{color} exist for glow-flagged colors', () => {
+    const colors = ['amber', 'amber-dark', 'orange', 'red', 'red-deep', 'green', 'cyan', 'blue', 'steel'];
+    for (const c of colors) {
+      assert.match(css, new RegExp(`\\.nerv-gradient-from-${c}\\b`), `missing .nerv-gradient-from-${c}`);
+      assert.match(css, new RegExp(`\\.nerv-gradient-to-${c}\\b`), `missing .nerv-gradient-to-${c}`);
+    }
+  });
+
+  // B10: cascade-responsive defaults (ambiance tokens)
+  it('.nerv-gradient defaults reference ambiance tokens (--nerv-primary-rgb, --nerv-bg-rgb)', () => {
+    const idx = css.indexOf('.nerv-gradient {');
+    assert.ok(idx >= 0, '.nerv-gradient block should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-primary-rgb'), 'default from should reference ambiance token --nerv-primary-rgb');
+    assert.ok(block.includes('--nerv-bg-rgb'), 'default to should reference ambiance token --nerv-bg-rgb');
+  });
+});
+
 describe('Regression — Phase 1–3', () => {
   // Behavior 32
   it('Foundation tokens still present', () => {

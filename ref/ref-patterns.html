@@ -362,6 +362,51 @@
     </div>
   </div>
 
+  <!-- Gradient utilities -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-gradient presets — Background containers
+    </div>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding: 0 2rem;">
+      <!-- Thermal: green → red -->
+      <div class="nerv-gradient nerv-gradient-thermal" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-thermal</span>
+      </div>
+      <!-- Energy: cyan → blue -->
+      <div class="nerv-gradient nerv-gradient-energy" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-energy</span>
+      </div>
+      <!-- Warning: amber → red -->
+      <div class="nerv-gradient nerv-gradient-warning" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-warning</span>
+      </div>
+      <!-- Field: void → amber -->
+      <div class="nerv-gradient nerv-gradient-field" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-field</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 1.5rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-gradient-rainbow + composable from/to modifiers
+    </div>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding: 0 2rem;">
+      <!-- Rainbow: multi-stop hue sweep -->
+      <div class="nerv-gradient nerv-gradient-rainbow" style="width: 420px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-rainbow</span>
+      </div>
+      <!-- Custom composable: cyan → red-deep via modifier classes -->
+      <div class="nerv-gradient nerv-gradient-from-cyan nerv-gradient-to-red-deep" style="width: 200px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.6rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">from-cyan to-red-deep</span>
+      </div>
+      <!-- Custom with opacity + vertical direction -->
+      <div class="nerv-gradient nerv-gradient-from-amber nerv-gradient-to-red" style="width: 200px; height: 60px; --nerv-gradient-direction: to bottom; --nerv-gradient-opacity: 0.5; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.55rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">↓ to bottom, opacity 0.5</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Grid mark variant comparison -->
   <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; padding: 0 2rem;">
     <div style="text-align: center;">
