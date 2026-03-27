@@ -91,4 +91,4 @@ No new technology — validation not required. Uses standard CSS `linear-gradien
 - [x] Technology validation complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA
