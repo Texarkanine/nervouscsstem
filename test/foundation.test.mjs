@@ -100,6 +100,30 @@ describe('Font-face declarations', () => {
   });
 });
 
+describe('VT323 / DOS/BIOS boot font', () => {
+  before(() => {
+    if (!css) {
+      execSync('npm run build', { cwd: ROOT, stdio: 'pipe' });
+      css = readFileSync(DIST_CSS, 'utf-8');
+    }
+  });
+
+  it('declares @font-face for VT323', () => {
+    assert.match(css, /font-family:\s*["']?VT323["']?/, 'missing @font-face for VT323');
+  });
+
+  it('.nerv-type-boot utility class exists', () => {
+    assert.match(css, /\.nerv-type-boot\b/, 'missing .nerv-type-boot class');
+  });
+
+  it('.nerv-type-boot sets font-family including VT323', () => {
+    const idx = css.indexOf('.nerv-type-boot');
+    assert.ok(idx !== -1, '.nerv-type-boot not found');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('VT323'), '.nerv-type-boot should include VT323 in font-family');
+  });
+});
+
 describe('Color map → glow class verification', () => {
   before(() => {
     if (!css) {

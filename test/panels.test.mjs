@@ -161,6 +161,61 @@ describe('Reticle tickmarks', () => {
   });
 });
 
+const GLOW_COLORS = [
+  'amber', 'amber-dark', 'orange', 'red',
+  'red-deep', 'green', 'cyan', 'blue', 'steel',
+];
+
+describe('Grid marks × variant', () => {
+  it('.nerv-grid-marks-x class exists with background-image', () => {
+    assert.match(css, /\.nerv-grid-marks-x\b/, 'missing .nerv-grid-marks-x class');
+    const idx = css.indexOf('.nerv-grid-marks-x {');
+    assert.ok(idx !== -1, '.nerv-grid-marks-x block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('background-image'), '.nerv-grid-marks-x should have background-image');
+  });
+
+  it('.nerv-grid-marks-x SVG uses diagonal line geometry', () => {
+    const idx = css.indexOf('.nerv-grid-marks-x {');
+    assert.ok(idx !== -1, '.nerv-grid-marks-x block not found');
+    const block = css.slice(idx, idx + 1200);
+    assert.ok(block.includes('data:image/svg+xml'), '.nerv-grid-marks-x should use SVG data URI');
+  });
+
+  it('.nerv-grid-marks-x-{color} auto-generated for each glow-flagged color', () => {
+    for (const name of GLOW_COLORS) {
+      assert.match(css, new RegExp(`\\.nerv-grid-marks-x-${name}\\b`), `missing .nerv-grid-marks-x-${name} class`);
+    }
+  });
+});
+
+describe('Grid marks hex variant', () => {
+  it('.nerv-grid-marks-hex class exists with background-image', () => {
+    assert.match(css, /\.nerv-grid-marks-hex\b/, 'missing .nerv-grid-marks-hex class');
+    const idx = css.indexOf('.nerv-grid-marks-hex {');
+    assert.ok(idx !== -1, '.nerv-grid-marks-hex block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('background-image'), '.nerv-grid-marks-hex should have background-image');
+  });
+
+  it('.nerv-grid-marks-hex SVG uses polygon/path for hex geometry', () => {
+    const idx = css.indexOf('.nerv-grid-marks-hex {');
+    assert.ok(idx !== -1, '.nerv-grid-marks-hex block not found');
+    const block = css.slice(idx, idx + 1200);
+    assert.ok(block.includes('data:image/svg+xml'), '.nerv-grid-marks-hex should use SVG data URI');
+    assert.ok(
+      block.includes('polygon') || block.includes('path'),
+      '.nerv-grid-marks-hex SVG should contain polygon or path for hex shapes'
+    );
+  });
+
+  it('.nerv-grid-marks-hex-{color} auto-generated for each glow-flagged color', () => {
+    for (const name of GLOW_COLORS) {
+      assert.match(css, new RegExp(`\\.nerv-grid-marks-hex-${name}\\b`), `missing .nerv-grid-marks-hex-${name} class`);
+    }
+  });
+});
+
 describe('Regression — Phase 1 and Phase 2', () => {
   it('Phase 1 foundation selectors still present', () => {
     assert.match(css, /--nerv-amber\s*:/, 'missing --nerv-amber token');
