@@ -216,6 +216,6 @@ No new technology — validation not required. `:has()` pseudo-class is a CSS st
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
+- [x] Preflight — PASS. Advisory: `--nerv-list-clip` doubles as public API for custom shapes (document in doc comment).
 - [ ] Build
 - [ ] QA
