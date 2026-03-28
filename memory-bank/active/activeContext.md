@@ -4,12 +4,11 @@
 M4: Data Background — Binary/DNA fill modes with scroll animation and criticality-driven speed
 
 ## Phase
-QA - COMPLETE
+REFLECT COMPLETE
 
 ## What Was Done
-- 8/8 implementation steps completed, 332 tests passing (11 new), no regressions
-- QA fix: moved `--nerv-data-bg-opacity` from inner to container for correct cascade inheritance
-- Updated doc comment to match
+- Full implementation of M4: data background module with binary/DNA fill, seamless scroll, criticality speed
+- 332 tests passing (11 new), clean QA, reflection documented
 
 ## Next Step
-Reflect phase will now run automatically.
+Run `/niko` to continue to the next milestone.

@@ -11,6 +11,7 @@ Create data background module (`.nerv-data-bg`) with binary and DNA fill modes, 
 - **2026-03-28**: Preflight PASS. Convention fix: flat naming (no BEM `__`/`--`). Added B11: `--nerv-data-bg-opacity` custom property (follows gradient pattern). No conflicts detected.
 - **2026-03-28**: Build phase complete. 8/8 steps done. 332 tests passing (11 new). 6 files modified/created. One minor deviation: custom property reorder for Stylelint compliance.
 - **2026-03-28**: QA phase PASS. One fix: moved `--nerv-data-bg-opacity` default from `.nerv-data-bg-inner` to `.nerv-data-bg` container so consumer overrides via inline style cascade correctly. Updated doc comment accordingly.
+- **2026-03-28**: Reflect phase complete. Key insight: custom property defaults must live on the consumer-facing element (container), not the JS-injected child, to preserve cascade inheritance for inline style overrides.
 
 ## History
 
