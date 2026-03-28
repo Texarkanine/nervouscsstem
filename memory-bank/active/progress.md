@@ -1,18 +1,9 @@
-# Progress: M4 — Data Background
+# Progress: M5 — List Nesting Overhaul
 
-Create data background module (`.nerv-data-bg`) with binary and DNA fill modes, seamless scroll animation, and criticality-driven speed escalation.
+Overhaul list nesting in `_list.scss` — fix contained sublists and indented non-contained sublists for all shape/rotation combinations including angled variants.
 
-**Complexity:** Level 2
-
-## History
-
-- **2026-03-28**: Complexity analysis complete. Level 2 determined — self-contained additive SCSS+JS module.
-- **2026-03-28**: Plan phase complete. 8 steps, 10 behaviors, 6 files. New `_data-bg.scss` with `.nerv-data-bg` container + JS-injected inner scrolling layer. Binary/DNA modes. Criticality-driven speed via `--nerv-animation-speed`. Cascade-responsive color via `--nerv-primary`.
-- **2026-03-28**: Preflight PASS. Convention fix: flat naming (no BEM `__`/`--`). Added B11: `--nerv-data-bg-opacity` custom property (follows gradient pattern). No conflicts detected.
-- **2026-03-28**: Build phase complete. 8/8 steps done. 332 tests passing (11 new). 6 files modified/created. One minor deviation: custom property reorder for Stylelint compliance.
-- **2026-03-28**: QA phase PASS. One fix: moved `--nerv-data-bg-opacity` default from `.nerv-data-bg-inner` to `.nerv-data-bg` container so consumer overrides via inline style cascade correctly. Updated doc comment accordingly.
-- **2026-03-28**: Reflect phase complete. Key insight: custom property defaults must live on the consumer-facing element (container), not the JS-injected child, to preserve cascade inheritance for inline style overrides.
+**Complexity:** Level 3
 
 ## History
 
-- **2026-03-28**: Complexity analysis complete. Level 2 determined — self-contained additive SCSS+JS module (new `_data-bg.scss` partial + JS animation orchestration), no cross-component architectural impact.
+- **2026-03-28**: Complexity analysis complete. Level 3 determined — deep overhaul of `_list.scss` spanning all shape/rotation/angle permutations, two distinct sub-problems (contained sublists, indented non-contained sublists), M8 depends on stabilized output.

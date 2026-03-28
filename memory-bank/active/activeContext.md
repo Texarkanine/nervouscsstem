@@ -1,14 +1,13 @@
 # Active Context
 
 ## Current Task
-M4: Data Background — Binary/DNA fill modes with scroll animation and criticality-driven speed
+M5: List Nesting Overhaul — fix contained sublists and indented non-contained sublists for all shape/rotation combinations including angled variants
 
 ## Phase
-REFLECT COMPLETE
+COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
-- Full implementation of M4: data background module with binary/DNA fill, seamless scroll, criticality speed
-- 332 tests passing (11 new), clean QA, reflection documented
+- Complexity Level 3 determined: deep overhaul of single module (`_list.scss`) spanning all shape/rotation/angle permutations, two distinct sub-problems (contained vs indented), significant risk (M8 depends on stabilized list structure)
 
 ## Next Step
-Run `/niko` to continue to the next milestone.
+Load Level 3 workflow and begin planning phase.
