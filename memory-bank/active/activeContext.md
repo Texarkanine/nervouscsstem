@@ -1,14 +1,13 @@
 # Active Context
 
 ## Current Task
-M3: Rainbow Gradients — Reusable gradient utility classes for backgrounds
+M4: Data Background — Binary/DNA fill modes with scroll animation and criticality-driven speed
 
 ## Phase
-REFLECT COMPLETE
+COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
-- Full implementation of M3: gradient utility module with cascade-responsive defaults, 5 presets, auto-generated from/to modifiers
-- 322 tests passing (10 new), clean QA, reflection documented
+- Complexity Level 2 determined: self-contained additive SCSS+JS module (new `_data-bg.scss` partial + JS animation orchestration), no cross-component architectural impact
 
 ## Next Step
-Run `/niko` to continue to the next milestone.
+Load Level 2 workflow and begin PLAN phase.
