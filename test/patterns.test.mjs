@@ -497,6 +497,11 @@ describe('nerv.js API surface', () => {
       'function',
       'NERV.initRadarBlipAutoLayout should be a function'
     );
+    assert.equal(
+      typeof NERV.initDataBackgrounds,
+      'function',
+      'NERV.initDataBackgrounds should be a function'
+    );
   });
 });
 
@@ -590,6 +595,83 @@ describe('Gradient utilities', () => {
     const block = css.slice(idx, idx + 500);
     assert.ok(block.includes('--nerv-primary-rgb'), 'default from should reference ambiance token --nerv-primary-rgb');
     assert.ok(block.includes('--nerv-bg-rgb'), 'default to should reference ambiance token --nerv-bg-rgb');
+  });
+});
+
+describe('Data background', () => {
+  // B1: .nerv-data-bg container exists with correct positioning
+  it('.nerv-data-bg exists with position: relative and overflow: hidden', () => {
+    assert.match(css, /\.nerv-data-bg\b[^-]/, 'missing .nerv-data-bg class');
+    const idx = css.indexOf('.nerv-data-bg {');
+    assert.ok(idx >= 0, '.nerv-data-bg block should exist');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('position: relative'), '.nerv-data-bg should have position: relative');
+    assert.ok(block.includes('overflow: hidden'), '.nerv-data-bg should have overflow: hidden');
+  });
+
+  // B2: .nerv-data-bg-inner exists with absolute positioning and pointer-events: none
+  it('.nerv-data-bg-inner exists with position: absolute and pointer-events: none', () => {
+    assert.match(css, /\.nerv-data-bg-inner\b/, 'missing .nerv-data-bg-inner class');
+    const idx = css.indexOf('.nerv-data-bg-inner');
+    assert.ok(idx >= 0, '.nerv-data-bg-inner should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('position: absolute'), '.nerv-data-bg-inner should be absolutely positioned');
+    assert.ok(block.includes('pointer-events: none'), '.nerv-data-bg-inner should not capture pointer events');
+  });
+
+  // B3: --nerv-data-bg-duration token in :root
+  it('--nerv-data-bg-duration token exists in :root', () => {
+    assert.match(css, /--nerv-data-bg-duration\s*:/, 'missing --nerv-data-bg-duration token');
+  });
+
+  // B4: animation references keyframes + animation-speed
+  it('.nerv-data-bg-inner animation references nerv-data-bg-scroll and --nerv-animation-speed', () => {
+    const idx = css.indexOf('.nerv-data-bg-inner');
+    assert.ok(idx >= 0, '.nerv-data-bg-inner should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('nerv-data-bg-scroll'), 'animation should reference nerv-data-bg-scroll keyframes');
+    assert.ok(block.includes('--nerv-animation-speed'), 'duration should reference --nerv-animation-speed for criticality');
+  });
+
+  // B5: @keyframes with translateY
+  it('@keyframes nerv-data-bg-scroll exists with translateY', () => {
+    assert.match(css, /@keyframes\s+nerv-data-bg-scroll/, 'missing @keyframes nerv-data-bg-scroll');
+    const idx = css.indexOf('@keyframes nerv-data-bg-scroll');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('translateY'), 'keyframes should use translateY for vertical scroll');
+  });
+
+  // B6: prefers-reduced-motion suppression
+  it('prefers-reduced-motion suppresses data-bg animation', () => {
+    const reducedMotionBlocks = css.split('prefers-reduced-motion');
+    const hasDataBgSuppression = reducedMotionBlocks.some((block) => block.includes('nerv-data-bg'));
+    assert.ok(hasDataBgSuppression, 'prefers-reduced-motion should suppress .nerv-data-bg animation');
+  });
+
+  // B7: color references --nerv-primary (cascade-responsive)
+  it('.nerv-data-bg-inner color references var(--nerv-primary)', () => {
+    const idx = css.indexOf('.nerv-data-bg-inner');
+    assert.ok(idx >= 0, '.nerv-data-bg-inner should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-primary'), '.nerv-data-bg-inner should use --nerv-primary for cascade-responsive color');
+  });
+
+  // B8: .nerv-data-bg-binary modifier
+  it('.nerv-data-bg-binary modifier class exists', () => {
+    assert.match(css, /\.nerv-data-bg-binary\b/, 'missing .nerv-data-bg-binary modifier');
+  });
+
+  // B9: .nerv-data-bg-dna modifier
+  it('.nerv-data-bg-dna modifier class exists', () => {
+    assert.match(css, /\.nerv-data-bg-dna\b/, 'missing .nerv-data-bg-dna modifier');
+  });
+
+  // B11: --nerv-data-bg-opacity custom property
+  it('.nerv-data-bg-inner references --nerv-data-bg-opacity', () => {
+    const idx = css.indexOf('.nerv-data-bg-inner');
+    assert.ok(idx >= 0, '.nerv-data-bg-inner should exist');
+    const block = css.slice(idx, idx + 500);
+    assert.ok(block.includes('--nerv-data-bg-opacity'), 'should reference --nerv-data-bg-opacity for consumer-tunable opacity');
   });
 });
 

@@ -5,7 +5,8 @@
  * scanline overlay injection, hex cell state cycling, grid axis labels,
  * ghost-segment population, bar meter fill activation / generation,
  * label box group radio toggle, MAGI panel dynamic grid columns,
- * and optional radar sweep phase sync for CSS/JS consumers.
+ * optional radar sweep phase sync for CSS/JS consumers,
+ * and data background character grid generation.
  *
  * UMD-lite: works as a classic <script> tag (window.NERV) and as a
  * Node.js/CJS module (require/import). No build step required.
@@ -66,6 +67,7 @@
         NERV.initLabelBoxGroups();
         NERV.initMagiPanels();
         NERV.initCartouches();
+        NERV.initDataBackgrounds();
 
         var syncRadars = document.querySelectorAll('.nerv-radar[data-nerv-radar-sync]');
         for (var r = 0; r < syncRadars.length; r++) {
@@ -358,6 +360,50 @@
         document.fonts.ready.then(measure);
       } else {
         measure();
+      }
+    },
+
+    /**
+     * Generates a random character grid and injects it into each `.nerv-data-bg`
+     * container as a `.nerv-data-bg-inner` element for seamless CSS-driven scroll
+     * animation. Mode is determined by `.nerv-data-bg-binary` (0/1) or
+     * `.nerv-data-bg-dna` (C/A/G/T); defaults to binary.
+     *
+     * The inner element contains two identical text blocks stacked vertically.
+     * The CSS `@keyframes nerv-data-bg-scroll` translates `Y` from 0 to −50%,
+     * creating an infinite seamless loop.
+     *
+     * @param {HTMLElement} [container=document] - Scope for element lookup
+     */
+    initDataBackgrounds: function initDataBackgrounds(container) {
+      if (typeof document === 'undefined') return;
+      var scope = container || document;
+      var COLS = 80;
+      var ROWS = 60;
+      var BINARY_CHARS = '01';
+      var DNA_CHARS = 'CAGT';
+
+      var bgs = scope.querySelectorAll('.nerv-data-bg');
+      for (var i = 0; i < bgs.length; i++) {
+        var el = bgs[i];
+        if (el.querySelector('.nerv-data-bg-inner')) continue;
+
+        var chars = el.classList.contains('nerv-data-bg-dna') ? DNA_CHARS : BINARY_CHARS;
+        var lines = [];
+        for (var r = 0; r < ROWS; r++) {
+          var line = '';
+          for (var c = 0; c < COLS; c++) {
+            line += chars.charAt(Math.floor(Math.random() * chars.length));
+            if (c < COLS - 1) line += ' ';
+          }
+          lines.push(line);
+        }
+        var block = lines.join('\n');
+
+        var inner = document.createElement('div');
+        inner.className = 'nerv-data-bg-inner';
+        inner.textContent = block + '\n' + block;
+        el.appendChild(inner);
       }
     },
 

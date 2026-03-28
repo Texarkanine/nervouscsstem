@@ -407,6 +407,42 @@
     </div>
   </div>
 
+  <!-- Data background fills -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-data-bg — Binary &amp; DNA fill modes
+    </div>
+    <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; padding: 0 2rem;">
+      <!-- Binary mode -->
+      <div style="text-align: center;">
+        <div class="nerv-data-bg nerv-data-bg-binary" style="width: 280px; height: 160px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+          <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 100%;">
+            <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-primary); text-shadow: 0 0 6px rgba(var(--nerv-primary-rgb), 0.6);">BINARY MODE</span>
+          </div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">.nerv-data-bg-binary</div>
+      </div>
+      <!-- DNA mode -->
+      <div style="text-align: center;">
+        <div class="nerv-data-bg nerv-data-bg-dna" style="width: 280px; height: 160px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+          <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 100%;">
+            <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-primary); text-shadow: 0 0 6px rgba(var(--nerv-primary-rgb), 0.6);">DNA MODE</span>
+          </div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">.nerv-data-bg-dna</div>
+      </div>
+      <!-- Higher opacity demo -->
+      <div style="text-align: center;">
+        <div class="nerv-data-bg nerv-data-bg-binary" style="width: 280px; height: 160px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15); --nerv-data-bg-opacity: 0.35;">
+          <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 100%;">
+            <span class="nerv-type-hud" style="font-size: 0.6rem; color: var(--nerv-primary); text-shadow: 0 0 6px rgba(var(--nerv-primary-rgb), 0.6);">--nerv-data-bg-opacity: 0.35</span>
+          </div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">custom opacity</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Grid mark variant comparison -->
   <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; padding: 0 2rem;">
     <div style="text-align: center;">

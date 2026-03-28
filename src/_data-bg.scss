@@ -1,0 +1,78 @@
+/// _data-bg.scss — Scrolling data background fill.
+///
+/// Creates a scrolling wall of monospace characters (binary 0/1 or DNA CAGT)
+/// as a background layer inside any container. JS generates the character grid
+/// and injects it as an absolutely-positioned inner element; CSS handles the
+/// seamless vertical scroll animation and criticality-driven speed scaling.
+///
+/// Classes:
+///   .nerv-data-bg             — container (position: relative, overflow: hidden)
+///   .nerv-data-bg-inner       — JS-injected scrolling text layer
+///   .nerv-data-bg-binary      — mode: binary characters (0, 1)
+///   .nerv-data-bg-dna         — mode: DNA bases (C, A, G, T)
+///
+/// Custom properties (set on .nerv-data-bg-inner):
+///   --nerv-data-bg-opacity    Text opacity (default: 0.15)
+///
+/// Tokens consumed:
+///   --nerv-data-bg-duration   Base scroll cycle duration (from _tokens.scss)
+///   --nerv-animation-speed    Global speed multiplier (from _states.scss cascade)
+///   --nerv-primary            Text color (follows alert cascade)
+///   --nerv-primary-rgb        RGB companion for rgba() if needed
+
+.nerv-data-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.nerv-data-bg-inner {
+  --nerv-data-bg-opacity: 0.15;
+
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  color: var(--nerv-primary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+  white-space: pre;
+  opacity: var(--nerv-data-bg-opacity);
+  animation:
+    nerv-data-bg-scroll
+    calc(var(--nerv-data-bg-duration) / var(--nerv-animation-speed))
+    linear infinite;
+}
+
+.nerv-data-bg-binary {
+  --nerv-data-bg-chars: '01';
+}
+
+.nerv-data-bg-dna {
+  --nerv-data-bg-chars: 'CAGT';
+  letter-spacing: 0.12em;
+}
+
+@keyframes nerv-data-bg-scroll {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-data-bg-inner {
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nerv-data-bg-inner {
+    --nerv-data-bg-opacity: 0.25;
+  }
+}

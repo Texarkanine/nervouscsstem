@@ -94,6 +94,6 @@ No new technology — validation not required. Uses existing Dart Sass compilati
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
 - [ ] QA
