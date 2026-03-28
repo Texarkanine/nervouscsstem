@@ -11,7 +11,7 @@
 ///   .nerv-data-bg-binary      — mode: binary characters (0, 1)
 ///   .nerv-data-bg-dna         — mode: DNA bases (C, A, G, T)
 ///
-/// Custom properties (set on .nerv-data-bg-inner):
+/// Custom properties (set on .nerv-data-bg container):
 ///   --nerv-data-bg-opacity    Text opacity (default: 0.15)
 ///
 /// Tokens consumed:
@@ -21,13 +21,13 @@
 ///   --nerv-primary-rgb        RGB companion for rgba() if needed
 
 .nerv-data-bg {
+  --nerv-data-bg-opacity: 0.15;
+
   position: relative;
   overflow: hidden;
 }
 
 .nerv-data-bg-inner {
-  --nerv-data-bg-opacity: 0.15;
-
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -72,7 +72,7 @@
 }
 
 @media (prefers-contrast: more) {
-  .nerv-data-bg-inner {
+  .nerv-data-bg {
     --nerv-data-bg-opacity: 0.25;
   }
 }

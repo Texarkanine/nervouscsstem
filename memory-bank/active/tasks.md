@@ -96,4 +96,4 @@ No new technology — validation not required. Uses existing Dart Sass compilati
 - [x] Technology validation complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA

@@ -666,12 +666,17 @@ describe('Data background', () => {
     assert.match(css, /\.nerv-data-bg-dna\b/, 'missing .nerv-data-bg-dna modifier');
   });
 
-  // B11: --nerv-data-bg-opacity custom property
-  it('.nerv-data-bg-inner references --nerv-data-bg-opacity', () => {
-    const idx = css.indexOf('.nerv-data-bg-inner');
-    assert.ok(idx >= 0, '.nerv-data-bg-inner should exist');
-    const block = css.slice(idx, idx + 500);
-    assert.ok(block.includes('--nerv-data-bg-opacity'), 'should reference --nerv-data-bg-opacity for consumer-tunable opacity');
+  // B11: --nerv-data-bg-opacity custom property (default on container, consumed by inner)
+  it('--nerv-data-bg-opacity default set on .nerv-data-bg and consumed by .nerv-data-bg-inner', () => {
+    const containerIdx = css.indexOf('.nerv-data-bg {');
+    assert.ok(containerIdx >= 0, '.nerv-data-bg block should exist');
+    const containerBlock = css.slice(containerIdx, containerIdx + 300);
+    assert.ok(containerBlock.includes('--nerv-data-bg-opacity'), 'container should define --nerv-data-bg-opacity default');
+
+    const innerIdx = css.indexOf('.nerv-data-bg-inner');
+    assert.ok(innerIdx >= 0, '.nerv-data-bg-inner should exist');
+    const innerBlock = css.slice(innerIdx, innerIdx + 500);
+    assert.ok(innerBlock.includes('--nerv-data-bg-opacity'), 'inner should consume --nerv-data-bg-opacity via opacity');
   });
 });
 
