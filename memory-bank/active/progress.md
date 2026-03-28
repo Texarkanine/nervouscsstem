@@ -7,7 +7,8 @@ Create data background module (`.nerv-data-bg`) with binary and DNA fill modes, 
 ## History
 
 - **2026-03-28**: Complexity analysis complete. Level 2 determined — self-contained additive SCSS+JS module.
-- **2026-03-28**: Plan phase complete. 8 steps, 10 behaviors, 6 files. New `_data-bg.scss` with `.nerv-data-bg` container + JS-injected `__inner` scrolling layer. Binary/DNA modes. Criticality-driven speed via `--nerv-animation-speed`. Cascade-responsive color via `--nerv-primary`.
+- **2026-03-28**: Plan phase complete. 8 steps, 10 behaviors, 6 files. New `_data-bg.scss` with `.nerv-data-bg` container + JS-injected inner scrolling layer. Binary/DNA modes. Criticality-driven speed via `--nerv-animation-speed`. Cascade-responsive color via `--nerv-primary`.
+- **2026-03-28**: Preflight PASS. Convention fix: flat naming (no BEM `__`/`--`). Added B11: `--nerv-data-bg-opacity` custom property (follows gradient pattern). No conflicts detected.
 
 ## History
 

@@ -11,15 +11,16 @@ Create a data background module (`.nerv-data-bg`) with binary (0/1) and DNA (CAG
 ### Behaviors to Verify
 
 - B1: `.nerv-data-bg` class exists in compiled CSS with `position: relative` and `overflow: hidden`
-- B2: `.nerv-data-bg__inner` class exists with `position: absolute` and `pointer-events: none`
+- B2: `.nerv-data-bg-inner` class exists with `position: absolute` and `pointer-events: none`
 - B3: `--nerv-data-bg-duration` token exists in `:root`
-- B4: `.nerv-data-bg__inner` animation references both `nerv-data-bg-scroll` keyframes and `--nerv-animation-speed` for criticality scaling
+- B4: `.nerv-data-bg-inner` animation references both `nerv-data-bg-scroll` keyframes and `--nerv-animation-speed` for criticality scaling
 - B5: `@keyframes nerv-data-bg-scroll` exists with `translateY`
 - B6: `prefers-reduced-motion` suppresses data-bg animation
-- B7: `.nerv-data-bg__inner` color references `var(--nerv-primary)` (cascade-responsive)
-- B8: `.nerv-data-bg--binary` modifier class exists
-- B9: `.nerv-data-bg--dna` modifier class exists
+- B7: `.nerv-data-bg-inner` color references `var(--nerv-primary)` (cascade-responsive)
+- B8: `.nerv-data-bg-binary` modifier class exists
+- B9: `.nerv-data-bg-dna` modifier class exists
 - B10: `NERV.initDataBackgrounds` function exists in module exports
+- B11: `--nerv-data-bg-opacity` custom property referenced (consumer-tunable opacity)
 
 ### Test Infrastructure
 
@@ -36,7 +37,7 @@ Create a data background module (`.nerv-data-bg`) with binary (0/1) and DNA (CAG
 
 2. **Create `_data-bg.scss` with documentation and class stubs**
    - Files: `src/_data-bg.scss` (new)
-   - Changes: Full doc comment (purpose, class API, tokens consumed), empty `.nerv-data-bg`, `.nerv-data-bg__inner`, modifier, keyframes, and accessibility stubs
+   - Changes: Full doc comment (purpose, class API, tokens consumed), empty `.nerv-data-bg`, `.nerv-data-bg-inner`, modifier, keyframes, and accessibility stubs
 
 3. **Register module in entry point**
    - Files: `src/nerv.scss`
@@ -52,7 +53,7 @@ Create a data background module (`.nerv-data-bg`) with binary (0/1) and DNA (CAG
 
 6. **Implement `_data-bg.scss`**
    - Files: `src/_data-bg.scss`
-   - Changes: `.nerv-data-bg` (position, overflow, isolation), `.nerv-data-bg__inner` (absolute positioning, full coverage, animation, color, font, opacity, pointer-events, user-select), `.nerv-data-bg--binary`/`--dna` (mode-specific overrides if needed — e.g. different letter-spacing), `@keyframes nerv-data-bg-scroll` (translateY 0 to -50%), `prefers-reduced-motion` suppression, `prefers-contrast` opacity adjustment
+   - Changes: `.nerv-data-bg` (position, overflow, isolation), `.nerv-data-bg-inner` (absolute positioning, full coverage, animation, color via `var(--nerv-primary)`, font, `--nerv-data-bg-opacity` custom property, pointer-events, user-select), `.nerv-data-bg-binary`/`.nerv-data-bg-dna` (mode markers — JS reads these to determine character set), `@keyframes nerv-data-bg-scroll` (translateY 0 to -50%), `prefers-reduced-motion` suppression, `prefers-contrast` opacity adjustment
 
 7. **Implement `initDataBackgrounds` in JS**
    - Files: `src/nerv.js`
@@ -79,6 +80,13 @@ No new technology — validation not required. Uses existing Dart Sass compilati
 - **Container sizing**: The character grid is a fixed-size block of text. If the container is very large, gaps may appear at edges. Mitigation: generate a generous grid (80 cols × 60 rows) and rely on `overflow: hidden` to crop. The text wraps naturally within the inner div width.
 - **CSS property replacement with `background`**: Since `.nerv-data-bg` uses DOM children (not `background-image`), it avoids the background-property collision issue entirely. This is a deliberate advantage of the DOM-injection approach over SVG data URI backgrounds.
 - **High-contrast mode**: The background text should become slightly more opaque (rather than less) so it remains visible as a texture signal. `prefers-contrast: more` adjusts `--nerv-data-bg-opacity`.
+
+## Preflight Amendments
+
+1. **CONVENTION FIX**: Renamed `.nerv-data-bg__inner` → `.nerv-data-bg-inner` (project uses flat naming, no BEM `__`)
+2. **CONVENTION FIX**: Renamed `.nerv-data-bg--binary`/`--dna` → `.nerv-data-bg-binary`/`.nerv-data-bg-dna` (project uses flat naming, no BEM `--`)
+3. **COMPLETENESS**: Added B11 — `--nerv-data-bg-opacity` custom property (follows `_gradient.scss` pattern for consumer-tunable opacity)
+4. **INNOVATION**: `--nerv-data-bg-opacity` exposed as class-level custom property (default `0.15`), matching `_gradient.scss`'s `--nerv-gradient-opacity` pattern
 
 ## Status
 
