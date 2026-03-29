@@ -58,6 +58,14 @@
   --nerv-list-inset: 0.9em;
   --nerv-list-angle: 0deg;
   --nerv-list-gap: 0.35rem;
+  --nerv-list-clip: polygon(
+    var(--nerv-list-inset) 0%,
+    calc(100% - var(--nerv-list-inset)) 0%,
+    100% 50%,
+    calc(100% - var(--nerv-list-inset)) 100%,
+    var(--nerv-list-inset) 100%,
+    0% 50%
+  );
 
   list-style: none;
   padding: 0;
@@ -75,14 +83,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    clip-path: polygon(
-      var(--nerv-list-inset) 0%,
-      calc(100% - var(--nerv-list-inset)) 0%,
-      100% 50%,
-      calc(100% - var(--nerv-list-inset)) 100%,
-      var(--nerv-list-inset) 100%,
-      0% 50%
-    );
+    clip-path: var(--nerv-list-clip);
     transform: rotate(var(--nerv-list-angle));
     transform-origin: 0% 50%;
   }
@@ -110,13 +111,17 @@
 // 3. Shape modifiers (AFTER fill modes — para overrides bg to transparent)
 // ---------------------------------------------------------------------------
 
+.nerv-list-rect {
+  --nerv-list-clip: none;
+}
+
 .nerv-list-rect > li {
   clip-path: none;
   padding: 0.3em 0.8em;
 }
 
-.nerv-list-arrow > li {
-  clip-path: polygon(
+.nerv-list-arrow {
+  --nerv-list-clip: polygon(
     var(--nerv-list-inset) 0%,
     100% 0%,
     100% 100%,
@@ -125,8 +130,8 @@
   );
 }
 
-.nerv-list-arrow-reverse > li {
-  clip-path: polygon(
+.nerv-list-arrow-reverse {
+  --nerv-list-clip: polygon(
     0% 0%,
     calc(100% - var(--nerv-list-inset)) 0%,
     100% 50%,
@@ -139,6 +144,7 @@
 // angle control (degrees, not inset ratios) and preserves real CSS borders.
 .nerv-list-para {
   --nerv-list-skew: -15deg;
+  --nerv-list-clip: none;
 
   > li {
     clip-path: none;

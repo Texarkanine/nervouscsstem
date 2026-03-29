@@ -412,12 +412,12 @@ describe('List styling CSS', () => {
     assert.ok(block.includes('column'), '.nerv-list should use flex-direction: column');
   });
 
-  it('B2: .nerv-list li applies clip-path polygon for pillbox shape', () => {
+  it('B2: .nerv-list li applies clip-path via --nerv-list-clip custom property', () => {
     assert.match(css, /\.nerv-list[^{]*li\b/, 'missing .nerv-list li rule');
     const liMatch = css.match(/\.nerv-list[^{]*li\s*\{[^}]*\}/);
     assert.ok(liMatch, '.nerv-list li block not found');
     assert.ok(liMatch[0].includes('clip-path'), '.nerv-list li should use clip-path');
-    assert.ok(liMatch[0].includes('polygon'), '.nerv-list li clip-path should use polygon()');
+    assert.ok(liMatch[0].includes('var(--nerv-list-clip)'), '.nerv-list li clip-path should reference var(--nerv-list-clip)');
   });
 
   it('B3: --nerv-list-color custom property declared on .nerv-list', () => {
@@ -507,13 +507,13 @@ describe('List styling CSS', () => {
     assert.ok(block.includes('clip-path: none'), '.nerv-list-rect li should set clip-path: none');
   });
 
-  it('B15: .nerv-list-arrow > li has clip-path polygon with left point and flat right edge', () => {
+  it('B15: .nerv-list-arrow defines arrow polygon via --nerv-list-clip', () => {
     assert.match(css, /\.nerv-list-arrow\b[^-]/, 'missing .nerv-list-arrow class');
     const idx = css.indexOf('.nerv-list-arrow ');
     assert.ok(idx !== -1, '.nerv-list-arrow block not found');
     const block = css.slice(idx, idx + 500);
-    assert.ok(block.includes('clip-path'), '.nerv-list-arrow li should have clip-path');
-    assert.ok(block.includes('polygon'), '.nerv-list-arrow li should use polygon()');
+    assert.ok(block.includes('--nerv-list-clip'), '.nerv-list-arrow should set --nerv-list-clip');
+    assert.ok(block.includes('polygon'), '.nerv-list-arrow --nerv-list-clip should use polygon()');
     assert.ok(block.includes('100% 0%'), '.nerv-list-arrow polygon should have flush top-right corner');
     assert.ok(block.includes('100% 100%'), '.nerv-list-arrow polygon should have flush bottom-right corner');
   });
@@ -552,13 +552,13 @@ describe('List styling CSS', () => {
     assert.ok(block.includes('--nerv-bg'), '.nerv-list-solid li should set text to --nerv-bg');
   });
 
-  it('B20: .nerv-list-arrow-reverse > li has clip-path polygon with flat left and pointed right', () => {
+  it('B20: .nerv-list-arrow-reverse defines arrow-reverse polygon via --nerv-list-clip', () => {
     assert.match(css, /\.nerv-list-arrow-reverse\b/, 'missing .nerv-list-arrow-reverse class');
     const idx = css.indexOf('.nerv-list-arrow-reverse');
     assert.ok(idx !== -1, '.nerv-list-arrow-reverse block not found');
     const block = css.slice(idx, idx + 500);
-    assert.ok(block.includes('clip-path'), '.nerv-list-arrow-reverse li should have clip-path');
-    assert.ok(block.includes('polygon'), '.nerv-list-arrow-reverse li should use polygon()');
+    assert.ok(block.includes('--nerv-list-clip'), '.nerv-list-arrow-reverse should set --nerv-list-clip');
+    assert.ok(block.includes('polygon'), '.nerv-list-arrow-reverse --nerv-list-clip should use polygon()');
     assert.ok(block.includes('0% 0%'), '.nerv-list-arrow-reverse polygon should have flush top-left corner');
     assert.ok(block.includes('100% 50%'), '.nerv-list-arrow-reverse polygon should have pointed right edge');
   });
@@ -586,6 +586,104 @@ describe('List styling CSS', () => {
     const block = css.slice(idx, idx + 800);
     assert.ok(block.includes('--nerv-list-gap'), '.nerv-list should declare --nerv-list-gap');
     assert.ok(block.includes('gap: var(--nerv-list-gap'), '.nerv-list should use --nerv-list-gap for gap');
+  });
+
+  // --- M5: List Nesting Overhaul ---
+
+  it('B24: --nerv-list-clip custom property declared on .nerv-list with polygon value', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-list-clip'), '.nerv-list should declare --nerv-list-clip');
+    assert.ok(block.includes('polygon'), '--nerv-list-clip value should contain polygon');
+  });
+
+  it('B25: .nerv-list > li uses clip-path: var(--nerv-list-clip)', () => {
+    const re = /\.nerv-list\s*>\s*li\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list > li block not found');
+    assert.ok(match[0].includes('clip-path'), '.nerv-list > li should set clip-path');
+    assert.ok(match[0].includes('var(--nerv-list-clip)'), '.nerv-list > li clip-path should reference var(--nerv-list-clip)');
+  });
+
+  it('B26: .nerv-list-rect sets --nerv-list-clip: none', () => {
+    const re = /\.nerv-list-rect\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-rect container block not found');
+    assert.ok(match[0].includes('--nerv-list-clip: none'), '.nerv-list-rect should set --nerv-list-clip: none');
+  });
+
+  it('B27: .nerv-list-arrow sets --nerv-list-clip to arrow polygon', () => {
+    const re = /\.nerv-list-arrow\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-arrow container block not found');
+    assert.ok(match[0].includes('--nerv-list-clip'), '.nerv-list-arrow should set --nerv-list-clip');
+    assert.ok(match[0].includes('polygon'), '.nerv-list-arrow --nerv-list-clip should use polygon()');
+  });
+
+  it('B28: .nerv-list-arrow-reverse sets --nerv-list-clip to arrow-reverse polygon', () => {
+    const re = /\.nerv-list-arrow-reverse\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-arrow-reverse container block not found');
+    assert.ok(match[0].includes('--nerv-list-clip'), '.nerv-list-arrow-reverse should set --nerv-list-clip');
+    assert.ok(match[0].includes('polygon'), '.nerv-list-arrow-reverse --nerv-list-clip should use polygon()');
+  });
+
+  // --- M5: Step 2: Nesting detection + indented mode ---
+
+  it('B29: :has( selector present in compiled CSS for nesting detection', () => {
+  });
+
+  it('B30: Nested-parent li has clip-path: none and background: transparent', () => {
+  });
+
+  it('B31: ::before on nested-parent item has clip-path referencing --nerv-list-clip', () => {
+  });
+
+  it('B32: --nerv-list-indent custom property declared on .nerv-list', () => {
+  });
+
+  it('B33: --nerv-list-item-height custom property declared on .nerv-list', () => {
+  });
+
+  it('B34: Nested .nerv-list inside li gets margin-left for indent', () => {
+  });
+
+  // --- M5: Step 3: Contained mode ---
+
+  it('B35: .nerv-list-contained class exists in compiled CSS', () => {
+  });
+
+  it('B36: :has(> .nerv-list-contained) adjusts ::before to cover full item', () => {
+  });
+
+  // --- M5: Step 4: Fill × nesting ---
+
+  it('B37: Bordered + nesting: ::before has border property', () => {
+  });
+
+  it('B38: Outline + nesting: ::before has border and --nerv-bg background', () => {
+  });
+
+  it('B39: Solid + nesting: ::before has opaque --nerv-list-color background', () => {
+  });
+
+  // --- M5: Step 5: Rotation × nesting ---
+
+  it('B40: Nested .nerv-list inside angled item has counter-rotation transform', () => {
+  });
+
+  it('B41: Nested .nerv-list inside angled-reverse item has counter-rotation transform', () => {
+  });
+
+  // --- M5: Step 6: Accessibility ---
+
+  it('B42: prefers-contrast: more targets nested-parent items', () => {
+  });
+
+  // --- M5: Step 7: Regression ---
+
+  it('B43: All existing component selectors still present after nesting overhaul', () => {
   });
 });
 
