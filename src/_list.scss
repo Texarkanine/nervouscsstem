@@ -230,11 +230,7 @@
 }
 
 // Rotation × nesting: counter-rotate nested lists so they read horizontally
-.nerv-list-angled > li > .nerv-list {
-  transform: rotate(calc(-1 * var(--nerv-list-angle)));
-  transform-origin: 0% 0%;
-}
-
+.nerv-list-angled > li > .nerv-list,
 .nerv-list-angled-reverse > li > .nerv-list {
   transform: rotate(calc(-1 * var(--nerv-list-angle)));
   transform-origin: 0% 0%;
@@ -280,8 +276,6 @@
 }
 
 .nerv-list > li > .nerv-list-contained {
-  margin-left: var(--nerv-list-indent);
-  margin-top: var(--nerv-list-gap);
   margin-bottom: 0.3em;
 }
 

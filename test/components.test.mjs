@@ -717,19 +717,19 @@ describe('List styling CSS', () => {
   // --- M5: Step 5: Rotation × nesting ---
 
   it('B40: Nested .nerv-list inside angled item has counter-rotation transform', () => {
-    const re = /\.nerv-list-angled\s*>\s*li\s*>\s*\.nerv-list\s*\{[^}]*\}/;
-    const match = css.match(re);
-    assert.ok(match, '.nerv-list-angled > li > .nerv-list rule not found');
-    assert.ok(match[0].includes('transform'), 'nested list in angled item should have transform');
-    assert.ok(match[0].includes('rotate'), 'nested list in angled item should have counter-rotation');
+    const idx = css.indexOf('.nerv-list-angled > li > .nerv-list');
+    assert.ok(idx !== -1, '.nerv-list-angled > li > .nerv-list rule not found');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('transform'), 'nested list in angled item should have transform');
+    assert.ok(block.includes('rotate'), 'nested list in angled item should have counter-rotation');
   });
 
   it('B41: Nested .nerv-list inside angled-reverse item has counter-rotation transform', () => {
-    const re = /\.nerv-list-angled-reverse\s*>\s*li\s*>\s*\.nerv-list\s*\{[^}]*\}/;
-    const match = css.match(re);
-    assert.ok(match, '.nerv-list-angled-reverse > li > .nerv-list rule not found');
-    assert.ok(match[0].includes('transform'), 'nested list in angled-reverse item should have transform');
-    assert.ok(match[0].includes('rotate'), 'nested list in angled-reverse item should have counter-rotation');
+    const idx = css.indexOf('.nerv-list-angled-reverse > li > .nerv-list');
+    assert.ok(idx !== -1, '.nerv-list-angled-reverse > li > .nerv-list rule not found');
+    const block = css.slice(idx, idx + 300);
+    assert.ok(block.includes('transform'), 'nested list in angled-reverse item should have transform');
+    assert.ok(block.includes('rotate'), 'nested list in angled-reverse item should have counter-rotation');
   });
 
   // --- M5: Step 6: Accessibility ---

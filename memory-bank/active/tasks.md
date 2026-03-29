@@ -52,4 +52,4 @@ Each shape has a different visual mechanism. All converge on `::before` for nest
 - [x] Technology validation complete
 - [x] Preflight — PASS. Advisory: `--nerv-list-clip` doubles as public API for custom shapes (document in doc comment).
 - [x] Build — PASS. All 8 steps complete, 161/161 tests passing.
-- [ ] QA
+- [x] QA — PASS. Two DRY fixes applied (merged rotation counter-rotation selectors, removed duplicated contained margins). 161/161 tests still passing.
