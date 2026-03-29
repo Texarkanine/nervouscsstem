@@ -236,6 +236,20 @@
   transform-origin: 0% 0%;
 }
 
+// Non-contained rotated nesting: after counter-rotation the local X-axis is
+// page-horizontal, so translateX produces a purely horizontal indent. The
+// sin() term compensates for the horizontal displacement caused by the nested
+// list's vertical offset being in the rotated coordinate system.
+.nerv-list-angled > li > .nerv-list:not(.nerv-list-contained),
+.nerv-list-angled-reverse > li > .nerv-list:not(.nerv-list-contained) {
+  transform: rotate(calc(-1 * var(--nerv-list-angle)))
+    translateX(calc(
+      var(--nerv-list-indent)
+      + (var(--nerv-list-item-height) + var(--nerv-list-gap)) * sin(var(--nerv-list-angle))
+    ));
+  margin-left: 0;
+}
+
 // ---------------------------------------------------------------------------
 // 5. Nesting (indented + contained)
 // ---------------------------------------------------------------------------
@@ -262,10 +276,13 @@
   z-index: -1;
 }
 
-// Indented mode (default): nested list shifts right
+// Indented mode (default): nested list shifts right.
+// margin-top uses calc() to compensate for the ::before shape extending 0.3em
+// (padding-bottom) below the text node — without this, the visible gap between
+// parent shape bottom and first child is smaller than the inter-child gap.
 .nerv-list > li > .nerv-list {
   margin-left: var(--nerv-list-indent);
-  margin-top: var(--nerv-list-gap);
+  margin-top: calc(var(--nerv-list-gap) + 0.3em);
 }
 
 // Contained mode: parent shape wraps both its text and nested children.
@@ -276,6 +293,7 @@
 }
 
 .nerv-list > li > .nerv-list-contained {
+  margin-top: var(--nerv-list-gap);
   margin-bottom: 0.3em;
 }
 

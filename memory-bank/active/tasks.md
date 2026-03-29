@@ -138,6 +138,6 @@ CSS `sin()` function (CSS Values and Units Level 4) — verified:
 - [x] Test planning complete (TDD)
 - [x] Implementation plan complete
 - [x] Technology validation complete (CSS sin() verified)
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight — PASS. Convention-compliant, no conflicts, CSS sin() validated.
+- [x] Build — PASS. 2/2 steps, 5 new tests (B44–B48), 357/357 pass. No deviations.
 - [ ] QA

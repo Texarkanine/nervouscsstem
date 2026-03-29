@@ -748,6 +748,48 @@ describe('List styling CSS', () => {
     assert.match(css, /\.nerv-segment-display\b/, 'missing .nerv-segment-display class');
     assert.match(css, /\.nerv-panel\b[^-]/, 'missing .nerv-panel class');
   });
+
+  // --- M5 Rework: Bug 1 (indented-mode parent→child spacing) ---
+
+  it('B44: Base nested list rule uses calc() in margin-top for spacing compensation', () => {
+    const re = /\.nerv-list\s*>\s*li\s*>\s*\.nerv-list\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list > li > .nerv-list rule not found');
+    assert.ok(match[0].includes('margin-top'), 'nested .nerv-list should have margin-top');
+    assert.ok(match[0].includes('calc('), 'nested .nerv-list margin-top should use calc() for spacing compensation');
+  });
+
+  it('B45: Contained nested list overrides margin-top with --nerv-list-gap (no calc)', () => {
+    const re = /\.nerv-list\s*>\s*li\s*>\s*\.nerv-list-contained\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list > li > .nerv-list-contained rule not found');
+    assert.ok(match[0].includes('margin-top'), '.nerv-list-contained should have margin-top');
+    assert.ok(match[0].includes('--nerv-list-gap'), '.nerv-list-contained margin-top should reference --nerv-list-gap');
+    assert.ok(!match[0].match(/margin-top[^;]*calc\(/), '.nerv-list-contained margin-top should NOT use calc()');
+  });
+
+  // --- M5 Rework: Bug 2 (rotated-nesting horizontal alignment) ---
+
+  it('B46: Non-contained rotated nested list has translateX in its transform', () => {
+    const re = /\.nerv-list-angled\s*>\s*li\s*>\s*\.nerv-list:not\(\.nerv-list-contained\)[^{]*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-angled > li > .nerv-list:not(.nerv-list-contained) rule not found');
+    assert.ok(match[0].includes('translateX'), 'non-contained rotated nested list should have translateX');
+  });
+
+  it('B47: Non-contained rotated nested list has margin-left: 0', () => {
+    const re = /\.nerv-list-angled\s*>\s*li\s*>\s*\.nerv-list:not\(\.nerv-list-contained\)[^{]*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-angled > li > .nerv-list:not(.nerv-list-contained) rule not found');
+    assert.ok(match[0].includes('margin-left: 0'), 'non-contained rotated nested list should override margin-left to 0');
+  });
+
+  it('B48: Non-contained rotated nested list uses sin() in translateX expression', () => {
+    const re = /\.nerv-list-angled\s*>\s*li\s*>\s*\.nerv-list:not\(\.nerv-list-contained\)[^{]*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-angled > li > .nerv-list:not(.nerv-list-contained) rule not found');
+    assert.ok(match[0].includes('sin('), 'non-contained rotated nested list translateX should use sin() for trig compensation');
+  });
 });
 
 describe('Form styling CSS', () => {

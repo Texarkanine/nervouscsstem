@@ -4,19 +4,20 @@
 M5: List Nesting Overhaul (Rework) — fix two visual bugs: indented-mode parent→child spacing, rotated-nesting horizontal alignment
 
 ## Phase
-PLAN - COMPLETE
+BUILD - COMPLETE
 
 ## What Was Done
-- Analyzed both bugs with browser bounding-box measurements
-- Identified root causes: `margin-top` measured from text bottom vs shape bottom (bug 1), `margin-left` in rotated layout frame (bug 2)
-- Validated CSS `sin()` function passes through Dart Sass with `var()` arguments
-- 2-step implementation plan: spacing calc fix + translateX with trig compensation
+- Bug 1: Changed `margin-top` on `.nerv-list > li > .nerv-list` from `var(--nerv-list-gap)` to `calc(var(--nerv-list-gap) + 0.3em)` — compensates for `::before` shape extending past text by padding-bottom
+- Bug 1: Added explicit `margin-top: var(--nerv-list-gap)` to `.nerv-list > li > .nerv-list-contained` to preserve contained behavior
+- Bug 2: Added new rule for `.nerv-list-angled > li > .nerv-list:not(.nerv-list-contained)` with `translateX(calc(indent + (item-height + gap) * sin(angle)))` and `margin-left: 0`
+- TDD: 5 new tests (B44–B48), all passing. 357/357 total tests pass.
+
+## Files Modified
+- `src/_list.scss` — spacing calc fix, contained override, rotated translateX rule
+- `test/components.test.mjs` — 5 new test behaviors (B44–B48)
 
 ## Key Decisions
-- `margin-top: calc(var(--nerv-list-gap) + 0.3em)` — the `0.3em` exactly compensates for the `::before` shape extending past the text area by `padding-bottom`
-- Contained mode gets explicit `margin-top: var(--nerv-list-gap)` override to preserve current (correct) behavior
-- Rotated + non-contained uses `translateX(calc(indent + y_offset * sin(angle)))` for page-space horizontal indent
-- Contained + rotated excluded from translateX fix (no demos, indent should follow shape angle)
+- No deviations from plan — both fixes implemented exactly as specified
 
 ## Next Step
-Proceed to Preflight phase to validate the plan.
+QA review will now run automatically.
