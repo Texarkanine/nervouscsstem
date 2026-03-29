@@ -717,19 +717,36 @@ describe('List styling CSS', () => {
   // --- M5: Step 5: Rotation × nesting ---
 
   it('B40: Nested .nerv-list inside angled item has counter-rotation transform', () => {
+    const re = /\.nerv-list-angled\s*>\s*li\s*>\s*\.nerv-list\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-angled > li > .nerv-list rule not found');
+    assert.ok(match[0].includes('transform'), 'nested list in angled item should have transform');
+    assert.ok(match[0].includes('rotate'), 'nested list in angled item should have counter-rotation');
   });
 
   it('B41: Nested .nerv-list inside angled-reverse item has counter-rotation transform', () => {
+    const re = /\.nerv-list-angled-reverse\s*>\s*li\s*>\s*\.nerv-list\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-angled-reverse > li > .nerv-list rule not found');
+    assert.ok(match[0].includes('transform'), 'nested list in angled-reverse item should have transform');
+    assert.ok(match[0].includes('rotate'), 'nested list in angled-reverse item should have counter-rotation');
   });
 
   // --- M5: Step 6: Accessibility ---
 
   it('B42: prefers-contrast: more targets nested-parent items', () => {
+    const re = /prefers-contrast:\s*more\)[\s\S]*?:has\([\s\S]*?\}\s*\}/;
+    assert.match(css, re, 'prefers-contrast: more block should contain :has() for nested-parent items');
   });
 
   // --- M5: Step 7: Regression ---
 
   it('B43: All existing component selectors still present after nesting overhaul', () => {
+    assert.match(css, /\.nerv-list\b[^-]/, 'missing .nerv-list class');
+    assert.match(css, /\.nerv-bar-meter\b[^-]/, 'missing .nerv-bar-meter class');
+    assert.match(css, /\.nerv-label-box\b[^-]/, 'missing .nerv-label-box class');
+    assert.match(css, /\.nerv-segment-display\b/, 'missing .nerv-segment-display class');
+    assert.match(css, /\.nerv-panel\b[^-]/, 'missing .nerv-panel class');
   });
 });
 

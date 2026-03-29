@@ -1,4 +1,4 @@
-/// _list.scss — Angled pillbox list item styling.
+/// _list.scss — Angled pillbox list item styling with nesting support.
 ///
 /// Utility class that styles list items as geometric shapes via `clip-path:
 /// polygon()`. The default hex shape has symmetric 45-degree angled ends
@@ -31,6 +31,22 @@
 ///   .nerv-list-angled-reverse — each item pivots +45deg at left edge (fans down)
 ///   .nerv-list-{color}        — color variant (auto-generated per glow-flagged token)
 ///
+/// Nesting:
+///   Place a nested `<ul class="nerv-list">` inside a `<li>` for hierarchy.
+///   The parent item's shape is drawn via `::before`; the nested list renders
+///   below it without being clipped.
+///
+///   Indented mode (default):
+///     The nested list indents to the right; the parent shape covers only the
+///     text line. Children are visually distinct from their parent.
+///
+///   Contained mode:
+///     Add `.nerv-list-contained` to the nested `<ul>`. The parent shape
+///     expands to visually wrap both its text and all children.
+///
+///   All shape × fill × rotation combinations compose with nesting.
+///   Rotated parents counter-rotate their nested lists for readability.
+///
 /// Custom properties:
 ///   --nerv-list-color       (default: --nerv-primary)
 ///   --nerv-list-color-rgb   (default: --nerv-primary-rgb)
@@ -38,6 +54,10 @@
 ///   --nerv-list-angle       (per-item rotation, default: 0deg)
 ///   --nerv-list-gap         (vertical spacing between items, default: 0.35rem)
 ///   --nerv-list-skew        (para skew angle, default: -15deg; auto-matches rotation)
+///   --nerv-list-clip        (clip-path shape; set per shape modifier. Consumers
+///                            can override for custom shapes via polygon() values)
+///   --nerv-list-indent      (nested list left margin, default: 1.5em)
+///   --nerv-list-item-height (height of the ::before shape pseudo, default: 1.8em)
 ///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert state)
@@ -209,6 +229,17 @@
   --nerv-list-skew: 45deg;
 }
 
+// Rotation × nesting: counter-rotate nested lists so they read horizontally
+.nerv-list-angled > li > .nerv-list {
+  transform: rotate(calc(-1 * var(--nerv-list-angle)));
+  transform-origin: 0% 0%;
+}
+
+.nerv-list-angled-reverse > li > .nerv-list {
+  transform: rotate(calc(-1 * var(--nerv-list-angle)));
+  transform-origin: 0% 0%;
+}
+
 // ---------------------------------------------------------------------------
 // 5. Nesting (indented + contained)
 // ---------------------------------------------------------------------------
@@ -290,5 +321,9 @@
 @media (prefers-contrast: more) {
   .nerv-list > li {
     background: rgba(var(--nerv-list-color-rgb), 0.7);
+  }
+
+  .nerv-list > li:has(> .nerv-list)::before {
+    background: rgba(var(--nerv-list-color-rgb), 0.85);
   }
 }
