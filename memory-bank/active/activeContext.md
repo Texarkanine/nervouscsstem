@@ -1,25 +1,19 @@
 # Active Context
 
 ## Current Task
-M5: List Nesting Overhaul (Rework) — fix visual bugs in list nesting
+M5: List Nesting Overhaul (Rework) — COMPLETE (Bug 1 shipped, Bug 2 abandoned)
 
 ## Phase
-BUILD (rework-2) - COMPLETE
+ARCHIVED
 
 ## What Was Done
-- Bug 1a (prior): `calc(var(--nerv-list-gap) + 0.3em)` for parent→first-child spacing ✓
-- Bug 1b: `margin-bottom: -0.3em` on base nested list rule to compensate for parent li padding-bottom; contained rule's `margin-bottom: 0.3em` overrides this via source order
-- Bug 2 root cause: `--nerv-list-angle` resets to `0deg` on nested `.nerv-list` (base rule), making counter-rotation and translateX no-ops
-- Bug 2 fix: Introduced `--_nerv-list-rotation` internal property on `.nerv-list-angled` / `.nerv-list-angled-reverse`; used in counter-rotation and translateX rules instead of `--nerv-list-angle`
-- Browser-verified all 3 nesting modes: indented (spacing equalized), contained (unchanged), rotated (counter-rotation + translateX working)
-- 358/358 tests pass (B40, B41, B48 updated for new variable; B49 added for margin-bottom)
-
-## Files Modified
-- `src/_list.scss` — `--_nerv-list-rotation`, counter-rotation/translateX use it, `margin-bottom: -0.3em`
-- `test/components.test.mjs` — B40, B41, B48 updated; B49 added
+- Bug 1 (spacing): `calc(var(--nerv-list-gap) + 0.3em)` + `margin-bottom: -0.3em` — SHIPPED ✓
+- Bug 2 (rotated nesting alignment): 8+ iterations attempted, all fragile. ABANDONED. All rotation × nesting CSS removed.
+- 353/353 tests pass
 
 ## Key Decisions
-- `--_nerv-list-rotation` (underscore prefix) signals internal property; it inherits to nested lists without being reset by the base `.nerv-list` rule
+- Rotated nesting abandoned: CSS transforms don't affect layout, making robust page-space alignment of rotated nested content infeasible with pure CSS
+- Full research archived at `memory-bank/archive/enhancements/20260329-nerv-phase7-m5-rework.md`
 
 ## Next Step
-QA review needed, then reflect, then archive.
+Continue to next milestone.

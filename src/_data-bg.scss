@@ -29,8 +29,9 @@
 
 .nerv-data-bg-inner {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
   pointer-events: none;
   user-select: none;
   color: var(--nerv-primary);

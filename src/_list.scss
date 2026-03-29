@@ -44,8 +44,12 @@
 ///     Add `.nerv-list-contained` to the nested `<ul>`. The parent shape
 ///     expands to visually wrap both its text and all children.
 ///
-///   All shape × fill × rotation combinations compose with nesting.
-///   Rotated parents counter-rotate their nested lists for readability.
+///   All shape × fill combinations compose with nesting.
+///
+///   ⚠ Nesting inside rotated lists (.nerv-list-angled / -reverse) is
+///   unsupported. The base nesting rules still apply, but children will
+///   indent along the rotation axis rather than page-space X/Y. See the
+///   archive doc for why counter-rotation was abandoned.
 ///
 /// Custom properties:
 ///   --nerv-list-color       (default: --nerv-primary)
@@ -210,14 +214,12 @@
 
 .nerv-list-angled {
   --nerv-list-angle: -45deg;
-  --_nerv-list-rotation: -45deg;
   --nerv-list-gap: 0.8rem;
   padding-top: 10rem;
 }
 
 .nerv-list-angled-reverse {
   --nerv-list-angle: 45deg;
-  --_nerv-list-rotation: 45deg;
   --nerv-list-gap: 0.8rem;
   padding-bottom: 10rem;
 }
@@ -229,30 +231,6 @@
 
 .nerv-list-para.nerv-list-angled-reverse {
   --nerv-list-skew: 45deg;
-}
-
-// Rotation × nesting: counter-rotate nested lists so they read horizontally.
-// Uses --_nerv-list-rotation (not --nerv-list-angle) because the nested
-// .nerv-list resets --nerv-list-angle to 0deg in its base rule. The internal
-// --_nerv-list-rotation property inherits from the parent without being reset.
-.nerv-list-angled > li > .nerv-list,
-.nerv-list-angled-reverse > li > .nerv-list {
-  transform: rotate(calc(-1 * var(--_nerv-list-rotation)));
-  transform-origin: 0% 0%;
-}
-
-// Non-contained rotated nesting: after counter-rotation the local X-axis is
-// page-horizontal, so translateX produces a purely horizontal indent. The
-// sin() term compensates for the horizontal displacement caused by the nested
-// list's vertical offset being in the rotated coordinate system.
-.nerv-list-angled > li > .nerv-list:not(.nerv-list-contained),
-.nerv-list-angled-reverse > li > .nerv-list:not(.nerv-list-contained) {
-  transform: rotate(calc(-1 * var(--_nerv-list-rotation)))
-    translateX(calc(
-      var(--nerv-list-indent)
-      + (var(--nerv-list-item-height) + var(--nerv-list-gap)) * sin(var(--_nerv-list-rotation))
-    ));
-  margin-left: 0;
 }
 
 // ---------------------------------------------------------------------------
