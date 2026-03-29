@@ -210,12 +210,14 @@
 
 .nerv-list-angled {
   --nerv-list-angle: -45deg;
+  --_nerv-list-rotation: -45deg;
   --nerv-list-gap: 0.8rem;
   padding-top: 10rem;
 }
 
 .nerv-list-angled-reverse {
   --nerv-list-angle: 45deg;
+  --_nerv-list-rotation: 45deg;
   --nerv-list-gap: 0.8rem;
   padding-bottom: 10rem;
 }
@@ -229,10 +231,13 @@
   --nerv-list-skew: 45deg;
 }
 
-// Rotation × nesting: counter-rotate nested lists so they read horizontally
+// Rotation × nesting: counter-rotate nested lists so they read horizontally.
+// Uses --_nerv-list-rotation (not --nerv-list-angle) because the nested
+// .nerv-list resets --nerv-list-angle to 0deg in its base rule. The internal
+// --_nerv-list-rotation property inherits from the parent without being reset.
 .nerv-list-angled > li > .nerv-list,
 .nerv-list-angled-reverse > li > .nerv-list {
-  transform: rotate(calc(-1 * var(--nerv-list-angle)));
+  transform: rotate(calc(-1 * var(--_nerv-list-rotation)));
   transform-origin: 0% 0%;
 }
 
@@ -242,10 +247,10 @@
 // list's vertical offset being in the rotated coordinate system.
 .nerv-list-angled > li > .nerv-list:not(.nerv-list-contained),
 .nerv-list-angled-reverse > li > .nerv-list:not(.nerv-list-contained) {
-  transform: rotate(calc(-1 * var(--nerv-list-angle)))
+  transform: rotate(calc(-1 * var(--_nerv-list-rotation)))
     translateX(calc(
       var(--nerv-list-indent)
-      + (var(--nerv-list-item-height) + var(--nerv-list-gap)) * sin(var(--nerv-list-angle))
+      + (var(--nerv-list-item-height) + var(--nerv-list-gap)) * sin(var(--_nerv-list-rotation))
     ));
   margin-left: 0;
 }
@@ -277,12 +282,13 @@
 }
 
 // Indented mode (default): nested list shifts right.
-// margin-top uses calc() to compensate for the ::before shape extending 0.3em
-// (padding-bottom) below the text node — without this, the visible gap between
-// parent shape bottom and first child is smaller than the inter-child gap.
+// Both margin-top and margin-bottom compensate for the 0.3em li padding that
+// the ::before shape occupies past the text node. Without these, the visible
+// gap between parent/child boundaries differs from the inter-item gap.
 .nerv-list > li > .nerv-list {
   margin-left: var(--nerv-list-indent);
   margin-top: calc(var(--nerv-list-gap) + 0.3em);
+  margin-bottom: -0.3em;
 }
 
 // Contained mode: parent shape wraps both its text and nested children.

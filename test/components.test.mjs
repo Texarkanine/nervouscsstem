@@ -716,20 +716,22 @@ describe('List styling CSS', () => {
 
   // --- M5: Step 5: Rotation × nesting ---
 
-  it('B40: Nested .nerv-list inside angled item has counter-rotation transform', () => {
+  it('B40: Nested .nerv-list inside angled item has counter-rotation using --_nerv-list-rotation', () => {
     const idx = css.indexOf('.nerv-list-angled > li > .nerv-list');
     assert.ok(idx !== -1, '.nerv-list-angled > li > .nerv-list rule not found');
     const block = css.slice(idx, idx + 300);
     assert.ok(block.includes('transform'), 'nested list in angled item should have transform');
     assert.ok(block.includes('rotate'), 'nested list in angled item should have counter-rotation');
+    assert.ok(block.includes('--_nerv-list-rotation'), 'counter-rotation should use --_nerv-list-rotation (not --nerv-list-angle)');
   });
 
-  it('B41: Nested .nerv-list inside angled-reverse item has counter-rotation transform', () => {
+  it('B41: Nested .nerv-list inside angled-reverse item has counter-rotation using --_nerv-list-rotation', () => {
     const idx = css.indexOf('.nerv-list-angled-reverse > li > .nerv-list');
     assert.ok(idx !== -1, '.nerv-list-angled-reverse > li > .nerv-list rule not found');
     const block = css.slice(idx, idx + 300);
     assert.ok(block.includes('transform'), 'nested list in angled-reverse item should have transform');
     assert.ok(block.includes('rotate'), 'nested list in angled-reverse item should have counter-rotation');
+    assert.ok(block.includes('--_nerv-list-rotation'), 'counter-rotation should use --_nerv-list-rotation (not --nerv-list-angle)');
   });
 
   // --- M5: Step 6: Accessibility ---
@@ -784,11 +786,20 @@ describe('List styling CSS', () => {
     assert.ok(match[0].includes('margin-left: 0'), 'non-contained rotated nested list should override margin-left to 0');
   });
 
-  it('B48: Non-contained rotated nested list uses sin() in translateX expression', () => {
+  it('B48: Non-contained rotated nested list uses sin() with --_nerv-list-rotation', () => {
     const re = /\.nerv-list-angled\s*>\s*li\s*>\s*\.nerv-list:not\(\.nerv-list-contained\)[^{]*\{[^}]*\}/;
     const match = css.match(re);
     assert.ok(match, '.nerv-list-angled > li > .nerv-list:not(.nerv-list-contained) rule not found');
     assert.ok(match[0].includes('sin('), 'non-contained rotated nested list translateX should use sin() for trig compensation');
+    assert.ok(match[0].includes('--_nerv-list-rotation'), 'sin() should reference --_nerv-list-rotation (not --nerv-list-angle)');
+  });
+
+  it('B49: Base nested list rule has negative margin-bottom to compensate for parent padding', () => {
+    const re = /\.nerv-list\s*>\s*li\s*>\s*\.nerv-list\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list > li > .nerv-list rule not found');
+    assert.ok(match[0].includes('margin-bottom'), 'nested .nerv-list should have margin-bottom');
+    assert.ok(match[0].includes('margin-bottom: -0.3em'), 'nested .nerv-list margin-bottom should be -0.3em');
   });
 });
 

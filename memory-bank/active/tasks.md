@@ -141,3 +141,4 @@ CSS `sin()` function (CSS Values and Units Level 4) — verified:
 - [x] Preflight — PASS. Convention-compliant, no conflicts, CSS sin() validated.
 - [x] Build — PASS. 2/2 steps, 5 new tests (B44–B48), 357/357 pass. No deviations.
 - [x] QA — PASS. Clean: no KISS/DRY/YAGNI/completeness/regression/integrity/documentation issues.
+- [x] Build (rework-2) — operator found two remaining issues: (1) last-child→next-parent spacing too large, (2) rotated nesting unchanged because `--nerv-list-angle` resets to 0deg on nested `.nerv-list`. Fixed with `margin-bottom: -0.3em` and new `--_nerv-list-rotation` internal property. 6 new/modified tests (B40, B41, B48 updated; B49 added), 358/358 pass. Browser-verified.

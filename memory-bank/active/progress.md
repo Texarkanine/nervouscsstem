@@ -18,3 +18,4 @@ Overhaul list nesting in `_list.scss` — fix contained sublists and indented no
 - **2026-03-29**: Rework build PASS. 2/2 steps, 5 new tests (B44–B48). Bug 1: `calc(gap + 0.3em)` + contained override. Bug 2: `translateX` with `sin()` compensation + `margin-left: 0`. 357/357 tests pass. No deviations from plan.
 - **2026-03-29**: Rework QA PASS. Clean — no semantic issues found across all 7 QA constraints.
 - **2026-03-29**: Rework reflect complete. Zero-iteration build confirmed. CSS `sin()` passthrough pattern documented as reusable for M8.
+- **2026-03-29**: Rework-2 build. Operator found two remaining issues: (1) last-child→next-parent spacing (fixed with `margin-bottom: -0.3em`), (2) rotated nesting unchanged because `--nerv-list-angle` resets to `0deg` on nested `.nerv-list` (fixed with `--_nerv-list-rotation` internal property). 358/358 tests pass. Browser-verified all modes.
