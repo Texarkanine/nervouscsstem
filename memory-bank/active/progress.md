@@ -17,3 +17,4 @@ Overhaul list nesting in `_list.scss` — fix contained sublists and indented no
 - **2026-03-29**: Rework preflight PASS. Convention-compliant, specificity cascade verified, para+nesting interaction confirmed safe, CSS sin() passthrough validated.
 - **2026-03-29**: Rework build PASS. 2/2 steps, 5 new tests (B44–B48). Bug 1: `calc(gap + 0.3em)` + contained override. Bug 2: `translateX` with `sin()` compensation + `margin-left: 0`. 357/357 tests pass. No deviations from plan.
 - **2026-03-29**: Rework QA PASS. Clean — no semantic issues found across all 7 QA constraints.
+- **2026-03-29**: Rework reflect complete. Zero-iteration build confirmed. CSS `sin()` passthrough pattern documented as reusable for M8.
