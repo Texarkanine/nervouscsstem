@@ -126,6 +126,21 @@ None — implementation approach is clear. Key architectural decisions resolved 
 
 - B43 (regression) covers integration: non-nested list, bar-meter, label-box, segment-display selectors all still present after changes.
 
+## Browser Smoke Testing
+
+During build, use the browser MCP to visually verify changes at key checkpoints. After each `npm run build`, reload `http://localhost:8000/ref/ref-lists.html` and screenshot the relevant section.
+
+**Baseline (pre-build):** The existing nesting is visibly broken:
+- "Power Grid" → "District 01" / "District 02" are flat, un-contained items with no visual hierarchy
+- "L Arm" under "LCL Circulation" has zero indentation — renders as a peer, not a child
+
+**Checkpoints:**
+- **After step 1** (clip-path refactor): Screenshot all rows. All existing shapes must look pixel-identical to baseline — this is a pure refactor with no visual change.
+- **After step 2** (nesting detection): Screenshot the first column. "District 01/02" should be indented under "Power Grid" with the parent item's shape visible above them. "L Arm" should be indented under "LCL Circulation".
+- **After step 3** (contained mode): Screenshot the contained demo. "Power Grid" shape should visually wrap its children.
+- **After step 5** (rotation × nesting): Screenshot the rotations row. Nested sublists in angled items should read horizontally (counter-rotated).
+- **After step 7** (ref page update): Full-page screenshot. All new nesting demos should render correctly across shapes, fills, and rotations.
+
 ## Implementation Plan
 
 1. **Refactor: Extract `--nerv-list-clip` custom property**
@@ -139,6 +154,7 @@ None — implementation approach is clear. Key architectural decisions resolved 
       - `.nerv-list-para`: add `--nerv-list-clip: none` (para uses skewX, not clip-path)
     - Tests: B24–B28
     - Verify: existing B1–B23 still pass (backward compatible)
+    - 🖥️ Browser smoke: screenshot all rows, confirm zero visual change from baseline
 
 2. **Add nesting custom properties + detection rules**
     - Files: `src/_list.scss`, `test/components.test.mjs`
@@ -148,6 +164,7 @@ None — implementation approach is clear. Key architectural decisions resolved 
       - Add `.nerv-list > li:has(> .nerv-list)::before` rule: `content: ''; position: absolute; top: 0; left: 0; right: 0; height: var(--nerv-list-item-height); clip-path: var(--nerv-list-clip); background: rgba(var(--nerv-list-color-rgb), 0.5); z-index: -1;`
       - Add `.nerv-list > li > .nerv-list` rule: `margin-left: var(--nerv-list-indent); margin-top: var(--nerv-list-gap);`
     - Tests: B29–B34
+    - 🖥️ Browser smoke: screenshot first column — "District 01/02" indented under "Power Grid", "L Arm" indented under "LCL Circulation"
 
 3. **Add contained mode**
     - Files: `src/_list.scss`, `test/components.test.mjs`
@@ -155,6 +172,7 @@ None — implementation approach is clear. Key architectural decisions resolved 
       - Add `.nerv-list > li:has(> .nerv-list-contained)::before` rule: `bottom: 0; height: auto;`
       - Add `.nerv-list > li > .nerv-list-contained` rule: indent + spacing adjustments for contained context
     - Tests: B35–B36
+    - 🖥️ Browser smoke: screenshot contained demo — parent shape wraps children
 
 4. **Fill mode overrides for nesting**
     - Files: `src/_list.scss`, `test/components.test.mjs`
@@ -172,6 +190,7 @@ None — implementation approach is clear. Key architectural decisions resolved 
       - `.nerv-list-angled-reverse > li > .nerv-list`: same counter-rotation
       - Visual positioning adjustments as needed during implementation
     - Tests: B40–B41
+    - 🖥️ Browser smoke: screenshot rotations row — nested sublists in angled items readable
 
 6. **Accessibility**
     - Files: `src/_list.scss`, `test/components.test.mjs`
@@ -187,6 +206,7 @@ None — implementation approach is clear. Key architectural decisions resolved 
       - Add nesting section: demos for contained × (hex, rect, para)
       - Add nesting section: demos for angled × indented, angled × contained
     - Tests: visual verification + B43 regression
+    - 🖥️ Browser smoke: full-page screenshot — all nesting demos render correctly
 
 8. **Documentation update**
     - Files: `src/_list.scss` (doc comment header)
