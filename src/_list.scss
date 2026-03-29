@@ -66,6 +66,8 @@
     var(--nerv-list-inset) 100%,
     0% 50%
   );
+  --nerv-list-indent: 1.5em;
+  --nerv-list-item-height: 1.8em;
 
   list-style: none;
   padding: 0;
@@ -208,7 +210,70 @@
 }
 
 // ---------------------------------------------------------------------------
-// 5. Color variants (auto-generated from glow-flagged tokens)
+// 5. Nesting (indented + contained)
+// ---------------------------------------------------------------------------
+
+// Nesting detection: a parent li that directly contains a nested .nerv-list.
+// The li itself becomes transparent; a ::before pseudo takes over the visual
+// shape so the nested list can render below it without being clipped.
+.nerv-list > li:has(> .nerv-list) {
+  clip-path: none;
+  background: transparent;
+  border: 0;
+  position: relative;
+}
+
+.nerv-list > li:has(> .nerv-list)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nerv-list-item-height);
+  clip-path: var(--nerv-list-clip);
+  background: rgba(var(--nerv-list-color-rgb), 0.5);
+  z-index: -1;
+}
+
+// Indented mode (default): nested list shifts right
+.nerv-list > li > .nerv-list {
+  margin-left: var(--nerv-list-indent);
+  margin-top: var(--nerv-list-gap);
+}
+
+// Contained mode: parent shape wraps both its text and nested children.
+// The ::before expands to cover the full li height instead of just item-height.
+.nerv-list > li:has(> .nerv-list-contained)::before {
+  bottom: 0;
+  height: auto;
+}
+
+.nerv-list > li > .nerv-list-contained {
+  margin-left: var(--nerv-list-indent);
+  margin-top: var(--nerv-list-gap);
+  margin-bottom: 0.3em;
+}
+
+// Fill mode × nesting: override ::before visuals to match the fill mode
+.nerv-list-bordered > li:has(> .nerv-list)::before {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-outline > li:has(> .nerv-list)::before {
+  background: var(--nerv-bg);
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-solid > li:has(> .nerv-list)::before {
+  background: var(--nerv-list-color);
+}
+
+.nerv-list-solid > li:has(> .nerv-list) {
+  color: var(--nerv-bg);
+}
+
+// ---------------------------------------------------------------------------
+// 6. Color variants (auto-generated from glow-flagged tokens)
 // ---------------------------------------------------------------------------
 
 @each $name, $vals in tokens.$nerv-colors {

@@ -632,40 +632,86 @@ describe('List styling CSS', () => {
   // --- M5: Step 2: Nesting detection + indented mode ---
 
   it('B29: :has( selector present in compiled CSS for nesting detection', () => {
+    assert.match(css, /:has\(/, ':has( selector should be present in compiled CSS');
+    assert.match(css, /\.nerv-list[^}]*:has\(/, ':has() should be used in a .nerv-list context');
   });
 
   it('B30: Nested-parent li has clip-path: none and background: transparent', () => {
+    const re = /\.nerv-list\s*>\s*li:has\(\s*>\s*\.nerv-list\s*\)\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list > li:has(> .nerv-list) rule not found');
+    assert.ok(match[0].includes('clip-path: none'), 'nested-parent li should set clip-path: none');
+    assert.ok(match[0].includes('background: transparent'), 'nested-parent li should set background: transparent');
   });
 
   it('B31: ::before on nested-parent item has clip-path referencing --nerv-list-clip', () => {
+    const re = /\.nerv-list\s*>\s*li:has\(\s*>\s*\.nerv-list\s*\)::before\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list > li:has(> .nerv-list)::before rule not found');
+    assert.ok(match[0].includes('--nerv-list-clip'), '::before should reference --nerv-list-clip');
+    assert.ok(match[0].includes('position: absolute'), '::before should be absolutely positioned');
   });
 
   it('B32: --nerv-list-indent custom property declared on .nerv-list', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-list-indent'), '.nerv-list should declare --nerv-list-indent');
   });
 
   it('B33: --nerv-list-item-height custom property declared on .nerv-list', () => {
+    const idx = css.indexOf('.nerv-list {');
+    assert.ok(idx !== -1, '.nerv-list block not found');
+    const block = css.slice(idx, idx + 800);
+    assert.ok(block.includes('--nerv-list-item-height'), '.nerv-list should declare --nerv-list-item-height');
   });
 
   it('B34: Nested .nerv-list inside li gets margin-left for indent', () => {
+    const re = /\.nerv-list\s*>\s*li\s*>\s*\.nerv-list\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list > li > .nerv-list rule not found');
+    assert.ok(match[0].includes('margin-left'), 'nested .nerv-list should have margin-left for indent');
   });
 
   // --- M5: Step 3: Contained mode ---
 
   it('B35: .nerv-list-contained class exists in compiled CSS', () => {
+    assert.match(css, /\.nerv-list-contained\b/, '.nerv-list-contained class should exist in compiled CSS');
   });
 
   it('B36: :has(> .nerv-list-contained) adjusts ::before to cover full item', () => {
+    const re = /li:has\(\s*>\s*\.nerv-list-contained\s*\)::before\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, 'li:has(> .nerv-list-contained)::before rule not found');
+    const block = match[0];
+    assert.ok(
+      block.includes('bottom: 0') || block.includes('inset: 0') || block.includes('height: auto'),
+      '::before should extend to cover full item (bottom: 0, inset: 0, or height: auto)'
+    );
   });
 
   // --- M5: Step 4: Fill × nesting ---
 
   it('B37: Bordered + nesting: ::before has border property', () => {
+    const re = /\.nerv-list-bordered\s*>\s*li:has\([^)]*\)::before\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-bordered > li:has(...)::before rule not found');
+    assert.ok(match[0].includes('border'), 'bordered nesting ::before should have border');
   });
 
   it('B38: Outline + nesting: ::before has border and --nerv-bg background', () => {
+    const re = /\.nerv-list-outline\s*>\s*li:has\([^)]*\)::before\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-outline > li:has(...)::before rule not found');
+    assert.ok(match[0].includes('border'), 'outline nesting ::before should have border');
+    assert.ok(match[0].includes('--nerv-bg'), 'outline nesting ::before should reference --nerv-bg');
   });
 
   it('B39: Solid + nesting: ::before has opaque --nerv-list-color background', () => {
+    const re = /\.nerv-list-solid\s*>\s*li:has\([^)]*\)::before\s*\{[^}]*\}/;
+    const match = css.match(re);
+    assert.ok(match, '.nerv-list-solid > li:has(...)::before rule not found');
+    assert.ok(match[0].includes('--nerv-list-color'), 'solid nesting ::before should reference --nerv-list-color');
   });
 
   // --- M5: Step 5: Rotation × nesting ---
