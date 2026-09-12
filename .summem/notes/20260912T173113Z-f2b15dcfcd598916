@@ -1,0 +1,1 @@
+When dist is gitignored, skip release-please RP-branch amend jobs; node strategy already patches package-lock.json version fields

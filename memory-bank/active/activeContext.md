@@ -1,21 +1,16 @@
 # Active Context
 
 ## Current Task: nerv-v01-m2-release-please-npm-gh-assets
-**Phase:** QA - COMPLETE (PASS)
+**Phase:** REFLECT - COMPLETE
 
 ## What Was Done
 
-- Files created: `test/publish-contract.test.mjs`, `release-please-config.json`, `.release-please-manifest.json`, `.github/workflows/release-please.yaml`, `README.md`
-- Files modified: `package.json` (public, `0.0.1`, `files`/`main`/`style`/`publishConfig`/`repository`), `package-lock.json` (root and `packages[""]` version `0.0.1`)
-- TDD: pack-contract tests went red on empty `files` + `private: true` + empty `repository.url`, then green
-- Tests: 357 passing (4 new). `npm run lint` reports 7 stylelint errors in generated `dist/nerv.css` (Antonio quotes, `0px`); not introduced here and `dist/` is gitignored
-- No creative-phase docs. No `extra-files`. `dist/` still gitignored. Version left at `0.0.1` for the operator's hand-publish
-
-## Deviations from Plan
-
-None — built to plan. Did not add a `verify-cdn` job (preflight advisory only).
+- Wrote `memory-bank/active/reflection/reflection-nerv-v01-m2-release-please-npm-gh-assets.md`
+- Surgical `techContext.md` update: dist is gitignored, release workflow pointer, pack-contract test
+- productContext and systemPatterns unchanged
 
 ## Next Step
 
-- Proceed to `/niko-reflect`.
-- After merge: operator hand-publishes **0.0.1**, attaches trusted publisher to `release-please.yaml` + environment `npmjs.org`, then release-please cuts **0.1.0**
+- This is an L4 sub-run (`memory-bank/active/milestones.md` exists). Run `/niko` to continue to the next milestone.
+- Do not check off M2 here; that is `/niko` Step 2a.
+- After merge: operator hand-publishes **0.0.1**, attaches trusted publisher, then release-please cuts **0.1.0**

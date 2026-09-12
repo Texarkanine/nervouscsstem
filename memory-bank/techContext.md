@@ -16,12 +16,13 @@ Pure-CSS design system with minimal vanilla JS orchestration. SCSS (Dart Sass) i
 - `npm run build:min` — compressed output to `dist/nerv.min.css`
 - `npm run watch` — file watcher for development
 - `nerv.js` is vanilla JS — copied to `dist/` without compilation
+- `dist/` is gitignored. CI builds it before `npm publish` and before attaching `dist/nerv.css` / `dist/nerv.js` to the GitHub Release. Release automation is `.github/workflows/release-please.yaml` (npm trusted publisher matches that filename; GitHub environment `npmjs.org`).
 
 ## Testing Process
 
 Visual verification against reference HTML pages in `ref/`. Each page (`ref-foundation.html` through `ref-alert-cascade.html`) tests a cumulative subset of the design system's layers.
 
-Automated checks via Node.js built-in test runner (`node --test`) in `test/`. Stylelint enforces `.nerv-` prefix convention and is configured in `.stylelintrc.json`. Test and lint commands are defined in `package.json`.
+Automated checks via Node.js built-in test runner (`node --test`) in `test/`. Stylelint enforces `.nerv-` prefix convention and is configured in `.stylelintrc.json`. Test and lint commands are defined in `package.json`. The npm tarball must contain `dist/nerv.css` and `dist/nerv.js` from `dist/` and not other dist artifacts; that contract is `test/publish-contract.test.mjs`.
 
 ## Design System
 

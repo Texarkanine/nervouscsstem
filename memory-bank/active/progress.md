@@ -99,3 +99,13 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
     - Accepted the implementation as-is; no Build or Plan rework is required
 * Insights
     - The preflight `verify-cdn` suggestion remains advisory; no other semantic findings were identified
+
+## 2026-09-12 - REFLECT - COMPLETE
+
+* Work completed
+    - Wrote the M2 reflection
+    - Reconciled persistent files: surgical `techContext.md` (pack contract + gitignored `dist/` + release workflow); productContext and systemPatterns skipped
+* Decisions made
+    - Do not mark M2 complete in `milestones.md` from this sub-run; `/niko` Step 2a owns that
+* Insights
+    - Two milestones in a row planned tests for files the customer never receives. That is the process pattern to stop.
