@@ -23,16 +23,16 @@ jobs:
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       # A GitHub App token (rather than the default GITHUB_TOKEN) is used so the
-      # release PR triggers CI like a normal PR. The operator provisions APP_ID,
-      # APP_PRIVATE_KEY, the npmjs.org GitHub environment, and the npm trusted
+      # release PR triggers CI like a normal PR. The operator provisions HELPER_APP_ID,
+      # HELPER_APP_PRIVATE_KEY, the npmjs.org GitHub environment, and the npm trusted
       # publisher (workflow filename release-please.yaml, environment npmjs.org)
       # after merge.
       - name: Generate GitHub App Token
         id: generate-token
         uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ vars.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ vars.HELPER_APP_ID }}
+          private-key: ${{ secrets.HELPER_APP_PRIVATE_KEY }}
 
       - uses: googleapis/release-please-action@v5
         id: release
