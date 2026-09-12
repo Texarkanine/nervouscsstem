@@ -65,3 +65,13 @@ Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap w
     - PASS with advisories: `python3` >= 3.11 PATH requirement and pre-existing stylelint errors are documented, non-blocking
 * Insights
     - `summem init` is confirmed side-effect-free in this repo; QA re-ran it live to verify the `AGENTS.md` block character-for-character
+
+## 2026-09-12 - REFLECT - COMPLETE
+
+* Work completed
+    - Wrote `memory-bank/active/reflection/reflection-nerv-v01-m1-summem-niko-bootstrap.md`
+    - Persistent files unchanged
+* Decisions made
+    - The first plan's test suite was the mistake; the install itself was the milestone
+* Insights
+    - Test what we ship. Contract tests only for our product, and skip them when semver already carries the signal
