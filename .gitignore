@@ -1,0 +1,4 @@
+node_modules/
+dist/
+**/.summem/__pycache__/
+

@@ -1,0 +1,123 @@
+/// _bar-meter.scss — Discrete colored bar meter component.
+///
+/// Flex row of small blocks with color-mix() gradient via SCSS @for loop,
+/// zone markers via ::after, fill level via data-fill / .nerv-bar-active class.
+///
+/// Classes:
+///   .nerv-bar-meter           — container (flex row)
+///   .nerv-bar-meter-bar       — individual bar segments
+///   .nerv-bar-active           — active state for individual bars
+///   .nerv-bar-meter-vertical  — modifier for vertical (column-reverse) orientation
+///   .nerv-bar-thermal         — preset: green → red (canonical NGE gauge gradient)
+///   .nerv-bar-energy          — preset: cyan → blue (power/operational readouts)
+///   .nerv-bar-warning         — preset: amber → red (warning/damage indicators)
+///   .nerv-bar-field           — preset: void → amber (AT field / boundary extent)
+///
+/// Custom properties (container):
+///   --nerv-bar-from   Gradient start color token  (default: --nerv-cyan)
+///   --nerv-bar-to     Gradient end color token    (default: --nerv-blue)
+///   --nerv-bar-gap    Gap between bar segments    (default: 2px)
+///
+/// Custom properties (bar):
+///   --nerv-bar-width  Preferred segment size      (default: 4px min, flex to fill)
+///   --nerv-bar-pct    Gradient position 0–100%    (set by SCSS loop or JS)
+///
+/// Tokens consumed:
+///   --nerv-cyan, --nerv-blue (default gradient endpoints — data-driven)
+///   --nerv-primary-rgb (zone marker label color, follows ambiance)
+
+@use 'sass:math';
+
+$nerv-bar-count: 50;
+
+.nerv-bar-meter {
+  --nerv-bar-from: var(--nerv-cyan);
+  --nerv-bar-to: var(--nerv-blue);
+  --nerv-bar-gap: 2px;
+
+  display: flex;
+  align-items: stretch;
+  gap: var(--nerv-bar-gap);
+  height: 1.2rem;
+}
+
+.nerv-bar-meter-bar {
+  position: relative;
+  flex: 1 0 var(--nerv-bar-width, 0px);
+  min-width: var(--nerv-bar-width, 4px);
+  background: transparent;
+  transition: background-color 0.1s;
+
+  &.nerv-bar-active {
+    background-color: color-mix(in srgb, var(--nerv-bar-from), var(--nerv-bar-to) var(--nerv-bar-pct, 0%));
+  }
+}
+
+@for $i from 1 through $nerv-bar-count {
+  $pct: math.div(math.round(math.div($i - 1, $nerv-bar-count - 1) * 10000), 100);
+
+  .nerv-bar-meter-bar:nth-child(#{$i}) {
+    --nerv-bar-pct: #{$pct}%;
+  }
+}
+
+.nerv-bar-meter-vertical {
+  flex-direction: column-reverse;
+  width: 1.2rem;
+  height: auto;
+
+  .nerv-bar-meter-bar {
+    min-width: unset;
+    min-height: var(--nerv-bar-width, 4px);
+    flex: 1 0 var(--nerv-bar-width, 0px);
+  }
+
+  .nerv-bar-meter-bar[data-zone]::after {
+    top: 50%;
+    bottom: auto;
+    left: calc(100% + 0.4em);
+    transform: translateY(-50%);
+  }
+}
+
+.nerv-bar-meter-bar[data-zone]::after {
+  content: attr(data-zone);
+  position: absolute;
+  top: -1.4em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(var(--nerv-primary-rgb), 0.6);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.nerv-bar-thermal {
+  --nerv-bar-from: var(--nerv-green);
+  --nerv-bar-to: var(--nerv-red);
+}
+
+.nerv-bar-energy {
+  --nerv-bar-from: var(--nerv-cyan);
+  --nerv-bar-to: var(--nerv-blue);
+}
+
+.nerv-bar-warning {
+  --nerv-bar-from: var(--nerv-amber);
+  --nerv-bar-to: var(--nerv-red);
+}
+
+.nerv-bar-field {
+  --nerv-bar-from: var(--nerv-void);
+  --nerv-bar-to: var(--nerv-amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-bar-meter-bar {
+    transition: none;
+  }
+}

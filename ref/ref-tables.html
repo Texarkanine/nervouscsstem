@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Tables — ref-tables</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nerv-void);
+      color: var(--nerv-amber);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 0;
+    }
+
+    .ref-page-title {
+      font-family: 'Shippori Mincho B1', serif;
+      font-size: 1.4rem;
+      color: var(--nerv-amber);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .ref-table-row {
+      width: 1100px;
+      max-width: 98vw;
+      margin-top: 2rem;
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .ref-table-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+      min-width: 220px;
+      max-width: 320px;
+    }
+
+    .ref-table-wide {
+      min-width: 450px;
+      max-width: 600px;
+    }
+
+    .ref-table-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      color: rgba(var(--nerv-amber-rgb), 0.5);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .ref-row-title {
+      width: 1100px;
+      max-width: 98vw;
+      margin-top: 2.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: rgba(var(--nerv-amber-rgb), 0.35);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(var(--nerv-amber-rgb), 0.15);
+      padding-bottom: 0.3rem;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="ref-page-title nerv-type-display">テーブル表示 Table Components</div>
+
+  <!-- ═══ Section 1: Fill & Border Modes on base rect tables ═══ -->
+  <div class="ref-row-title">Fill &amp; Border Modes (base rectangular cells)</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group">
+      <span class="ref-table-label">Translucent Fill (default) — Amber</span>
+      <table class="nerv-table nerv-table-amber">
+        <thead><tr><th>System</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Life Support</td><td>Nominal</td></tr>
+          <tr><td>Power Grid</td><td>Active</td></tr>
+          <tr><td>LCL Circ.</td><td>Online</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ref-table-group">
+      <span class="ref-table-label">Bordered (fill + phosphor) — Blue</span>
+      <table class="nerv-table nerv-table-bordered nerv-table-blue">
+        <thead><tr><th>Section</th><th>Access</th></tr></thead>
+        <tbody>
+          <tr><td>Terminal Dogma</td><td>Restricted</td></tr>
+          <tr><td>Central Dogma</td><td>Authorized</td></tr>
+          <tr><td>Command Center</td><td>Open</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ref-table-group">
+      <span class="ref-table-label">Outline (border only) — Red</span>
+      <table class="nerv-table nerv-table-outline nerv-table-red">
+        <thead><tr><th>Alert</th><th>Level</th></tr></thead>
+        <tbody>
+          <tr><td>Pattern Blue</td><td>Critical</td></tr>
+          <tr><td>AT Field Loss</td><td>Danger</td></tr>
+          <tr><td>Sync Abort</td><td>Emergency</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ref-table-group">
+      <span class="ref-table-label">Solid (opaque fill) — Green</span>
+      <table class="nerv-table nerv-table-solid nerv-table-green">
+        <thead><tr><th>Phase</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Launch Prep</td><td>Complete</td></tr>
+          <tr><td>Sortie</td><td>Active</td></tr>
+          <tr><td>Recovery</td><td>Standby</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Section 2: Color Variants ═══ -->
+  <div class="ref-row-title">Color Variants (auto-generated from $nerv-colors)</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group">
+      <span class="ref-table-label">Cyan</span>
+      <table class="nerv-table nerv-table-cyan">
+        <tr><td>Sync Rate</td><td>78.3%</td></tr>
+        <tr><td>A10 Nerve</td><td>Active</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group">
+      <span class="ref-table-label">Orange — Bordered</span>
+      <table class="nerv-table nerv-table-bordered nerv-table-orange">
+        <tr><td>Entry Plug</td><td>Inserted</td></tr>
+        <tr><td>LCL Flood</td><td>Complete</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group">
+      <span class="ref-table-label">Steel — Outline</span>
+      <table class="nerv-table nerv-table-outline nerv-table-steel">
+        <tr><td>Armor Plate</td><td>Intact</td></tr>
+        <tr><td>Hull Breach</td><td>None</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group">
+      <span class="ref-table-label">Red-Deep — Solid</span>
+      <table class="nerv-table nerv-table-solid nerv-table-red-deep">
+        <tr><td>Berserk</td><td>Imminent</td></tr>
+        <tr><td>Control</td><td>Lost</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Section 3: Triangle Rows ═══ -->
+  <div class="ref-row-title">Triangle Rows (clip-path — borders clipped away)</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Table-Level Triangle — Amber — Borderless</span>
+      <table class="nerv-table nerv-table-borderless nerv-table-triangle nerv-table-amber">
+        <tr><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr>
+        <tr><td>01</td><td>02</td><td>03</td><td>04</td><td>05</td><td>06</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Row-Level Triangle — Red Solid — Borderless</span>
+      <table class="nerv-table nerv-table-borderless nerv-table-solid nerv-table-red">
+        <tr class="nerv-table-triangle"><td>△01</td><td>△02</td><td>△03</td><td>△04</td></tr>
+        <tr class="nerv-table-triangle"><td>△05</td><td>△06</td><td>△07</td><td>△08</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Section 4: Parallelogram Rows ═══ -->
+  <div class="ref-row-title">Parallelogram Rows (skewX — borders survive)</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Cyan — Alternating (default)</span>
+      <table class="nerv-table nerv-table-para nerv-table-cyan nerv-table-ruled">
+        <tr><td>Sector 7</td><td>Active</td><td>Nominal</td><td>Clear</td></tr>
+        <tr><td>Sector 9</td><td>Standby</td><td>Warning</td><td>Monitor</td></tr>
+        <tr><td>Sector 12</td><td>Offline</td><td>N/A</td><td>Locked</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Orange — Uniform (all same skew)</span>
+      <table class="nerv-table nerv-table-para nerv-table-uniform nerv-table-orange nerv-table-ruled">
+        <tr><td>Entry Plug</td><td>Inserted</td><td>Sealed</td><td>Ready</td></tr>
+        <tr><td>LCL Flood</td><td>Complete</td><td>Pressure OK</td><td>Go</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Green — Bordered (borders on ::before)</span>
+      <table class="nerv-table nerv-table-para nerv-table-bordered nerv-table-green">
+        <tr><td>A10 Nerve</td><td>Active</td><td>98.2%</td><td>Stable</td></tr>
+        <tr><td>Sync Rate</td><td>78.3%</td><td>Rising</td><td>Optimal</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Blue — Outline</span>
+      <table class="nerv-table nerv-table-para nerv-table-outline nerv-table-blue">
+        <tr><td>Hull Int.</td><td>100%</td><td>Armor</td><td>Intact</td></tr>
+        <tr><td>Pwr Cell</td><td>04:58</td><td>Drain</td><td>Normal</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Red Solid — Ruled (thick)</span>
+      <table class="nerv-table nerv-table-para nerv-table-solid nerv-table-red nerv-table-ruled" style="--nerv-table-rule-width: 3px">
+        <tr><td>ALERT</td><td>Berserk</td><td>Control</td><td>Lost</td></tr>
+        <tr><td>EVAC</td><td>Sector 3</td><td>Status</td><td>Critical</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Amber — Ruled (red color)</span>
+      <table class="nerv-table nerv-table-para nerv-table-amber nerv-table-ruled" style="--nerv-table-rule-color: var(--nerv-red); --nerv-table-rule-width: 5px">
+        <tr><td>Cage 01</td><td>Open</td><td>EVA-01</td><td>Standby</td></tr>
+        <tr><td>Cage 02</td><td>Sealed</td><td>EVA-02</td><td>Deploy</td></tr>
+        <tr><td>Cage 05</td><td>Locked</td><td>EVA-05</td><td>Maintenance</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Section 5: Triangle + Uniform ═══ -->
+  <div class="ref-row-title">Triangle Uniform Modifier</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Triangle — Cyan — Uniform (all point up)</span>
+      <table class="nerv-table nerv-table-borderless nerv-table-triangle nerv-table-uniform nerv-table-cyan">
+        <tr><td>▲1</td><td>▲2</td><td>▲3</td><td>▲4</td><td>▲5</td><td>▲6</td></tr>
+        <tr><td>▲7</td><td>▲8</td><td>▲9</td><td>▲10</td><td>▲11</td><td>▲12</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Triangle — Red Solid — Alternating (default)</span>
+      <table class="nerv-table nerv-table-borderless nerv-table-triangle nerv-table-solid nerv-table-red">
+        <tr><td>△01</td><td>▽02</td><td>△03</td><td>▽04</td></tr>
+        <tr><td>△05</td><td>▽06</td><td>△07</td><td>▽08</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Section 6: Mixed Tables ═══ -->
+  <div class="ref-row-title">Mixed Tables</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Mixed Shapes — Triangle → Para → Plain — Amber</span>
+      <table class="nerv-table nerv-table-amber">
+        <tr class="nerv-table-triangle"><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td></tr>
+        <tr class="nerv-table-triangle"><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td><td>△ Tri</td></tr>
+        <tr class="nerv-table-para"><td>▱ Para</td><td>▱ Para</td><td>▱ Para</td><td>▱ Para</td></tr>
+        <tr><td>▭ Plain</td><td>▭ Plain</td><td>▭ Plain</td><td>▭ Plain</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Mixed Colors — Orange table, per-cell green/red overrides</span>
+      <table class="nerv-table nerv-table-bordered nerv-table-orange">
+        <thead><tr><th>Unit</th><th>Status</th><th>Sync</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>EVA-01</td><td class="nerv-table-green">Online</td><td>98.2%</td><td>Standby</td></tr>
+          <tr><td>EVA-02</td><td class="nerv-table-red">Offline</td><td class="nerv-table-red">0.0%</td><td class="nerv-table-red">Emergency</td></tr>
+          <tr><td>EVA-05</td><td class="nerv-table-green">Online</td><td>72.1%</td><td>Deploy</td></tr>
+          <tr><td>EVA-08</td><td>Standby</td><td class="nerv-table-green">88.7%</td><td>Ready</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ Section 7: Per-Row Color Overrides ═══ -->
+  <div class="ref-row-title">Per-Row Color Overrides</div>
+  <div class="ref-table-row">
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Para — Cyan table, red alert row</span>
+      <table class="nerv-table nerv-table-para nerv-table-ruled nerv-table-cyan">
+        <tr><td>Sector 1</td><td>Clear</td><td>Normal</td><td>Patrol</td></tr>
+        <tr class="nerv-table-red"><td>Sector 3</td><td>Breach</td><td>Critical</td><td>Evacuate</td></tr>
+        <tr><td>Sector 5</td><td>Clear</td><td>Normal</td><td>Patrol</td></tr>
+        <tr><td>Sector 7</td><td>Clear</td><td>Normal</td><td>Patrol</td></tr>
+      </table>
+    </div>
+
+    <div class="ref-table-group ref-table-wide">
+      <span class="ref-table-label">Bordered — Orange table, green status row</span>
+      <table class="nerv-table nerv-table-bordered nerv-table-orange">
+        <thead><tr><th>Phase</th><th>Target</th><th>Status</th><th>ETA</th></tr></thead>
+        <tbody>
+          <tr><td>Launch</td><td>EVA-01</td><td>Pending</td><td>00:45</td></tr>
+          <tr class="nerv-table-green"><td>Deploy</td><td>EVA-02</td><td>Complete</td><td>—</td></tr>
+          <tr><td>Recovery</td><td>EVA-05</td><td>Pending</td><td>02:10</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="../dist/nerv.js"></script>
+  <script>NERV.init();</script>
+
+</body>
+</html>

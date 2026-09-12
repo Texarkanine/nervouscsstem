@@ -1,0 +1,81 @@
+/// _magi-panel.scss — MAGI N-system consensus decision display.
+///
+/// CSS Grid layout with N .nerv-magi-system boxes and one
+/// .nerv-magi-output box, connecting lines via pseudo-elements.
+/// Uses _glow.scss mixin for box glow. JS sets grid columns from child count.
+///
+/// Classes:
+///   .nerv-magi-panel  — grid container
+///   .nerv-magi-system — individual system box (CASPER, BALTHASAR, MELCHIOR)
+///   .nerv-magi-output — consensus result box
+///
+/// Custom properties (panel):
+///   --nerv-magi-color       (default: --nerv-primary)
+///   --nerv-magi-color-rgb   (default: --nerv-primary-rgb)
+///
+/// Custom properties (system box):
+///   --nerv-magi-system-color      (default: inherits --nerv-magi-color)
+///   --nerv-magi-system-color-rgb  (default: inherits --nerv-magi-color-rgb)
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb (default panel color, follows ambiance)
+///   --nerv-border-width
+///   --nerv-bg
+///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
+
+@use 'glow';
+
+.nerv-magi-panel {
+  --nerv-magi-color: var(--nerv-primary);
+  --nerv-magi-color-rgb: var(--nerv-primary-rgb);
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1.5rem auto;
+  gap: 0;
+}
+
+.nerv-magi-system {
+  --nerv-magi-system-color: var(--nerv-magi-color);
+  --nerv-magi-system-color-rgb: var(--nerv-magi-color-rgb);
+
+  position: relative;
+  border: var(--nerv-border-width) solid var(--nerv-magi-system-color);
+  background: var(--nerv-bg);
+  padding: 0.8rem 0.6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nerv-magi-system-color);
+  @include glow.nerv-glow(--nerv-magi-system-color, --nerv-magi-system-color-rgb);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: calc(-1.5rem - var(--nerv-border-width));
+    left: 50%;
+    width: var(--nerv-border-width);
+    height: 1.5rem;
+    background: var(--nerv-magi-system-color);
+    pointer-events: none;
+  }
+}
+
+.nerv-magi-output {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  position: relative;
+  border: var(--nerv-border-width) solid var(--nerv-magi-color);
+  background: var(--nerv-bg);
+  padding: 0.8rem 0.6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nerv-magi-color);
+  text-align: center;
+  @include glow.nerv-glow(--nerv-magi-color, --nerv-magi-color-rgb);
+}

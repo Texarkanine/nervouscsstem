@@ -1,0 +1,80 @@
+/// _glitch.scss — Digital corruption glitch effect.
+///
+/// Text distortion via ::before/::after pseudo-elements with clip-path
+/// polygon slices and chromatic-aberration-like color offsets.
+///
+/// Keyframes are deliberately sparse: most of the cycle holds at rest
+/// (no transform) with rare, violent displacement bursts. step-end
+/// timing ensures zero interpolation — the element teleports between
+/// positions with no tweening, like real signal corruption.
+///
+/// The two slices run on coprime-ish durations (1x vs 1.7x) with
+/// glitch windows at different cycle positions, so they phase-drift
+/// and never fully sync.
+///
+/// Consumer contract: elements using .nerv-glitch must include a
+/// data-text attribute matching their text content:
+///   <span class="nerv-glitch" data-text="EMERGENCY">EMERGENCY</span>
+///
+/// Tokens consumed:
+///   --nerv-glitch-duration  (base cycle length, default 3s)
+///   --nerv-animation-speed  (global speed multiplier)
+
+.nerv-glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.nerv-glitch::before,
+.nerv-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.nerv-glitch::before {
+  color: var(--nerv-cyan);
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  animation: nerv-glitch-top calc(var(--nerv-glitch-duration) / var(--nerv-animation-speed)) step-end infinite;
+}
+
+.nerv-glitch::after {
+  color: var(--nerv-red);
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  animation: nerv-glitch-bottom calc(var(--nerv-glitch-duration) * 1.7 / var(--nerv-animation-speed)) step-end infinite;
+}
+
+@keyframes nerv-glitch-top {
+  0% {
+    transform: translate(0, 0);
+  }
+  30% {
+    transform: translate(-12px, -3px) skewX(9deg);
+  }
+  40% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes nerv-glitch-bottom {
+  0% {
+    transform: translate(0, 0);
+  }
+  43% {
+    transform: translate(14px, -2px) skewX(-10deg);
+  }
+  50% {
+    transform: translate(0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-glitch::before,
+  .nerv-glitch::after {
+    animation: none;
+  }
+}

@@ -1,0 +1,51 @@
+/// _status-text.scss — Large alert/status text overlays.
+///
+/// Severity-based styling with composition hooks for Phase 2 animation
+/// classes (.nerv-blink, .nerv-glitch).
+///
+/// Classes:
+///   .nerv-status-text     — base large status label
+///   .nerv-status-nominal  — green, no animation
+///   .nerv-status-caution  — amber
+///   .nerv-status-danger   — red (consumers add .nerv-blink)
+///   .nerv-status-critical — red (consumers add .nerv-glitch)
+///
+/// Tokens consumed:
+///   --nerv-green, --nerv-amber, --nerv-red
+///   --nerv-void
+///   --nerv-border-width
+
+.nerv-status-text {
+  display: inline-block;
+  padding: 0.2em 0.8em;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: calc(var(--nerv-border-width) * 2) solid currentcolor;
+}
+
+.nerv-status-nominal {
+  background: var(--nerv-green);
+  color: var(--nerv-void);
+  border-color: var(--nerv-green);
+}
+
+.nerv-status-caution {
+  background: var(--nerv-amber);
+  color: var(--nerv-void);
+  border-color: var(--nerv-amber);
+}
+
+.nerv-status-danger {
+  background: var(--nerv-red);
+  color: var(--nerv-void);
+  border-color: var(--nerv-red);
+}
+
+.nerv-status-critical {
+  background: var(--nerv-red);
+  color: var(--nerv-void);
+  border-color: var(--nerv-red);
+}

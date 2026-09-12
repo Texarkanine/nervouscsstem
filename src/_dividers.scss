@@ -1,0 +1,44 @@
+/// _dividers.scss — Zone-separator divider rules.
+///
+/// Horizontal and vertical dividers defaulting to --nerv-primary (ambiance).
+/// Color variant classes (.nerv-divider-{name}) are auto-generated from
+/// the $nerv-colors map for every glow-flagged color.
+///
+///   .nerv-divider          — horizontal divider (follows --nerv-primary)
+///   .nerv-divider-vertical — vertical orientation
+///   .nerv-divider-{color}  — color variant (auto-generated per glow-flagged token)
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb  (default divider color)
+///   --nerv-border-width                 (divider thickness)
+///   --nerv-glow-spread, --nerv-glow-intensity (via glow mixin)
+
+@use 'sass:list';
+@use 'glow';
+@use 'tokens';
+
+.nerv-divider {
+  border: none;
+  height: var(--nerv-border-width);
+  background: var(--nerv-primary);
+  @include glow.nerv-glow(--nerv-primary, --nerv-primary-rgb);
+}
+
+.nerv-divider-vertical {
+  width: var(--nerv-border-width);
+  height: auto;
+  min-height: 100%;
+  background: var(--nerv-primary);
+  @include glow.nerv-glow(--nerv-primary, --nerv-primary-rgb);
+}
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-divider-#{$name} {
+      background: var(--nerv-#{$name});
+      @include glow.nerv-glow(--nerv-#{$name}, --nerv-#{$name}-rgb);
+    }
+  }
+}

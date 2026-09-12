@@ -1,0 +1,1 @@
+Test what we ship to consumers; do not TDD our own CI unless it is brittle or critical

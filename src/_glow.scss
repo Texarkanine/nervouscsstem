@@ -1,0 +1,76 @@
+/// _glow.scss — Phosphor bloom glow effects.
+///
+/// Uses tokens.$nerv-colors map to auto-generate per-color glow classes:
+///   `.nerv-glow-{name}`      — box-shadow bloom
+///   `.nerv-glow-text-{name}` — text-shadow bloom (pair with `.nerv-text-{name}` for color)
+///   `.nerv-glow-drop-{name}` — filter: drop-shadow bloom (follows rendered shape)
+///
+/// The --nerv-glow-intensity token (defined in _tokens.scss) scales all
+/// glow effects and is reduced under prefers-contrast: more.
+
+@use 'sass:list';
+@use 'tokens';
+
+/// Box-shadow phosphor bloom. Faint multi-layer halo at increasing blur
+/// radii — the glow should tint the surrounding void, not obscure edges.
+@mixin nerv-glow($color-var, $color-rgb-var) {
+  box-shadow:
+    0 0 1px rgba(var(#{$color-rgb-var}), 0.4),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.25),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.13),
+    0 0 calc(var(--nerv-glow-spread) * 5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.13);
+}
+
+/// Text-shadow phosphor bloom. Soft halo only — no directional offsets
+/// so character edges stay crisp. The bloom bleeds light outward.
+@mixin nerv-glow-text($color-var, $color-rgb-var) {
+  text-shadow:
+    0 0 2px rgba(var(#{$color-rgb-var}), 0.35),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.4),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(#{$color-rgb-var}), 0.8);
+}
+
+/// Drop-shadow phosphor bloom for non-rectangular elements (hex cells,
+/// clipped panels). Follows actual rendered shape, unlike box-shadow.
+@mixin nerv-glow-drop($color-var) {
+  filter:
+    drop-shadow(0 0 2px var(#{$color-var}))
+    drop-shadow(0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) var(#{$color-var}));
+}
+
+// Auto-generate .nerv-glow-{name}, .nerv-glow-text-{name}, and
+// .nerv-glow-drop-{name} for each color flagged with glow: true in $nerv-colors.
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-glow-#{$name} {
+      @include nerv-glow(--nerv-#{$name}, --nerv-#{$name}-rgb);
+    }
+
+    .nerv-glow-text-#{$name} {
+      @include nerv-glow-text(--nerv-#{$name}, --nerv-#{$name}-rgb);
+    }
+
+    .nerv-glow-drop-#{$name} {
+      @include nerv-glow-drop(--nerv-#{$name});
+    }
+
+    .nerv-text-#{$name} {
+      color: var(--nerv-#{$name});
+    }
+  }
+}
+
+// Default aliases — follow the ambiance meta-token
+.nerv-glow {
+  @include nerv-glow(--nerv-primary, --nerv-primary-rgb);
+}
+
+.nerv-glow-text {
+  @include nerv-glow-text(--nerv-primary, --nerv-primary-rgb);
+}
+
+.nerv-glow-drop {
+  @include nerv-glow-drop(--nerv-primary);
+}

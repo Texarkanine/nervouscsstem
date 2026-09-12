@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Forms — ref-forms</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nerv-void);
+      color: var(--nerv-amber);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 0;
+    }
+
+    .ref-page-title {
+      font-family: 'Shippori Mincho B1', serif;
+      font-size: 1.4rem;
+      color: var(--nerv-amber);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .ref-form-row {
+      width: 1100px;
+      max-width: 98vw;
+      margin-top: 2rem;
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .ref-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+      min-width: 220px;
+      max-width: 320px;
+    }
+
+    .ref-form-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      color: rgba(var(--nerv-amber-rgb), 0.5);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .ref-row-title {
+      width: 1100px;
+      max-width: 98vw;
+      margin-top: 2.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: rgba(var(--nerv-amber-rgb), 0.35);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(var(--nerv-amber-rgb), 0.15);
+      padding-bottom: 0.3rem;
+    }
+
+    .ref-inline-group {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .ref-check-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      color: var(--nerv-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="ref-page-title nerv-type-display">入力フォーム Form Elements</div>
+
+  <!-- ═══ Row 1: Text Inputs ═══ -->
+  <div class="ref-row-title">Text Inputs</div>
+  <div class="ref-form-row">
+    <div class="ref-form-group">
+      <span class="ref-form-label">Text Input — Default</span>
+      <input class="nerv-input" type="text" placeholder="Pilot designation...">
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Email Input</span>
+      <input class="nerv-input" type="email" placeholder="operator@nerv.go.jp">
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Password Input</span>
+      <input class="nerv-input" type="password" placeholder="Access code...">
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Number Input</span>
+      <input class="nerv-input" type="number" placeholder="0.00" step="0.01">
+    </div>
+  </div>
+
+  <!-- ═══ Row 2: Textarea ═══ -->
+  <div class="ref-row-title">Textarea</div>
+  <div class="ref-form-row">
+    <div class="ref-form-group" style="max-width: 500px; flex: 2;">
+      <span class="ref-form-label">Operations Log — Resizable Vertically</span>
+      <textarea class="nerv-textarea" rows="4" placeholder="Enter operational notes..."></textarea>
+    </div>
+
+    <div class="ref-form-group" style="max-width: 500px; flex: 2;">
+      <span class="ref-form-label">Textarea — With Content</span>
+      <textarea class="nerv-textarea" rows="4">Eva Unit-01 sync ratio holding at 41.3%. LCL pressure nominal. Neural connections stable across all monitors. Ready for launch sequence.</textarea>
+    </div>
+  </div>
+
+  <!-- ═══ Row 3: Select ═══ -->
+  <div class="ref-row-title">Select Dropdowns</div>
+  <div class="ref-form-row">
+    <div class="ref-form-group">
+      <span class="ref-form-label">Eva Unit Selection</span>
+      <select class="nerv-select">
+        <option>Unit-00 Prototype</option>
+        <option>Unit-01 Test Type</option>
+        <option>Unit-02 Production</option>
+      </select>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Alert Level</span>
+      <select class="nerv-select">
+        <option>Nominal</option>
+        <option>Elevated</option>
+        <option>Critical</option>
+        <option>Emergency</option>
+      </select>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Pilot Assignment</span>
+      <select class="nerv-select">
+        <option>Ayanami Rei — First Child</option>
+        <option>Ikari Shinji — Third Child</option>
+        <option>Soryu Asuka Langley — Second Child</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ═══ Row 4: Checkboxes & Radios ═══ -->
+  <div class="ref-row-title">Checkboxes &amp; Radios</div>
+  <div class="ref-form-row">
+    <div class="ref-form-group">
+      <span class="ref-form-label">System Checks — Color per Status</span>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <label class="ref-check-label">
+          <input class="nerv-checkbox nerv-form-green" type="checkbox" checked> Life Support
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-checkbox nerv-form-cyan" type="checkbox" checked> LCL Pressure
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-checkbox nerv-form-amber" type="checkbox"> Neural Link
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-checkbox nerv-form-red" type="checkbox"> AT Field
+        </label>
+      </div>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Launch Priority (Radio)</span>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <label class="ref-check-label">
+          <input class="nerv-radio" type="radio" name="priority" checked> Standard
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-radio" type="radio" name="priority"> Priority
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-radio" type="radio" name="priority"> Emergency
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-radio" type="radio" name="priority"> Override
+        </label>
+      </div>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Mixed Inline Controls</span>
+      <div class="ref-inline-group">
+        <label class="ref-check-label">
+          <input class="nerv-checkbox" type="checkbox" checked> Armed
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-checkbox" type="checkbox"> Locked
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-radio" type="radio" name="mode" checked> Auto
+        </label>
+        <label class="ref-check-label">
+          <input class="nerv-radio" type="radio" name="mode"> Manual
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Row 5: Buttons ═══ -->
+  <div class="ref-row-title">Buttons</div>
+  <div class="ref-form-row">
+    <div class="ref-form-group">
+      <span class="ref-form-label">Standard Buttons</span>
+      <div class="ref-inline-group">
+        <button class="nerv-btn">Submit</button>
+        <button class="nerv-btn">Cancel</button>
+        <button class="nerv-btn">Reset</button>
+      </div>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Disabled State</span>
+      <div class="ref-inline-group">
+        <button class="nerv-btn" disabled>Locked</button>
+        <input class="nerv-input" type="text" disabled value="Read Only">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Row 6: Full Form Example ═══ -->
+  <div class="ref-row-title">Combined Form — Color Variants + Label-Box Buttons</div>
+  <div class="ref-form-row">
+    <div class="ref-form-group" style="max-width: 500px; flex: 2;">
+      <form onsubmit="return false;" style="display: flex; flex-direction: column; gap: 0.8rem;">
+        <span class="ref-form-label">Pilot Registration</span>
+        <input class="nerv-input" type="text" placeholder="Full name...">
+        <input class="nerv-input" type="email" placeholder="Contact address...">
+        <select class="nerv-select">
+          <option>Assign to Eva Unit...</option>
+          <option>Unit-00</option>
+          <option>Unit-01</option>
+          <option>Unit-02</option>
+        </select>
+        <textarea class="nerv-textarea" rows="3" placeholder="Additional notes..."></textarea>
+        <div class="ref-inline-group">
+          <label class="ref-check-label">
+            <input class="nerv-checkbox nerv-form-green" type="checkbox"> Confirm medical clearance
+          </label>
+        </div>
+        <div class="ref-inline-group">
+          <button class="nerv-label-box" style="--nerv-label-box-color: var(--nerv-green); --nerv-label-box-color-rgb: var(--nerv-green-rgb);" type="submit"><span>Register Pilot</span></button>
+          <button class="nerv-label-box nerv-label-box-active" style="--nerv-label-box-color: var(--nerv-red); --nerv-label-box-color-rgb: var(--nerv-red-rgb);" type="reset"><span>Clear Form</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../dist/nerv.js"></script>
+  <script>NERV.init();</script>
+
+</body>
+</html>

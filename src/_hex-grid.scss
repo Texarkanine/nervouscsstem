@@ -1,0 +1,231 @@
+/// _hex-grid.scss — Hexagonal cell grid with state-based coloring.
+///
+/// Tiled hexagonal cells for warning displays and status grids.
+/// Cell uses ::before for the outer hex shape (visible phosphor border)
+/// and ::after for the inner fill over a solid black backing. Glow is
+/// rendered as inset box-shadow on ::after (clipped by its clip-path),
+/// keeping all luminance contained within each cell — no cross-cell
+/// opacity blending in tiled grids.
+///
+/// Honeycomb tiling is built-in: odd rows offset horizontally, and rows
+/// use negative margin-top to eliminate triangular gaps.
+///
+/// Classes:
+///   .nerv-hex-grid        — Container (default: honeycomb, overlapping rows)
+///   .nerv-hex-grid-tiled  — Spacing modifier: true honeycomb tessellation (no gaps, no overlaps)
+///   .nerv-hex-grid-spaced — Spacing modifier: non-overlapping, corner-touching with gaps
+///   .nerv-hex-grid-filled — Fill modifier: saturated active fills (combinable with any spacing)
+///   .nerv-hex-grid-solid  — Fill modifier: fully opaque fills, black border + text
+///   .nerv-hex-row         — A row of hex cells; odd rows offset for honeycomb stacking
+///   .nerv-hex-cell        — Individual hexagonal cell
+///   .nerv-hex-danger      — Red state (uses --nerv-red)
+///   .nerv-hex-warn        — Amber/warning state (uses --nerv-amber)
+///   .nerv-hex-safe        — Green/safe state (uses --nerv-green)
+///
+/// Tokens consumed:
+///   --nerv-primary-rgb (neutral cell border — follows ambiance)
+///   --nerv-red, --nerv-red-rgb, --nerv-amber, --nerv-amber-rgb,
+///   --nerv-green, --nerv-green-rgb (data states — stable)
+///   --nerv-border-width
+
+$_hex-clip: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+$_hex-cell-width: 80px;
+$_hex-row-overlap: 15px;
+
+// Tiled tessellation geometry (flat-top regular hex, side s = W/2):
+//   H   = W × √3/2  ≈ 69.28px  (cell height)
+//   gap = W / 2      = 40px     (within-row bounding-box gap)
+//   off = 3W / 4     = 60px     (odd-row horizontal offset)
+//   ovl = H / 2      ≈ 34.64px  (row-to-row vertical overlap)
+$_hex-cell-height: $_hex-cell-width * 0.866;
+$_hex-tiled-gap: $_hex-cell-width * 0.5;
+$_hex-tiled-offset: $_hex-cell-width * 0.75;
+$_hex-tiled-overlap: $_hex-cell-height * 0.5;
+
+.nerv-hex-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nerv-hex-row {
+  display: flex;
+  gap: 2px;
+
+  &:nth-child(odd) {
+    margin-left: calc(#{$_hex-cell-width} / 2);
+  }
+
+  &:not(:first-child) {
+    margin-top: -#{$_hex-row-overlap};
+  }
+}
+
+// Spaced variant: no row overlap, corner-touching with triangular gaps
+.nerv-hex-grid-spaced > .nerv-hex-row {
+  gap: 4px;
+}
+
+.nerv-hex-grid-spaced > .nerv-hex-row:not(:first-child) {
+  margin-top: 4px;
+}
+
+// Tiled variant: true honeycomb tessellation (no gaps, no overlaps).
+// Uses flat-top hex geometry: W/2 row gap, 3W/4 odd-row offset,
+// −H/2 row overlap where H = W × √3/2. Adjacent-row hexes share
+// diagonal edges exactly; same-row triangular voids are filled by
+// offset-row cells. Top/bottom rows have natural zigzag edges.
+.nerv-hex-grid-tiled > .nerv-hex-row {
+  gap: $_hex-tiled-gap;
+}
+
+.nerv-hex-grid-tiled > .nerv-hex-row:nth-child(odd) {
+  margin-left: $_hex-tiled-offset;
+}
+
+.nerv-hex-grid-tiled > .nerv-hex-row:not(:first-child) {
+  margin-top: -#{$_hex-tiled-overlap};
+}
+
+.nerv-hex-cell {
+  width: $_hex-cell-width;
+  aspect-ratio: 1.1547;
+  position: relative;
+  isolation: isolate;
+  clip-path: $_hex-clip;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.5rem;
+  line-height: 1.15;
+  padding: 6px;
+  overflow-wrap: break-word;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    clip-path: $_hex-clip;
+    background: rgba(var(--nerv-primary-rgb), 0.5);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    z-index: -1;
+    clip-path: $_hex-clip;
+    background-color: var(--nerv-void);
+  }
+}
+
+// === Default state fills (tiled grid) ===
+
+.nerv-hex-danger {
+  &::before {
+    background: var(--nerv-red);
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        rgba(var(--nerv-red-rgb), 0.2),
+        rgba(var(--nerv-red-rgb), 0.2)
+      );
+    box-shadow: inset 0 0 12px 4px rgba(var(--nerv-red-rgb), 0.6);
+  }
+}
+
+.nerv-hex-warn {
+  &::before {
+    background: var(--nerv-amber);
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        rgba(var(--nerv-amber-rgb), 0.15),
+        rgba(var(--nerv-amber-rgb), 0.15)
+      );
+    box-shadow: inset 0 0 12px 4px rgba(var(--nerv-amber-rgb), 0.6);
+  }
+}
+
+.nerv-hex-safe {
+  &::before {
+    background: var(--nerv-green);
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        rgba(var(--nerv-green-rgb), 0.12),
+        rgba(var(--nerv-green-rgb), 0.12)
+      );
+    box-shadow: inset 0 0 12px 4px rgba(var(--nerv-green-rgb), 0.6);
+  }
+}
+
+// === Filled variant: passive + saturated active fills (independent of spacing) ===
+
+.nerv-hex-grid-filled .nerv-hex-cell::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-primary-rgb), 0.15),
+      rgba(var(--nerv-primary-rgb), 0.15)
+    );
+}
+
+.nerv-hex-grid-filled .nerv-hex-danger::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-red-rgb), 0.45),
+      rgba(var(--nerv-red-rgb), 0.45)
+    );
+}
+
+.nerv-hex-grid-filled .nerv-hex-warn::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-amber-rgb), 0.35),
+      rgba(var(--nerv-amber-rgb), 0.35)
+    );
+}
+
+.nerv-hex-grid-filled .nerv-hex-safe::after {
+  background-image:
+    linear-gradient(
+      rgba(var(--nerv-green-rgb), 0.3),
+      rgba(var(--nerv-green-rgb), 0.3)
+    );
+}
+
+// === Solid variant: fully opaque fills, black border ring, black text ===
+
+.nerv-hex-grid-solid .nerv-hex-cell {
+  color: var(--nerv-void);
+}
+
+.nerv-hex-grid-solid .nerv-hex-cell::before {
+  background: var(--nerv-void);
+}
+
+.nerv-hex-grid-solid .nerv-hex-cell::after {
+  background-color: var(--nerv-primary);
+  background-image: none;
+  box-shadow: none;
+}
+
+.nerv-hex-grid-solid .nerv-hex-danger::after {
+  background-color: var(--nerv-red);
+}
+
+.nerv-hex-grid-solid .nerv-hex-warn::after {
+  background-color: var(--nerv-amber);
+}
+
+.nerv-hex-grid-solid .nerv-hex-safe::after {
+  background-color: var(--nerv-green);
+}

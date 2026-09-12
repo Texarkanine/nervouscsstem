@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Patterns — ref-patterns</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nerv-void);
+      color: var(--nerv-amber);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 2rem;
+    }
+
+    .ref-viewport {
+      position: relative;
+      width: 960px;
+      max-width: 96vw;
+      aspect-ratio: 4 / 3;
+    }
+
+    .ref-grid-bg {
+      position: absolute;
+      top: 4.5rem;
+      bottom: 4.5rem;
+      left: 0;
+      right: 0;
+      z-index: 0;
+    }
+
+    .ref-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 2rem 1fr 260px;
+      grid-template-rows: auto auto 1fr auto auto;
+      width: 100%;
+      height: 100%;
+      gap: 2px;
+    }
+
+    /* === Stripe bars === */
+    .ref-stripe-top-green {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+
+    .ref-stripe-left,
+    .ref-stripe-left-behind {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    .ref-stripe-bottom-green {
+      grid-column: 1 / -1;
+      grid-row: 5;
+    }
+
+    /* === DANGER / EMERGENCY bars === */
+    .ref-alert-bar {
+      position: relative;
+      height: 2.5rem;
+    }
+
+    .ref-alert-bar-top {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .ref-alert-bar-bottom {
+      grid-column: 1 / -1;
+      grid-row: 4;
+    }
+
+    .ref-alert-bar-stripe {
+      position: absolute;
+      inset: 0;
+    }
+
+    .ref-alert-bar-center {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .ref-alert-label-box {
+      background: var(--nerv-void);
+      padding: 0.25rem 2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    /* === Main center area === */
+    .ref-center {
+      grid-column: 2;
+      grid-row: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      gap: 1.5rem;
+    }
+
+    .ref-radar-container {
+      width: min(280px, 50%);
+    }
+
+    .ref-center-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      color: rgba(var(--nerv-primary-rgb), 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      text-align: center;
+    }
+
+    /* === Right: hex grid === */
+    .ref-hex-area {
+      grid-column: 3;
+      grid-row: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      gap: 1rem;
+    }
+
+    .ref-hex-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      color: rgba(var(--nerv-primary-rgb), 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- No manual scanline div — nerv.js injects it automatically -->
+
+  <div class="ref-viewport">
+
+    <!-- Grid marks background layer (inset to avoid peeking behind bars) -->
+    <div class="ref-grid-bg nerv-grid-marks"></div>
+
+    <div class="ref-content">
+
+      <!-- === Top green stripe === -->
+      <div class="ref-stripe-top-green nerv-stripe nerv-stripe-animated"
+           style="height: auto;"></div>
+
+      <!-- === DANGER bar === -->
+      <div class="ref-alert-bar ref-alert-bar-top">
+        <div class="ref-alert-bar-stripe nerv-stripe nerv-stripe-red nerv-stripe-transparent nerv-stripe-animated"
+             style="height: 100%;"></div>
+        <div class="ref-alert-bar-center">
+          <span class="ref-alert-label-box nerv-glow-red"
+                style="color: var(--nerv-red); border: var(--nerv-border-width) solid var(--nerv-red);">
+            <span class="nerv-glitch nerv-blink" data-text="DANGER">DANGER</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- === Left vertical stripe (green, transparent, with glow) === -->
+      <div class="ref-stripe-left-behind"
+           style="writing-mode: vertical-lr; display: flex; align-items: center; justify-content: space-around;
+                  font-family: 'Barlow Condensed', sans-serif; font-size: 0.5rem; letter-spacing: 0.15em;
+                  text-transform: uppercase; color: var(--nerv-amber); padding: 1rem 0;">
+        <span>SEC</span><span>VII</span><span>ACT</span>
+      </div>
+      <div class="ref-stripe-left nerv-stripe-vertical nerv-stripe-green nerv-stripe-transparent nerv-stripe-animated"></div>
+
+      <!-- === Center: radar display === -->
+      <div class="ref-center">
+        <span class="ref-center-label">Tactical Scope — Sector VII</span>
+        <div class="ref-radar-container">
+          <div class="nerv-radar" data-nerv-radar-sync data-nerv-radar-auto-blips>
+            <div class="nerv-radar-sweep"></div>
+            <span
+              class="nerv-radar-blip"
+              style="top: 18%; left: 62%;"
+              title="Blip A — auto phase from bearing (NERV.layoutRadarBlips)"
+              aria-hidden="true"></span>
+            <span
+              class="nerv-radar-blip nerv-radar-blip-label-below nerv-type-hud nerv-glow-text-green nerv-text-green"
+              style="top: 55%; left: 28%; --nerv-radar-blip-label-max-width: 5.5rem;"
+              title="Blip B — label below dot; nerv-text-green pairs with nerv-glow-text-green"
+              aria-hidden="true">EVA-02</span>
+            <span
+              class="nerv-radar-blip"
+              style="top: 72%; left: 58%;"
+              title="Blip C — auto phase from bearing (NERV.layoutRadarBlips)"
+              aria-hidden="true"></span>
+          </div>
+        </div>
+        <span class="ref-center-label" style="font-size: 0.55rem; max-width: 24rem;">
+          <code style="font-size: 0.65em;">data-nerv-radar-auto-blips</code> sets Cartesian blip phase from bearing.
+          Dot is <code style="font-size: 0.65em;">::before</code>; use <code style="font-size: 0.65em;">.nerv-radar-blip-label-*</code> and
+          <code style="font-size: 0.65em;">--nerv-radar-blip-label-max-width</code> for labels.
+          Glow text needs <code style="font-size: 0.65em;">.nerv-text-{color}</code> (e.g. <code style="font-size: 0.65em;">nerv-text-green</code>) — <code style="font-size: 0.65em;">nerv-glow-text-*</code> is shadow only.
+        </span>
+        <span class="ref-center-label nerv-flicker" style="color: var(--nerv-green);">
+          Range: 120km &middot; Mode: Active
+        </span>
+      </div>
+
+      <!-- === Right: hex grids (tiled + spaced) === -->
+      <div class="ref-hex-area">
+        <!-- Tiled (honeycomb, overlapping rows) -->
+        <span class="ref-hex-label">Tiled — Honeycomb</span>
+        <div class="nerv-hex-grid" data-nerv-hex-flicker>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-danger"><span class="nerv-glitch nerv-blink" data-text="SHINJI">SHINJI</span></div>
+            <div class="nerv-hex-cell nerv-hex-warn">ASUKA</div>
+            <div class="nerv-hex-cell nerv-hex-safe">REI</div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell"></div>
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-warn"></div>
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+            <div class="nerv-hex-cell"></div>
+          </div>
+        </div>
+        <span class="ref-hex-label nerv-blink" style="color: var(--nerv-red);">
+          ⚠ 3 Sectors Compromised
+        </span>
+
+        <!-- Spaced variant (non-overlapping, boosted fills) -->
+        <span class="ref-hex-label" style="margin-top: 0.5rem;">Spaced — Fuel Bundle</span>
+        <div class="nerv-hex-grid nerv-hex-grid-spaced nerv-hex-grid-filled" data-nerv-hex-flicker>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-safe">EVA-01</div>
+            <div class="nerv-hex-cell nerv-hex-safe">HANGAR</div>
+            <div class="nerv-hex-cell nerv-hex-safe">飛行機</div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-safe">BARRACKS</div>
+            <div class="nerv-hex-cell nerv-hex-danger">SERVER</div>
+            <div class="nerv-hex-cell nerv-hex-safe">SHUTTLE</div>
+          </div>
+          <div class="nerv-hex-row">
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-safe"></div>
+            <div class="nerv-hex-cell nerv-hex-danger"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Bottom EMERGENCY bar: cyan wire stripes === -->
+      <div class="ref-alert-bar ref-alert-bar-bottom">
+        <div class="ref-alert-bar-stripe nerv-stripe nerv-stripe-amber nerv-stripe-transparent nerv-stripe-animated"
+             style="height: 100%; animation-direction: reverse;"></div>
+        <div class="ref-alert-bar-center">
+          <span class="ref-alert-label-box nerv-cyan"
+                style="color: var(--nerv-cyan); border: var(--nerv-border-width) solid var(--nerv-cyan);">
+            EMERGENCY
+          </span>
+        </div>
+      </div>
+
+      <!-- === Bottom green stripe === -->
+      <div class="ref-stripe-bottom-green nerv-stripe nerv-stripe-animated"
+           style="height: auto;"></div>
+
+    </div>
+  </div>
+
+  <!-- Tiled hex grid — true tessellation (lockout hex-wall) -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-hex-grid-tiled — Lockout Hex Wall
+    </div>
+    <div style="display: inline-block; overflow: hidden; padding: 0.5rem;">
+      <div class="nerv-hex-grid nerv-hex-grid-tiled nerv-hex-grid-filled">
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-warn nerv-flicker-staccato">SEC-7</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger nerv-flicker">DENY</div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: var(--nerv-red); text-transform: uppercase; letter-spacing: 0.3em; margin-top: 0.25rem;" class="nerv-blink">
+      ⚠ Area Sealed — Authorization Required
+    </div>
+  </div>
+
+  <!-- Tiled hex grid — solid fills (library class, no inline overrides) -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-hex-grid-tiled .nerv-hex-grid-solid — Lockout Wall
+    </div>
+    <div style="display: inline-block; overflow: hidden; padding: 0.5rem;">
+      <div class="nerv-hex-grid nerv-hex-grid-tiled nerv-hex-grid-solid">
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">SEC-7</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger nerv-flicker-fast">DENY</div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger">封鎖</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+        <div class="nerv-hex-row">
+          <div class="nerv-hex-cell nerv-hex-danger nerv-blink">LOCK</div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+          <div class="nerv-hex-cell nerv-hex-danger"></div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: var(--nerv-red); text-transform: uppercase; letter-spacing: 0.3em; margin-top: 0.25rem;" class="nerv-blink">
+      ⚠ Sector Lockout — Breach Detected
+    </div>
+  </div>
+
+  <!-- Gradient utilities -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-gradient presets — Background containers
+    </div>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding: 0 2rem;">
+      <!-- Thermal: green → red -->
+      <div class="nerv-gradient nerv-gradient-thermal" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-thermal</span>
+      </div>
+      <!-- Energy: cyan → blue -->
+      <div class="nerv-gradient nerv-gradient-energy" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-energy</span>
+      </div>
+      <!-- Warning: amber → red -->
+      <div class="nerv-gradient nerv-gradient-warning" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-warning</span>
+      </div>
+      <!-- Field: void → amber -->
+      <div class="nerv-gradient nerv-gradient-field" style="width: 200px; height: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-field</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 1.5rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-gradient-rainbow + composable from/to modifiers
+    </div>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding: 0 2rem;">
+      <!-- Rainbow: multi-stop hue sweep -->
+      <div class="nerv-gradient nerv-gradient-rainbow" style="width: 420px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">.nerv-gradient-rainbow</span>
+      </div>
+      <!-- Custom composable: cyan → red-deep via modifier classes -->
+      <div class="nerv-gradient nerv-gradient-from-cyan nerv-gradient-to-red-deep" style="width: 200px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.6rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">from-cyan to-red-deep</span>
+      </div>
+      <!-- Custom with opacity + vertical direction -->
+      <div class="nerv-gradient nerv-gradient-from-amber nerv-gradient-to-red" style="width: 200px; height: 60px; --nerv-gradient-direction: to bottom; --nerv-gradient-opacity: 0.5; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+        <span class="nerv-type-hud" style="font-size: 0.55rem; color: var(--nerv-white); text-shadow: 0 0 4px rgba(0,0,0,0.8);">↓ to bottom, opacity 0.5</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data background fills -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-data-bg — Binary &amp; DNA fill modes
+    </div>
+    <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; padding: 0 2rem;">
+      <!-- Binary mode -->
+      <div style="text-align: center;">
+        <div class="nerv-data-bg nerv-data-bg-binary" style="width: 280px; height: 160px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+          <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 100%;">
+            <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-primary); text-shadow: 0 0 6px rgba(var(--nerv-primary-rgb), 0.6);">BINARY MODE</span>
+          </div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">.nerv-data-bg-binary</div>
+      </div>
+      <!-- DNA mode -->
+      <div style="text-align: center;">
+        <div class="nerv-data-bg nerv-data-bg-dna" style="width: 280px; height: 160px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+          <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 100%;">
+            <span class="nerv-type-hud" style="font-size: 0.7rem; color: var(--nerv-primary); text-shadow: 0 0 6px rgba(var(--nerv-primary-rgb), 0.6);">DNA MODE</span>
+          </div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">.nerv-data-bg-dna</div>
+      </div>
+      <!-- Higher opacity demo -->
+      <div style="text-align: center;">
+        <div class="nerv-data-bg nerv-data-bg-binary" style="width: 280px; height: 160px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15); --nerv-data-bg-opacity: 0.35;">
+          <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 100%;">
+            <span class="nerv-type-hud" style="font-size: 0.6rem; color: var(--nerv-primary); text-shadow: 0 0 6px rgba(var(--nerv-primary-rgb), 0.6);">--nerv-data-bg-opacity: 0.35</span>
+          </div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">custom opacity</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid mark variant comparison -->
+  <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; padding: 0 2rem;">
+    <div style="text-align: center;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+        .nerv-grid-marks (+ crosshair)
+      </div>
+      <div class="nerv-grid-marks" style="width: 200px; height: 150px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);"></div>
+    </div>
+    <div style="text-align: center;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+        .nerv-grid-marks-x (&times; rotated)
+      </div>
+      <div class="nerv-grid-marks-x" style="width: 200px; height: 150px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);"></div>
+    </div>
+    <div style="text-align: center;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+        .nerv-grid-marks-hex (hexagonal)
+      </div>
+      <div class="nerv-grid-marks-hex" style="width: 200px; height: 150px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);"></div>
+    </div>
+  </div>
+
+  <script src="../dist/nerv.js"></script>
+  <script>NERV.init();</script>
+
+</body>
+</html>

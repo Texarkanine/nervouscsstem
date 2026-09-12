@@ -1,0 +1,4 @@
+# Screenshot libraries. Git LFS, repo-only. Do not put skill-shipped files in these trees.
+# Do not replace these with a repo-wide *.png rule. See docs/service-manual.md
+planning/selected-ref-images/*.png filter=lfs diff=lfs merge=lfs -text
+docs/img/** filter=lfs diff=lfs merge=lfs -text

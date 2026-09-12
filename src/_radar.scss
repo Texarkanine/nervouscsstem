@@ -1,0 +1,264 @@
+/// _radar.scss — Tactical radar disc, rotating sweep, and phased blips.
+///
+/// **Long-form narrative:** `docs/radar.md` (timing model, polar vs Cartesian, JS hooks, a11y).
+///
+/// **Visual stack:** rings + crosshairs + 45° lines on `.nerv-radar` (`::before` / `::after`);
+/// conic “wedge” on `.nerv-radar-sweep` rotated by `@keyframes nerv-radar-sweep`. Sweep trails
+/// *behind* the bright leading edge (clockwise).
+///
+/// **Blip timing (one CSS loop, no separate intro):** element starts `opacity: 0` until
+/// `animation-delay` elapses. Delay = `(phase + sweep_align) × period` where `period` matches
+/// the sweep. First sample at local 0% = hit (`opacity: 1`); then short hold, long linear fade
+/// to `--nerv-radar-blip-opacity-floor`, hold through 100%, then loop jumps to next hit at 0%.
+///
+/// **Placement:** Cartesian — `top`/`left` % + `translate(-50%,-50%)` (contact = dot center;
+/// `NERV.layoutRadarBlips` sets `--nerv-radar-blip-phase` from bearing only). Polar —
+/// `.nerv-radar-blip-polar` + `--nerv-radar-blip-bear-turn` wires phase to `rotate` + `translateY(-orbit)`.
+///
+/// **Classes:** `.nerv-radar`, `.nerv-radar-sweep`, `.nerv-radar-blip` (dot `::before`, label in flex).
+/// Label modifiers: `.nerv-radar-blip-label-{left|above|below}`, `-nowrap`, `-align-end`.
+///
+/// **Tokens (see also `docs/radar.md` §4):** `--nerv-primary`, `--nerv-primary-rgb`,
+/// `--nerv-radar-duration`, `--nerv-animation-speed`; on `.nerv-radar` defaults for blip orbit,
+/// sweep align, opacity floor, label layout.
+
+.nerv-radar {
+  // Radial distance from disc center to polar blips (before border/rim clipping).
+  --nerv-radar-blip-orbit: calc(50% - 0.9rem);
+  // Trim if conic leading edge and `rotate(0)` disagree (unitless turns, e.g. 0.01 or -0.02).
+  --nerv-radar-blip-sweep-align: 0;
+  // Fully invisible tail between sweeps (keyframes fade 1 → floor over ~90% of period).
+  --nerv-radar-blip-opacity-floor: 0;
+  // Label box (when blip contains text)
+  --nerv-radar-blip-label-gap: 0.35rem;
+  --nerv-radar-blip-label-max-width: none;
+  --nerv-radar-blip-label-line-height: 1.2;
+  --nerv-radar-blip-label-text-align: start;
+
+  container-type: size;
+
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: calc(var(--nerv-border-width) * 2) solid rgba(var(--nerv-primary-rgb), 0.8);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle,
+      transparent              0%,  transparent              9%,
+      rgba(var(--nerv-primary-rgb), 0.6) 9%,  rgba(var(--nerv-primary-rgb), 0.6) 10%,
+      transparent             10%,  transparent             19%,
+      rgba(var(--nerv-primary-rgb), 0.5) 19%, rgba(var(--nerv-primary-rgb), 0.5) 20%,
+      transparent             20%,  transparent             29%,
+      rgba(var(--nerv-primary-rgb), 0.5) 29%, rgba(var(--nerv-primary-rgb), 0.5) 30%,
+      transparent             30%,  transparent             39%,
+      rgba(var(--nerv-primary-rgb), 0.5) 39%, rgba(var(--nerv-primary-rgb), 0.5) 40%,
+      transparent             40%,  transparent             49%,
+      rgba(var(--nerv-primary-rgb), 0.5) 49%, rgba(var(--nerv-primary-rgb), 0.5) 50%,
+      transparent             50%,  transparent             59%,
+      rgba(var(--nerv-primary-rgb), 0.5) 59%, rgba(var(--nerv-primary-rgb), 0.5) 60%,
+      transparent             60%,  transparent             69%,
+      rgba(var(--nerv-primary-rgb), 0.5) 69%, rgba(var(--nerv-primary-rgb), 0.5) 70%,
+      transparent             70%,  transparent             79%,
+      rgba(var(--nerv-primary-rgb), 0.5) 79%, rgba(var(--nerv-primary-rgb), 0.5) 80%,
+      transparent             80%,  transparent             89%,
+      rgba(var(--nerv-primary-rgb), 0.6) 89%, rgba(var(--nerv-primary-rgb), 0.6) 90%,
+      transparent             90%
+    );
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &::before {
+    background:
+      linear-gradient(
+        to right,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      ),
+      linear-gradient(
+        to bottom,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.5) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      );
+  }
+
+  &::after {
+    background:
+      linear-gradient(
+        45deg,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      ),
+      linear-gradient(
+        -45deg,
+        transparent calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% - 0.5px),
+        rgba(var(--nerv-primary-rgb), 0.35) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      );
+  }
+}
+
+// --- Sweep (same period expression as blip pulse; align with --nerv-radar-blip-sweep-align if needed) ---
+
+.nerv-radar-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 310deg,
+    rgba(var(--nerv-primary-rgb), 0.15) 335deg,
+    rgba(var(--nerv-primary-rgb), 0.6) 360deg
+  );
+  animation:
+    nerv-radar-sweep
+    calc(var(--nerv-radar-duration) / var(--nerv-animation-speed))
+    linear
+    infinite;
+}
+
+@keyframes nerv-radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// --- Blip pulse: 0% = hit each revolution; 2.5%–93% = fade (tweak stops to change hold vs decay) ---
+
+@keyframes nerv-radar-blip-pulse {
+  // Loop boundary = sweep pass: 100% (floor) → 0% (hit) is a discrete jump each revolution.
+  0% {
+    opacity: 1;
+  }
+
+  // Short hit, then fade to 0 over ~90% of the period (linear easing on the animation).
+  2.5% {
+    opacity: 1;
+  }
+
+  93% {
+    opacity: var(--nerv-radar-blip-opacity-floor, 0);
+  }
+
+  99.99%,
+  100% {
+    opacity: var(--nerv-radar-blip-opacity-floor, 0);
+  }
+}
+
+// --- Blip box: flex label + ::before dot; delay aligns first 0% keyframe to sweep ---
+
+.nerv-radar .nerv-radar-blip {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--nerv-radar-blip-label-gap);
+  max-width: var(--nerv-radar-blip-label-max-width);
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  line-height: var(--nerv-radar-blip-label-line-height);
+  text-align: var(--nerv-radar-blip-label-text-align);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  // Anchor: (left, top) = contact center (same as polar orbit origin intent).
+  transform: translate(-50%, -50%);
+  // Invisible until delay: first sample = 0% keyframe = first sweep hit.
+  opacity: 0;
+  animation:
+    nerv-radar-blip-pulse
+    calc(var(--nerv-radar-duration) / var(--nerv-animation-speed))
+    linear
+    infinite;
+  animation-delay: calc(
+    (var(--nerv-radar-blip-phase, 0) + var(--nerv-radar-blip-sweep-align, 0)) * (var(--nerv-radar-duration) / var(--nerv-animation-speed))
+  );
+
+  &::before {
+    content: '';
+    flex: 0 0 0.45rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: rgba(var(--nerv-primary-rgb), 0.95);
+    box-shadow: 0 0 0.3rem rgba(var(--nerv-primary-rgb), 0.55);
+  }
+}
+
+// Label sits to the right of the dot (default row). Other sides:
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-left {
+  flex-direction: row-reverse;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-above {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-below {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-nowrap {
+  white-space: nowrap;
+}
+
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-label-align-end {
+  text-align: end;
+}
+
+// True polar placement: bearing matches pulse phase (same turn value).
+.nerv-radar .nerv-radar-blip.nerv-radar-blip-polar {
+  --nerv-radar-blip-phase: var(--nerv-radar-blip-bear-turn, 0);
+
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--nerv-radar-blip-bear-turn, 0) * 1turn))
+    translateY(calc(-1 * var(--nerv-radar-blip-orbit)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-radar-sweep {
+    animation: none;
+  }
+
+  .nerv-radar .nerv-radar-blip {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nerv-radar .nerv-radar-blip {
+    --nerv-radar-blip-opacity-floor: 0.35;
+
+    &::before {
+      box-shadow:
+        0 0 0 1px rgba(var(--nerv-primary-rgb), 0.9),
+        0 0 0.4rem rgba(var(--nerv-primary-rgb), 0.75);
+    }
+  }
+}

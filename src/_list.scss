@@ -1,0 +1,325 @@
+/// _list.scss — Angled pillbox list item styling with nesting support.
+///
+/// Utility class that styles list items as geometric shapes via `clip-path:
+/// polygon()`. The default hex shape has symmetric 45-degree angled ends
+/// creating the characteristic NGE HUD list appearance. Color is configurable
+/// via custom properties and auto-generated color variant classes.
+///
+/// The host `<ul>` or `<ol>` gets `.nerv-list`; child `<li>` elements are
+/// auto-styled with the chosen shape and colored background fill.
+///
+/// Shapes (mutually exclusive):
+///   .nerv-list > li           — hex: symmetric pointed ends (default)
+///   .nerv-list-rect           — rectangle (no clip-path)
+///   .nerv-list-arrow          — tag/arrow left: left point + flat right edge
+///   .nerv-list-arrow-reverse  — tag/arrow right: flat left + right point
+///   .nerv-list-para           — true parallelogram via skewX (exact angle control)
+///
+/// Fill modes (mutually exclusive):
+///   (default)                 — translucent color fill
+///   .nerv-list-bordered       — translucent fill + crisp phosphor border
+///   .nerv-list-outline        — crisp phosphor border, no visible fill
+///   .nerv-list-solid          — opaque fill
+///
+/// ⚠ Border visibility: bordered/outline use real CSS border. clip-path clips
+///   borders, so crisp borders only render on rect and para items. Para uses
+///   skewX (not clip-path), so borders survive. On hex/arrow shapes the border
+///   is clipped away.
+///
+/// Rotation:
+///   .nerv-list-angled         — each item pivots -45deg at left edge (fans up)
+///   .nerv-list-angled-reverse — each item pivots +45deg at left edge (fans down)
+///   .nerv-list-{color}        — color variant (auto-generated per glow-flagged token)
+///
+/// Nesting:
+///   Place a nested `<ul class="nerv-list">` inside a `<li>` for hierarchy.
+///   The parent item's shape is drawn via `::before`; the nested list renders
+///   below it without being clipped.
+///
+///   Indented mode (default):
+///     The nested list indents to the right; the parent shape covers only the
+///     text line. Children are visually distinct from their parent.
+///
+///   Contained mode:
+///     Add `.nerv-list-contained` to the nested `<ul>`. The parent shape
+///     expands to visually wrap both its text and all children.
+///
+///   All shape × fill combinations compose with nesting.
+///
+///   ⚠ Nesting inside rotated lists (.nerv-list-angled / -reverse) is
+///   unsupported. The base nesting rules still apply, but children will
+///   indent along the rotation axis rather than page-space X/Y. See the
+///   archive doc for why counter-rotation was abandoned.
+///
+/// Custom properties:
+///   --nerv-list-color       (default: --nerv-primary)
+///   --nerv-list-color-rgb   (default: --nerv-primary-rgb)
+///   --nerv-list-inset       (horizontal extent of angled points, default: 0.9em)
+///   --nerv-list-angle       (per-item rotation, default: 0deg)
+///   --nerv-list-gap         (vertical spacing between items, default: 0.35rem)
+///   --nerv-list-skew        (para skew angle, default: -15deg; auto-matches rotation)
+///   --nerv-list-clip        (clip-path shape; set per shape modifier. Consumers
+///                            can override for custom shapes via polygon() values)
+///   --nerv-list-indent      (nested list left margin, default: 1.5em)
+///   --nerv-list-item-height (height of the ::before shape pseudo, default: 1.8em)
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert state)
+///   --nerv-border-width (bordered/outline modes)
+///   --nerv-bg (outline mode background)
+///   Color values from tokens.$nerv-colors for variant generation
+
+@use 'sass:list';
+@use 'tokens';
+
+// ---------------------------------------------------------------------------
+// 1. Base container + default hex shape
+// ---------------------------------------------------------------------------
+
+.nerv-list {
+  --nerv-list-color: var(--nerv-primary);
+  --nerv-list-color-rgb: var(--nerv-primary-rgb);
+  --nerv-list-inset: 0.9em;
+  --nerv-list-angle: 0deg;
+  --nerv-list-gap: 0.35rem;
+  --nerv-list-clip: polygon(
+    var(--nerv-list-inset) 0%,
+    calc(100% - var(--nerv-list-inset)) 0%,
+    100% 50%,
+    calc(100% - var(--nerv-list-inset)) 100%,
+    var(--nerv-list-inset) 100%,
+    0% 50%
+  );
+  --nerv-list-indent: 1.5em;
+  --nerv-list-item-height: 1.8em;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nerv-list-gap);
+
+  > li {
+    padding: 0.3em calc(var(--nerv-list-inset) + 0.5em);
+    background: rgba(var(--nerv-list-color-rgb), 0.5);
+    color: var(--nerv-list-color);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    clip-path: var(--nerv-list-clip);
+    transform: rotate(var(--nerv-list-angle));
+    transform-origin: 0% 50%;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 2. Fill / border modifiers (BEFORE shapes so shapes can override bg)
+// ---------------------------------------------------------------------------
+
+.nerv-list-bordered > li {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-outline > li {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+  background: var(--nerv-bg);
+}
+
+.nerv-list-solid > li {
+  background: var(--nerv-list-color);
+  color: var(--nerv-bg);
+}
+
+// ---------------------------------------------------------------------------
+// 3. Shape modifiers (AFTER fill modes — para overrides bg to transparent)
+// ---------------------------------------------------------------------------
+
+.nerv-list-rect {
+  --nerv-list-clip: none;
+}
+
+.nerv-list-rect > li {
+  clip-path: none;
+  padding: 0.3em 0.8em;
+}
+
+.nerv-list-arrow {
+  --nerv-list-clip: polygon(
+    var(--nerv-list-inset) 0%,
+    100% 0%,
+    100% 100%,
+    var(--nerv-list-inset) 100%,
+    0% 50%
+  );
+}
+
+.nerv-list-arrow-reverse {
+  --nerv-list-clip: polygon(
+    0% 0%,
+    calc(100% - var(--nerv-list-inset)) 0%,
+    100% 50%,
+    calc(100% - var(--nerv-list-inset)) 100%,
+    0% 100%
+  );
+}
+
+// Para uses skewX on a ::before pseudo instead of clip-path. This gives exact
+// angle control (degrees, not inset ratios) and preserves real CSS borders.
+.nerv-list-para {
+  --nerv-list-skew: -15deg;
+  --nerv-list-clip: none;
+
+  > li {
+    clip-path: none;
+    position: relative;
+    background: transparent;
+    border: 0;
+    padding: 0.3em 1.5em;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(var(--nerv-list-color-rgb), 0.5);
+      transform: skewX(var(--nerv-list-skew));
+      z-index: -1;
+    }
+  }
+}
+
+// Para fill mode overrides — border/bg go on ::before (the visual shape)
+.nerv-list-bordered.nerv-list-para > li::before {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-outline.nerv-list-para > li::before {
+  background: var(--nerv-bg);
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-solid.nerv-list-para > li {
+  color: var(--nerv-bg);
+
+  &::before {
+    background: var(--nerv-list-color);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 4. Rotation modifiers
+// ---------------------------------------------------------------------------
+
+.nerv-list-angled {
+  --nerv-list-angle: -45deg;
+  --nerv-list-gap: 0.8rem;
+  padding-top: 10rem;
+}
+
+.nerv-list-angled-reverse {
+  --nerv-list-angle: 45deg;
+  --nerv-list-gap: 0.8rem;
+  padding-bottom: 10rem;
+}
+
+// Para + rotation: match skew angle to rotation so edges appear vertical
+.nerv-list-para.nerv-list-angled {
+  --nerv-list-skew: -45deg;
+}
+
+.nerv-list-para.nerv-list-angled-reverse {
+  --nerv-list-skew: 45deg;
+}
+
+// ---------------------------------------------------------------------------
+// 5. Nesting (indented + contained)
+// ---------------------------------------------------------------------------
+
+// Nesting detection: a parent li that directly contains a nested .nerv-list.
+// The li itself becomes transparent; a ::before pseudo takes over the visual
+// shape so the nested list can render below it without being clipped.
+.nerv-list > li:has(> .nerv-list) {
+  clip-path: none;
+  background: transparent;
+  border: 0;
+  position: relative;
+}
+
+.nerv-list > li:has(> .nerv-list)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nerv-list-item-height);
+  clip-path: var(--nerv-list-clip);
+  background: rgba(var(--nerv-list-color-rgb), 0.5);
+  z-index: -1;
+}
+
+// Indented mode (default): nested list shifts right.
+// Both margin-top and margin-bottom compensate for the 0.3em li padding that
+// the ::before shape occupies past the text node. Without these, the visible
+// gap between parent/child boundaries differs from the inter-item gap.
+.nerv-list > li > .nerv-list {
+  margin-left: var(--nerv-list-indent);
+  margin-top: calc(var(--nerv-list-gap) + 0.3em);
+  margin-bottom: -0.3em;
+}
+
+// Contained mode: parent shape wraps both its text and nested children.
+// The ::before expands to cover the full li height instead of just item-height.
+.nerv-list > li:has(> .nerv-list-contained)::before {
+  bottom: 0;
+  height: auto;
+}
+
+.nerv-list > li > .nerv-list-contained {
+  margin-top: var(--nerv-list-gap);
+  margin-bottom: 0.3em;
+}
+
+// Fill mode × nesting: override ::before visuals to match the fill mode
+.nerv-list-bordered > li:has(> .nerv-list)::before {
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-outline > li:has(> .nerv-list)::before {
+  background: var(--nerv-bg);
+  border: var(--nerv-border-width) solid var(--nerv-list-color);
+}
+
+.nerv-list-solid > li:has(> .nerv-list)::before {
+  background: var(--nerv-list-color);
+}
+
+.nerv-list-solid > li:has(> .nerv-list) {
+  color: var(--nerv-bg);
+}
+
+// ---------------------------------------------------------------------------
+// 6. Color variants (auto-generated from glow-flagged tokens)
+// ---------------------------------------------------------------------------
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-list-#{$name} {
+      --nerv-list-color: var(--nerv-#{$name});
+      --nerv-list-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nerv-list > li {
+    background: rgba(var(--nerv-list-color-rgb), 0.7);
+  }
+
+  .nerv-list > li:has(> .nerv-list)::before {
+    background: rgba(var(--nerv-list-color-rgb), 0.85);
+  }
+}

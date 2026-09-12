@@ -1,0 +1,36 @@
+{
+  "name": "nervouscsstem",
+  "version": "0.0.1",
+  "description": "NERV Design System — pure-CSS design system inspired by Neon Genesis Evangelion operational consoles",
+  "homepage": "https://github.com/Texarkanine/nervouscsstem#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Texarkanine/nervouscsstem.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Texarkanine/nervouscsstem/issues"
+  },
+  "license": "AGPL-3.0-only",
+  "author": "Texarkanine <texarkanine@protonmail.com>",
+  "main": "dist/nerv.js",
+  "style": "dist/nerv.css",
+  "files": [
+    "dist/nerv.css",
+    "dist/nerv.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "sass src/nerv.scss dist/nerv.css --no-source-map && cp src/nerv.js dist/nerv.js",
+    "build:min": "sass src/nerv.scss dist/nerv.min.css --style=compressed --no-source-map",
+    "watch": "sass --watch src/nerv.scss dist/nerv.css",
+    "test": "node --test --test-concurrency=1 test/foundation.test.mjs test/effects.test.mjs test/panels.test.mjs test/patterns.test.mjs test/components.test.mjs test/states.test.mjs test/publish-contract.test.mjs",
+    "lint": "stylelint dist/nerv.css"
+  },
+  "devDependencies": {
+    "sass": "^1.86.0",
+    "stylelint": "^16.16.0",
+    "stylelint-config-standard": "^37.0.0"
+  }
+}

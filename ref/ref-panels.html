@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Panels — ref-panels</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nerv-void);
+      color: var(--nerv-amber);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ref-viewport {
+      position: relative;
+      width: 960px;
+      max-width: 96vw;
+      aspect-ratio: 4 / 3;
+    }
+
+    .ref-grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .ref-panel-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .ref-cell {
+      display: flex;
+      padding: 1rem;
+    }
+
+    .ref-cell > * {
+      flex: 1;
+    }
+
+    .ref-ruler-h {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(50% - 7px);
+      height: 14px;
+      z-index: 2;
+    }
+
+    .ref-ruler-v {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 7px);
+      width: 14px;
+      z-index: 2;
+    }
+
+    .ref-ruler-line-h {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      z-index: 3;
+    }
+
+    .ref-ruler-line-v {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      z-index: 3;
+    }
+
+    .ref-axis-labels {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .ref-axis-label {
+      position: absolute;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.5rem;
+      color: rgba(var(--nerv-cyan-rgb), 0.35);
+      letter-spacing: 0.05em;
+    }
+
+    .ref-axis-label-x {
+      bottom: -1.2rem;
+    }
+
+    .ref-axis-label-y {
+      left: -2.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scanline overlay — in production, nerv.js injects this automatically -->
+  <div class="nerv-scanlines"></div>
+
+  <div class="ref-viewport nerv-reticle">
+
+    <!-- Grid marks background layer -->
+    <div class="ref-grid-bg nerv-grid-marks"></div>
+
+    <!-- Axis labels along bottom edge (static HTML, Phase 3 approach) -->
+    <div class="ref-axis-labels">
+      <span class="ref-axis-label ref-axis-label-x" style="left: 0;">000</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 12.5%;">120</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 25%;">240</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 37.5%;">360</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 50%;">480</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 62.5%;">600</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 75%;">720</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 87.5%;">840</span>
+      <span class="ref-axis-label ref-axis-label-x" style="left: 100%;">960</span>
+
+      <span class="ref-axis-label ref-axis-label-y" style="top: 0;">720</span>
+      <span class="ref-axis-label ref-axis-label-y" style="top: 25%;">540</span>
+      <span class="ref-axis-label ref-axis-label-y" style="top: 50%;">360</span>
+      <span class="ref-axis-label ref-axis-label-y" style="top: 75%;">180</span>
+      <span class="ref-axis-label ref-axis-label-y" style="top: 100%;">000</span>
+    </div>
+
+    <!-- Ruler-strip dividers: cyan tick marks + thin center line -->
+    <div class="ref-ruler-h nerv-reticle nerv-reticle-cyan"></div>
+    <div class="ref-ruler-line-h nerv-divider nerv-divider-cyan"></div>
+    <div class="ref-ruler-v nerv-reticle nerv-reticle-cyan"></div>
+    <div class="ref-ruler-line-v nerv-divider-vertical nerv-divider-cyan"></div>
+
+    <!-- 2×2 panel grid -->
+    <div class="ref-panel-grid">
+
+      <!-- Top-left: basic panel with HUD text -->
+      <div class="ref-cell">
+        <div class="nerv-panel">
+          <div class="nerv-type-boot nerv-text-green">
+NERV BIOS v3.14 — MAGI SYSTEM CHECK
+Base Memory:       640K OK
+Extended Memory:   131072K OK
+<span style="color: var(--nerv-amber);">CASPER-3</span> .......... ONLINE
+<span style="color: var(--nerv-orange);">BALTHASAR-2</span> ....... ONLINE
+<span style="color: var(--nerv-amber-dark);">MELCHIOR-1</span> ........ ONLINE
+Press <span class="nerv-text-red">DEL</span> to enter SETUP</div>
+        </div>
+      </div>
+
+      <!-- Top-right: titled panel -->
+      <div class="ref-cell">
+        <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
+          <p class="nerv-type-data" style="font-size: 0.75rem; color: var(--nerv-cyan); line-height: 1.8;">
+            EGO_BORDER: 0.83<br>
+            CONTAMINATION: 0.02%<br>
+            HARMONICS: +4.7σ<br>
+            A10_NERVE: CONNECTED
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom-left: double-border panel with segment countdown -->
+      <div class="ref-cell">
+        <div class="nerv-panel-double" style="display: flex; align-items: center; justify-content: center;">
+          <div class="nerv-type-segment" style="font-size: 2.2rem; color: var(--nerv-amber);">
+            <span style="position: relative; display: inline-block;">
+              <span style="color: rgba(var(--nerv-amber-rgb), 0.06); user-select: none; pointer-events: none;">88:88:88</span>
+              <span
+                class="nerv-glow-text-amber"
+                id="panel-countdown"
+                aria-label="Countdown timer"
+                style="position: absolute; top: 0; left: 0;"
+              >04:00:00</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom-right: inset panel with dense data -->
+      <div class="ref-cell">
+        <div class="nerv-panel-inset">
+          <p class="nerv-type-data" style="font-size: 0.65rem; color: var(--nerv-green); line-height: 1.7;">
+            CORE_TEMP: 227.4°C<br>
+            S2_OUTPUT: 1.8×10⁹ J/s<br>
+            LCL_PH: 7.41<br>
+            PLUG_DEPTH: 44.2m<br>
+            SYNAPSE_RATE: 2.4×10⁶/s<br>
+            AT_FIELD: PHASE-3 LOCK<br>
+            UMBILICAL: CONNECTED<br>
+            PWR_REMAIN: 04:00:00
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const el = document.getElementById('panel-countdown');
+      if (!el) return;
+      let remaining = 4 * 60 * 60;
+      function pad(n) { return n.toString().padStart(2, '0'); }
+      function render() {
+        const h = Math.floor(remaining / 3600);
+        const m = Math.floor((remaining % 3600) / 60);
+        const s = remaining % 60;
+        el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+      }
+      render();
+      setInterval(function () {
+        if (remaining > 0) remaining--;
+        render();
+      }, 1000);
+    })();
+  </script>
+
+</body>
+</html>

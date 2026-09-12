@@ -1,0 +1,95 @@
+/// _flicker.scss — Staccato animation classes for CRT flicker effects.
+///
+/// Hard-cut step() timing creates the snap-between-states feel central to
+/// the NERV aesthetic. Interfaces snap, they don't interpolate.
+///
+/// Classes:
+///   .nerv-flicker          — standard staccato on/off (~0.5s cycle)
+///   .nerv-flicker-fast     — rapid staccato flicker (0.1–0.3s cycle)
+///   .nerv-flicker-staccato — hard two-state visibility toggle
+///   .nerv-blink            — slower sustained pulse (~1s cycle)
+///
+/// Stagger: --nerv-stagger-index controls per-element animation-delay.
+/// :nth-child() rules provide sane defaults so grouped elements flicker
+/// out of phase automatically. Consumers or nerv.js can override
+/// --nerv-stagger-index per-element for finer control.
+///
+/// Tokens consumed:
+///   --nerv-flicker-duration (base cycle length)
+///   --nerv-animation-speed  (global speed multiplier)
+
+@keyframes nerv-flicker-kf {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes nerv-flicker-fast-kf {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes nerv-flicker-staccato-kf {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes nerv-blink-kf {
+  0%, 100% { opacity: 1; }
+  40%, 60% { opacity: 0.3; }
+}
+
+.nerv-flicker {
+  animation:
+    nerv-flicker-kf
+    calc(var(--nerv-flicker-duration) * 3 / var(--nerv-animation-speed))
+    steps(1)
+    infinite;
+  animation-delay: calc(var(--nerv-stagger-index, 0) * 0.07s);
+}
+
+.nerv-flicker-fast {
+  animation:
+    nerv-flicker-fast-kf
+    calc(var(--nerv-flicker-duration) * 1.5 / var(--nerv-animation-speed))
+    steps(1)
+    infinite;
+  animation-delay: calc(var(--nerv-stagger-index, 0) * 0.04s);
+}
+
+.nerv-flicker-staccato {
+  animation:
+    nerv-flicker-staccato-kf
+    calc(var(--nerv-flicker-duration) * 2 / var(--nerv-animation-speed))
+    steps(2)
+    infinite;
+  animation-delay: calc(var(--nerv-stagger-index, 0) * 0.05s);
+}
+
+.nerv-blink {
+  animation:
+    nerv-blink-kf
+    calc(var(--nerv-flicker-duration) * 7 / var(--nerv-animation-speed))
+    steps(4)
+    infinite;
+  animation-delay: calc(var(--nerv-stagger-index, 0) * 0.1s);
+}
+
+// Out-of-the-box stagger: :nth-child() sets --nerv-stagger-index so
+// grouped elements desynchronize without consumer effort. Prime-ish
+// offsets ensure overlapping selectors produce varied delays.
+.nerv-flicker:nth-child(2n),
+.nerv-flicker-fast:nth-child(2n) { --nerv-stagger-index: 1; }
+
+.nerv-flicker:nth-child(3n),
+.nerv-flicker-fast:nth-child(3n) { --nerv-stagger-index: 2; }
+
+.nerv-flicker:nth-child(5n) { --nerv-stagger-index: 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-flicker,
+  .nerv-flicker-fast,
+  .nerv-flicker-staccato,
+  .nerv-blink {
+    animation: none;
+  }
+}

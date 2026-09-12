@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERV Foundation — ref-foundation</title>
+  <link rel="stylesheet" href="../dist/nerv.css">
+  <style>
+    /* Reference page layout — NOT part of the design system */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nerv-void);
+      color: var(--nerv-amber);
+      min-height: 100vh;
+      padding: 3rem 4rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    .ref-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(var(--nerv-steel-rgb), 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+    }
+
+    .ref-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: baseline;
+    }
+
+    .ref-swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .ref-color-name {
+      font-size: 0.6rem;
+      font-family: 'IBM Plex Mono', monospace;
+      opacity: 0.5;
+    }
+
+    .segment-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .segment-ghost {
+      color: rgba(var(--nerv-amber-rgb), 0.06);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .segment-value {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Typography Classes -->
+  <section>
+    <div class="ref-label">Typography — .nerv-type-display</div>
+    <p class="nerv-type-display" style="font-size: 2.5rem; color: var(--nerv-orange);">
+      NERV — 特務機関ネルフ
+    </p>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-hud</div>
+    <p class="nerv-type-hud" style="font-size: 1.5rem; color: var(--nerv-amber);">
+      Evangelion Unit-01 Status: Active
+    </p>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-data</div>
+    <p class="nerv-type-data" style="font-size: 1.1rem; color: var(--nerv-green);">
+      SYNC_RATE: 41.3% &nbsp; CONTAMINATION: 0.03% &nbsp; A10_DEPTH: 128.7m
+    </p>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-segment</div>
+    <div class="nerv-type-segment" style="font-size: 3rem; color: var(--nerv-amber);">
+      <span class="segment-wrapper">
+        <span class="segment-ghost">88:88:88:88</span>
+        <span
+          class="segment-value nerv-glow-text-amber"
+          id="live-segment-timer"
+          aria-label="Elapsed time with centisecond accuracy"
+        >00:00:00:00</span>
+      </span>
+    </div>
+    <script>
+      /**
+       * Formats a centisecond timer value to the 00:00:00:00 format
+       * HH:MM:SS:CC where CC = centiseconds.
+       * @param {number} elapsedMs Elapsed milliseconds
+       * @returns {string} formatted time
+       */
+      function formatCentisecondTimer(elapsedMs) {
+        const totalCentis = Math.floor(elapsedMs / 10);
+        const centis = totalCentis % 100;
+        const totalSeconds = Math.floor(totalCentis / 100);
+        const seconds = totalSeconds % 60;
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const minutes = totalMinutes % 60;
+        const hours = Math.floor(totalMinutes / 60);
+        const pad = n => n.toString().padStart(2, '0');
+        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}:${pad(centis)}`;
+      }
+
+      (function () {
+        const elem = document.getElementById('live-segment-timer');
+        if (!elem) return;
+        // Use performance.now() for improved time accuracy (not Date.now)
+        const start = performance.now();
+
+        function tick() {
+          const now = performance.now();
+          const elapsed = now - start; // in ms
+          elem.textContent = formatCentisecondTimer(elapsed);
+          requestAnimationFrame(tick); // ~60fps, good enough for centiseconds
+        }
+
+        tick();
+      })();
+    </script>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-mixed (JP/EN composite)</div>
+    <p class="nerv-type-mixed" style="font-size: 1.8rem; color: var(--nerv-amber);">
+      活動限界 ACTIVE TIME REMAINING
+    </p>
+  </section>
+
+  <section>
+    <div class="ref-label">Typography — .nerv-type-boot (DOS/BIOS monospace)</div>
+    <div class="nerv-type-boot" style="font-size: 1.4rem; color: var(--nerv-green); line-height: 1.6;">
+NERV BIOS v3.14 — MAGI SYSTEM CHECK
+Base Memory:       640K OK
+Extended Memory:   131072K OK
+  </section>
+
+  <!-- Color Tokens — plain colored text (no glow) -->
+  <section>
+    <div class="ref-label">Color Tokens</div>
+    <div class="ref-row">
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-amber);">NERV AMBER</span>
+        <span class="ref-color-name">#ffaa00</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-amber-dark);">AMBER DARK</span>
+        <span class="ref-color-name">#f06800</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-orange);">NERV ORANGE</span>
+        <span class="ref-color-name">#ff9830</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-red);">ALERT RED</span>
+        <span class="ref-color-name">#ff2233</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-red-deep);">RED DEEP</span>
+        <span class="ref-color-name">#a00010</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-green);">DATA GREEN</span>
+        <span class="ref-color-name">#50ff50</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-cyan);">WIRE CYAN</span>
+        <span class="ref-color-name">#20f0ff</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-blue);">DATA BLUE</span>
+        <span class="ref-color-name">#4488ff</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud" style="font-size: 1.2rem; color: var(--nerv-steel);">STEEL</span>
+        <span class="ref-color-name">#e0e0d8</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Color Tokens as Glowing Labels -->
+  <section>
+    <div class="ref-label">Color Tokens — Glow Text <span class="ref-color-name" style="display:block;margin-top:0.35rem;font-size:0.65rem;">.nerv-glow-text-* = text-shadow only — add matching .nerv-text-* for <code style="color:inherit;">color: var(--nerv-…)</code></span></div>
+    <div class="ref-row">
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-amber" style="font-size: 1.2rem; color: var(--nerv-amber);">NERV AMBER</span>
+        <span class="ref-color-name">#ffaa00</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-amber-dark" style="font-size: 1.2rem; color: var(--nerv-amber-dark);">AMBER DARK</span>
+        <span class="ref-color-name">#f06800</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-orange" style="font-size: 1.2rem; color: var(--nerv-orange);">NERV ORANGE</span>
+        <span class="ref-color-name">#ff9830</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-red" style="font-size: 1.2rem; color: var(--nerv-red);">ALERT RED</span>
+        <span class="ref-color-name">#ff2233</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-red-deep" style="font-size: 1.2rem; color: var(--nerv-red-deep);">RED DEEP</span>
+        <span class="ref-color-name">#a00010</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-green" style="font-size: 1.2rem; color: var(--nerv-green);">DATA GREEN</span>
+        <span class="ref-color-name">#50ff50</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-cyan" style="font-size: 1.2rem; color: var(--nerv-cyan);">WIRE CYAN</span>
+        <span class="ref-color-name">#20f0ff</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-blue" style="font-size: 1.2rem; color: var(--nerv-blue);">DATA BLUE</span>
+        <span class="ref-color-name">#4488ff</span>
+      </div>
+      <div class="ref-swatch">
+        <span class="nerv-type-hud nerv-glow-text-steel" style="font-size: 1.2rem; color: var(--nerv-steel);">STEEL</span>
+        <span class="ref-color-name">#e0e0d8</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Box-shadow Glow Samples -->
+  <section>
+    <div class="ref-label">Glow Effects — box-shadow (.nerv-glow-*)</div>
+    <div class="ref-row">
+      <div class="nerv-glow" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-amber);">
+        <span class="nerv-type-hud" style="color: var(--nerv-amber);">.nerv-glow</span>
+      </div>
+      <div class="nerv-glow-red" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-red);">
+        <span class="nerv-type-hud" style="color: var(--nerv-red);">.nerv-glow-red</span>
+      </div>
+      <div class="nerv-glow-green" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-green);">
+        <span class="nerv-type-hud" style="color: var(--nerv-green);">.nerv-glow-green</span>
+      </div>
+      <div class="nerv-glow-cyan" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-cyan);">
+        <span class="nerv-type-hud" style="color: var(--nerv-cyan);">.nerv-glow-cyan</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- drop-shadow Glow -->
+  <section>
+    <div class="ref-label">Glow Effects — filter: drop-shadow (.nerv-glow-drop)</div>
+    <div class="ref-label">Glow Effects — box-shadow (.nerv-glow-*)</div>
+    <div class="ref-row">
+      <div class="nerv-glow-drop" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-amber);">
+        <span class="nerv-type-hud" style="color: var(--nerv-amber);">.nerv-glow</span>
+      </div>
+      <div class="nerv-glow-drop-red" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-red);">
+        <span class="nerv-type-hud" style="color: var(--nerv-red);">.nerv-glow-red</span>
+      </div>
+      <div class="nerv-glow-drop-green" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-green);">
+        <span class="nerv-type-hud" style="color: var(--nerv-green);">.nerv-glow-green</span>
+      </div>
+      <div class="nerv-glow-drop-cyan" style="padding: 0.75rem 1.5rem; border: 1px solid var(--nerv-cyan);">
+        <span class="nerv-type-hud" style="color: var(--nerv-cyan);">.nerv-glow-cyan</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Status Cartouche — Flex (default) -->
+  <section>
+    <div class="ref-label">Status Cartouche — flex (.nerv-cartouche / .nerv-cartouche-{color})</div>
+    <div class="ref-row">
+      <span class="nerv-cartouche nerv-cartouche-red">IDENTIFIED</span>
+      <span class="nerv-cartouche nerv-cartouche-amber">CAPTURE</span>
+      <span class="nerv-cartouche nerv-cartouche-green">NOMINAL</span>
+      <span class="nerv-cartouche nerv-cartouche-cyan">CONDITION BLUE</span>
+      <span class="nerv-cartouche nerv-cartouche-steel">PILOT VANISHED</span>
+      <span class="nerv-cartouche">DEFAULT</span>
+    </div>
+    <div class="ref-row" style="margin-top: 0.75rem;">
+      <span class="nerv-cartouche nerv-cartouche-red nerv-glow-red">LOCKED</span>
+      <span class="nerv-cartouche nerv-cartouche-amber nerv-glow-amber">SIGNAL LOST</span>
+      <span class="nerv-cartouche nerv-cartouche-red">REFUSED</span>
+      <span class="nerv-cartouche nerv-cartouche-green">OPEN</span>
+      <span class="nerv-cartouche nerv-cartouche-blue">活動限界</span>
+    </div>
+  </section>
+
+  <!-- Status Cartouche — Fixed (text stretches to fill) -->
+  <section>
+    <div class="ref-label">Status Cartouche — fixed (.nerv-cartouche-fixed, JS: NERV.initCartouches)</div>
+    <div class="ref-row">
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-red" style="width: 180px; height: 36px;"><span>識別 IDENTIFIED</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-amber" style="width: 120px; height: 36px;"><span>CAPTURE</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-green" style="width: 200px; height: 28px;"><span>OPERATING</span></span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 240px; height: 36px;"><span>OBJECT: EVA-01</span></span>
+    </div>
+  </section>
+
+  <!-- Status Cartouche — Fixed table-mode (multi-cell) -->
+  <section>
+    <div class="ref-label">Status Cartouche — fixed table-mode (.nerv-cartouche-fixed + &lt;table&gt;, JS: NERV.initCartouches)</div>
+    <div class="ref-row">
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 240px; height: 36px;">
+        <table><tr><td>OBJECT :</td><td>EVA-01</td></tr></table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-steel" style="width: 280px; height: 100px;">
+        <table>
+          <tr><td>OBJECT :</td><td>EVA-01</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+          <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td colspan="2">ENTRY PLUG : INTERIOR</td></tr>
+          <tr><td colspan="3">DIRECT CONNECTION NO. 316</td></tr>
+          <tr><td colspan="3">PILOT VANISHED</td></tr>
+        </table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-amber" style="width: 220px; height: 50px;">
+        <table>
+          <tr><td>LIVE</td><td>第22警戒群</td></tr>
+          <tr><td colspan="2">MAGNIFICATION ×10⁵</td></tr>
+        </table>
+      </span>
+    </div>
+    <div class="ref-row" style="margin-top: 0.75rem;">
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-red" style="width: 160px; height: 50px;">
+        <table>
+          <tr><td>LOCKED</td></tr>
+          <tr><td>TARGET: 6TH</td></tr>
+        </table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-green" style="width: 160px; height: 50px;">
+        <table>
+          <tr><td>OPEN</td></tr>
+          <tr><td>GATE 07-A</td></tr>
+        </table>
+      </span>
+      <span class="nerv-cartouche nerv-cartouche-fixed nerv-cartouche-amber" style="width: 200px; height: 50px;">
+        <table>
+          <tr><td>LIVE</td><td>PICTURE ×01</td></tr>
+          <tr><td colspan="2">FROM KIKU-07</td></tr>
+        </table>
+      </span>
+    </div>
+  </section>
+
+  <script src="../src/nerv.js"></script>
+  <script>NERV.initCartouches();</script>
+</body>
+</html>

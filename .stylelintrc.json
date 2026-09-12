@@ -1,0 +1,20 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "selector-class-pattern": "^nerv-",
+    "at-rule-no-unknown": [true, {
+      "ignoreAtRules": ["use", "forward", "mixin", "include", "each", "if", "else", "for", "function", "return", "warn", "error"]
+    }],
+    "no-descending-specificity": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "function-no-unknown": null,
+    "import-notation": null,
+    "color-hex-length": null,
+    "at-rule-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "color-function-notation": null,
+    "alpha-value-notation": null,
+    "declaration-empty-line-before": null,
+    "selector-attribute-quotes": null
+  }
+}

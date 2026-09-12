@@ -1,0 +1,67 @@
+/// _tokens.scss — Design tokens as CSS custom properties on :root.
+///
+/// The $nerv-colors map is the single source of truth for the color system.
+/// An @each loop generates --nerv-{name} and --nerv-{name}-rgb custom
+/// properties automatically. _glow.scss imports this map via @use 'tokens'
+/// to auto-generate glow classes for colors flagged with `glow: true`.
+///
+/// Token categories:
+///   - Named data tokens (stable, never overridden by alert states)
+///   - Ambiance/meta-tokens (--nerv-primary, --nerv-bg — overridden by Phase 6)
+///   - Utility tokens (glow, animation, border)
+
+@use 'sass:list';
+
+/// Master color map. Each entry: (hex, rgb-string, glow-variant-flag).
+/// Adding a color here auto-generates :root tokens + RGB companions.
+/// Setting glow: true also generates .nerv-glow-{name} and .nerv-glow-text-{name}
+/// classes in _glow.scss.
+$nerv-colors: (
+  'void':       (#000000, '0, 0, 0',       false),
+  'amber':      (#ffaa00, '255, 170, 0',   true),
+  'amber-dark': (#f06800, '240, 104, 0',   true),
+  'orange':     (#ff9830, '255, 152, 48',  true),
+  'red':        (#ff2233, '255, 34, 51',   true),
+  'red-deep':   (#a00010, '160, 0, 16',    true),
+  'green':      (#50ff50, '80, 255, 80',   true),
+  'cyan':       (#20f0ff, '32, 240, 255',  true),
+  'blue':       (#4488ff, '68, 136, 255',  true),
+  'steel':      (#e0e0d8, '224, 224, 216', true),
+  'white':      (#ffffff, '255, 255, 255', false),
+);
+
+:root {
+  @each $name, $vals in $nerv-colors {
+    $hex: list.nth($vals, 1);
+    $rgb: list.nth($vals, 2);
+
+    --nerv-#{$name}: #{$hex};
+    --nerv-#{$name}-rgb: #{$rgb};
+  }
+
+  // Ambiance meta-tokens — overridden by .nerv-state-* in Phase 6
+  --nerv-primary: var(--nerv-amber);
+  --nerv-primary-rgb: var(--nerv-amber-rgb);
+  --nerv-bg: var(--nerv-void);
+  --nerv-bg-rgb: var(--nerv-void-rgb);
+
+  // Utility tokens
+  --nerv-glow-spread: 8px;
+  --nerv-glow-intensity: 1;
+  --nerv-scanline-opacity: 0.08;
+  --nerv-flicker-duration: 0.15s;
+  --nerv-glitch-duration: 3s;
+  --nerv-stripe-duration: 15s;
+  --nerv-stripe-width: 0.75rem;
+  --nerv-radar-duration: 4s;
+  --nerv-animation-speed: 1;
+  --nerv-data-bg-duration: 30s;
+  --nerv-border-width: 1px;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --nerv-border-width: 2px;
+    --nerv-glow-intensity: 0.3;
+  }
+}

@@ -1,0 +1,277 @@
+/// _form.scss — NERV-styled web form elements.
+///
+/// Provides CRT-console styling for standard HTML form elements: text inputs,
+/// textareas, selects, checkboxes, radios, and buttons. Each element gets a
+/// `.nerv-` prefixed class applying dark background, phosphor-colored borders,
+/// glow on focus, and HUD typography.
+///
+/// Classes:
+///   .nerv-input      — text-like inputs (text, email, password, number, etc.)
+///   .nerv-textarea   — multiline text input
+///   .nerv-select     — dropdown select with custom arrow
+///   .nerv-checkbox   — custom checkbox (appearance: none)
+///   .nerv-radio      — custom radio button (appearance: none)
+///   .nerv-btn        — standard form button (rectangular, no skew)
+///
+/// Custom properties:
+///   --nerv-form-color     (default: --nerv-primary)
+///   --nerv-form-color-rgb (default: --nerv-primary-rgb)
+///
+/// Color variants (auto-generated per glow-flagged token):
+///   .nerv-form-{color}  — override --nerv-form-color on any form element
+///
+/// Tokens consumed:
+///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert)
+///   --nerv-bg, --nerv-bg-rgb (background)
+///   --nerv-border-width (border sizing)
+///   --nerv-glow-spread, --nerv-glow-intensity (focus glow)
+///   Color values from tokens.$nerv-colors for variant generation
+
+@use 'sass:list';
+@use 'tokens';
+
+// ---------------------------------------------------------------------------
+// Internal mixins (not exposed)
+// ---------------------------------------------------------------------------
+
+@mixin _form-base($bg: var(--nerv-bg)) {
+  --nerv-form-color: var(--nerv-primary);
+  --nerv-form-color-rgb: var(--nerv-primary-rgb);
+
+  background: #{$bg};
+  color: var(--nerv-form-color);
+  border: var(--nerv-border-width) solid var(--nerv-form-color);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4em 0.8em;
+  outline: none;
+  transition: box-shadow 0.06s, border-color 0.06s;
+}
+
+@mixin _form-focus {
+  box-shadow:
+    0 0 0 1px var(--nerv-bg),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.45),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.2);
+}
+
+@mixin _form-placeholder {
+  color: rgba(var(--nerv-form-color-rgb), 0.4);
+  font-style: italic;
+  text-transform: none;
+}
+
+// ---------------------------------------------------------------------------
+// 1. Text input
+// ---------------------------------------------------------------------------
+
+.nerv-input {
+  @include _form-base;
+}
+
+.nerv-input::-webkit-outer-spin-button,
+.nerv-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+#{'.nerv-input[type="number"]'} {
+  appearance: textfield;
+}
+
+.nerv-input:focus {
+  @include _form-focus;
+}
+
+.nerv-input::placeholder {
+  @include _form-placeholder;
+}
+
+// ---------------------------------------------------------------------------
+// 2. Textarea
+// ---------------------------------------------------------------------------
+
+.nerv-textarea {
+  @include _form-base;
+  resize: vertical;
+  min-height: 4em;
+}
+
+.nerv-textarea:focus {
+  @include _form-focus;
+}
+
+.nerv-textarea::placeholder {
+  @include _form-placeholder;
+}
+
+// ---------------------------------------------------------------------------
+// 3. Select
+// ---------------------------------------------------------------------------
+
+.nerv-select {
+  @include _form-base;
+  appearance: none;
+  cursor: pointer;
+  padding-right: 2.2em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ffaa00'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7em center;
+  background-size: 0.65em;
+}
+
+.nerv-select:focus {
+  @include _form-focus;
+}
+
+// ---------------------------------------------------------------------------
+// 4. Checkbox
+// ---------------------------------------------------------------------------
+
+.nerv-checkbox {
+  --nerv-form-color: var(--nerv-primary);
+  --nerv-form-color-rgb: var(--nerv-primary-rgb);
+
+  appearance: none;
+  width: 1.1em;
+  height: 1.1em;
+  border: var(--nerv-border-width) solid var(--nerv-form-color);
+  background: var(--nerv-bg);
+  cursor: pointer;
+  vertical-align: middle;
+  position: relative;
+  outline: none;
+  transition: box-shadow 0.06s;
+}
+
+.nerv-checkbox:checked {
+  background: var(--nerv-form-color);
+  box-shadow:
+    inset 0 0 0 2px var(--nerv-bg);
+}
+
+.nerv-checkbox:focus {
+  @include _form-focus;
+}
+
+.nerv-checkbox:checked:focus {
+  box-shadow:
+    inset 0 0 0 2px var(--nerv-bg),
+    0 0 0 1px var(--nerv-bg),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.45),
+    0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.2);
+}
+
+// ---------------------------------------------------------------------------
+// 5. Radio
+// ---------------------------------------------------------------------------
+
+.nerv-radio {
+  --nerv-form-color: var(--nerv-primary);
+  --nerv-form-color-rgb: var(--nerv-primary-rgb);
+
+  appearance: none;
+  width: 1.1em;
+  height: 1.1em;
+  border: var(--nerv-border-width) solid var(--nerv-form-color);
+  border-radius: 50%;
+  background: var(--nerv-bg);
+  cursor: pointer;
+  vertical-align: middle;
+  position: relative;
+  outline: none;
+  transition: box-shadow 0.06s;
+}
+
+.nerv-radio:checked {
+  background: radial-gradient(
+    circle,
+    var(--nerv-form-color) 40%,
+    var(--nerv-bg) 41%
+  );
+}
+
+.nerv-radio:focus {
+  @include _form-focus;
+}
+
+// ---------------------------------------------------------------------------
+// 6. Button
+// ---------------------------------------------------------------------------
+
+.nerv-btn {
+  @include _form-base($bg: transparent);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.nerv-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--nerv-bg),
+    0 0 0 calc(2px + var(--nerv-border-width)) var(--nerv-form-color),
+    0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.45);
+}
+
+@media (hover: hover) {
+  .nerv-btn:hover {
+    background: rgba(var(--nerv-form-color-rgb), 0.12);
+    box-shadow:
+      0 0 calc(var(--nerv-glow-spread) * 1.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.45),
+      0 0 calc(var(--nerv-glow-spread) * 3.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.2);
+  }
+}
+
+.nerv-btn:active {
+  transform: scale(0.96);
+  background: rgba(var(--nerv-form-color-rgb), 0.25);
+  box-shadow:
+    inset 0 0 12px rgba(var(--nerv-form-color-rgb), 0.35),
+    0 0 calc(var(--nerv-glow-spread) * 2 * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.55);
+}
+
+// ---------------------------------------------------------------------------
+// 7. Color variants (auto-generated from glow-flagged tokens)
+// ---------------------------------------------------------------------------
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-form-#{$name} {
+      --nerv-form-color: var(--nerv-#{$name});
+      --nerv-form-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 8. Accessibility
+// ---------------------------------------------------------------------------
+
+@media (prefers-contrast: more) {
+  .nerv-input,
+  .nerv-textarea,
+  .nerv-select,
+  .nerv-checkbox,
+  .nerv-radio,
+  .nerv-btn {
+    border-width: calc(var(--nerv-border-width) + 1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-input,
+  .nerv-textarea,
+  .nerv-select,
+  .nerv-checkbox,
+  .nerv-radio,
+  .nerv-btn {
+    transition: none;
+  }
+}

@@ -1,0 +1,173 @@
+/// _reticle.scss — Measurement-ruler tickmarks along container edges.
+///
+/// Utility classes that add CSS-based tick marks along element edges using
+/// a `::after` pseudo-element with `repeating-linear-gradient` backgrounds.
+/// Configurable via custom properties. The host element must establish a
+/// positioning context (the classes set `position: relative` if not already set).
+///
+///   .nerv-reticle            — all 4 edges
+///   .nerv-reticle-top        — top edge only
+///   .nerv-reticle-right      — right edge only
+///   .nerv-reticle-bottom     — bottom edge only
+///   .nerv-reticle-left       — left edge only
+///   .nerv-reticle-{color}    — color variant (auto-generated per glow-flagged token)
+///
+/// Custom properties:
+///   --nerv-reticle-color     (default: --nerv-primary)
+///   --nerv-reticle-size      (tick length, default: 8px)
+///   --nerv-reticle-spacing   (repeat distance, default: 8px)
+///   --nerv-reticle-width     (tick stroke width, default: 1px; 2px in prefers-contrast)
+///
+/// Trade-off: these classes consume the host element's ::after pseudo-element.
+///
+/// Tokens consumed:
+///   --nerv-primary (default tick color, follows ambiance/alert state)
+///   Color values from tokens.$nerv-colors for variant generation
+
+@use 'sass:list';
+@use 'tokens';
+
+@mixin _reticle-host {
+  --nerv-reticle-color: var(--nerv-primary);
+  --nerv-reticle-size: 8px;
+  --nerv-reticle-spacing: 8px;
+  --nerv-reticle-width: 1px;
+
+  position: relative;
+}
+
+@mixin _reticle-overlay {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nerv-reticle {
+  @include _reticle-host;
+
+  &::after {
+    @include _reticle-overlay;
+    background-image:
+      repeating-linear-gradient(
+        to right,
+        var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+        transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+      ),
+      repeating-linear-gradient(
+        to right,
+        var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+        transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+        transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+        transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+      );
+    background-size:
+      100% var(--nerv-reticle-size),
+      100% var(--nerv-reticle-size),
+      var(--nerv-reticle-size) 100%,
+      var(--nerv-reticle-size) 100%;
+    background-position:
+      top left,
+      bottom left,
+      top left,
+      top right;
+    background-repeat:
+      repeat-x,
+      repeat-x,
+      repeat-y,
+      repeat-y;
+  }
+}
+
+.nerv-reticle-top {
+  @include _reticle-host;
+
+  &::after {
+    @include _reticle-overlay;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+      transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+    );
+    background-size: 100% var(--nerv-reticle-size);
+    background-position: top left;
+    background-repeat: repeat-x;
+  }
+}
+
+.nerv-reticle-right {
+  @include _reticle-host;
+
+  &::after {
+    @include _reticle-overlay;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+      transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+    );
+    background-size: var(--nerv-reticle-size) 100%;
+    background-position: top right;
+    background-repeat: repeat-y;
+  }
+}
+
+.nerv-reticle-bottom {
+  @include _reticle-host;
+
+  &::after {
+    @include _reticle-overlay;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+      transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+    );
+    background-size: 100% var(--nerv-reticle-size);
+    background-position: bottom left;
+    background-repeat: repeat-x;
+  }
+}
+
+.nerv-reticle-left {
+  @include _reticle-host;
+
+  &::after {
+    @include _reticle-overlay;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--nerv-reticle-color) 0 var(--nerv-reticle-width),
+      transparent var(--nerv-reticle-width) var(--nerv-reticle-spacing)
+    );
+    background-size: var(--nerv-reticle-size) 100%;
+    background-position: top left;
+    background-repeat: repeat-y;
+  }
+}
+
+@each $name, $vals in tokens.$nerv-colors {
+  $has-glow: list.nth($vals, 3);
+
+  @if $has-glow {
+    .nerv-reticle-#{$name} {
+      --nerv-reticle-color: var(--nerv-#{$name});
+    }
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nerv-reticle,
+  .nerv-reticle-top,
+  .nerv-reticle-right,
+  .nerv-reticle-bottom,
+  .nerv-reticle-left {
+    --nerv-reticle-width: 2px;
+  }
+}
