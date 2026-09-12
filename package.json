@@ -1,7 +1,7 @@
 {
   "name": "nervouscsstem",
   "version": "0.0.1",
-  "description": "NERV Design System — pure-CSS design system inspired by Neon Genesis Evangelion operational consoles",
+  "description": "Mostly-pure CSS design system inspired by NERV's operational consoles from Neon Genesis Evangelion",
   "homepage": "https://github.com/Texarkanine/nervouscsstem#readme",
   "repository": {
     "type": "git",
