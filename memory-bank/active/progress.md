@@ -1,6 +1,6 @@
 # Progress
 
-Add a ProperDocs GitHub Pages site from existing `docs/` plus CSS-only and JS example pages that load CDN assets on release and `dist/` locally, erroring if local bundles are missing.
+Add a ProperDocs GitHub Pages site from existing `docs/` plus Using pages with live examples embedded on the page. Released pages load CDN assets; local serve/build uses `dist/` and errors if those files are missing.
 
 **Complexity:** Level 3
 
@@ -77,3 +77,28 @@ Add a ProperDocs GitHub Pages site from existing `docs/` plus CSS-only and JS ex
     - v0.1 ships the pattern (CSS section plus a small set of component pages), not a page for every component
 * Insights
     - The previous creative (Option D) is void. Dual-load remains; hosting does not.
+
+## 2026-09-12 - CREATIVE - COMPLETE (replan)
+
+* Work completed
+    - Explored embedding plus dual-load as the replacement open question
+    - Wrote `memory-bank/active/creative/creative-embedded-docs-examples.md`
+    - Marked the standalone-HTML creative superseded
+* Decisions made
+    - Option C: inline HTML islands in markdown plus `extra_css` / `extra_javascript`
+    - Never call `NERV.init()` on docs pages; `injectScanlines` is viewport-fixed on `body`
+    - v0.1 Using pages: CSS, Panels (CSS-only), Bar meters (scoped JS)
+* Insights
+    - `extra_css` is relative to `docs_dir`, so CDN mode writes an `@import` stand-in rather than a second YAML config
+
+## 2026-09-12 - PLAN - COMPLETE (replan)
+
+* Work completed
+    - Rewrote `tasks.md`: resolver still the executable unit; Using pages and ProperDocs are prose/policy
+    - Updated parent brief requirements 9–11 and AC 3–4, and the L4 M4 checkbox/Done, to match embedded examples
+    - Folded the prior preflight advisory (`needs: publish-npm`) into unit 3
+* Decisions made
+    - Still L3. Pattern, not encyclopedia
+    - No tests that spawn ProperDocs or grep workflow YAML
+* Insights
+    - The load-path contract is still the shipped-product TDD surface; the teaching pages are fixtures that contract tests assert on

@@ -1,5 +1,9 @@
 # Architecture Decision: Dual-load example hosting
 
+**Superseded.** Operator rejected standalone HTML. See `creative-embedded-docs-examples.md`.
+
+## Requirements & Constraints
+
 ## Requirements & Constraints
 
 **Functional requirements**

@@ -16,11 +16,11 @@ A new agent in this repository wakes SumMem from `AGENTS.md` and loads Niko proj
 
 ### Use-Case 3: Read docs on GitHub Pages
 
-A visitor opens the ProperDocs site and sees the existing `docs/` plus two live-example pages. CSS and JS for those examples come from the released CDN URLs.
+A visitor opens the ProperDocs site and sees the existing visual-language docs plus Using pages with live examples inlined on the page (preview, spec, code). CSS and JS for those examples come from the released CDN URLs.
 
 ### Use-Case 4: Iterate docs locally
 
-An operator builds CSS/JS to `dist/` and runs the doc site locally. Example pages load those on-disk bundles. If the files are missing, the local docs build errors.
+An operator builds CSS/JS to `dist/` and runs the doc site locally. Example islands load those on-disk bundles. If the files are missing, the local docs build errors.
 
 ### Use-Case 5: Install the skill
 
@@ -36,8 +36,8 @@ An operator runs `npx skills.sh` / `npx skills` and gets a placeholder skill who
 6. Publish the package to npm so the public site can load CSS/JS from a CDN (jsDelivr or the equivalent that follows from npm). Confirm that path during the work; do not invent a separate CDN.
 7. Investigate the feasibility of an offline bundle that includes fonts and JS. Licensing is the main question. This is a written answer, not a promise to ship that bundle in 0.1.
 8. Add a ProperDocs documentation site that keeps existing `docs/` as the docs.
-9. Add two new live-example pages: one CSS-only (must work with JavaScript disabled) and one that requires JS.
-10. On a release docs build, those example pages load the **released** CSS/JS from the CDN.
+9. Add a CSS section and a small set of component pages with live examples embedded on the page (preview island, spec, then code). CSS islands must work without `nerv.js`. At least one page uses `nerv.js` via scoped init. This is the pattern, not a page for every component.
+10. On a release docs build, those pages load the **released** CSS/JS from the CDN.
 11. On a local docs run, those pages load the on-disk `dist/` build and **error if those files are missing**.
 12. Host the site on GitHub Pages.
 13. Add an agent skill installable via `npx skills.sh` / `npx skills`, slobac-style, so the documentation site travels with the skill. Skill prose may be placeholder.
@@ -55,8 +55,8 @@ An operator runs `npx skills.sh` / `npx skills` and gets a placeholder skill who
 
 1. Agents in this repo wake SumMem from `AGENTS.md`; `CLAUDE.md` points at `AGENTS.md`.
 2. A GitHub Release exists (or the release-please path to one is wired) with versioned CSS and JS attached.
-3. The GitHub Pages site shows existing docs plus the two example pages, and the browser loads CSS/JS from the CDN.
-4. The CSS-only example page works with JavaScript disabled.
+3. The GitHub Pages site shows existing docs plus the Using pages with embedded live examples, and the browser loads CSS/JS from the CDN.
+4. CSS example islands render without `nerv.js`.
 5. A local ProperDocs serve/build uses on-disk `dist/` bundles and fails if they are absent.
 6. `npx skills.sh` / `npx skills` can install the skill; the docs site comes along inside it; `SKILL.md` has a matching version.
 7. A written feasibility note exists for offline font+JS bundling (licensing).

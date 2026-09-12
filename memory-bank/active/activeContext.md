@@ -1,16 +1,15 @@
 # Active Context
 
 ## Current Task: nerv-v01-m4-properdocs-dual-load-site
-**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
+**Phase:** PLAN - COMPLETE (replan)
 
 ## What Was Done
 
-- Classified M4 as Level 3 and planned it
-- Creative: Node dual-load module + standalone HTML examples (see `memory-bank/active/creative/creative-dual-load-example-hosting.md`)
-- ProperDocs spike: extra HTML copied as-is; `--strict` fails on `../.gitattributes`; need `index.md`
-- Preflight: plan validated; TDD order correct; no blocking conflicts; advisories on release job ordering and workflow chaining
-- Refactored the parent L4 `milestones.md` to the upstream format (Done/Risks blocks; estimates off checkboxes; #7 on M3). M4 L3 plan unchanged.
+- Operator rejected standalone HTML; replanned M4 around Bootstrap-style embedded examples
+- Creative: inline HTML islands plus `extra_css` / `extra_javascript` dual-load (`creative-embedded-docs-examples.md`)
+- Parent brief and L4 M4 Done updated: CSS islands do not require `nerv.js`; pattern not full catalog
+- Prior preflight advisory folded in: Pages job `needs: publish-npm`
 
 ## Next Step
 
-- `/niko-plan` replan (operator rejected standalone HTML examples)
+- Preflight
