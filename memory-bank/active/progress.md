@@ -55,3 +55,13 @@ Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap w
     - Left pre-existing stylelint errors in `dist/nerv.css` alone
 * Insights
     - Contract tests belong on our shipped product; even then semver can carry the signal
+
+## 2026-09-12 - QA - COMPLETE (PASS)
+
+* Work completed
+    - Semantic review of the M1 install against the plan: vendored script byte-identity, `AGENTS.md` init-block fidelity against a fresh `summem init` run, Niko template shape, `CLAUDE.md`, `.gitignore`, no-new-tests directive, and commit contents
+    - Wrote `.qa-validation-status` (PASS) and recorded findings in `tasks.md`
+* Decisions made
+    - PASS with advisories: `python3` >= 3.11 PATH requirement and pre-existing stylelint errors are documented, non-blocking
+* Insights
+    - `summem init` is confirmed side-effect-free in this repo; QA re-ran it live to verify the `AGENTS.md` block character-for-character

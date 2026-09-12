@@ -57,4 +57,13 @@ No new technology — validation not required. SumMem is a file copy, not an npm
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA
+
+## QA Results (2026-09-12) — PASS
+
+- Vendored `.summem/summem` verified byte-identical to the sibling source and executable
+- `AGENTS.md` init block verified against a fresh `summem init` run; Niko template matches SumMem's own shape, repo-specific trailing sentence correctly omitted
+- `CLAUDE.md` is `@AGENTS.md`; `.gitignore` entry appended; no new tests per operator directive
+- Build commit contains exactly the four planned files; M1 scope held (no release-please/ProperDocs/skill/offline-bundle work)
+- Advisories only: `python3` >= 3.11 PATH requirement (documented in Technology Validation); pre-existing stylelint errors untouched
+- Full findings: `memory-bank/active/.qa-validation-status`
