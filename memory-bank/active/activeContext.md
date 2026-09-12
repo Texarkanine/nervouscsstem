@@ -1,16 +1,15 @@
 # Active Context
 
 ## Current Task: nerv-v01-m3-offline-bundle-feasibility
-**Phase:** COMPLEXITY-ANALYSIS - COMPLETE
+**Phase:** PLAN - COMPLETE
 
 ## What Was Done
 
-- Advanced L4 milestone M2 to `- [x]` (Step 2a) and cleared M2 sub-run ephemerals; parent `projectbrief.md`, `milestones.md`, and `reflection/` retained
-- Classified first unchecked milestone M3 as Level 2
-- Decision tree: not a bug fix; small self-contained enhancement (research plus one written feasibility note; no code ship) → L2
-- Matches the L4 advisory estimate
-- Parent brief mapping: requirement 7, acceptance criterion 7, and constraint 3; invariant 3 (offline bundles are not a 0.1 ship)
+- Classified M3 as Level 2 (research plus one written note; no code ship)
+- Wrote the M3 implementation plan: one prose/policy unit that inventories `_typography.scss` `@font-face` URLs, records licenses, and writes `planning/offline-bundle.md`
+- No TDD unit: no new executable behavior; no change-detector on the note
+- Parent brief mapping: requirement 7, acceptance criterion 7, constraint 3; invariant 3 (do not vendor)
 
 ## Next Step
 
-- Load the Level 2 workflow and execute the Plan phase
+- Preflight validation of the M3 plan
