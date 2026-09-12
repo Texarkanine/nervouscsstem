@@ -18,3 +18,17 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
 * Insights
     - Later milestones stay out of this sub-run: no offline-bundle note, ProperDocs site, or skill/`SKILL.md` extra-files work
     - Invariant 5 is load-bearing: M2 creates release-please and does not add a `SKILL.md` extra-file; M5 will extend extra-files later
+
+## 2026-09-12 - PLAN - COMPLETE
+
+* Work completed
+    - Wrote the M2 implementation plan in `tasks.md`: one executable TDD unit (npm pack contract) plus release-please/Actions wiring and a short README
+    - Mapped parent brief requirements 4–6 and acceptance criterion 2 onto concrete files
+* Decisions made
+    - Copy inquirerjs for `release-type: node`, OIDC publish (Node 24, `environment: npmjs.org`, `APP_ID` / `APP_PRIVATE_KEY`), doggo PR header
+    - Add only `gh release upload` of `dist/nerv.css` and `dist/nerv.js`; do not copy codecov/`test:ci`
+    - `package.json` version `0.0.1` + matching manifest so the first `feat:` on `main` is `0.1.0`
+    - No `extra-files`; no creative phase
+* Insights
+    - AC2 is wiring, not a live first publish: npm OIDC cannot create a never-published package; operator bootstraps then attaches the trusted publisher
+    - Same GitHub App is named `APP_ID`, `DOGGO_BOT_APP_ID`, and `HELPER_APP_ID` on sibling repos; this plan uses the inquirerjs names

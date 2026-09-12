@@ -1,0 +1,1 @@
+First npm publish cannot use OIDC until the package exists on the registry; operator bootstraps then attaches trusted publisher to release-please.yaml
