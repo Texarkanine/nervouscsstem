@@ -54,6 +54,13 @@ No new technology — validation not required. No new npm dependencies. License 
 - Implementer treats `Noto Serif JP` as a loaded font: work step 1 says it is a CSS fallback, not a `@font-face` src
 - Implementer changes `_typography.scss` to self-host "while we're here": work step 5 forbids it
 
+## QA Findings
+
+- PASS. `git diff --stat` since the pre-build checkpoint touches only `planning/offline-bundle.md` plus memory-bank tracking files — `_typography.scss`, `nerv.js`, `package.json`, `docs/`, and release-please files are untouched.
+- All 22 `@font-face` `src` URLs in `src/_typography.scss` cross-checked against the note's inventory table, alias list, and "not loaded" fallback list — exact match.
+- Full suite re-run 357/357; `npm run lint` reproduces the same pre-existing 7 stylelint errors on `dist/nerv.css`, confirming they predate and are unrelated to this milestone.
+- No KISS/DRY/YAGNI/completeness/regression/integrity/documentation violations found.
+
 ## Status
 
 - [x] Initialization complete
@@ -63,4 +70,4 @@ No new technology — validation not required. No new npm dependencies. License 
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA

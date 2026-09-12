@@ -55,3 +55,14 @@ Write a feasibility note on offline font-and-JS bundles covering the licenses of
     - Offline JS was never the gap; twenty-two CDN font URLs are
     - If a later milestone ships, take official OFL packages rather than `gstatic` subset hashes
 
+## 2026-09-12 - QA - COMPLETE
+
+* Work completed
+    - Verified `planning/offline-bundle.md` against the plan, parent brief, and `src/_typography.scss`
+    - Confirmed no scope creep via `git diff --stat` since the pre-build checkpoint
+    - Re-ran full suite (357/357) and lint (same pre-existing 7 errors)
+* Decisions made
+    - QA result: PASS, no findings requiring rework
+* Insights
+    - All six pre-mortem risks (vendoring, stale PHASE1 table, wrong file location, change-detector tests, Noto Serif JP miscount, `_typography.scss` edits) were each independently avoided in Build
+

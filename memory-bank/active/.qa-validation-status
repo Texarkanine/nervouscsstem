@@ -1,0 +1,13 @@
+PASS
+
+Verified `planning/offline-bundle.md` against the approved M3 plan (`tasks.md`), the parent brief (requirement 7 / acceptance criterion 7 / constraint 3), and the live source of truth.
+
+Scope discipline: `git diff --stat` since the pre-build checkpoint shows only `planning/offline-bundle.md` plus the three memory-bank tracking files. `src/_typography.scss`, `src/nerv.js`, `package.json`, `docs/`, and release-please files are untouched, matching work step 5 and every pre-mortem risk about scope creep.
+
+Inventory accuracy: cross-checked all 22 `@font-face` `src` URLs in `src/_typography.scss` against the note's table. Six unique families, aliasing (`NERV Mixed` → Barlow Condensed Latin, `NERV Cartouche` → Antonio Latin), and the "not loaded" fallback list (`Noto Serif JP`, `Arial Narrow`, `Courier New`, generics) all match the source file exactly. `planning/PHASE1.md` is correctly flagged as stale and not used as the inventory.
+
+Completeness: covers per-family license/SPDX/upstream, copyright + reserved-font-name table, the OFL-vs-AGPL aggregate question, a concrete go/no-go, and closes with the required "this milestone does not ship" line. Matches the file location convention set by `planning/tiled-hex-grid-variant.md`.
+
+Verification re-run: full suite is 357/357 (`npm test`); `npm run lint` reproduces the same pre-existing 7 stylelint errors on `dist/nerv.css` (`font-family-name-quotes` on Antonio, `length-zero-no-unit`) unrelated to this milestone's scope, confirming the claim in `activeContext.md`.
+
+No KISS/DRY/YAGNI/completeness/regression/integrity/documentation violations found. No advisories beyond the one already recorded at Preflight (future provenance manifest).
