@@ -66,3 +66,14 @@ Write a feasibility note on offline font-and-JS bundles covering the licenses of
 * Insights
     - All six pre-mortem risks (vendoring, stale PHASE1 table, wrong file location, change-detector tests, Noto Serif JP miscount, `_typography.scss` edits) were each independently avoided in Build
 
+## 2026-09-12 - REFLECT - COMPLETE
+
+* Work completed
+    - Wrote the M3 reflection
+    - Reconciled persistent files: no edits
+* Decisions made
+    - Do not mark M3 complete in `milestones.md` from this sub-run; `/niko` Step 2a owns that
+* Insights
+    - Font inventory is `_typography.scss`, not PHASE1
+
+
