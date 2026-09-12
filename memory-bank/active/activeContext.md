@@ -1,14 +1,14 @@
 # Active Context
 
 ## Current Task: nerv-v01-m2-release-please-npm-gh-assets
-**Phase:** PLAN - COMPLETE
+**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
 
 ## What Was Done
 
-- Replanned after preflight FAIL (blocking) on CI TDD
-- Operator 2026-09-12: test only what we ship to customers as product; own CI does not get that TDD cycle unless brittle or critical; this pipeline is not one of those times. Discard that preflight finding. always-tdd wording is being fixed in `.cursor-rules`
-- Implementation units unchanged: unit 1 stays the npm pack contract (executable); unit 2 stays release-please/Actions wiring (prose/policy); unit 3 README (prose/policy)
+- Re-ran Preflight per operator's binding 2026-09-12 directive: discarded the prior `FAIL (blocking)` on CI TDD for unit 2; did not invent a YAML/JSON change-detector in its place
+- All other checks (conventions, dependency impact, conflict detection, completeness) pass unchanged
+- Recorded one advisory (non-blocking): a `verify-cdn` post-publish smoke job in the workflow
 
 ## Next Step
 
-- Spawn Preflight; the CI-TDD blocking finding is discarded
+- Proceed to Build

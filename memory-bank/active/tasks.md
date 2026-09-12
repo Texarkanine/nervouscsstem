@@ -163,6 +163,6 @@ No new npm or runtime dependencies — validation not required. Dart Sass and `n
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight (re-run after operator discarded CI-TDD block)
+- [x] Preflight
 - [ ] Build
 - [ ] QA

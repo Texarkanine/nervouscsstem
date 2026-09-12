@@ -53,3 +53,14 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
     - Do not add YAML/JSON change-detectors while `.cursor-rules` updates always-tdd
 * Insights
     - The first preflight was following the letter of always-tdd’s “workflow it runs” clause; the operator overrode that reading for this class of pipeline
+
+## 2026-09-12 - PREFLIGHT - COMPLETE (re-run)
+
+* Work completed
+    - Re-validated the M2 plan against the repository, conventions, and dependency/conflict/completeness checks
+    - Wrote `.preflight-status` as `PASS WITH ADVISORY`
+* Decisions made
+    - Honored the operator's 2026-09-12 binding directive: the discarded CI-TDD finding is not re-raised; no YAML/JSON change-detector was invented in its place
+* Insights
+    - All other checks (conventions, dependency impact, conflict detection, completeness) pass without changes to the plan
+    - Advisory only: a `verify-cdn` post-publish smoke job would close the loop on the CDN path before later milestones depend on it live; not required for M2
