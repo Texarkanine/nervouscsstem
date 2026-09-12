@@ -32,3 +32,13 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
 * Insights
     - AC2 is wiring, not a live first publish: npm OIDC cannot create a never-published package; operator bootstraps then attaches the trusted publisher
     - Same GitHub App is named `APP_ID`, `DOGGO_BOT_APP_ID`, and `HELPER_APP_ID` on sibling repos; this plan uses the inquirerjs names
+
+## 2026-09-12 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Validated the M2 plan against the repository, local inquirerjs release-pipeline conventions, and Release Please's documented manifest-mode outputs
+    - Wrote `.preflight-status` as `FAIL (blocking)`
+* Decisions made
+    - Build cannot start until the plan treats release-please and GitHub Actions configuration as executable behavior and schedules test-first coverage
+* Insights
+    - The existing pack-contract unit satisfies TDD, but it does not cover the release, publish, and release-asset workflow contract

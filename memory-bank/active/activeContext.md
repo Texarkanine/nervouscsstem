@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: nerv-v01-m2-release-please-npm-gh-assets
-**Phase:** PLAN - COMPLETE
+**Phase:** PREFLIGHT - COMPLETE (FAIL (blocking))
 
 ## What Was Done
 
@@ -13,4 +13,4 @@
 
 ## Next Step
 
-- Spawn Preflight to validate the plan
+- Return to `/niko-plan`: add test-first coverage for executable release-please and GitHub Actions configuration before requesting Preflight again.

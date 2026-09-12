@@ -1,0 +1,11 @@
+FAIL (blocking)
+
+Blocking — implementation unit 2 misclassifies `release-please-config.json`, `.release-please-manifest.json`, and `.github/workflows/release-please.yaml` as prose/policy and schedules no test-first steps. GitHub Actions configuration is executable behavior under `.cursor/rules/shared/always-tdd.mdc`; its release, publish, and asset-upload contracts therefore need a test plan ordered before implementation. This plan cannot proceed to Build as written.
+
+Pass — unit 1 has explicit stub-test, stub-interface, red-test, and green-code steps in the required order. Its pack-contract assertions cover the publishable metadata and the generated CSS/JS tarball contents without creating a documentation change-detector.
+
+Pass — the planned package metadata, manifest-mode release-please configuration, release output wiring, generated artifacts, and README scope align with the current repository and the local inquirerjs sibling. Release Please's documented root-component outputs include both `release_created` and `tag_name`, and its manifest defaults are the planned filenames.
+
+Pass — all M2-scoped requirements (parent requirements 4–6 and acceptance criterion 2) map to concrete files and steps. The plan keeps `dist/` ignored, leaves `extra-files` for M5, and preserves `docs/` as the authoring source of truth.
+
+Advisory — add a package-release verification command that compares the packed `dist/nerv.css` and `dist/nerv.js` with the files uploaded to the release workflow. This would make the npm/CDN and GitHub Release paths provably carry the same build artifacts, but it is a redesign choice rather than a prerequisite for the stated M2 scope.
