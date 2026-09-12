@@ -16,3 +16,16 @@ Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap w
     - Parent `projectbrief.md` retained; M1 maps to requirements 1–3 and acceptance criterion 1
 * Insights
     - Later milestones stay out of this sub-run: no release-please, ProperDocs, skill, or offline-bundle work
+
+## 2026-09-12 - PLAN - COMPLETE
+
+* Work completed
+    - Wrote the M1 implementation plan in `tasks.md` with one executable TDD unit
+    - Mapped parent brief requirements 1–3 and acceptance criterion 1 onto concrete files and contract tests
+* Decisions made
+    - Copy `/home/mobaxterm/git/SumMem/summem` unmodified; insert the `init` prompt (after `---`), then the Niko `AGENTS.md` template; `CLAUDE.md` is `@AGENTS.md`
+    - Contract tests in `test/summem-bootstrap.test.mjs`, registered on the explicit `package.json` `test` list
+    - Tests call `init` and `version` only — not `wake`
+* Insights
+    - SumMem's own `AGENTS.md` is the shape to match; stockroom is the same composition
+    - `env python3` here is 3.11.11; `/usr/bin/python3` is 3.10 and would fail SumMem's floor
