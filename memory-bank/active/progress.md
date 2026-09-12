@@ -41,3 +41,17 @@ Write a feasibility note on offline font-and-JS bundles covering the licenses of
     - No tests are required because the only deliverable is a prose/policy feasibility note, not executable product behavior
 * Insights
     - A later shipping milestone should pair an offline bundle with a versioned font provenance manifest containing upstream source, license, copyright, and file hashes
+
+## 2026-09-12 - BUILD - COMPLETE
+
+* Work completed
+    - Wrote `planning/offline-bundle.md` from the `_typography.scss` `@font-face` inventory and upstream OFL texts
+    - Full suite 357/357; no new tests
+* Decisions made
+    - All six loaded families are OFL-1.1; reserved names only on Plex and DSEG; unmodified bundling may keep those names
+    - Aggregate zip is legally OK if fonts stay OFL and JS stays AGPL; 0.1 still does not ship
+    - Left pre-existing stylelint errors on `dist/nerv.css` alone
+* Insights
+    - Offline JS was never the gap; twenty-two CDN font URLs are
+    - If a later milestone ships, take official OFL packages rather than `gstatic` subset hashes
+

@@ -22,11 +22,11 @@ No new executable behavior. This milestone is a written investigation. Operator:
 - Files: `planning/offline-bundle.md`
 - No tests: prose/policy artifact
 
-1. Inventory unique typefaces from `src/_typography.scss` `@font-face` `src` URLs. Do not use `planning/PHASE1.md` as the font list — that table is missing Antonio and VT323. Treat `NERV Mixed` and `NERV Cartouche` as aliases of already-listed files, not extra licenses. Name CSS fallbacks that are not loaded (`Noto Serif JP`, system fonts) as not in scope for bundling.
-2. For each loaded family, record license name, SPDX id, and an upstream URL. Look up Google-hosted families from the official OFL metadata (not Google Fonts CSS API terms). Look up DSEG7 Classic from [keshikan/DSEG](https://github.com/keshikan/DSEG). Record OFL redistribution conditions that matter here (include license/copyright; reserved font names if unmodified).
-3. Cover JS: `dist/nerv.js` is already in the npm tarball under `AGPL-3.0-only` (`package.json` / `LICENSE`). Offline JS is already solved for anyone with the package; the gap is fonts fetched at runtime from `fonts.gstatic.com` and jsDelivr.
-4. Write `planning/offline-bundle.md`: inventory table, per-family licenses, OFL+AGPL interaction in one zip, a go/no-go on legal feasibility, and a recommendation. Include a mermaid of today's CDN load path vs a hypothetical later bundle. End with: this milestone does not ship the bundle even if the answer is "yes."
-5. Do not edit `src/_typography.scss`, `src/nerv.js`, `package.json`, `docs/`, or release-please files.
+1. [x] Inventory unique typefaces from `src/_typography.scss` `@font-face` `src` URLs. Do not use `planning/PHASE1.md` as the font list — that table is missing Antonio and VT323. Treat `NERV Mixed` and `NERV Cartouche` as aliases of already-listed files, not extra licenses. Name CSS fallbacks that are not loaded (`Noto Serif JP`, system fonts) as not in scope for bundling.
+2. [x] For each loaded family, record license name, SPDX id, and an upstream URL. Look up Google-hosted families from the official OFL metadata (not Google Fonts CSS API terms). Look up DSEG7 Classic from [keshikan/DSEG](https://github.com/keshikan/DSEG). Record OFL redistribution conditions that matter here (include license/copyright; reserved font names if unmodified).
+3. [x] Cover JS: `dist/nerv.js` is already in the npm tarball under `AGPL-3.0-only` (`package.json` / `LICENSE`). Offline JS is already solved for anyone with the package; the gap is fonts fetched at runtime from `fonts.gstatic.com` and jsDelivr.
+4. [x] Write `planning/offline-bundle.md`: inventory table, per-family licenses, OFL+AGPL interaction in one zip, a go/no-go on legal feasibility, and a recommendation. Include a mermaid of today's CDN load path vs a hypothetical later bundle. End with: this milestone does not ship the bundle even if the answer is "yes."
+5. [x] Do not edit `src/_typography.scss`, `src/nerv.js`, `package.json`, `docs/`, or release-please files.
 
 ## Technology Validation
 
@@ -61,6 +61,6 @@ No new technology — validation not required. No new npm dependencies. License 
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
 - [ ] QA

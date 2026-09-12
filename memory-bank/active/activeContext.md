@@ -1,15 +1,16 @@
 # Active Context
 
 ## Current Task: nerv-v01-m3-offline-bundle-feasibility
-**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
+**Phase:** BUILD - COMPLETE
 
 ## What Was Done
 
-- Classified M3 as Level 2 (research plus one written note; no code ship)
-- Wrote the M3 implementation plan: one prose/policy unit that inventories `_typography.scss` `@font-face` URLs, records licenses, and writes `planning/offline-bundle.md`
-- No TDD unit: no new executable behavior; no change-detector on the note
-- Parent brief mapping: requirement 7, acceptance criterion 7, constraint 3; invariant 3 (do not vendor)
+- Wrote `/home/mobaxterm/git/nervouscsstem/planning/offline-bundle.md`
+- Inventory: six OFL-1.1 families from `_typography.scss` `@font-face` URLs; NERV Mixed / NERV Cartouche are aliases; Noto Serif JP and system fonts are not loaded
+- Verdict: legally feasible to bundle unmodified OFL fonts with AGPL-3.0-only JS; do not ship in 0.1
+- Did not vendor fonts, did not add a zip, did not edit CSS/JS/package/docs/release-please
+- Full suite 357/357. `npm run lint` still reports the pre-existing 7 stylelint errors on `dist/nerv.css`
 
 ## Next Step
 
-- Build the feasibility note according to the approved plan; consider a font provenance manifest only in a later shipping milestone
+- QA review of the M3 note against the approved plan
