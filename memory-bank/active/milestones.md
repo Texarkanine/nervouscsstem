@@ -2,15 +2,15 @@
 
 ## Cross-milestone invariants & constraints
 
-1. **`docs/` stays the authoring source of truth.** Do not move the existing documentation tree into the skill. The skill may carry a copy or a build-time inclusion so installers get the site; editors keep working in `docs/`.
-2. **No bespoke CDN.** Public CSS/JS are reached by publishing the npm package and loading jsDelivr or the equivalent that follows from npm. Do not stand up a separate file host.
-3. **Offline bundles are not a 0.1 ship.** The feasibility note may recommend bundling; no milestone may add vendored font files or an offline artifact unless a later, explicit decision says so.
+1. **`docs/` stays the authoring source of truth.** Editors keep working in `docs/`. M4 may add a landing page and the two live examples under that tree. M5 may copy or include the site so installers get it; M5 must not relocate the authoring tree into the skill.
+2. **No bespoke CDN.** Public CSS/JS are reached by publishing the npm package and loading jsDelivr or the equivalent that follows from npm. M2 owns publish wiring and the package `files` list. M4 and M5 consume those URLs; they must not stand up a separate file host or change the tarball contract.
+3. **Offline bundles are not a 0.1 ship.** The feasibility note may recommend bundling. No milestone may add vendored font files or an offline artifact unless a later, explicit decision says so.
 4. **release-please is the only version bumper.** Package version, Git tags, changelog, and (once it exists) `SKILL.md` version are updated by release-please extra-files — not by hand in a sub-run except to add the extra-files hook.
-5. **M2 creates release-please; M5 only extends extra-files.** M2 adds `release-please-config.json`, the manifest, and the release workflow, and makes the package publishable. It does not add a `SKILL.md` extra-file. M5, after that file exists, may add only the `SKILL.md` extra-files entry. M5 does not replace or redesign the release workflow.
+5. **M2 creates release-please; M5 only extends extra-files.** M2 adds the config, manifest, and release workflow, and makes the package publishable. It does not add a `SKILL.md` extra-file. M5, after that file exists, may add only the `SKILL.md` extra-files entry. M5 does not replace or redesign the release workflow.
 6. **SumMem activation stays at the top of `AGENTS.md`.** Later README or docs edits must not overwrite or relocate that block. `CLAUDE.md` remains `@AGENTS.md`.
 7. **Live examples stay inside design-system constraints.** `.nerv-` prefix, no canvas/WebGL, no image files, minimal JS. The CSS-only page must not require JavaScript.
 8. **Copy SumMem as a consumer.** Drop in the script and the 0BSD prompt; do not modify the SumMem program. Invoking it does not make this repo a covered work.
-9. **This list is L4 design, not a sub-run plan.** File paths, numbered implementation steps, and test-first sequences belong in each milestone's own L1/L2/L3 plan. Do not expand these one-liners into implementation plans.
+9. **M4 owns the ProperDocs site; M5 includes it.** M5 may copy or include the built site for skill install. It does not replace, relocate, or redesign the site or its local-vs-CDN load contract.
 
 ## Execution Order
 
@@ -27,18 +27,37 @@ graph LR
     M4 --> M5
 ```
 
-M3 has no edges: it can run any time. Serial order below is M1 → M2 → M3 → M4 → M5 so the first `/niko` after review starts with the onboard the operator asked to do first.
+M3 has no edges: it can run any time. The checklist below is a serial-safe walk of that DAG: M1 → M2 → M3 → M4 → M5.
 
-## Scope estimates
+- [x] M1: Install SumMem as a consumer copy and add the Niko root bootstrap pair
+- [x] M2: Wire release-please, npm publish, and GitHub Release attachments for the built CSS and JS
+- [x] M3: Write a feasibility note on offline font-and-JS bundles covering the licenses of every font the CSS currently loads #7
+- [ ] M4: Add a ProperDocs GitHub Pages site from existing docs plus CSS-only and JS example pages that load CDN assets on release and dist locally, erroring if local bundles are missing
+- [ ] M5: Add a placeholder agent skill installable via npx skills that carries the docs site and a SKILL.md version bumped by release-please
 
-- **M1 L2** — self-contained onboard of one script plus two root prompt files; no architectural choice once the SumMem README recipe is followed.
-- **M2 L3** — complete publish feature: package metadata, release-please, npm trusted-publish, and attaching `dist` CSS/JS to the GitHub Release. Several workflows and the public package contract.
-- **M3 L2** — research plus one written note; no code ship.
-- **M4 L3** — ProperDocs, GH Pages, two example pages, and the local-vs-released asset switch. Multiple components; the load-path contract is the design work.
-- **M5 L2** — add a placeholder skill, include the docs for `npx skills` install, and hook `SKILL.md` version into release-please extra-files. Depends on M4 existing but does not rework it.
+## Per-milestone done and risks
 
-- [x] M1: Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap with the SumMem init block at the top of `AGENTS.md` (est. L2)
-- [x] M2: Wire release-please, npm publish, and GitHub Release attachments for the built `dist/nerv.css` and `dist/nerv.js` (est. L3)
-- [x] M3: Write a feasibility note on offline font-and-JS bundles covering the licenses of every font the CSS currently loads (est. L2)
-- [ ] M4: Add a ProperDocs GitHub Pages site from existing `docs/` plus CSS-only and JS example pages that load CDN assets on release and `dist/` locally, erroring if local bundles are missing (est. L3)
-- [ ] M5: Add a placeholder agent skill installable via `npx skills` that carries the docs site and a `SKILL.md` version bumped by release-please (est. L2)
+### M1: Install SumMem as a consumer copy and add the Niko root bootstrap pair
+
+- Done: An agent in this repo wakes SumMem from `AGENTS.md`. `CLAUDE.md` is `@AGENTS.md`. SumMem is an unmodified consumer copy with `__pycache__` gitignored.
+- Risks: see invariants 6 and 8
+
+### M2: Wire release-please, npm publish, and GitHub Release attachments for the built CSS and JS
+
+- Done: release-please is the version bumper. A GitHub Release attaches the built CSS and JS. The package is on npm so jsDelivr can serve those files.
+- Risks: see invariants 2, 4, and 5. Do not add extra-files for a skill.
+
+### M3: Write a feasibility note on offline font-and-JS bundles covering the licenses of every font the CSS currently loads #7
+
+- Done: A written licensing answer exists for every font the CSS loads. That answer lives at issue #7. No font files or offline zip shipped.
+- Risks: see invariant 3
+
+### M4: Add a ProperDocs GitHub Pages site from existing docs plus CSS-only and JS example pages that load CDN assets on release and dist locally, erroring if local bundles are missing
+
+- Done: GitHub Pages hosts the existing docs plus a CSS-only example and a JS example. Released example pages load CSS/JS from the npm CDN. Local serve/build uses on-disk dist bundles and errors if they are missing. The CSS-only example works with JavaScript disabled.
+- Risks: see invariants 1, 2, 7, and 9. Do not add a skill, extra-files, or vendored fonts. Do not overlay `nerv.css` on the taxonomy docs.
+
+### M5: Add a placeholder agent skill installable via npx skills that carries the docs site and a SKILL.md version bumped by release-please
+
+- Done: `npx skills` installs a placeholder skill that carries the documentation site. `SKILL.md` version matches the published package.
+- Risks: see invariants 1, 4, 5, and 9. Add only the `SKILL.md` extra-files entry. Do not relocate `docs/` or redesign the release workflow or the site.

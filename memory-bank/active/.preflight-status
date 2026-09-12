@@ -1,0 +1,11 @@
+PASS WITH ADVISORY
+
+Planning prerequisites are complete (L3, creative doc present, technology validation recorded). TDD encoding is correct: unit 1 places stub tests, red tests, and interface stub before implementation; units 2–4 are prose/policy with no executable behavior tests required. No change-detector tests are scheduled. Conventions align with existing `test/*.mjs` + explicit `package.json` `"test"` listing and `node:test` patterns.
+
+Convention compliance: first `scripts/` directory in repo is acceptable; `.nerv-panel` fixtures exist in `ref/`. Dependency touchpoints (`dist/`, npm publish contract, release-please workflow) are correctly scoped as read-only or additive. No conflicting resolver, ProperDocs, or Pages implementations exist. Requirements 8–12 and AC 3–5 map to concrete file-level steps.
+
+Advisory (non-blocking): Unit 3 copies SLOBAC’s Pages shape but does not specify `needs: publish-npm` (or `workflow_run` after publish) on the release deploy job—parallel `release` triggers can CDN-rewrite before jsDelivr has the tarball despite the Challenges note accepting lag. Wire explicit job ordering in the release Pages path.
+
+Advisory (non-blocking): `techContext.md` still describes Node-only tooling; after build, add a surgical pointer to the new `uv`/ProperDocs docs commands so the memory bank stays accurate.
+
+Radical innovation (advisory): Split workflows by trigger—keep PR validation in a standalone `docs.yaml`, but add a `deploy-pages` job with `needs: publish-npm` to `.github/workflows/release-please.yaml` (or a `workflow_run` chain) so release → npm publish → CDN rewrite → Pages upload is one serial pipeline with one release trigger, eliminating duplicate release listeners and shrinking the first-deploy CDN miss window.
