@@ -29,3 +29,15 @@ Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap w
 * Insights
     - SumMem's own `AGENTS.md` is the shape to match; stockroom is the same composition
     - `env python3` here is 3.11.11; `/usr/bin/python3` is 3.10 and would fail SumMem's floor
+
+## 2026-09-12 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Validated the M1 plan against live repo state: TDD ordering, test conventions, sibling-repo dependency, root-file conflicts, and requirement coverage
+    - Verified `summem init` is side-effect-free against the sibling source repo, confirming the plan's test-safety edge case
+    - `.preflight-status` first line: `PASS WITH ADVISORY`
+* Decisions made
+    - No plan edits needed — no change-detector strikes, no TDD-order swaps
+* Insights
+    - Stockroom's copied `summem` (0.7.0) trails the sibling source (0.11.1); the plan is already immune since it runs `init` live rather than transcribing stockroom's text
+    - `package.json`'s explicit test file list is a recurring friction point (flagged again here as advisory); `node --test`'s built-in auto-discovery would remove it for all future milestones, left for the operator to evaluate
