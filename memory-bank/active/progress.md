@@ -76,11 +76,16 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
 * Insights
     - Sibling amend workflows exist for *committed* generated artifacts that change with the version (e.g. inquirerjs demo GIFs). That is not this repo.
 
-## 2026-09-12 - BUILD - IN-PROGRESS
+## 2026-09-12 - BUILD - COMPLETE
 
 * Work completed
-    - Left Preflight (PASS WITH ADVISORY); starting implementation of the M2 plan
+    - Unit 1 TDD: `test/publish-contract.test.mjs` (pack contents, not-private, repository URL, min.css excluded); `package.json` public at `0.0.1` with `files` listing `dist/nerv.css` and `dist/nerv.js`
+    - Unit 2: release-please config + manifest `0.0.1`, workflow copied from inquirerjs with App token, Node 24 OIDC publish, `gh release upload` of the two dist files; no `extra-files`, no codecov/`test:ci`/`.nvmrc`
+    - Unit 3: root `README.md` with AGPL-3.0, npm install, jsDelivr URLs, `docs/` as SoT, release-please merge on `main`
+    - Full suite 357/357
 * Decisions made
-    - Follow the plan's three units in order; product commit will be `feat(...)` so release-please can see a releasable change once `initialdev` reaches `main`
+    - Product commit is `feat(release)` so release-please can open `0.1.0` once `initialdev` reaches `main`
+    - Did not add the preflight `verify-cdn` advisory job
 * Insights
-    - No creative-phase docs exist; none required by the plan
+    - `npm run lint` is not clean on generated `dist/nerv.css` (7 stylelint errors); out of scope for this milestone
+    - No creative-phase docs existed; none required

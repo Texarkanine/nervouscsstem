@@ -1,14 +1,21 @@
 # Active Context
 
 ## Current Task: nerv-v01-m2-release-please-npm-gh-assets
-**Phase:** BUILD - IN-PROGRESS
+**Phase:** BUILD - COMPLETE
 
 ## What Was Done
 
-- Preflight completed PASS WITH ADVISORY (operator discarded CI-TDD block; pack-contract TDD remains)
-- Entering Build: unit 1 npm pack contract (TDD), unit 2 release-please/Actions (prose/policy), unit 3 README (prose/policy)
+- Files created: `test/publish-contract.test.mjs`, `release-please-config.json`, `.release-please-manifest.json`, `.github/workflows/release-please.yaml`, `README.md`
+- Files modified: `package.json` (public, `0.0.1`, `files`/`main`/`style`/`publishConfig`/`repository`), `package-lock.json` (root and `packages[""]` version `0.0.1`)
+- TDD: pack-contract tests went red on empty `files` + `private: true` + empty `repository.url`, then green
+- Tests: 357 passing (4 new). `npm run lint` reports 7 stylelint errors in generated `dist/nerv.css` (Antonio quotes, `0px`); not introduced here and `dist/` is gitignored
+- No creative-phase docs. No `extra-files`. `dist/` still gitignored. Version left at `0.0.1` for the operator's hand-publish
+
+## Deviations from Plan
+
+None — built to plan. Did not add a `verify-cdn` job (preflight advisory only).
 
 ## Next Step
 
-- Execute the M2 implementation plan in order
-- Keep `package.json` at `0.0.1`; no `extra-files`; no `SKILL.md`; dist stays gitignored
+- QA review
+- After merge: operator hand-publishes **0.0.1**, attaches trusted publisher to `release-please.yaml` + environment `npmjs.org`, then release-please cuts **0.1.0**

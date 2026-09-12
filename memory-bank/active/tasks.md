@@ -102,11 +102,7 @@ No locally tested behaviors for `release-please-config.json`, `.release-please-m
 
 - Files: `package.json`, `test/publish-contract.test.mjs`
 - Creative ref: none
-
-1. Stub tests: add `test/publish-contract.test.mjs` with empty `describe`/`it` cases for pack contents, `private`, and `repository.url`; append `test/publish-contract.test.mjs` to the `package.json` `test` script file list
-2. Stub interface: add `files` (empty array), `license`, `repository`, `bugs`, `homepage`, `author`, `publishConfig`, `style`, and `main` keys if absent; leave `private: true` and do not yet list dist files
-3. Write tests and run red: after `npm run build`, `npm pack --dry-run --json` must list `dist/nerv.css` and `dist/nerv.js`; `private` must not be true; `repository.url` must contain `github.com/Texarkanine/nervouscsstem`. Expect fail while `private` is true and `files` is empty
-4. Write code and run green: remove `private`; set `version` to `0.0.1`; set `files` to `["dist/nerv.css", "dist/nerv.js"]`; `license` `AGPL-3.0-only`; `repository` `{ "type": "git", "url": "git+https://github.com/Texarkanine/nervouscsstem.git" }`; `publishConfig.access` `public`; `style` `dist/nerv.css`; `main` `dist/nerv.js`; fill bugs/homepage/author to match inquirerjs’s Texarkanine shape. Sync `package-lock.json` root `version` and `packages[""].version` to `0.0.1` (lockfile v3 already has both). Re-run the new test then the full suite
+- [x] Stub tests, stub interface, red tests, green metadata (`private` removed, version `0.0.1`, `files` lists `dist/nerv.css` and `dist/nerv.js`)
 
 ### 2. release-please and GitHub Actions wiring — prose/policy
 
@@ -114,20 +110,13 @@ No locally tested behaviors for `release-please-config.json`, `.release-please-m
 - No tests: prose/policy artifact
 - Operator 2026-09-12: own CI, not shipped product; not brittle or critical; prior preflight TDD FAIL on this unit is discarded
 - Creative ref: none
-
-1. Write `release-please-config.json` with `release-type: node`, `bump-minor-pre-major: true`, `bump-patch-for-minor-pre-major: false`, `include-component-in-tag: false`, and `packages["."].pull-request-header` the doggo bark line. Do not add `extra-files`
-2. Write `.release-please-manifest.json` as `{ ".": "0.0.1" }`
-3. Write `.github/workflows/release-please.yaml` from inquirerjs: `on.push.branches: [main]`; permissions `contents: write`, `id-token: write`, `issues: write`, `pull-requests: write`; App token via `actions/create-github-app-token@v3` with `vars.APP_ID` / `secrets.APP_PRIVATE_KEY`; `googleapis/release-please-action@v5` with id `release`; job outputs `release_created` and `tag_name`; do not copy codecov, `test:ci`, or `.nvmrc`
-4. Add `publish-npm` job: `needs: release-please`, `if: needs.release-please.outputs.release_created == 'true'`, `environment: npmjs.org`, Node 24, `registry-url: https://registry.npmjs.org`, `npm ci`, `npm run build`, `npm publish`, upload npm debug log on `always()`, then `gh release upload "${{ needs.release-please.outputs.tag_name }}" dist/nerv.css dist/nerv.js` with `GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}`
-5. Comment in the workflow that the operator provisions `APP_ID` / `APP_PRIVATE_KEY`, the `npmjs.org` GitHub environment, and the npm trusted publisher (workflow filename `release-please.yaml`, environment `npmjs.org`) after merge — same post-merge pattern as SumMem’s helper-app comment
+- [x] Config (`release-type: node`, doggo header, no `extra-files`), manifest `0.0.1`, workflow from inquirerjs with `tag_name` + `publish-npm` + `gh release upload` of `dist/nerv.css` and `dist/nerv.js`
 
 ### 3. Package README and CDN path — prose/policy
 
 - Files: `README.md`
 - No tests: prose/policy artifact
-
-1. Write a short root `README.md`: what the package is, AGPL-3.0, `npm i nervouscsstem`, jsDelivr URLs for CSS and JS using `@<version>/dist/nerv.css` and `/dist/nerv.js`, pointer that documentation is authored in `docs/`
-2. Record in the README that the first GitHub Release is created by merging the release-please PR on `main`, not by hand-tagging
+- [x] Root README: AGPL-3.0, `npm i`, jsDelivr `@<version>/dist/nerv.css` and `.js`, `docs/` as SoT, release-please merge on `main` (no hand-tag)
 
 ## Technology Validation
 
@@ -168,5 +157,5 @@ No new npm or runtime dependencies — validation not required. Dart Sass and `n
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
 - [x] Preflight
-- [ ] Build
+- [x] Build
 - [ ] QA
