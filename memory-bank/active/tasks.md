@@ -66,10 +66,11 @@ graph TD
 - `dist/` remains gitignored; artifacts are built in CI
 - Workflow filename must stay `release-please.yaml` — npm trusted publisher matches that filename exactly
 - `repository.url` must be `git+https://github.com/Texarkanine/nervouscsstem.git` so npm provenance can match the public repo ([trusted publishers](https://docs.npmjs.com/trusted-publishers/))
+- Must test only what this repo ships to customers as product. Own CI is not that. TDD a pipeline only when it is brittle or critical; this one is neither. (Operator 2026-09-12; `.cursor-rules` is being updated to match.)
 
 ## Open Questions
 
-None - implementation approach is clear. Copy inquirerjs for node release-please + OIDC publish; add only the required `gh release upload`; leave extra-files to M5.
+- [x] Must release-please/GitHub Actions wiring get a TDD unit? → Resolved (operator 2026-09-12): No. Test only what we ship to customers as product. Our CI does not get that cycle unless it is brittle or critical; this is not one of those times. The 2026-09-12 preflight FAIL (blocking) on unit 2 is discarded. Do not add YAML/JSON change-detectors to satisfy always-tdd’s “workflow it runs” reading while that wording is being fixed in `.cursor-rules`.
 
 ## Test Plan (TDD)
 
@@ -79,6 +80,8 @@ None - implementation approach is clear. Copy inquirerjs for node release-please
 - Publishable: reading `package.json` → `private` is absent or `false`
 - Provenance URL: `package.json` `repository.url` → contains `github.com/Texarkanine/nervouscsstem`
 - Edge: `files` lists those two paths (so extra files sitting in `dist/`, e.g. a local `nerv.min.css`, are not required to be in the tarball)
+
+No locally tested behaviors for `release-please-config.json`, `.release-please-manifest.json`, or `.github/workflows/release-please.yaml`. Those files are our pipeline, not the shipped product.
 
 ### Test Infrastructure
 
@@ -107,7 +110,8 @@ None - implementation approach is clear. Copy inquirerjs for node release-please
 ### 2. release-please and GitHub Actions wiring — prose/policy
 
 - Files: `release-please-config.json`, `.release-please-manifest.json`, `.github/workflows/release-please.yaml`
-- No tests: CI configuration following inquirerjs; not a consumer-facing artifact
+- No tests: prose/policy artifact
+- Operator 2026-09-12: own CI, not shipped product; not brittle or critical; prior preflight TDD FAIL on this unit is discarded
 - Creative ref: none
 
 1. Write `release-please-config.json` with `release-type: node`, `bump-minor-pre-major: true`, `bump-patch-for-minor-pre-major: false`, `include-component-in-tag: false`, and `packages["."].pull-request-header` the doggo bark line. Do not add `extra-files`
@@ -148,6 +152,7 @@ No new npm or runtime dependencies — validation not required. Dart Sass and `n
 - **Release PR uses `GITHUB_TOKEN` and later CI never runs on that PR**: copy the App-token step from inquirerjs
 - **Trusted publisher environment name omitted on npmjs.com while the job sets `environment: npmjs.org`**: OIDC mismatch. Workflow comment and Challenges name both sides
 - **Change-detector tests on YAML/README**: not scheduled; only the pack contract is tested
+- **Preflight re-blocks on CI TDD**: discarded by operator 2026-09-12; do not invent workflow tests to appease the old always-tdd reading
 - **Changelog dumps the entire `initialdev` history as 0.1.0**: most Niko commits are `chore:` (invisible). The product `feat` is the intended trigger. Acceptable for a first release
 
 ## Status
@@ -158,6 +163,6 @@ No new npm or runtime dependencies — validation not required. Dart Sass and `n
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
+- [ ] Preflight (re-run after operator discarded CI-TDD block)
 - [ ] Build
 - [ ] QA

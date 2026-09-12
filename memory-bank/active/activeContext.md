@@ -1,16 +1,14 @@
 # Active Context
 
 ## Current Task: nerv-v01-m2-release-please-npm-gh-assets
-**Phase:** PREFLIGHT - COMPLETE (FAIL (blocking))
+**Phase:** PLAN - COMPLETE
 
 ## What Was Done
 
-- Classified M2 as Level 3; wrote the implementation plan
-- Follow inquirerjs for node release-please + npm OIDC (APP_ID, environment `npmjs.org`, Node 24); add `gh release upload` of `dist/nerv.css` and `dist/nerv.js`; no `extra-files` (M5)
-- Parent brief mapping unchanged: requirements 4–6, acceptance criterion 2
-- One executable TDD unit: `test/publish-contract.test.mjs` against `npm pack` contents and publishable `package.json`
-- No open questions; no creative phase
+- Replanned after preflight FAIL (blocking) on CI TDD
+- Operator 2026-09-12: test only what we ship to customers as product; own CI does not get that TDD cycle unless brittle or critical; this pipeline is not one of those times. Discard that preflight finding. always-tdd wording is being fixed in `.cursor-rules`
+- Implementation units unchanged: unit 1 stays the npm pack contract (executable); unit 2 stays release-please/Actions wiring (prose/policy); unit 3 README (prose/policy)
 
 ## Next Step
 
-- Return to `/niko-plan`: add test-first coverage for executable release-please and GitHub Actions configuration before requesting Preflight again.
+- Spawn Preflight; the CI-TDD blocking finding is discarded

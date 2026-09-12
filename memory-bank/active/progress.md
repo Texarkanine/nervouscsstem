@@ -42,3 +42,14 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
     - Build cannot start until the plan treats release-please and GitHub Actions configuration as executable behavior and schedules test-first coverage
 * Insights
     - The existing pack-contract unit satisfies TDD, but it does not cover the release, publish, and release-asset workflow contract
+
+## 2026-09-12 - PLAN - COMPLETE (replan)
+
+* Work completed
+    - Re-entered Plan after preflight FAIL (blocking)
+    - Recorded the operator decision in `tasks.md`: no TDD unit for release-please/GitHub Actions; pack-contract tests unchanged
+* Decisions made
+    - Operator: we only test what we ship to customers as product. Own CI is not that, and this pipeline is not brittle or critical. The blocking TDD finding on unit 2 is discarded
+    - Do not add YAML/JSON change-detectors while `.cursor-rules` updates always-tdd
+* Insights
+    - The first preflight was following the letter of always-tdd’s “workflow it runs” clause; the operator overrode that reading for this class of pipeline
