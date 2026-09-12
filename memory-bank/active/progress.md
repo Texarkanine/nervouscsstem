@@ -41,3 +41,17 @@ Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap w
 * Insights
     - Stockroom's copied `summem` (0.7.0) trails the sibling source (0.11.1); the plan is already immune since it runs `init` live rather than transcribing stockroom's text
     - `package.json`'s explicit test file list is a recurring friction point (flagged again here as advisory); `node --test`'s built-in auto-discovery would remove it for all future milestones, left for the operator to evaluate
+
+## 2026-09-12 - BUILD - COMPLETE
+
+* Work completed
+    - Copied `/home/mobaxterm/git/SumMem/summem` to `.summem/summem` unmodified
+    - Wrote `AGENTS.md` (init prompt + Niko template) and `CLAUDE.md` (`@AGENTS.md`)
+    - Added `**/.summem/__pycache__/` to `.gitignore`
+    - Removed the bootstrap contract tests the operator rejected
+    - Existing suite: 353 pass, 0 fail. `npm run build` succeeds
+* Decisions made
+    - This milestone is a file copy plus agent-facing prose. No new tests
+    - Left pre-existing stylelint errors in `dist/nerv.css` alone
+* Insights
+    - Contract tests belong on our shipped product; even then semver can carry the signal

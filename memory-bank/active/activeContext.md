@@ -1,15 +1,29 @@
 # Active Context
 
 ## Current Task: nerv-v01-m1-summem-niko-bootstrap
-**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
+**Phase:** BUILD - COMPLETE
 
 ## What Was Done
 
-- Classified M1 as Level 2 and planned the consumer SumMem install plus Niko `AGENTS.md` / `CLAUDE.md` bootstrap.
-- One executable TDD unit: contract tests in `test/summem-bootstrap.test.mjs`, then copy sibling `summem`, gitignore the pycache path, compose `AGENTS.md` (init prompt then Niko template), write `CLAUDE.md` as `@AGENTS.md`.
-- Scoped to parent-brief requirements 1–3 and acceptance criterion 1. No `wake` in tests.
-- Preflight validated the plan against live repo state (TDD ordering, conventions, dependency, conflicts, completeness): no plan edits needed. Two advisory findings recorded in `.preflight-status` (stockroom version drift, `node --test` auto-discovery idea) — neither blocks Build.
+- Copied sibling SumMem to `.summem/summem` (byte-identical, not edited).
+- Appended `**/.summem/__pycache__/` to `.gitignore`.
+- Wrote `AGENTS.md`: `init` prompt, then the Niko `# Agent context` template.
+- Wrote `CLAUDE.md` as `@AGENTS.md`.
+- Deleted the bootstrap contract tests after the operator rejected them. No new tests. Existing design-system suite: 353 pass, 0 fail.
+
+## Files created or modified
+
+- `/home/mobaxterm/git/nervouscsstem/.summem/summem`
+- `/home/mobaxterm/git/nervouscsstem/.gitignore`
+- `/home/mobaxterm/git/nervouscsstem/AGENTS.md`
+- `/home/mobaxterm/git/nervouscsstem/CLAUDE.md`
+
+## Key decisions
+
+- Vendor SumMem as a consumer copy. Do not modify the program.
+- No tests for agent prose, gitignore, or the vendored script.
+- `stylelint` reports 7 pre-existing `dist/nerv.css` errors (Antonio quotes, zero-length units). Not touched.
 
 ## Next Step
 
-- Build the single executable unit per `tasks.md`.
+- QA review of the install against the M1 brief.
