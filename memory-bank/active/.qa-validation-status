@@ -1,0 +1,2 @@
+PASS
+Reviewed 2026-09-12: M2 implementation conforms to the approved plan. The npm pack contract passes; the release-please manifest/config and workflow preserve the 0.0.1 bootstrap path, build dist artifacts in CI, publish with npm OIDC, and attach both release assets. The preflight verify-cdn omission remains a non-blocking advisory.

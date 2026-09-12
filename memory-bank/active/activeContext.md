@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: nerv-v01-m2-release-please-npm-gh-assets
-**Phase:** BUILD - COMPLETE
+**Phase:** QA - COMPLETE (PASS)
 
 ## What Was Done
 
@@ -17,5 +17,5 @@ None — built to plan. Did not add a `verify-cdn` job (preflight advisory only)
 
 ## Next Step
 
-- QA review
+- Proceed to `/niko-reflect`.
 - After merge: operator hand-publishes **0.0.1**, attaches trusted publisher to `release-please.yaml` + environment `npmjs.org`, then release-please cuts **0.1.0**

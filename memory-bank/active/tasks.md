@@ -158,4 +158,4 @@ No new npm or runtime dependencies — validation not required. Dart Sass and `n
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA — PASS: the implementation conforms to the approved M2 plan; no blocking semantic findings
