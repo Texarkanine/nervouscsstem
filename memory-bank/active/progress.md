@@ -76,4 +76,15 @@ Write a feasibility note on offline font-and-JS bundles covering the licenses of
 * Insights
     - Font inventory is `_typography.scss`, not PHASE1
 
+## 2026-09-12 - OPERATOR - issue #7 is the only copy
+
+* Work completed
+    - Deleted `planning/offline-bundle.md` after filing GitHub issue #7
+    - Removed the planning-file pointer from the issue body
+* Decisions made
+    - Operator: the planning note was fully redundant with #7 and would confuse whoever takes the ship
+    - Issue #7 is the written feasibility note (AC7) and the request to ship
+* Insights
+    - Do not keep an investigate-only file next to an issue that asks to ship the same thing
+
 

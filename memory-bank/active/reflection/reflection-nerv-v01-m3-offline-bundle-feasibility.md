@@ -8,11 +8,11 @@ complexity_level: 2
 
 ## Summary
 
-M3 wrote `planning/offline-bundle.md`. All six typefaces the CSS loads are OFL-1.1; an offline zip next to AGPL JS is legally feasible and is not a 0.1 ship. It succeeded.
+M3 wrote a feasibility note, then the operator moved that investigation to GitHub issue #7 and deleted `planning/offline-bundle.md` so the ship request has one home. All six typefaces the CSS loads are OFL-1.1; an offline zip next to AGPL JS is legally feasible and is not a 0.1 ship. It succeeded.
 
 ## Requirements vs Outcome
 
-Parent-brief requirement 7, acceptance criterion 7, and constraint 3 are met. The note inventories live `@font-face` URLs, records licenses, and says do not vendor. Nothing from M4/M5 leaked in. No requirement was dropped or added.
+Parent-brief requirement 7, acceptance criterion 7, and constraint 3 are met. The investigation inventories live `@font-face` URLs, records licenses, and says do not vendor in 0.1. After reflect, the operator moved that text to issue #7 (the ship request) and deleted the planning copy as redundant. Nothing from M4/M5 leaked in. No requirement was dropped.
 
 ## Plan Accuracy
 
@@ -34,4 +34,4 @@ Build was a license read plus one markdown file. QA passed with no findings: 22 
 
 ### Million-Dollar Question
 
-A planning note is the right artifact for investigate-only. Putting OFL text in the repo without the fonts would pretend we had a bundle. What we built is the thing we should have assumed: write the answer, leave CDN loading as it is.
+A GitHub issue is the right home once the answer is "yes, later." A second copy in `planning/` that says "this milestone stops here" would fight whoever picks up the ship. Putting OFL text in the repo without the fonts would still pretend we had a bundle.

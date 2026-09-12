@@ -6,7 +6,8 @@
 ## What Was Done
 
 - Wrote `memory-bank/active/reflection/reflection-nerv-v01-m3-offline-bundle-feasibility.md`
-- Persistent files unchanged: productContext, systemPatterns, and techContext still accurate (CDN OFL fonts; the note is a planning artifact)
+- Operator moved the investigation to GitHub issue #7 and deleted `planning/offline-bundle.md` as a redundant copy
+- Persistent files unchanged: productContext, systemPatterns, and techContext still accurate (CDN OFL fonts)
 
 ## Next Step
 
