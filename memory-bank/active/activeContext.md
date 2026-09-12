@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: nerv-v01-m3-offline-bundle-feasibility
-**Phase:** PLAN - COMPLETE
+**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
 
 ## What Was Done
 
@@ -12,4 +12,4 @@
 
 ## Next Step
 
-- Preflight validation of the M3 plan
+- Build the feasibility note according to the approved plan; consider a font provenance manifest only in a later shipping milestone

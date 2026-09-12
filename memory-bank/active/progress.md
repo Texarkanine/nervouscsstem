@@ -30,3 +30,14 @@ Write a feasibility note on offline font-and-JS bundles covering the licenses of
     - No new tests; no CSS/JS/package/release-please edits
 * Insights
     - Offline JS is already in the npm tarball; the open question is redistributing the CDN fonts under OFL next to AGPL `nerv.js`
+
+## 2026-09-12 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Validated the M3 plan against `_typography.scss`, package metadata, `LICENSE`, and the established planning-file convention
+    - Confirmed that `planning/offline-bundle.md` does not already exist and that no source or release configuration changes are in scope
+* Decisions made
+    - Preflight result: PASS WITH ADVISORY
+    - No tests are required because the only deliverable is a prose/policy feasibility note, not executable product behavior
+* Insights
+    - A later shipping milestone should pair an offline bundle with a versioned font provenance manifest containing upstream source, license, copyright, and file hashes
