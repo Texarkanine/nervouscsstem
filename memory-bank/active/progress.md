@@ -75,3 +75,12 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
     - No force-push amend on release-please PRs: dist is gitignored; node strategy already updates package-lock.json version fields
 * Insights
     - Sibling amend workflows exist for *committed* generated artifacts that change with the version (e.g. inquirerjs demo GIFs). That is not this repo.
+
+## 2026-09-12 - BUILD - IN-PROGRESS
+
+* Work completed
+    - Left Preflight (PASS WITH ADVISORY); starting implementation of the M2 plan
+* Decisions made
+    - Follow the plan's three units in order; product commit will be `feat(...)` so release-please can see a releasable change once `initialdev` reaches `main`
+* Insights
+    - No creative-phase docs exist; none required by the plan
