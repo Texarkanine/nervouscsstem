@@ -1,13 +1,13 @@
 # Active Context
 
 ## Current Task: nerv-v01-release-pipeline
-**Phase:** COMPLEXITY-ANALYSIS - COMPLETE
+**Phase:** PLAN - COMPLETE
 
 ## What Was Done
 
-- Intent approved: v0.1 release wiring plus SumMem + Niko `AGENTS.md`/`CLAUDE.md` bootstrap first.
-- Complexity Level 4. Not a bug fix or a small enhancement. Complete feature across multiple subsystems (SumMem onboard, release-please + npm/CDN, ProperDocs dual load path, skill packaging) with architectural implications for how artifacts and docs are published.
+- Complexity Level 4 recorded.
+- L4 plan generated: 5 milestones (M1 SumMem/Niko bootstrap, M2 release-please/npm/GH assets, M3 offline-bundle feasibility, M4 ProperDocs dual-load site, M5 installable skill).
 
 ## Next Step
 
-- Load the Level 4 workflow and execute the plan phase (generate milestones).
+- Preflight to validate the milestone list.
