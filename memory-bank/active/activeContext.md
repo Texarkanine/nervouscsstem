@@ -1,15 +1,15 @@
 # Active Context
 
-## Current Task: nerv-v01-m3-offline-bundle-feasibility
-**Phase:** REFLECT - COMPLETE
+## Current Task: nerv-v01-m4-properdocs-dual-load-site
+**Phase:** COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
 
-- Wrote `memory-bank/active/reflection/reflection-nerv-v01-m3-offline-bundle-feasibility.md`
-- Operator moved the investigation to GitHub issue #7 and deleted `planning/offline-bundle.md` as a redundant copy
-- Persistent files unchanged: productContext, systemPatterns, and techContext still accurate (CDN OFL fonts)
+- Marked L4 milestone M3 complete and cleared its sub-run ephemerals (reflection and parent brief kept)
+- Classified first unchecked L4 milestone M4 as Level 3
+- Stubbed `tasks.md` for `nerv-v01-m4-properdocs-dual-load-site`
+- Replaced `progress.md` (M3 history is stale for this sub-run)
 
 ## Next Step
 
-- This is an L4 sub-run (`memory-bank/active/milestones.md` exists). Run `/niko` to continue to the next milestone.
-- Do not check off M3 here; that is `/niko` Step 2a.
+- Load the Level 3 workflow and enter Plan

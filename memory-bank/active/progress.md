@@ -1,90 +1,21 @@
 # Progress
 
-Write a feasibility note on offline font-and-JS bundles covering the licenses of every font the CSS currently loads.
+Add a ProperDocs GitHub Pages site from existing `docs/` plus CSS-only and JS example pages that load CDN assets on release and `dist/` locally, erroring if local bundles are missing.
 
-**Complexity:** Level 2
+**Complexity:** Level 3
 
 ## 2026-09-12 - COMPLEXITY-ANALYSIS - COMPLETE
 
 * Work completed
-    - Marked L4 milestone M2 complete and cleared its sub-run ephemerals
-    - Classified first unchecked L4 milestone M3 as Level 2
-    - Stubbed `tasks.md` for `nerv-v01-m3-offline-bundle-feasibility`
-    - Replaced this progress file (L4 parent and M2 history are stale for the sub-run)
+    - Marked L4 milestone M3 complete and cleared its sub-run ephemerals
+    - Classified first unchecked L4 milestone M4 as Level 3
+    - Stubbed `tasks.md` for `nerv-v01-m4-properdocs-dual-load-site`
+    - Replaced this progress file (M3 history is stale for the sub-run)
 * Decisions made
-    - Decision tree: not a bug fix; small self-contained enhancement (research plus one written note; no code ship) → L2
+    - Decision tree: not a bug fix; not a small self-contained enhancement; complete feature with multiple components (ProperDocs site, GitHub Pages, CSS-only example, JS example, local-vs-CDN load switch) and no new system architecture → L3
     - Matches the L4 advisory estimate
-    - Parent `projectbrief.md` retained; M3 maps to requirement 7, acceptance criterion 7, and constraint 3
+    - Parent `projectbrief.md` retained; M4 maps to requirements 8–12, acceptance criteria 3–5, and use-cases 3–4
 * Insights
-    - Later milestones stay out of this sub-run: no ProperDocs site, skill, or release-please extra-files work
-    - Invariant 3 is load-bearing: the note may recommend bundling; this milestone does not vendor font files or add an offline artifact
-
-## 2026-09-12 - PLAN - COMPLETE
-
-* Work completed
-    - Wrote the M3 implementation plan in `tasks.md`: one prose/policy unit, output `planning/offline-bundle.md`
-    - Mapped parent brief requirement 7, acceptance criterion 7, and constraint 3 onto that file
-* Decisions made
-    - Inventory from `src/_typography.scss` `@font-face` URLs, not the stale PHASE1 four-font table
-    - Composite faces are aliases; `Noto Serif JP` is an unloaded fallback
-    - No new tests; no CSS/JS/package/release-please edits
-* Insights
-    - Offline JS is already in the npm tarball; the open question is redistributing the CDN fonts under OFL next to AGPL `nerv.js`
-
-## 2026-09-12 - PREFLIGHT - COMPLETE
-
-* Work completed
-    - Validated the M3 plan against `_typography.scss`, package metadata, `LICENSE`, and the established planning-file convention
-    - Confirmed that `planning/offline-bundle.md` does not already exist and that no source or release configuration changes are in scope
-* Decisions made
-    - Preflight result: PASS WITH ADVISORY
-    - No tests are required because the only deliverable is a prose/policy feasibility note, not executable product behavior
-* Insights
-    - A later shipping milestone should pair an offline bundle with a versioned font provenance manifest containing upstream source, license, copyright, and file hashes
-
-## 2026-09-12 - BUILD - COMPLETE
-
-* Work completed
-    - Wrote `planning/offline-bundle.md` from the `_typography.scss` `@font-face` inventory and upstream OFL texts
-    - Full suite 357/357; no new tests
-* Decisions made
-    - All six loaded families are OFL-1.1; reserved names only on Plex and DSEG; unmodified bundling may keep those names
-    - Aggregate zip is legally OK if fonts stay OFL and JS stays AGPL; 0.1 still does not ship
-    - Left pre-existing stylelint errors on `dist/nerv.css` alone
-* Insights
-    - Offline JS was never the gap; twenty-two CDN font URLs are
-    - If a later milestone ships, take official OFL packages rather than `gstatic` subset hashes
-
-## 2026-09-12 - QA - COMPLETE
-
-* Work completed
-    - Verified `planning/offline-bundle.md` against the plan, parent brief, and `src/_typography.scss`
-    - Confirmed no scope creep via `git diff --stat` since the pre-build checkpoint
-    - Re-ran full suite (357/357) and lint (same pre-existing 7 errors)
-* Decisions made
-    - QA result: PASS, no findings requiring rework
-* Insights
-    - All six pre-mortem risks (vendoring, stale PHASE1 table, wrong file location, change-detector tests, Noto Serif JP miscount, `_typography.scss` edits) were each independently avoided in Build
-
-## 2026-09-12 - REFLECT - COMPLETE
-
-* Work completed
-    - Wrote the M3 reflection
-    - Reconciled persistent files: no edits
-* Decisions made
-    - Do not mark M3 complete in `milestones.md` from this sub-run; `/niko` Step 2a owns that
-* Insights
-    - Font inventory is `_typography.scss`, not PHASE1
-
-## 2026-09-12 - OPERATOR - issue #7 is the only copy
-
-* Work completed
-    - Deleted `planning/offline-bundle.md` after filing GitHub issue #7
-    - Removed the planning-file pointer from the issue body
-* Decisions made
-    - Operator: the planning note was fully redundant with #7 and would confuse whoever takes the ship
-    - Issue #7 is the written feasibility note (AC7) and the request to ship
-* Insights
-    - Do not keep an investigate-only file next to an issue that asks to ship the same thing
-
-
+    - Later milestone M5 stays out of this sub-run: no placeholder skill, no `SKILL.md` extra-files hook
+    - Invariants 1, 2, and 7 are load-bearing: `docs/` remains the authoring source, no bespoke CDN, live examples stay inside design-system constraints
+    - L4 preflight advised a single dual-load asset-resolution module; Plan should treat that as the default unless a sibling ProperDocs pattern already owns the switch

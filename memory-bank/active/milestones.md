@@ -39,6 +39,6 @@ M3 has no edges: it can run any time. Serial order below is M1 → M2 → M3 →
 
 - [x] M1: Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap with the SumMem init block at the top of `AGENTS.md` (est. L2)
 - [x] M2: Wire release-please, npm publish, and GitHub Release attachments for the built `dist/nerv.css` and `dist/nerv.js` (est. L3)
-- [ ] M3: Write a feasibility note on offline font-and-JS bundles covering the licenses of every font the CSS currently loads (est. L2)
+- [x] M3: Write a feasibility note on offline font-and-JS bundles covering the licenses of every font the CSS currently loads (est. L2)
 - [ ] M4: Add a ProperDocs GitHub Pages site from existing `docs/` plus CSS-only and JS example pages that load CDN assets on release and `dist/` locally, erroring if local bundles are missing (est. L3)
 - [ ] M5: Add a placeholder agent skill installable via `npx skills` that carries the docs site and a `SKILL.md` version bumped by release-please (est. L2)
