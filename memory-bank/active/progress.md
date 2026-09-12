@@ -1,77 +1,20 @@
 # Progress
 
-Install SumMem under `.summem/` and add Niko `AGENTS.md`/`CLAUDE.md` bootstrap with the SumMem init block at the top of `AGENTS.md`.
+Wire release-please, npm publish, and GitHub Release attachments for the built `dist/nerv.css` and `dist/nerv.js`.
 
-**Complexity:** Level 2
+**Complexity:** Level 3
 
 ## 2026-09-12 - COMPLEXITY-ANALYSIS - COMPLETE
 
 * Work completed
-    - Classified first unchecked L4 milestone M1 as Level 2
-    - Stubbed `tasks.md` for `nerv-v01-m1-summem-niko-bootstrap`
-    - Replaced this progress file (L4 parent history is stale for the sub-run)
+    - Marked L4 milestone M1 complete and cleared its sub-run ephemerals
+    - Classified first unchecked L4 milestone M2 as Level 3
+    - Stubbed `tasks.md` for `nerv-v01-m2-release-please-npm-gh-assets`
+    - Replaced this progress file (L4 parent and M1 history are stale for the sub-run)
 * Decisions made
-    - Decision tree: not a bug fix; small self-contained enhancement (one script plus two root prompt files; no architectural choice once the SumMem recipe is followed) → L2
+    - Decision tree: not a bug fix; not a small self-contained enhancement; complete publish feature requiring multiple components (package metadata, release-please, npm trusted-publish, GitHub Release assets) without architectural implications beyond the L4 design → L3
     - Matches the L4 advisory estimate
-    - Parent `projectbrief.md` retained; M1 maps to requirements 1–3 and acceptance criterion 1
+    - Parent `projectbrief.md` retained; M2 maps to requirements 4–6 and acceptance criterion 2
 * Insights
-    - Later milestones stay out of this sub-run: no release-please, ProperDocs, skill, or offline-bundle work
-
-## 2026-09-12 - PLAN - COMPLETE
-
-* Work completed
-    - Wrote the M1 implementation plan in `tasks.md` with one executable TDD unit
-    - Mapped parent brief requirements 1–3 and acceptance criterion 1 onto concrete files and contract tests
-* Decisions made
-    - Copy `/home/mobaxterm/git/SumMem/summem` unmodified; insert the `init` prompt (after `---`), then the Niko `AGENTS.md` template; `CLAUDE.md` is `@AGENTS.md`
-    - Contract tests in `test/summem-bootstrap.test.mjs`, registered on the explicit `package.json` `test` list
-    - Tests call `init` and `version` only — not `wake`
-* Insights
-    - SumMem's own `AGENTS.md` is the shape to match; stockroom is the same composition
-    - `env python3` here is 3.11.11; `/usr/bin/python3` is 3.10 and would fail SumMem's floor
-
-## 2026-09-12 - PREFLIGHT - COMPLETE
-
-* Work completed
-    - Validated the M1 plan against live repo state: TDD ordering, test conventions, sibling-repo dependency, root-file conflicts, and requirement coverage
-    - Verified `summem init` is side-effect-free against the sibling source repo, confirming the plan's test-safety edge case
-    - `.preflight-status` first line: `PASS WITH ADVISORY`
-* Decisions made
-    - No plan edits needed — no change-detector strikes, no TDD-order swaps
-* Insights
-    - Stockroom's copied `summem` (0.7.0) trails the sibling source (0.11.1); the plan is already immune since it runs `init` live rather than transcribing stockroom's text
-    - `package.json`'s explicit test file list is a recurring friction point (flagged again here as advisory); `node --test`'s built-in auto-discovery would remove it for all future milestones, left for the operator to evaluate
-
-## 2026-09-12 - BUILD - COMPLETE
-
-* Work completed
-    - Copied `/home/mobaxterm/git/SumMem/summem` to `.summem/summem` unmodified
-    - Wrote `AGENTS.md` (init prompt + Niko template) and `CLAUDE.md` (`@AGENTS.md`)
-    - Added `**/.summem/__pycache__/` to `.gitignore`
-    - Removed the bootstrap contract tests the operator rejected
-    - Existing suite: 353 pass, 0 fail. `npm run build` succeeds
-* Decisions made
-    - This milestone is a file copy plus agent-facing prose. No new tests
-    - Left pre-existing stylelint errors in `dist/nerv.css` alone
-* Insights
-    - Contract tests belong on our shipped product; even then semver can carry the signal
-
-## 2026-09-12 - QA - COMPLETE (PASS)
-
-* Work completed
-    - Semantic review of the M1 install against the plan: vendored script byte-identity, `AGENTS.md` init-block fidelity against a fresh `summem init` run, Niko template shape, `CLAUDE.md`, `.gitignore`, no-new-tests directive, and commit contents
-    - Wrote `.qa-validation-status` (PASS) and recorded findings in `tasks.md`
-* Decisions made
-    - PASS with advisories: `python3` >= 3.11 PATH requirement and pre-existing stylelint errors are documented, non-blocking
-* Insights
-    - `summem init` is confirmed side-effect-free in this repo; QA re-ran it live to verify the `AGENTS.md` block character-for-character
-
-## 2026-09-12 - REFLECT - COMPLETE
-
-* Work completed
-    - Wrote `memory-bank/active/reflection/reflection-nerv-v01-m1-summem-niko-bootstrap.md`
-    - Persistent files unchanged
-* Decisions made
-    - The first plan's test suite was the mistake; the install itself was the milestone
-* Insights
-    - Test what we ship. Contract tests only for our product, and skip them when semver already carries the signal
+    - Later milestones stay out of this sub-run: no offline-bundle note, ProperDocs site, or skill/`SKILL.md` extra-files work
+    - Invariant 5 is load-bearing: M2 creates release-please and does not add a `SKILL.md` extra-file; M5 will extend extra-files later
