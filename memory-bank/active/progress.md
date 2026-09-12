@@ -64,3 +64,14 @@ Wire release-please, npm publish, and GitHub Release attachments for the built `
 * Insights
     - All other checks (conventions, dependency impact, conflict detection, completeness) pass without changes to the plan
     - Advisory only: a `verify-cdn` post-publish smoke job would close the loop on the CDN path before later milestones depend on it live; not required for M2
+
+## 2026-09-12 - OPERATOR - 0.0.1 then 0.1.0
+
+* Work completed
+    - Recorded the trusted-publish bootstrap sequence and the lockfile-amend decision in `tasks.md` / `activeContext.md`
+* Decisions made
+    - Operator publishes 0.0.1 by hand (CLI 2FA) from this branch; first CI/OIDC release is 0.1.0 via release-please after merge
+    - This PR keeps `package.json` at 0.0.1; do not pre-bump to 0.1.0
+    - No force-push amend on release-please PRs: dist is gitignored; node strategy already updates package-lock.json version fields
+* Insights
+    - Sibling amend workflows exist for *committed* generated artifacts that change with the version (e.g. inquirerjs demo GIFs). That is not this repo.

@@ -67,6 +67,7 @@ graph TD
 - Workflow filename must stay `release-please.yaml` — npm trusted publisher matches that filename exactly
 - `repository.url` must be `git+https://github.com/Texarkanine/nervouscsstem.git` so npm provenance can match the public repo ([trusted publishers](https://docs.npmjs.com/trusted-publishers/))
 - Must test only what this repo ships to customers as product. Own CI is not that. TDD a pipeline only when it is brittle or critical; this one is neither. (Operator 2026-09-12; `.cursor-rules` is being updated to match.)
+- Operator publishes **0.0.1** by hand (CLI 2FA) to create the npm package, then attaches the trusted publisher. The first automated GitHub Release / `npm publish` from CI is **0.1.0**. This branch keeps `package.json` and the manifest at `0.0.1` so that hand-publish is possible from the same tree. Do not put `0.1.0` in `package.json` on this PR.
 
 ## Open Questions
 
@@ -105,7 +106,7 @@ No locally tested behaviors for `release-please-config.json`, `.release-please-m
 1. Stub tests: add `test/publish-contract.test.mjs` with empty `describe`/`it` cases for pack contents, `private`, and `repository.url`; append `test/publish-contract.test.mjs` to the `package.json` `test` script file list
 2. Stub interface: add `files` (empty array), `license`, `repository`, `bugs`, `homepage`, `author`, `publishConfig`, `style`, and `main` keys if absent; leave `private: true` and do not yet list dist files
 3. Write tests and run red: after `npm run build`, `npm pack --dry-run --json` must list `dist/nerv.css` and `dist/nerv.js`; `private` must not be true; `repository.url` must contain `github.com/Texarkanine/nervouscsstem`. Expect fail while `private` is true and `files` is empty
-4. Write code and run green: remove `private`; set `version` to `0.0.1`; set `files` to `["dist/nerv.css", "dist/nerv.js"]`; `license` `AGPL-3.0-only`; `repository` `{ "type": "git", "url": "git+https://github.com/Texarkanine/nervouscsstem.git" }`; `publishConfig.access` `public`; `style` `dist/nerv.css`; `main` `dist/nerv.js`; fill bugs/homepage/author to match inquirerjs’s Texarkanine shape. Re-run the new test then the full suite
+4. Write code and run green: remove `private`; set `version` to `0.0.1`; set `files` to `["dist/nerv.css", "dist/nerv.js"]`; `license` `AGPL-3.0-only`; `repository` `{ "type": "git", "url": "git+https://github.com/Texarkanine/nervouscsstem.git" }`; `publishConfig.access` `public`; `style` `dist/nerv.css`; `main` `dist/nerv.js`; fill bugs/homepage/author to match inquirerjs’s Texarkanine shape. Sync `package-lock.json` root `version` and `packages[""].version` to `0.0.1` (lockfile v3 already has both). Re-run the new test then the full suite
 
 ### 2. release-please and GitHub Actions wiring — prose/policy
 
@@ -134,7 +135,8 @@ No new npm or runtime dependencies — validation not required. Dart Sass and `n
 
 ## Challenges and Mitigations
 
-- **First npm publish cannot use OIDC until the package exists** ([npm/cli#8544](https://github.com/npm/cli/issues/8544)): AC2 is wiring, not a live 0.1.0 on npm. After merge, the operator publishes a one-time bootstrap (manual `0.0.1` or equivalent), attaches the trusted publisher to `release-please.yaml` + environment `npmjs.org`, then later releases go through the job. Do not add an `NPM_TOKEN` fallback — that would be a third pattern
+- **First npm publish cannot use OIDC until the package exists** ([npm/cli#8544](https://github.com/npm/cli/issues/8544)): Operator 2026-09-12: from this branch, `npm publish` **0.0.1** with CLI 2FA, then attach trusted publisher to workflow `release-please.yaml` + environment `npmjs.org`. After merge to `main`, release-please’s first release PR is **0.1.0** and that CI publish uses OIDC. Do not add an `NPM_TOKEN` fallback. Do not leave `package.json` at `0.1.0` on this PR or the hand-publish cannot be 0.0.1 from the same tree.
+- **No release-please lockfile/demo amend workflow:** other repos force-push onto the RP branch when *committed* generated files change with the version bump. Here `dist/` is gitignored and built in the publish job. `release-type: node` already updates `package-lock.json` `version` and `packages[""].version` via [PackageLockJson](https://github.com/googleapis/release-please/blob/main/src/updaters/node/package-lock-json.ts). `npm ci` after the RP merge only needs those two strings to match `package.json`. Skip the amend job.
 - **Repo has no Actions variables or environments today**: operator must set `APP_ID` (same app as the other Texarkanine repos) and `APP_PRIVATE_KEY`, and create GitHub environment `npmjs.org`, post-merge. Until then the workflow files are present but cannot run successfully
 - **Niko checkpoint commits are `chore:`**: they will not open a release PR. The build’s product commit for this milestone must be `feat(...)` so that once `initialdev` reaches `main`, release-please sees a releasable commit
 - **`dist/` is gitignored**: if CI skips `npm run build`, the tarball and Release assets are empty of CSS/JS. The publish job always builds; the pack test fails without a prior build
@@ -145,7 +147,9 @@ No new npm or runtime dependencies — validation not required. Dart Sass and `n
 
 ## Pre-Mortem
 
-- **First CI `npm publish` fails with ENEEDAUTH because the package is not on npm yet**: already covered by the first Challenge; AC2 does not require a live publish in this sub-run
+- **First CI `npm publish` fails with ENEEDAUTH because 0.0.1 was not published and trusted publisher not attached before the 0.1.0 RP merges**: operator sequence is hand-publish 0.0.1, then attach publisher, then merge the 0.1.0 RP
+- **Implementer puts 0.1.0 in package.json on this branch so the PR “looks like v0.1”**: then the operator cannot `npm publish` 0.0.1 from that tree. Keep 0.0.1; RP cuts 0.1.0
+- **Implementer adds an RP-branch force-push to rebuild lockfile or dist**: dist is not committed; node strategy already patches the lockfile version fields. Already covered by the lockfile Challenge
 - **Implementer uses `release-type: simple` like SumMem**: `package.json` would not be the version source. Plan pins `node` like inquirerjs
 - **Implementer adds `extra-files` for dist or SKILL.md**: dist is generated and gitignored; SKILL.md is M5. Config step says no `extra-files`
 - **Implementer commits `dist/` or drops it from `.gitignore`**: invariant says keep gitignore; CI builds

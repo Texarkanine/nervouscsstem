@@ -12,3 +12,4 @@
 ## Next Step
 
 - Proceed to Build
+- Operator bootstrap: hand-publish **0.0.1** from this branch (CLI 2FA), attach trusted publisher, then let release-please’s **0.1.0** be the first OIDC publish. Keep `package.json` at `0.0.1` on this PR. No RP-branch lockfile amend job — `dist/` is uncommitted and the node strategy already bumps lockfile version fields.
