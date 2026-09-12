@@ -66,9 +66,6 @@ graph TD
 - CDN mode → `docs/stylesheets/nerv.css` contains an `@import` of `https://cdn.jsdelivr.net/npm/nervouscsstem@<package.json version>/dist/nerv.css` (loads without JS)
 - CDN mode → `docs/javascripts/nerv.js` loads that same version’s `dist/nerv.js` from jsDelivr
 - CDN mode does not require `dist/` to exist
-- `docs/javascripts/docs-init.js` does not call `NERV.init`
-- CSS Using pages (`docs/css.md`, `docs/components/panels.md`) contain `.nerv-docs-island` and do not set `data-nerv-init`
-- JS Using page (`docs/components/bar-meters.md`) contains `data-nerv-init="bar-meters"`
 - Resolver does not modify `ref/` or `src/`
 
 ### Test Infrastructure
@@ -89,15 +86,15 @@ graph TD
 - Files: `scripts/resolve-docs-assets.mjs`, `test/docs-assets.test.mjs`, `package.json` (add the test file to `"test"`), `.gitignore`
 - Creative ref: `memory-bank/active/creative/creative-embedded-docs-examples.md`
 
-1. Stub tests: `test/docs-assets.test.mjs` empty cases for local-missing, local copy, cdn `@import` / js stub, `docs-init.js` has no `NERV.init`, CSS pages have islands without `data-nerv-init`, bar-meters page has `data-nerv-init="bar-meters"`, no `ref/`/`src/` writes
+1. Stub tests: `test/docs-assets.test.mjs` empty cases for local-missing, local copy, CDN `@import` / JS stub, and no `ref/`/`src/` writes
 2. Stub interface: `scripts/resolve-docs-assets.mjs` exports `resolveDocsAssets({ mode, root })` and a CLI `--mode local|cdn`
-3. Write tests and run red: temp fixture trees for module I/O; product-file assertions go green in step 4 once those files exist
+3. Write tests and run red: temp fixture trees for module I/O
 4. Write code and run green: local copy-or-throw into `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js`; CDN stand-ins at the same paths; gitignore those two generated files
 
 ### 2. ProperDocs site and Using pages — prose/policy
 
 - Files: `properdocs.yml`, `pyproject.toml`, `uv.lock`, `.gitignore`, `docs/index.md`, `docs/css.md`, `docs/components/panels.md`, `docs/components/bar-meters.md`, `docs/stylesheets/docs-islands.css`, `docs/javascripts/docs-init.js`, `docs/service-manual.md`, `package.json` (docs scripts)
-- No tests: prose/policy artifact (product contracts for the pages live in unit 1)
+- No tests: prose/policy artifact
 - Creative ref: `memory-bank/active/creative/creative-embedded-docs-examples.md`
 
 1. Add `pyproject.toml` with a `docs` dependency group: `properdocs ~= 1.6`, `mkdocs-material ~= 9.5`. No awesome-pages, llms-source, or custom hooks. Commit `uv.lock`.
@@ -113,7 +110,7 @@ graph TD
 - No tests: prose/policy artifact
 
 1. PR / `workflow_dispatch` docs build: checkout with `lfs: true`; Node 24 + `npm ci` + `npm run build`; `uv sync --group docs --frozen`; `--mode local`; `uv run properdocs build --strict`.
-2. Release Pages: a job on `release-please.yaml` with `needs: publish-npm` so CDN rewrite cannot race the tarball. Checkout with `lfs: true`; `uv sync --group docs --frozen`; `--mode cdn`; `properdocs build --strict`; `actions/upload-pages-artifact` + `actions/deploy-pages`; `environment: github-pages`.
+2. Release Pages: a job on `release-please.yaml` with `needs: publish-npm` so CDN rewrite cannot race the tarball. Give that job `permissions: pages: write`, `id-token: write`, and `contents: read` (the workflow-level map does not include `pages: write`; do not add it to every job). Checkout with `lfs: true`; `uv sync --group docs --frozen`; `--mode cdn`; `properdocs build --strict`; `actions/upload-pages-artifact` + `actions/deploy-pages`; `environment: github-pages`.
 3. Do not add extra-files or skill install. Do not redesign the existing publish steps.
 
 ### 4. README and techContext pointers — prose/policy
@@ -132,7 +129,7 @@ This replan adds: `extra_css` / `extra_javascript` are relative to `docs_dir` ([
 
 ## Challenges & Mitigations
 
-- `NERV.init()` paints scanlines on the whole docs viewport: `docs-init.js` must not call it; unit 1 tests that; islands use scoped methods
+- `NERV.init()` paints scanlines on the whole docs viewport: `docs-init.js` must not call it (work step 2.4); islands use scoped methods
 - jsDelivr lag after a new version: Pages job `needs: publish-npm`
 - GitHub Actions without `lfs: true` would publish pointer files: always checkout LFS on docs builds
 - GitHub Pages not enabled: operator turns on Pages (Actions source) once
@@ -148,7 +145,7 @@ This replan adds: `extra_css` / `extra_javascript` are relative to `docs_dir` ([
 - Implementer uses `@latest` jsDelivr: plan requires `package.json` version
 - Implementer documents every component: work step 2.5 names three Using pages
 - Implementer skips `index.md` and Pages `/` 404s: work step 2.5
-- Implementer calls `NERV.init()` from a code sample on the bar-meters page: Challenges plus the `docs-init.js` test; the fenced sample shows `NERV.initBarMeters` / markup, not `NERV.init()`
+- Implementer calls `NERV.init()` from a code sample on the bar-meters page: already covered by Challenge 1 / work step 2.4; the fenced sample shows `NERV.initBarMeters` / markup, not `NERV.init()`
 
 ## Status
 

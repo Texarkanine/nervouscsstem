@@ -81,7 +81,7 @@ Key insights:
 
 ### Choice Pre-Mortem
 
-- Someone will call `NERV.init()` on the docs site and scanlines will cover Material: **checked** — `docs-init.js` must not contain `NERV.init`; tests assert that. Islands opt in with `data-nerv-init`.
+- Someone will call `NERV.init()` on the docs site and scanlines will cover Material: **checked** — `docs-init.js` must not contain `NERV.init` (work step 2.4). Islands opt in with `data-nerv-init`.
 - `@import` stand-in for CDN CSS would be blocked or rewritten: **checked as unused plugin** — this repo will not add Material privacy/external-asset rewriting in M4.
 - Taxonomy screenshot pages would look like NERV: **checked** — no `.nerv-*` on those pages; islands only exist on the Using pages.
 

@@ -102,3 +102,25 @@ Add a ProperDocs GitHub Pages site from existing `docs/` plus Using pages with l
     - No tests that spawn ProperDocs or grep workflow YAML
 * Insights
     - The load-path contract is still the shipped-product TDD surface; the teaching pages are fixtures that contract tests assert on
+
+## 2026-09-12 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Validated the replan against the existing Node test suite, NERV scoped initializers, docs tree, package contract, and release workflow
+    - Struck document-content change-detector tests from the executable unit
+    - Wrote `memory-bank/active/.preflight-status` with `FAIL (fixable)`
+* Decisions made
+    - The plan needs an explicit GitHub Pages deployment permission before build; planner replan is required
+    - Resolver fixture tests remain the TDD surface; pages and workflow wiring are prose/policy artifacts
+* Insights
+    - The existing explicit workflow permissions map omits `pages: write`, so an `actions/deploy-pages` job cannot deploy without a permission addition
+
+## 2026-09-12 - PLAN - COMPLETE (replan, pages permission)
+
+* Work completed
+    - Added job-scoped `pages: write` (plus `id-token: write` and `contents: read`) to the release Pages job in unit 3
+    - Removed leftover references to struck docs-content tests
+* Decisions made
+    - Do not grant `pages: write` at the release-please workflow top level; only the Pages job needs it
+* Insights
+    - SLOBAC’s dedicated docs workflow can set `pages: write` globally; this repo’s release workflow cannot, because that map also covers release-please and npm publish
