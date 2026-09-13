@@ -1,0 +1,1 @@
+Docs dual-load writes gitignored docs/{stylesheets,javascripts}/nerv.*; CDN JS stand-in fires nerv-docs:ready; docs-init must never call NERV.init()
