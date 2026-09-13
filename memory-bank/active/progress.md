@@ -136,3 +136,14 @@ Add a ProperDocs GitHub Pages site from existing `docs/` plus Using pages with l
 * Insights
     - Advisory (radical innovation): CDN mode could HEAD-verify the versioned jsDelivr URL with retry and throw, turning the documented jsDelivr-lag risk into a failed release job instead of a live 404 site; sketch recorded in `.preflight-status` for operator evaluation
     - Advisory: `.nerv-docs-island` spends the design-system `.nerv-` namespace on docs-only chrome — safe against Material collisions, but the prefix no longer exclusively means shipped product
+
+## 2026-09-12 - BUILD - IN-PROGRESS
+
+* Work completed
+    - Left PREFLIGHT (PASS WITH ADVISORY)
+    - Starting implementation of the replanned M4 dual-load site
+* Decisions made
+    - Follow `tasks.md` in order: resolver TDD, then ProperDocs/Using pages, Pages CI, README/techContext
+    - Preflight jsDelivr HEAD/retry advisory stays out of this build
+* Insights
+    - CDN `nerv.js` is a stand-in script tag, so docs-init must wait for `window.NERV` rather than assuming a blocking load
