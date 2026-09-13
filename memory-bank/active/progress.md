@@ -124,3 +124,15 @@ Add a ProperDocs GitHub Pages site from existing `docs/` plus Using pages with l
     - Do not grant `pages: write` at the release-please workflow top level; only the Pages job needs it
 * Insights
     - SLOBAC’s dedicated docs workflow can set `pages: write` globally; this repo’s release workflow cannot, because that map also covers release-please and npm publish
+
+## 2026-09-12 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Ran L3 preflight checks against the replanned `tasks.md`, creative doc, and codebase reality (`src/nerv.js` scoped initializers, release workflow jobs/permissions, docs tree, package contract, README anchors)
+    - Wrote `memory-bank/active/.preflight-status` (first line: `PASS WITH ADVISORY`)
+* Decisions made
+    - Plan is acceptable as-is for `/niko-build`; the earlier `FAIL (fixable)` permission gap is resolved by unit 3's job-scoped `pages: write`
+    - Verified `NERV.initBarMeters(container)` accepts an element scope and `injectScanlines` appends to `document.body`, confirming both the scoped-init design and the no-`NERV.init()` rule
+* Insights
+    - Advisory (radical innovation): CDN mode could HEAD-verify the versioned jsDelivr URL with retry and throw, turning the documented jsDelivr-lag risk into a failed release job instead of a live 404 site; sketch recorded in `.preflight-status` for operator evaluation
+    - Advisory: `.nerv-docs-island` spends the design-system `.nerv-` namespace on docs-only chrome — safe against Material collisions, but the prefix no longer exclusively means shipped product

@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: nerv-v01-m4-properdocs-dual-load-site
-**Phase:** PLAN - COMPLETE (replan, pages permission)
+**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
 
 ## What Was Done
 
@@ -12,4 +12,4 @@
 
 ## Next Step
 
-- Preflight
+- `/niko-build`
