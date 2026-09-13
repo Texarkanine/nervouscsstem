@@ -59,5 +59,5 @@ Key insights:
 - Do not list boards as `extra_templates` (that would Jinja-process them and is the failure mode that would force Option B).
 - Build check: `site/boards/*.html` must remain a copy of the source (no `md-header`). If it does not, switch this decision to Option B.
 - Do not add HTML copies under `skills/nerv/`.
-- Do not delete the `ref/` originals.
+- Do not delete the `ref/` originals. The operator will.
 - Optional later (not this ticket): equivalent boards for remaining components.

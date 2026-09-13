@@ -6,6 +6,8 @@
 
 Fill out the ProperDocs site as the teaching surface for every design-system capability ([issue #9](https://github.com/Texarkanine/nervouscsstem/issues/9)). Catalog pages teach isolation (variants together, constant filler, modifiers last as classes). Five `ref/` swatch HTML pages become unthemed void boards on Pages, not in the skill. Motion rename is [issue #12](https://github.com/Texarkanine/nervouscsstem/issues/12).
 
+Operator 2026-09-13: this work is user-facing prose (markdown and visual). No new tests. Sidebar order, `not_in_nav`, board HTML, and ProperDocs copying extra HTML are design-time choices; the HTML copy was probed and is vendor behavior. Do not delete `ref/` originals (operator will).
+
 ## Pinned Info
 
 ### Docs tree
@@ -39,120 +41,103 @@ Creative refs: `memory-bank/active/creative/creative-docs-tree.md`, `memory-bank
 ### Affected Components
 - `docs/` markdown tree: catalog pages, section homes, moves of existing Using and visual-language files
 - `properdocs.yml`: drop `nav:`; `navigation.indexes`; `not_in_nav` for boards and `reading.md`; awesome-pages plugin
-- `docs/.pages`: root sidebar order
-- `skills/nerv/docs/`: copy-identity for every new/moved markdown except `reading.md`
+- `docs/.pages`: root sidebar order (design-time, not tested)
+- `skills/nerv/docs/`: keep in lockstep with `docs/**/*.md` except `reading.md` (existing `skill-contract.test.mjs`; no new assertions)
 - `docs/img/` LFS stills: rename those that illustrate a catalogued component; retarget taxonomy links
-- `docs/boards/*.html`: five adapted swatch pages (void HTML)
-- `ref/*.html`: source of boards; four servings stay unpublished
+- `docs/boards/*.html`: five adapted swatch pages (void HTML, visual prose)
+- `ref/*.html`: source of boards this ticket; operator deletes the originals later
 - Docs asset dirs: gitignore currently ignores the whole directories, so `docs-init.js` / `docs-islands.css` are untracked
-- `scripts/resolve-docs-assets.mjs` and `test/docs-assets.test.mjs`: dual-load of `nerv.css` / `nerv.js`
-- `test/skill-contract.test.mjs`: markdown lockstep
+- `scripts/resolve-docs-assets.mjs` and `test/docs-assets.test.mjs`: dual-load already covered; no new cases
 - `.github/workflows/release-please.yaml` `publish-pages`: publishes `site/`
-- `docs/javascripts/docs-init.js`: extend `data-nerv-init` kinds as JS catalog islands need them
+- `docs/javascripts/docs-init.js`: extend `data-nerv-init` kinds as JS catalog islands need them (docs chrome, not a new product API)
 - `src/` / `dist/`: no CSS/JS product change
 
 ### Cross-Module Dependencies
-- Catalog markdown → skill copies (byte-identical `.md`)
+- Catalog markdown → skill copies (existing lockstep test)
 - Catalog islands → `docs-init.js` scoped `NERV.*` (never `NERV.init()` on Material chrome)
-- Catalog pages → `docs/img/` stills (LFS rename + relative links)
+- Catalog pages → `docs/img/` stills
 - Swatch HTML → `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js` (own `<link>`/`<script>`, not `extra_css`)
-- `publish-pages` uploads whatever `properdocs build` put in `site/`
+- `publish-pages` uploads `site/`
 
 ### Boundary Changes
 - Public docs URL tree changes (file moves)
 - Skill install markdown tree changes in lockstep
 - Screenshot filenames in `docs/img/` change; taxonomy pages must keep resolving
 - No CSS class rename (issue #12)
+- `ref/` originals stay until the operator deletes them
 
 ### Invariants
 - Must preserve `.nerv-` prefix, no canvas, no product image files, `prefers-reduced-motion` / `prefers-contrast`
-- Must preserve skill copy-identity for markdown except `reading.md`
-- Must preserve dual-load of `nerv.css` / `nerv.js` (local copy vs CDN stand-in)
+- Must preserve existing skill markdown copy-identity except `reading.md`
+- Must preserve dual-load of `nerv.css` / `nerv.js`
 - Must not call `NERV.init()` from Material docs chrome
-- Boards must remain unthemed void HTML (`site/boards/*.html` has no `md-header`)
+- Boards remain unthemed void HTML (ProperDocs copy already probed; do not list as `extra_templates`)
 - Screenshot library stays Git LFS under `docs/img/**`; stills and boards do not enter the skill
+- No new tests for this task
 
 ## Open Questions
 
 - [x] **Docs tree and catalog map** → Resolved: layered folders (`visual-language`, `css`, `js`, `components`), `index.md` section homes, one root `.pages` for sidebar order, `not_in_nav` for `reading.md`. See `memory-bank/active/creative/creative-docs-tree.md`.
-- [x] **Swatch board publication** → Resolved: Option A, `docs/boards/`. Operator requires void HTML outside Material. Probe `properdocs build --strict` copied a board HTML file byte-identical into `site/boards/` (no `md-header`). `extra_templates` is the failure mode that would force Option B. See `memory-bank/active/creative/creative-swatch-boards.md`.
+- [x] **Swatch board publication** → Resolved: Option A, `docs/boards/`. Probe showed unaltered copy. See `memory-bank/active/creative/creative-swatch-boards.md`.
+- [x] **What to test** → Resolved (operator 2026-09-13): nothing new. Boards, nav, `not_in_nav`, and the five-file HTML set are visual/design-time prose. A later seventh board or a rename must not fight a test. ProperDocs extra-HTML copy is vendor behavior already probed.
 
 ## Test Plan (TDD)
 
 ### Behaviors to Verify
 
-- Chrome files present: repo contains `docs/javascripts/docs-init.js` and `docs/stylesheets/docs-islands.css` (not gitignored)
-- Dual-load isolation unchanged: `resolveDocsAssets` does not modify `ref/` or `src/`
-- Board sources are void HTML: each `docs/boards/{foundation,lists,tables,forms,effects}.html` exists, starts with `<!DOCTYPE html>`, contains no `md-header`, links `../stylesheets/nerv.css`, and does not reference `../dist/nerv.css` or `../src/nerv.js`
-- Board NERV boot: lists, tables, forms, and foundation wait for `window.NERV` or `nerv-docs:ready` before calling `NERV.*`
-- Skill ships no HTML and no `boards/` path
-- Skill markdown lockstep: every `docs/**/*.md` except `reading.md` has an identical copy under `skills/nerv/docs/` at the same relative path (existing test covers new files once copies exist)
-- Island init kinds: every `data-nerv-init` value used in `docs/**/*.md` has a matching branch in `docs-init.js`
+No new executable behavior.
 
 ### Test Infrastructure
 
-- Framework: Node.js `node --test` (`package.json` `npm test`)
-- Test location: `test/`
-- Conventions: `*.test.mjs`, `node:test` + `node:assert/strict`
-- New test files: `test/docs-boards.test.mjs` (void HTML + asset URLs + boot). Extend `test/skill-contract.test.mjs` (no HTML / no `boards/`). Extend `test/docs-assets.test.mjs` or a small case in `docs-boards` for chrome files existing. New `test/docs-init-kinds.test.mjs` for the `data-nerv-init` lockstep.
+- Framework: Node.js `node --test` (`package.json` `npm test`) — **do not add files to this list for this task**
+- Existing gates that remain: `test/skill-contract.test.mjs` (markdown copies), `test/docs-assets.test.mjs` (dual-load + PyPI-only `uv.lock`), CSS product suites
+- New test files: none
 
 ### Integration Tests
 
-- After implementation, `npm run docs:build` must succeed (`properdocs build --strict`). That is a build check, not a new unit. If `site/boards/*.html` ever contains `md-header`, Option A has failed and the swatch creative falls back to Option B.
+- `npm run docs:build` at the end of build as a smoke that ProperDocs still builds. Not a new unit, not a nav-order assertion.
 
 ## Implementation Plan
 
-### 1. Docs chrome gitignore — executable
+### 1. Docs chrome gitignore — prose/policy
 
 - Files: `.gitignore`, `docs/javascripts/docs-init.js`, `docs/stylesheets/docs-islands.css`
+- No tests: gitignore and docs chrome (always-tdd out of scope)
 - Creative ref: `creative-docs-tree.md`
 
-1. Stub tests: in `test/docs-boards.test.mjs`, empty cases `chrome files exist` and `gitignore does not ignore docs-init.js`
-2. Stub interface: none (files already exist locally)
-3. Write tests and run red: `existsSync` for both chrome files; `git check-ignore` (or read `.gitignore`) must not match `docs/javascripts/docs-init.js`
-4. Write code and run green: remove directory-wide `docs/stylesheets` and `docs/javascripts` ignores; keep `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js`; `git add` the chrome files
+1. Remove directory-wide `docs/stylesheets` and `docs/javascripts` ignores; keep `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js`
+2. Track `docs-init.js` and `docs-islands.css`
 
-### 2. Board and skill HTML contract — executable
-
-- Files: `test/docs-boards.test.mjs`, `test/skill-contract.test.mjs`
-
-1. Stub tests: empty cases for five board paths, void markers, stylesheet href, no dist/src nerv URLs, NERV boot waiter, skill has no `.html` and no `boards` path segment
-2. Stub interface: none
-3. Write tests and run red
-4. Write code and run green: next step supplies the HTML; this step only lands the failing tests (and the skill assertion, which already passes until HTML is wrongly copied)
-
-### 3. Swatch HTML — executable
+### 2. Swatch HTML — prose/policy
 
 - Files: `docs/boards/{foundation,lists,tables,forms,effects}.html`
+- No tests: visual prose
 - Creative ref: `creative-swatch-boards.md`
 
-1. Stub tests: already in step 2
-2. Stub interface: empty HTML files that fail the assertions
-3. Write tests and run red: already red from step 2
-4. Write code and run green: copy from `ref/ref-*.html`; rewrite CSS/JS to dual-load paths; wrap `NERV.init` / `initCartouches` in a `window.NERV` / `nerv-docs:ready` boot; comment the `ref/` source; do not add to `extra_templates`; do not copy into the skill
+1. Copy from `ref/ref-*.html` into `docs/boards/`
+2. Point CSS/JS at dual-load paths (`../stylesheets/nerv.css`, `../javascripts/nerv.js`)
+3. Wrap `NERV.init` / `initCartouches` so they run when `window.NERV` exists or on `nerv-docs:ready`
+4. Comment the `ref/` source; do not add to `extra_templates`; do not copy into the skill
+5. Do not delete `ref/` files
 
-### 4. ProperDocs IA — executable
+### 3. ProperDocs IA — prose/policy
 
 - Files: `properdocs.yml`, `pyproject.toml`, `uv.lock`, `docs/.pages`
+- No tests: design-time nav/config. Root `.pages` and `not_in_nav` are the one-time solution; do not assert sidebar order or board exclusion in Node
 - Creative ref: `creative-docs-tree.md`
 
-1. Stub tests: none new — `npm run docs:build` is the gate (`No tests: build/config` except lock already tested in `docs-assets.test.mjs` for PyPI-only URLs)
-2. Stub interface: none
-3. Write tests and run red: skip — adding a plugin is config. Relock must keep `uv.lock` on pypi.org (existing test)
-4. Write code and run green:
-   - Drop `nav:`
-   - `theme.features`: keep `navigation.sections`, add `navigation.indexes`
-   - `plugins`: `awesome-pages` via `mkdocs-awesome-pages-plugin`
-   - `not_in_nav`: `reading.md`, `boards/**`
-   - `docs/.pages` nav: `index.md`, `visual-language`, `css`, `js`, `components`, `service-manual.md`
-   - `uv add --group docs mkdocs-awesome-pages-plugin` with PyPI-only index (`--no-config --default-index https://pypi.org/simple`)
-   - `npm run docs:build` must pass
-   - If the plugin cannot load under ProperDocs 1.6, use `mkdocs-awesome-nav` with `filename: .pages` (same `.pages` files) or fail this step and stop — do not invent a third nav scheme
+1. Drop `nav:`
+2. Keep `navigation.sections`; add `navigation.indexes`
+3. Add `mkdocs-awesome-pages-plugin`; `docs/.pages` order: `index.md`, `visual-language`, `css`, `js`, `components`, `service-manual.md`
+4. `not_in_nav`: `reading.md`, `boards/**`
+5. Relock with PyPI-only index (`--no-config --default-index https://pypi.org/simple`) so existing `docs-assets` lock test stays true
+6. `npm run docs:build` must succeed before catalog-page volume
+7. If the plugin cannot load under ProperDocs 1.6, use `mkdocs-awesome-nav` with `filename: .pages` or stop — do not restore `nav:`
 
-### 5. Folder moves and section homes — prose/policy
+### 4. Folder moves and section homes — prose/policy
 
 - Files: `docs/visual-language/*`, `docs/css/index.md`, `docs/js/index.md`, `docs/components/index.md`, `docs/index.md`, `skills/nerv/docs/**`
-- No tests: prose/policy artifact (skill-contract will fail until copies exist — that existing test is the gate)
+- No tests: prose/policy artifact (existing skill-contract fails until copies exist — comply, do not extend the test)
 - Creative ref: `creative-docs-tree.md`
 
 1. Move `design-language.md`, `atomic-elements.md`, `radar.md` into `visual-language/`; add `visual-language/index.md`; fix still links to `../img/`
@@ -163,7 +148,7 @@ Creative refs: `memory-bank/active/creative/creative-docs-tree.md`, `memory-bank
 6. Rewrite `docs/index.md` links to the new folders
 7. Copy every new/moved markdown into `skills/nerv/docs/` at the same relative path; delete stale skill paths (`skills/nerv/docs/css.md`, old taxonomy paths)
 
-### 6. Component catalog pages — prose/policy
+### 5. Component catalog pages — prose/policy
 
 - Files: `docs/components/*.md` and matching `skills/nerv/docs/components/*.md`
 - No tests: prose/policy artifact
@@ -194,48 +179,48 @@ For each family, same page grain: name/variant → NGE still if one exists → e
 
 Do not publish `ref-panels`, `ref-patterns`, `ref-components`, or `ref-alert-cascade` as boards.
 
-### 7. docs-init kinds — executable
+### 6. docs-init kinds — prose/policy
 
-- Files: `docs/javascripts/docs-init.js`, `test/docs-init-kinds.test.mjs`
+- Files: `docs/javascripts/docs-init.js`
+- No tests: docs-site chrome for catalog islands. A kind↔markdown lockstep would go red on honest island edits.
 
-1. Stub tests: empty case that every `data-nerv-init` in `docs/**/*.md` has a `kind === '…'` branch
-2. Stub interface: none
-3. Write tests and run red as catalog pages add kinds
-4. Write code and run green: add branches (`cartouches`, hex, magi, radar, label-box, data-bg, ghost segments, grid labels) calling the matching `NERV.init*(island)` only. Never `NERV.init()`
+1. Add `data-nerv-init` branches as those catalog pages land (`cartouches`, hex, magi, radar, label-box, data-bg, ghost segments, grid labels)
+2. Each branch calls the matching `NERV.init*(island)` only. Never `NERV.init()`
 
-### 8. Stills rename — prose/policy
+### 7. Stills rename — prose/policy
 
 - Files: `docs/img/*.png` (LFS), taxonomy markdown, catalog pages
-- No tests: prose/policy artifact (a filename lock would be a change-detector)
+- No tests: prose/policy artifact
 
 1. For each catalog family, take stills already used in `atomic-elements.md` / `design-language.md` that illustrate that component (not all 149 stills)
-2. `git lfs` rename so the filename names the component (e.g. `cartouche-identified.png`)
+2. `git lfs` rename so the filename names the component
 3. Update every markdown link to the old hash name
 4. Section order on the catalog page: name → still → island → spec + HTML → details
 5. Do not copy stills into the skill
 
 ## Technology Validation
 
-- **Static HTML in `docs/boards/`:** verified 2026-09-13. Probe file copied byte-identical to `site/boards/`; markdown pages still get Material `md-header`. No new dependency.
-- **mkdocs-awesome-pages-plugin:** new docs-group dependency. Validate in step 4 with `uv add` (PyPI-only) and `npm run docs:build`. If it will not load, stop and use `mkdocs-awesome-nav` with `filename: .pages` — do not restore `nav:` in `properdocs.yml`.
+- **Static HTML in `docs/boards/`:** verified 2026-09-13. Probe file copied byte-identical to `site/boards/`; markdown pages still get Material `md-header`. Vendor behavior; no test.
+- **mkdocs-awesome-pages-plugin:** new docs-group dependency. Validate in step 3 with `uv add` (PyPI-only) and `npm run docs:build`. If it will not load, use `mkdocs-awesome-nav` with `filename: .pages` — do not restore `nav:` in `properdocs.yml`.
 - No CSS/JS product dependencies.
 
 ## Challenges & Mitigations
 
-- **Material wraps boards:** already checked for current ProperDocs. If a plugin later wraps `.html`, switch swatch creative to Option B (post-copy into `site/`). Do not list boards in `extra_templates`.
-- **CDN async `nerv.js`:** board boot waiter is mandatory (Challenge for step 3).
-- **Skill copies forgotten after a move:** existing `skill-contract.test.mjs` fails until copies exist. Run it after every markdown batch.
-- **gitignore still hiding chrome:** step 1 exists because a fresh clone cannot `docs:build` today (`docs-init.js` is untracked).
-- **LFS rename:** use `git mv` so pointers stay LFS; never add a repo-wide `*.png` LFS rule.
-- **Catalog pages become servings:** grain rules in step 6; `states.md` is the cascade *mechanism* only.
-- **awesome-pages vs ProperDocs:** step 4 is a hard gate before writing twenty catalog pages.
+- **Material wraps boards:** already checked. If a plugin later wraps `.html`, switch to Option B. Do not list boards in `extra_templates`.
+- **CDN async `nerv.js`:** wrap board boot in step 2 (review, not a test).
+- **Skill copies forgotten after a move:** existing `skill-contract.test.mjs` fails until copies exist. Run the existing suite after markdown batches. Do not add “no HTML in skill” or a board-name list.
+- **gitignore still hiding chrome:** step 1. `always-tdd` treats gitignore as out of scope.
+- **LFS rename:** `git mv`; never a repo-wide `*.png` LFS rule.
+- **Catalog pages become servings:** grain rules in step 5; `states.md` is the cascade *mechanism* only.
+- **awesome-pages vs ProperDocs:** step 3 is a hard gate before writing twenty catalog pages.
+- **Preflight demands tests for nav:** operator rejected them. This plan records that so the next preflight does not re-open change-detectors.
 
 ## Pre-Mortem
 
-- **We documented current flicker names and then #12 ships immediately after:** accepted. Issue #12 exists so this ticket does not redesign motion. Effects page uses current names.
-- **We renamed every still in `docs/img/` including ones that do not illustrate a catalog component:** plan response — step 8 is per catalog family from taxonomy tables, not a 149-file bulk rename.
-- **Directory nav is alphabetical and Components lead the sidebar:** already covered by Challenge (root `.pages`).
-- **The task was actually L4 and the catalog is uneven because one plan tried to write every page at once:** keep L3; step 6 is one grain applied N times. If preflight says the plan is too large, split catalog families into a follow-up issue rather than silently dropping pages — issue #9’s done-when is the whole capability set.
+- **We documented current flicker names and then #12 ships immediately after:** accepted. Effects page uses current names.
+- **We renamed every still in `docs/img/`:** step 7 is per catalog family from taxonomy tables, not a 149-file bulk rename.
+- **A seventh board or a rename fights a test:** plan response — no board/nav filename tests, so that cannot happen.
+- **`docs-init` misses a new island kind:** accepted as review; a lockstep test would be a change-detector on the catalog.
 
 ## Status
 

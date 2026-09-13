@@ -29,6 +29,7 @@ I browse the site by directory: visual language, CSS, JS, and components are sep
 7. Remove the explicit `nav:` tree from `properdocs.yml`. Directory hierarchy drives navigation. CSS docs and JS docs live in separate folders. awesome-pages / `.pages` only when ordering cannot come from the tree. Section home pages are `README.md` or `index.md`.
 8. Host the five swatch-board HTML pages (`ref-foundation.html`, `ref-lists.html`, `ref-tables.html`, `ref-forms.html`, `ref-effects.html`) on the documentation site as visual-inspiration boards. Link each from the bottom of the matching catalog page. Keep them out of the installable skill. GitHub Pages will serve the HTML (dump into `site/` via Actions if ProperDocs will not serve plain HTML itself).
 9. New catalog markdown in `docs/` must stay in lockstep with `skills/nerv/docs/` (existing skill copy-identity, skipping `docs/reading.md`). Swatch-board HTML is repo/Pages only.
+10. No new tests. Boards, sidebar order, and `not_in_nav` are design-time. Operator deletes `ref/` originals later; this ticket does not.
 
 ## Constraints
 

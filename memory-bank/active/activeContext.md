@@ -1,14 +1,11 @@
 # Active Context
 
 ## Current Task: Canonical usage guide
-**Phase:** PREFLIGHT - COMPLETE (FAIL (blocking))
+**Phase:** PLAN - COMPLETE
 
 ## What Was Done
-- Intent for issue #9 confirmed. Motion rename filed as issue #12.
-- Classified Level 3.
-- Creative: layered docs tree; swatch boards as `docs/boards/` void HTML (probe confirmed no Material wrap).
-- Plan: TDD for chrome/boards/skill-HTML/`data-nerv-init`; catalog pages are prose/policy; awesome-pages for root order only.
-- Preflight found missing test-first coverage for public docs navigation and that planned new test suites are excluded from the explicit `npm test` command.
+- Operator rejected new tests for boards, nav, `not_in_nav`, and board/skill HTML contracts: visual prose and design-time config. ProperDocs HTML copy already probed.
+- Plan rewritten as all prose/policy. No new test files. Do not delete `ref/` (operator will). Existing skill-contract and docs-assets suites stay as they are.
 
 ## Next Step
-- Revise the implementation plan, then rerun `/niko-preflight`.
+- Preflight the revised plan.

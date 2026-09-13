@@ -69,3 +69,15 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
     - `npm run docs:build` verifies buildability but does not verify the required navigation behavior.
     - `npm test` currently enumerates test files explicitly, so newly proposed suites are silently excluded unless the plan changes the command or reuses listed suites.
 
+## 2026-09-13 - PLAN - COMPLETE (rework after blocking preflight)
+
+* Work completed
+    - Rewrote the implementation plan as prose/policy only. Removed new test files, npm test list changes, nav/output assertions, board HTML contracts, and `data-nerv-init` lockstep.
+* Decisions made
+    - Operator: boards and sidebar are visual/design-time prose. A later seventh board or rename must not fight a test. ProperDocs extra-HTML copy is vendor behavior already probed.
+    - Operator deletes `ref/` originals; this ticket does not.
+    - Existing `skill-contract` and `docs-assets` stay unchanged. Gitignore/docs chrome is always-tdd out of scope.
+* Insights
+    - Preflight's blocking item (test built nav) and its advisory (catalog manifest) are the same class of change-detector. Operator rejected both.
+
+
