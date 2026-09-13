@@ -241,3 +241,4 @@ Do not publish `ref-panels`, `ref-patterns`, `ref-components`, or `ref-alert-cas
   - [x] 6. docs-init kinds
   - [x] 7. Stills rename
 - [x] QA — PASS (2026-09-13). Semantic review against plan, brief, and creative docs: no blocking findings. Verified nav/IA config, five void boards (byte-identical in `site/`, dual-load, wrapped boot), docs-init kinds 1:1 with markdown islands, catalog grain on sampled pages, 13 stills renamed and retargeted, skill lockstep (only `.pages` excluded), `ref/` originals intact, no debris. Re-ran gates: `npm test` 370/370, `docs:build` strict passes. One advisory: inline label layout style in `forms.md` checkbox/radio island (docs filler, acceptable). Details in `memory-bank/active/.qa-validation-status`.
+- [x] Reflect

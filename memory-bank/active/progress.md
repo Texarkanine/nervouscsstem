@@ -124,4 +124,14 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
     - The `data-nerv-init` kind set landed exactly 1:1 with catalog usage — no dead branches, no missing kinds; the no-lockstep-test decision cost nothing here.
     - The preflight advisory fold-in (service-manual link retarget) was correctly executed in build; advisory folding worked as designed.
 
+## 2026-09-13 - REFLECT - COMPLETE
+
+* Work completed
+    - Wrote `memory-bank/active/reflection/reflection-canonical-usage-guide.md`.
+    - Reconciled persistent files: `systemPatterns.md` (boards vs `ref/`, no `NERV.init()` on Material chrome), `techContext.md` (directory nav, `.pages`, boards). `productContext.md` skipped.
+* Decisions made
+    - Next step is `/niko-archive` (no `milestones.md`; this was a standalone L3 task).
+* Insights
+    - See the reflection document.
+
 
