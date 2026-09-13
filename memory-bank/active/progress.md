@@ -147,3 +147,17 @@ Add a ProperDocs GitHub Pages site from existing `docs/` plus Using pages with l
     - Preflight jsDelivr HEAD/retry advisory stays out of this build
 * Insights
     - CDN `nerv.js` is a stand-in script tag, so docs-init must wait for `window.NERV` rather than assuming a blocking load
+
+## 2026-09-12 - BUILD - COMPLETE
+
+* Work completed
+    - Dual-load resolver (`scripts/resolve-docs-assets.mjs`) with 7 fixture tests
+    - ProperDocs Material site, Using pages with preview/spec/code islands, island chrome
+    - PR docs build (local) and release Pages job (`needs: publish-npm`, job-scoped `pages: write`)
+    - README Pages URL and surgical `techContext.md` pointer
+* Decisions made
+    - CDN JS stand-in dispatches `nerv-docs:ready`; docs-init waits for `window.NERV` so deferred extra_javascript still works
+    - Did not adopt the preflight jsDelivr HEAD/retry advisory
+* Insights
+    - `properdocs build --strict` is green locally in both modes; stylelint failures on `dist/nerv.css` predate this milestone (`src/` unchanged)
+    - Bar-meter island: 3×40 bars, 66 `.nerv-bar-active`, no scanlines overlay

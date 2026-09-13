@@ -156,5 +156,5 @@ This replan adds: `extra_css` / `extra_javascript` are relative to `docs_dir` ([
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
 - [x] Preflight
-- [ ] Build
+- [x] Build
 - [ ] QA
