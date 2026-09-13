@@ -1,3 +1,6 @@
+> [!WARNING]  
+> 🚧 This is a half-baked project under active development at major version 0. It's possible nothing works, or that none of it works well. Accept the risks or come back later!
+
 # nervouscsstem
 
 NERV Design System — a pure-CSS design system (with a small optional JS helper) inspired by Neon Genesis Evangelion operational consoles.
