@@ -13,3 +13,13 @@ Fix four PR #10 review findings: bar-meter copy-paste example, CDN handshake ass
     - Task id `pr10-review-fixes`. Scope is the four judged fix-in-this-PR items only.
 * Insights
     - PyTorch pins in `uv.lock` are lock-machine contamination, not a product dependency.
+
+## 2026-09-13 - PLAN - COMPLETE
+
+* Work completed
+    - Wrote Level 2 plan in `tasks.md`: two executable units (docs-assets tests, PyPI relock) and two prose/policy units (`docs:build`, bar-meter fence).
+* Decisions made
+    - Do not TDD markdown wording or the `docs:build` script string.
+    - Pin PyPI in `pyproject.toml` and isolate user uv config so this machine cannot re-contaminate the lock.
+* Insights
+    - Extra index lives in `~/.config/uv/uv.toml`, not in this repo.

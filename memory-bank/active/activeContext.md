@@ -1,10 +1,10 @@
 # Active Context
 
 ## Current Task: pr10-review-fixes
-**Phase:** COMPLEXITY-ANALYSIS - COMPLETE
+**Phase:** PLAN - COMPLETE
 
 ## What Was Done
-- Level 2 determined: four review-feedback bug fixes across docs, tests, npm scripts, and the docs lockfile. Not architecture.
+- Level 2 plan: TDD handshake + pytorch-free lock assertions in `test/docs-assets.test.mjs`; relock from PyPI isolating user `uv.toml`; `docs:build` prefix; bar-meter fence + skill copy.
 
 ## Next Step
-- Load the Level 2 workflow and enter Plan
+- Preflight
