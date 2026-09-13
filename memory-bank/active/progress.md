@@ -172,3 +172,15 @@ Add a ProperDocs GitHub Pages site from existing `docs/` plus Using pages with l
     - Verified `src/nerv.js` never self-initializes, so site-wide `extra_javascript` is scanline-safe; `docs-init.js` ready-race handling is correct for deferred loads
 * Insights
     - Advisories only: jsDelivr-lag leaves islands silently uninitialized (accepted; `needs: publish-npm` is the mitigation), `.nerv-docs-island` namespace spend (preflight advisory), `.yaml`/`.yml` mix (cosmetic)
+
+## 2026-09-12 - REFLECT - COMPLETE
+
+* Work completed
+    - Wrote `memory-bank/active/reflection/reflection-nerv-v01-m4-properdocs-dual-load-site.md`
+    - Reconciled persistent files; no surgical updates (techContext already updated in Build)
+* Decisions made
+    - Hosting-model veto is a replan, not a tweak; that is the process lesson from the first creative
+    - Deferred `extra_javascript` ready-race is the technical lesson worth keeping
+* Insights
+    - `needs: publish-npm` orders jobs; it does not make jsDelivr serve. The HEAD-verify advisory remains the live risk for M4's CDN Done criterion
+    - Next command is `/niko` (M5), not `/niko-archive` — `milestones.md` is still present
