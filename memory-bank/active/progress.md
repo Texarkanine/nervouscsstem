@@ -23,3 +23,13 @@ Fix four PR #10 review findings: bar-meter copy-paste example, CDN handshake ass
     - Pin PyPI in `pyproject.toml` and isolate user uv config so this machine cannot re-contaminate the lock.
 * Insights
     - Extra index lives in `~/.config/uv/uv.toml`, not in this repo.
+
+## 2026-09-13 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Ran all seven default-preflight checks against the codebase; result `PASS WITH ADVISORY` (first line of `.preflight-status`).
+    - Verified plan touchpoints exist and match reality: production already dispatches `nerv-docs:ready`, `docs-init.js` listens for it, user `uv.toml` carries the pytorch-cu126 index, `uv.lock` has 45 `download.pytorch.org` lines (lock test will be red as planned), bar-meter skill copy is currently byte-identical.
+* Decisions made
+    - No plan edits: TDD ordering already correct; no change-detectors scheduled; prose/policy units correctly owe no tests.
+* Insights
+    - Advisory: whitelist-style lock assertion (every uv.lock URL under PyPI hosts) would generalize the blacklist test; operator to evaluate at build time.

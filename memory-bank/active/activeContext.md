@@ -1,10 +1,10 @@
 # Active Context
 
 ## Current Task: pr10-review-fixes
-**Phase:** PLAN - COMPLETE
+**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
 
 ## What Was Done
-- Level 2 plan: TDD handshake + pytorch-free lock assertions in `test/docs-assets.test.mjs`; relock from PyPI isolating user `uv.toml`; `docs:build` prefix; bar-meter fence + skill copy.
+- Preflight PASS WITH ADVISORY. Advisory: whitelist PyPI hosts in the lock test; confirm uv index key at build.
 
 ## Next Step
-- Preflight
+- Build
