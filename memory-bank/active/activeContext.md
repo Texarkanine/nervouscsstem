@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: nerv-v01-m5-installable-docs-skill
-**Phase:** BUILD - COMPLETE
+**Phase:** QA - COMPLETE (PASS)
 
 ## What Was Done
 
@@ -26,4 +26,4 @@ None — built to plan. Preflight generator-script advisory not adopted.
 
 ## Next Step
 
-- QA review
+- QA PASSED - proceed to `/niko-reflect`

@@ -83,3 +83,15 @@ Add a placeholder agent skill installable via `npx skills` that carries the docu
 * Insights
     - `npm run lint` still fails on generated `dist/nerv.css` (Antonio quotes, `0px`); predates this milestone
 
+## 2026-09-12 - QA - COMPLETE
+
+* Work completed
+    - Reviewed `skills/nerv/`, `test/skill-contract.test.mjs`, `package.json`, `release-please-config.json`, `README.md`, and `memory-bank/techContext.md` against the plan and the parent brief
+    - Re-ran `npm test` (369/369 pass) and `npm run lint` (7 pre-existing `dist/nerv.css` errors, unrelated to this milestone)
+    - Diffed `docs/**/*.md` against `skills/nerv/docs/**/*.md`; confirmed only non-markdown assets (`img/`, `javascripts/`, `stylesheets/`) are absent from the skill copy
+* Decisions made
+    - `.qa-validation-status` first line: `PASS`
+    - Carried the Preflight docs-sync-script advisory forward as non-blocking; no new advisories raised
+* Insights
+    - `packedPaths()` duplication between `test/skill-contract.test.mjs` and `test/publish-contract.test.mjs` is consistent with this repo's existing convention of self-contained test files with no shared test-helper module — not a DRY violation to flag
+
