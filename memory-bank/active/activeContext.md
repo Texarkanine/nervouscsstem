@@ -1,14 +1,14 @@
 # Active Context
 
-## Current Task: nerv-v01-m4-properdocs-dual-load-site
-**Phase:** REFLECT - COMPLETE
+## Current Task: nerv-v01-m5-installable-docs-skill
+**Phase:** COMPLEXITY-ANALYSIS - COMPLETE
 
 ## What Was Done
 
-- Dual-load resolver, ProperDocs Material site, Using-page islands, PR docs build, release Pages job
-- QA PASS with advisories only
-- Reflection written at `memory-bank/active/reflection/reflection-nerv-v01-m4-properdocs-dual-load-site.md`
+- Marked L4 milestone M4 complete and cleared its sub-run ephemerals
+- Classified first unchecked L4 milestone M5 as Level 2
+- Rationale: not a bug fix; small enhancement (placeholder skill plus a `SKILL.md` extra-files hook); self-contained — must not relocate `docs/` or redesign the release workflow or the site
 
 ## Next Step
 
-- Run `/niko` to continue to the next milestone (M5)
+- Load the Level 2 workflow

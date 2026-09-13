@@ -32,7 +32,7 @@ M3 has no edges: it can run any time. The checklist below is a serial-safe walk 
 - [x] M1: Install SumMem as a consumer copy and add the Niko root bootstrap pair
 - [x] M2: Wire release-please, npm publish, and GitHub Release attachments for the built CSS and JS
 - [x] M3: Write a feasibility note on offline font-and-JS bundles covering the licenses of every font the CSS currently loads #7
-- [ ] M4: Add a ProperDocs GitHub Pages site from existing docs plus component pages with embedded live examples that load CDN assets on release and dist locally, erroring if local bundles are missing
+- [x] M4: Add a ProperDocs GitHub Pages site from existing docs plus component pages with embedded live examples that load CDN assets on release and dist locally, erroring if local bundles are missing
 - [ ] M5: Add a placeholder agent skill installable via npx skills that carries the docs site and a SKILL.md version bumped by release-please
 
 ## Per-milestone done and risks
