@@ -41,3 +41,21 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
     - `ref/` remains the CSS visual fixture; boards may drift and that is accepted with a source comment.
 * Insights
     - `extra_css` does not apply to copied HTML. CDN `nerv.js` is async; bare `NERV.init()` at the bottom of a board will race.
+
+## 2026-09-13 - CREATIVE - UPDATED (swatch boards, operator interrupt)
+
+* Work completed
+    - Operator required full black-void HTML outside Material. Probe: `docs/boards/_probe.html` → `site/boards/_probe.html` byte-identical, no `md-header`. Markdown pages still wrap.
+* Decisions made
+    - Keep Option A. Option B only if `.html` starts getting themed (including via `extra_templates`).
+* Insights
+    - MkDocs copies non-markdown unaltered. The wrap risk is treating boards as templates or markdown, not putting them under `docs/boards/`.
+
+## 2026-09-13 - PLAN - COMPLETE
+
+* Work completed
+    - Level 3 plan written to `memory-bank/active/tasks.md`.
+* Decisions made
+    - TDD surface: chrome files, void board HTML, skill has no HTML, `data-nerv-init` kinds lockstep. Catalog markdown is prose/policy.
+    - awesome-pages is the only new docs dependency; validate on `docs:build` before writing catalog pages.
+

@@ -1,12 +1,13 @@
 # Active Context
 
 ## Current Task: Canonical usage guide
-**Phase:** COMPLEXITY-ANALYSIS - COMPLETE
+**Phase:** PLAN - COMPLETE
 
 ## What Was Done
-- Intent confirmed for [issue #9](https://github.com/Texarkanine/nervouscsstem/issues/9): catalog pages teach isolation; five `ref/` swatch HTML pages become docs-only idea boards; directory-driven nav; stills renamed and linked.
-- Motion-class rename explicitly out of scope. Filed [issue #12](https://github.com/Texarkanine/nervouscsstem/issues/12).
-- Complexity determined **Level 3**: one documentation feature (catalog + IA + stills + five boards) with design questions for the creative phase, not independent L4 subsystems.
+- Intent for issue #9 confirmed. Motion rename filed as issue #12.
+- Classified Level 3.
+- Creative: layered docs tree; swatch boards as `docs/boards/` void HTML (probe confirmed no Material wrap).
+- Plan: TDD for chrome/boards/skill-HTML/`data-nerv-init`; catalog pages are prose/policy; awesome-pages for root order only.
 
 ## Next Step
-- Load the Level 3 workflow and execute the Plan phase.
+- Preflight to validate the plan.

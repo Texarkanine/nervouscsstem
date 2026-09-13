@@ -10,6 +10,7 @@
 - Repo `docs/` / Pages only. Not `skills/nerv/`.
 - Only those five files. Servings stay in `ref/`.
 - GitHub Pages serves whatever is in `site/` after `properdocs build` (Actions already uploads `path: site`).
+- **Hard:** boards are full black-void HTML, served *outside* ProperDocs Material chrome. If `docs/boards/` cannot do that, this decision is Option B (post-build dump into `site/`).
 - Material pages must not call `NERV.init()`. Standalone boards may, because they *are* a NERV viewport.
 - Dual-load: local `docs/javascripts/nerv.js` is the real file; CDN mode is an async jsDelivr stub that fires `nerv-docs:ready`.
 - `resolve-docs-assets` must not modify `ref/` or `src/` (existing test).
@@ -39,11 +40,12 @@ Key insights:
 - CDN `nerv.js` is async. Bare `NERV.init()` at the bottom of `ref-lists.html` will race. Every board that calls `NERV` must boot on `window.NERV` or `nerv-docs:ready`.
 - Option B’s “one source” is nicer until `docs:serve` forgets the dump and local preview 404s. A committed file in `docs/` previews with ordinary `properdocs serve`.
 - Drift is real. Mitigate with a one-line comment in each board pointing at the `ref/` original, and do not “improve” boards into new compositions — they stay the labeled swatches.
+- Operator interrupt 2026-09-13: void pages must sit *outside* Material. A `docs/boards/_probe.html` built with `properdocs build --strict` landed in `site/boards/_probe.html` **byte-identical** (no `md-header`). The same build wraps markdown (`site/css/index.html` has `md-header`). MkDocs copies non-markdown as static files; listing boards in `extra_templates` would Jinja them and is the failure mode that forces Option B.
 
 ## Decision
 
 **Selected**: Option A — committed adapted HTML in `docs/boards/`.
-**Rationale**: Simplest path that GitHub Pages already publishes (`site/` is the artifact), matches the M4 standalone-HTML lesson, and works on `docs:serve` without a second pipeline. Skill stays markdown-only.
+**Rationale**: Operator requires unthemed void HTML. The probe showed `docs/boards/*.html` is copied unaltered into `site/`, so A meets that bar without a post-build dump. Switch to Option B only if a later ProperDocs/plugin starts treating `.html` as pages.
 **Tradeoff**: `ref/` and `docs/boards/` can drift. Accept that: `ref/` remains visual QA for the CSS product; boards are the published inspiration URLs with Pages asset paths.
 
 ## Implementation Notes
@@ -54,7 +56,8 @@ Key insights:
 - Leave scanline injection on boards that already call `NERV.init()` — that is the point of a full-page swatch.
 - `properdocs.yml`: `not_in_nav` for `reading.md` and `boards/**` (and `img/**` if inferred nav ever picks it up).
 - Catalog pages link the matching board at the bottom: “Swatch board” → `/boards/lists.html` (site-relative via markdown link to the HTML file).
-- Do not list boards as `extra_templates` (that would Jinja-process them).
+- Do not list boards as `extra_templates` (that would Jinja-process them and is the failure mode that would force Option B).
+- Build check: `site/boards/*.html` must remain a copy of the source (no `md-header`). If it does not, switch this decision to Option B.
 - Do not add HTML copies under `skills/nerv/`.
 - Do not delete the `ref/` originals.
 - Optional later (not this ticket): equivalent boards for remaining components.
