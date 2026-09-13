@@ -161,3 +161,14 @@ Add a ProperDocs GitHub Pages site from existing `docs/` plus Using pages with l
 * Insights
     - `properdocs build --strict` is green locally in both modes; stylelint failures on `dist/nerv.css` predate this milestone (`src/` unchanged)
     - Bar-meter island: 3×40 bars, 66 `.nerv-bar-active`, no scanlines overlay
+
+## 2026-09-12 - QA - COMPLETE (PASS)
+
+* Work completed
+    - Semantic review of the build against the replanned `tasks.md` and `creative-embedded-docs-examples.md`
+    - Wrote `memory-bank/active/.qa-validation-status` (first line: `PASS`) and QA results in `tasks.md`
+* Decisions made
+    - Implementation acceptable as-is; no KISS/DRY/YAGNI/completeness/regression/integrity violations
+    - Verified `src/nerv.js` never self-initializes, so site-wide `extra_javascript` is scanline-safe; `docs-init.js` ready-race handling is correct for deferred loads
+* Insights
+    - Advisories only: jsDelivr-lag leaves islands silently uninitialized (accepted; `needs: publish-npm` is the mitigation), `.nerv-docs-island` namespace spend (preflight advisory), `.yaml`/`.yml` mix (cosmetic)

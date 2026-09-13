@@ -157,4 +157,12 @@ This replan adds: `extra_css` / `extra_javascript` are relative to `docs_dir` ([
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA
+
+## QA Results
+
+**PASS** — semantic review against this plan and `creative-embedded-docs-examples.md`; details in `memory-bank/active/.qa-validation-status`.
+
+- Resolver, tests, ProperDocs config, island chrome, Using pages, workflows, and doc pointers all match the plan; no KISS/DRY/YAGNI/completeness/regression/integrity violations found.
+- Confirmed `src/nerv.js` never self-initializes, so site-wide `extra_javascript` cannot paint scanlines; `docs-init.js` handles the deferred-load race (`window.NERV` first, `nerv-docs:ready` fallback).
+- Advisories only: jsDelivr-lag silent islands (accepted risk), `.nerv-docs-island` namespace spend (preflight advisory), `.yaml`/`.yml` mix (cosmetic).
