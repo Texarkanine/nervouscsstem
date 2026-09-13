@@ -1,0 +1,1 @@
+npm test lists files explicitly in package.json; a new test/*.test.mjs is invisible until added to that script

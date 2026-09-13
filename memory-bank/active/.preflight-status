@@ -1,0 +1,9 @@
+FAIL (blocking)
+
+Blocking: Implementation Plan step 4 changes public documentation navigation and the built-site behavior, but schedules no test before that configuration is written. `npm run docs:build` only proves ProperDocs can build; it can succeed while the required inferred navigation, root ordering, section index behavior, or board exclusion is wrong. Re-plan this unit with a test that asserts the built public navigation/output rather than raw YAML, then run it red before the configuration change.
+
+Fixable: `package.json` defines `npm test` with an explicit list of nine test files. The new `test/docs-boards.test.mjs` and `test/docs-init-kinds.test.mjs` proposed by steps 1, 2, and 7 are absent from that list, so the documented full suite would never execute their contracts. Add them to the command or extend already-listed suites; ensure each new test is run red and green in its owning step.
+
+Fixable: Step 2 says “Write code and run green” but immediately specifies that it lands only failing board tests whose production HTML arrives in step 3. Move its green run to step 3 or relabel step 2 as the test-only red phase, so an implementer cannot treat an expected failure as a completed green step.
+
+Advisory: Define one small catalog manifest mapping each Sass feature family to its canonical documentation path, required island initializer (when applicable), and board URL (when applicable). A Node test can then validate the generated navigation and initializer coverage against that manifest. It would make the “every capability” acceptance criterion auditable without asserting prose or copying source-file details; assess the extra maintenance cost before adopting it.

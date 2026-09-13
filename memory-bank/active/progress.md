@@ -59,3 +59,13 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
     - TDD surface: chrome files, void board HTML, skill has no HTML, `data-nerv-init` kinds lockstep. Catalog markdown is prose/policy.
     - awesome-pages is the only new docs dependency; validate on `docs:build` before writing catalog pages.
 
+## 2026-09-13 - PREFLIGHT - COMPLETE (FAIL (blocking))
+
+* Work completed
+    - Validated the Level 3 plan, creative decisions, current docs configuration, test runner, and relevant contracts.
+* Decisions made
+    - Build must not begin until the planner adds test-first coverage for the public navigation/configuration behavior and ensures planned new test files are executed by the full test command.
+* Insights
+    - `npm run docs:build` verifies buildability but does not verify the required navigation behavior.
+    - `npm test` currently enumerates test files explicitly, so newly proposed suites are silently excluded unless the plan changes the command or reuses listed suites.
+
