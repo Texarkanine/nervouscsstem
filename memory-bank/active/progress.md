@@ -33,3 +33,19 @@ Fix four PR #10 review findings: bar-meter copy-paste example, CDN handshake ass
     - No plan edits: TDD ordering already correct; no change-detectors scheduled; prose/policy units correctly owe no tests.
 * Insights
     - Advisory: whitelist-style lock assertion (every uv.lock URL under PyPI hosts) would generalize the blacklist test; operator to evaluate at build time.
+
+## 2026-09-13 - BUILD - COMPLETE
+
+* Work completed
+    - CDN handshake assertion and PyPI-host lock whitelist in `test/docs-assets.test.mjs`.
+    - Relocked docs toolchain from PyPI only; `uv sync --group docs --frozen` succeeded; `npm run docs:build` succeeded.
+    - `docs:build` now runs `npm run build` first.
+    - Bar-meter copy-paste example uses a parent container; skill bar-meters.md matched.
+    - `docs/reading.md` is not in the skill; copy-identity skips it. `SKILL.md` left as placeholder.
+* Decisions made
+    - Took the preflight whitelist advisory.
+    - Isolated lock needs `--upgrade`; without it uv kept the CUDA pins.
+    - Do not iterate placeholder skill prose.
+* Insights
+    - Extra index is `~/.config/uv/uv.toml`. Frozen sync uses lock URLs, so contamination is a lock-generation problem.
+    - `npm run lint` still fails on generated `dist/nerv.css` (Antonio quotes, `0px`); predates this task.

@@ -103,7 +103,7 @@ describe('skill install contract', () => {
   });
 
   it('copies every docs markdown file into skills/nerv/docs at the same relative path', () => {
-    const docs = markdownDocs(DOCS_DIR);
+    const docs = markdownDocs(DOCS_DIR).filter((rel) => rel !== 'reading.md');
     assert.ok(docs.length > 0, 'docs/ must contain markdown');
     for (const rel of docs) {
       const source = join(DOCS_DIR, rel);

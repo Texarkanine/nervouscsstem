@@ -117,6 +117,7 @@ describe('resolveDocsAssets CDN mode', () => {
     resolveDocsAssets({ mode: 'cdn', root });
     const js = readFileSync(docsJs(root), 'utf8');
     assert.ok(js.includes(jsdelivrJs()));
+    assert.ok(js.includes('nerv-docs:ready'));
     assert.equal(js.includes(DIST_JS_MARKER), false);
   });
 
@@ -147,5 +148,20 @@ describe('resolveDocsAssets isolation', () => {
     resolveDocsAssets({ mode: 'cdn', root });
     assert.equal(readFileSync(join(root, 'ref', 'sentinel.txt'), 'utf8'), REF_SENTINEL);
     assert.equal(readFileSync(join(root, 'src', 'sentinel.txt'), 'utf8'), SRC_SENTINEL);
+  });
+});
+
+describe('docs toolchain lock', () => {
+  it('does not pin wheels from download.pytorch.org', () => {
+    const lock = readFileSync(join(import.meta.dirname, '..', 'uv.lock'), 'utf8');
+    const urls = [
+      ...[...lock.matchAll(/url = "([^"]+)"/g)].map((m) => m[1]),
+      ...[...lock.matchAll(/registry = "([^"]+)"/g)].map((m) => m[1]),
+    ];
+    assert.ok(urls.length > 0, 'uv.lock must declare registry or file URLs');
+    const pypi = /^https:\/\/(pypi\.org|files\.pythonhosted\.org)\//;
+    for (const url of urls) {
+      assert.match(url, pypi, `non-PyPI URL in uv.lock: ${url}`);
+    }
   });
 });

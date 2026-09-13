@@ -17,9 +17,11 @@ Do not call `NERV.init()` from a docs page. That injects a viewport-fixed `.nerv
 **Spec:** an empty `.nerv-bar-meter` with `data-bars` gets that many `.nerv-bar-meter-bar` children. `data-fill` is 0–100; JS adds `.nerv-bar-active` to the matching prefix. Preset modifiers: `.nerv-bar-thermal` (green→red), `.nerv-bar-energy` (cyan→blue), `.nerv-bar-warning` (amber→red), `.nerv-bar-field` (void→amber).
 
 ```html
-<div class="nerv-bar-meter nerv-bar-thermal" data-bars="40" data-fill="72"></div>
+<div id="bar-meters">
+  <div class="nerv-bar-meter nerv-bar-thermal" data-bars="40" data-fill="72"></div>
+</div>
 <script>
-  NERV.initBarMeters(document.querySelector('.nerv-bar-meter'));
+  NERV.initBarMeters(document.getElementById('bar-meters'));
 </script>
 ```
 

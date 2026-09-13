@@ -28,7 +28,7 @@
     "test": "node --test --test-concurrency=1 test/foundation.test.mjs test/effects.test.mjs test/panels.test.mjs test/patterns.test.mjs test/components.test.mjs test/states.test.mjs test/publish-contract.test.mjs test/docs-assets.test.mjs test/skill-contract.test.mjs",
     "lint": "stylelint dist/nerv.css",
     "docs:serve": "npm run build && node scripts/resolve-docs-assets.mjs --mode local && uv run properdocs serve",
-    "docs:build": "node scripts/resolve-docs-assets.mjs --mode local && uv run properdocs build --strict"
+    "docs:build": "npm run build && node scripts/resolve-docs-assets.mjs --mode local && uv run properdocs build --strict"
   },
   "devDependencies": {
     "sass": "^1.86.0",
