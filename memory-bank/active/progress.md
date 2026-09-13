@@ -18,3 +18,17 @@ Add a placeholder agent skill installable via `npx skills` that carries the docu
 * Insights
     - Invariants 1, 4, 5, and 9 are load-bearing: `docs/` remains the authoring source, release-please stays the only version bumper, M5 only extends extra-files, M4's site and dual-load contract are consumed not redesigned
     - Skill prose may be placeholder; the shippable contract is installability plus version lockstep with the published package
+
+## 2026-09-12 - PLAN - COMPLETE
+
+* Work completed
+    - Wrote the L2 plan in `tasks.md`: skill install contract (executable), extra-files (prose/policy), README/techContext (prose/policy)
+    - Mapped parent brief requirements 13–14 and AC 6 onto that split
+* Decisions made
+    - Product skill lives at `skills/nerv/` (skills.sh discovery). Do not relocate `docs/` or retarget ProperDocs (SLOBAC's `docs_dir`-in-skill is forbidden here)
+    - Carry markdown copies, not `docs/img/` and not the built `site/`
+    - Generic extra-files on `SKILL.md`; `version: 0.1.0 # x-release-please-version`
+    - TDD surface is `test/skill-contract.test.mjs` only; do not TDD extra-files JSON or spawn `npx skills`
+* Insights
+    - SLOBAC's current install path is a plugin marketplace; this milestone follows the brief's `npx skills` command and this repo's copy-not-relocate invariants
+    - YAML extra-files cannot bump markdown frontmatter; the generic updater is the documented hook
