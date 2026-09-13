@@ -1,4 +1,6 @@
 node_modules/
 dist/
 **/.summem/__pycache__/
-
+site/
+docs/stylesheets
+docs/javascripts
