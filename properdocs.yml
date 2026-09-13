@@ -1,0 +1,43 @@
+site_name: nervouscsstem
+site_url: https://texarkanine.github.io/nervouscsstem/
+repo_url: https://github.com/Texarkanine/nervouscsstem
+edit_uri: edit/main/docs/
+docs_dir: docs
+strict: true
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.sections
+
+nav:
+  - Home: index.md
+  - Visual language:
+      - Design language: design-language.md
+      - Atomic elements: atomic-elements.md
+      - Radar: radar.md
+  - Using:
+      - CSS: css.md
+      - Panels: components/panels.md
+      - Bar meters: components/bar-meters.md
+  - Service manual: service-manual.md
+
+extra_css:
+  - stylesheets/docs-islands.css
+  - stylesheets/nerv.css
+
+extra_javascript:
+  - javascripts/nerv.js
+  - javascripts/docs-init.js
+
+markdown_extensions:
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

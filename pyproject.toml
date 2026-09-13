@@ -1,0 +1,22 @@
+# Docs-build toolchain for the nervouscsstem ProperDocs site (not a published package).
+#
+#     uv sync --group docs
+#     npm run docs:serve
+#     npm run docs:build
+
+[project]
+name = "nervouscsstem-docs"
+version = "0"
+description = "Docs-build toolchain for the nervouscsstem ProperDocs site (not a published package)."
+requires-python = ">=3.10"
+
+[dependency-groups]
+# properdocs is oprypin's drop-in continuation of MkDocs 1.x.
+# See: https://github.com/ProperDocs/properdocs
+docs = [
+    "properdocs ~= 1.6",
+    "mkdocs-material ~= 9.5",
+]
+
+[tool.uv]
+required-version = ">=0.5"

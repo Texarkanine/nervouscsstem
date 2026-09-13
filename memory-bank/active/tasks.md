@@ -97,12 +97,12 @@ graph TD
 - No tests: prose/policy artifact
 - Creative ref: `memory-bank/active/creative/creative-embedded-docs-examples.md`
 
-1. Add `pyproject.toml` with a `docs` dependency group: `properdocs ~= 1.6`, `mkdocs-material ~= 9.5`. No awesome-pages, llms-source, or custom hooks. Commit `uv.lock`.
-2. Add `properdocs.yml`: `docs_dir: docs`, `theme.name: material`, `strict: true`, `site_url: https://texarkanine.github.io/nervouscsstem/`, `repo_url` / `edit_uri: edit/main/docs/`, `md_in_html`, mermaid via `pymdownx.superfences`, `extra_css` / `extra_javascript` as in the creative notes, nav for Home, existing visual-language docs, Using (CSS, Panels, Bar meters), Service manual.
-3. Gitignore `site/` and `.venv`.
-4. Island chrome: `.nerv-docs-island` is a dark contained preview. `docs-init.js` on `DOMContentLoaded` calls `NERV.initBarMeters(island)` (and later kinds) only for `.nerv-docs-island[data-nerv-init]`. It must not call `NERV.init` or `injectScanlines`.
-5. Author `docs/index.md`, `docs/css.md` (tokens/type CSS-only islands), `docs/components/panels.md` (`.nerv-panel` variants, no `data-nerv-init`), `docs/components/bar-meters.md` (`data-nerv-init="bar-meters"`, `data-bars` / `data-fill`). Each example: island, short spec, fenced HTML. Change `docs/service-manual.md`'s `../.gitattributes` link to the GitHub blob URL so `--strict` passes.
-6. `package.json` scripts: `docs:serve` = `npm run build && node scripts/resolve-docs-assets.mjs --mode local && uv run properdocs serve`; `docs:build` = local resolve + `uv run properdocs build --strict`. Release CI runs `--mode cdn` then `properdocs build --strict`.
+1. [x] Add `pyproject.toml` with a `docs` dependency group: `properdocs ~= 1.6`, `mkdocs-material ~= 9.5`. No awesome-pages, llms-source, or custom hooks. Commit `uv.lock`.
+2. [x] Add `properdocs.yml`: `docs_dir: docs`, `theme.name: material`, `strict: true`, `site_url: https://texarkanine.github.io/nervouscsstem/`, `repo_url` / `edit_uri: edit/main/docs/`, `md_in_html`, mermaid via `pymdownx.superfences`, `extra_css` / `extra_javascript` as in the creative notes, nav for Home, existing visual-language docs, Using (CSS, Panels, Bar meters), Service manual.
+3. [x] Gitignore `site/` and `.venv`.
+4. [x] Island chrome: `.nerv-docs-island` is a dark contained preview. `docs-init.js` on `DOMContentLoaded` calls `NERV.initBarMeters(island)` (and later kinds) only for `.nerv-docs-island[data-nerv-init]`. It must not call `NERV.init` or `injectScanlines`.
+5. [x] Author `docs/index.md`, `docs/css.md` (tokens/type CSS-only islands), `docs/components/panels.md` (`.nerv-panel` variants, no `data-nerv-init`), `docs/components/bar-meters.md` (`data-nerv-init="bar-meters"`, `data-bars` / `data-fill`). Each example: island, short spec, fenced HTML. Change `docs/service-manual.md`'s `../.gitattributes` link to the GitHub blob URL so `--strict` passes.
+6. [x] `package.json` scripts: `docs:serve` = `npm run build && node scripts/resolve-docs-assets.mjs --mode local && uv run properdocs serve`; `docs:build` = local resolve + `uv run properdocs build --strict`. Release CI runs `--mode cdn` then `properdocs build --strict`.
 
 ### 3. GitHub Pages and PR docs build — prose/policy
 

@@ -20,7 +20,7 @@ graph TD
     Plan -.->|"do not copy"] Skill
 ```
 
-[`.gitattributes`](../.gitattributes) is the control surface:
+[`.gitattributes`](https://github.com/Texarkanine/nervouscsstem/blob/main/.gitattributes) is the control surface:
 
 - `docs/img/**` — every file under that tree is LFS. Today that is 163 PNGs referenced from the taxonomy docs. Treat the directory as the Library of Screenshots.
 - `planning/selected-ref-images/*.png` — three planning stills, also LFS.
