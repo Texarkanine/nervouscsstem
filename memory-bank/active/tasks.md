@@ -86,10 +86,10 @@ graph TD
 - Files: `scripts/resolve-docs-assets.mjs`, `test/docs-assets.test.mjs`, `package.json` (add the test file to `"test"`), `.gitignore`
 - Creative ref: `memory-bank/active/creative/creative-embedded-docs-examples.md`
 
-1. Stub tests: `test/docs-assets.test.mjs` empty cases for local-missing, local copy, CDN `@import` / JS stub, and no `ref/`/`src/` writes
-2. Stub interface: `scripts/resolve-docs-assets.mjs` exports `resolveDocsAssets({ mode, root })` and a CLI `--mode local|cdn`
-3. Write tests and run red: temp fixture trees for module I/O
-4. Write code and run green: local copy-or-throw into `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js`; CDN stand-ins at the same paths; gitignore those two generated files
+1. [x] Stub tests: `test/docs-assets.test.mjs` empty cases for local-missing, local copy, CDN `@import` / JS stub, and no `ref/`/`src/` writes
+2. [x] Stub interface: `scripts/resolve-docs-assets.mjs` exports `resolveDocsAssets({ mode, root })` and a CLI `--mode local|cdn`
+3. [x] Write tests and run red: temp fixture trees for module I/O
+4. [x] Write code and run green: local copy-or-throw into `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js`; CDN stand-ins at the same paths; gitignore those two generated files
 
 ### 2. ProperDocs site and Using pages — prose/policy
 
