@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: Canonical usage guide
-**Phase:** BUILD - COMPLETE (PASS)
+**Phase:** QA - COMPLETE (PASS)
 
 ## What Was Done
 - Gitignore now ignores only `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js`. Chrome files were already tracked.

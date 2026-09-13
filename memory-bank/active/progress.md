@@ -113,4 +113,15 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
     - Step 1 chrome files were already tracked; the gitignore change was what unblocked future files in those dirs.
     - Linking catalog pages from `js/index.md` before they exist fails `--strict`; write the target first.
 
+## 2026-09-13 - QA - COMPLETE (PASS)
+
+* Work completed
+    - Semantic review of the build output against the plan, project brief, and both creative docs. Re-ran mechanical gates: `npm test` 370/370, `docs:build` (strict) passes.
+    - Verified: directory nav config (no `nav:`, awesome-pages, `.pages`, `not_in_nav`), five void boards byte-identical in `site/` with dual-load paths and wrapped `NERV` boot, docs-init kinds exactly matching markdown island usage, catalog grain (variants together, constant filler, modifiers last) on sampled pages, 13 stills renamed with taxonomy retargets, skill lockstep, `ref/` originals intact, no debris.
+* Decisions made
+    - PASS with one advisory: inline label layout style in the `forms.md` checkbox/radio island is acceptable docs filler.
+* Insights
+    - The `data-nerv-init` kind set landed exactly 1:1 with catalog usage — no dead branches, no missing kinds; the no-lockstep-test decision cost nothing here.
+    - The preflight advisory fold-in (service-manual link retarget) was correctly executed in build; advisory folding worked as designed.
+
 
