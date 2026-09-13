@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/Texarkanine/nervouscsstem/compare/v0.1.0...v0.2.0) (2026-09-13)
+
+
+### Features
+
+* **docs:** Ship documentation site inside the Skill that instructs how to use ([#10](https://github.com/Texarkanine/nervouscsstem/issues/10)) ([d42b288](https://github.com/Texarkanine/nervouscsstem/commit/d42b288153a75d994c3fe447ac8608881bf143b2))
+
 ## [0.1.0](https://github.com/Texarkanine/nervouscsstem/compare/v0.0.1...v0.1.0) (2026-09-12)
 
 
