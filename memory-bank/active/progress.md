@@ -29,3 +29,15 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
     - Track `docs-init.js` / `docs-islands.css`; gitignore only `nerv.css` / `nerv.js` in those dirs.
 * Insights
     - Alphabetical inferred nav would put Components first; that is the legitimate `.pages` exception.
+
+## 2026-09-13 - CREATIVE - COMPLETE (swatch boards)
+
+* Work completed
+    - Generic creative for publishing the five swatch HTML files.
+* Decisions made
+    - Committed `docs/boards/*.html` adapted from `ref/` (not a post-build dump, not iframes).
+    - Asset paths go through dual-load `stylesheets/nerv.css` and `javascripts/nerv.js`.
+    - `NERV.init` on boards is allowed; wrap boot for the CDN async stub.
+    - `ref/` remains the CSS visual fixture; boards may drift and that is accepted with a source comment.
+* Insights
+    - `extra_css` does not apply to copied HTML. CDN `nerv.js` is async; bare `NERV.init()` at the bottom of a board will race.

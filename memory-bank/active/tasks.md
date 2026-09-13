@@ -36,6 +36,4 @@
 ## Open Questions
 
 - [x] **Docs tree and catalog map** → Resolved: layered folders (`visual-language`, `css`, `js`, `components`), `index.md` section homes, one root `.pages` for sidebar order, `not_in_nav` for `reading.md`. Catalog inventory and gitignore split in `memory-bank/active/creative/creative-docs-tree.md`.
-- [ ] **Swatch board publication** — How the five standalone HTML files get onto GitHub Pages with working `nerv.css` / `nerv.js`, stay out of Material nav and the skill, and relate to `ref/` fixtures.
-  - Why ambiguous: ProperDocs/MkDocs may copy extra HTML as-is, or we post-copy into `site/` in Actions; asset URLs today point at `../dist/nerv.css`; some boards call `NERV.init()`.
-  - Constraints: boards are repo/Pages only, not the skill; foundation, lists, tables, forms, effects only; GitHub Pages serving HTML is the success criterion; do not wrap boards in Material chrome.
+- [x] **Swatch board publication** → Resolved: committed adapted HTML in `docs/boards/`; dual-load relative URLs; boot `NERV` on `nerv-docs:ready`; `ref/` originals stay. See `memory-bank/active/creative/creative-swatch-boards.md`.
