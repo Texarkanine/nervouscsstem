@@ -49,3 +49,13 @@ Fix four PR #10 review findings: bar-meter copy-paste example, CDN handshake ass
 * Insights
     - Extra index is `~/.config/uv/uv.toml`. Frozen sync uses lock URLs, so contamination is a lock-generation problem.
     - `npm run lint` still fails on generated `dist/nerv.css` (Antonio quotes, `0px`); predates this task.
+
+## 2026-09-13 - QA - COMPLETE (PASS)
+
+* Work completed
+    - Reviewed the committed implementation against the Level 2 plan and all four acceptance criteria.
+    - Confirmed `npm test` passes 370 tests; frozen docs sync and `npm run docs:build` succeed.
+* Decisions made
+    - Accepted the PyPI-host whitelist as a stronger version of the planned PyTorch-channel check.
+* Insights
+    - Advisory only: the `pyproject.toml` relock comment should include `--upgrade` when it is intended to repair an already contaminated lockfile; the committed lock is clean.
