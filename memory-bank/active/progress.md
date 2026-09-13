@@ -18,3 +18,14 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
 * Insights
     - Catalog pages and swatch boards are different tools. Isolation teaches the palette; the existing labeled HTML is the combination view.
     - Canonical docs freeze names. Issue #12 exists so the effects page is not written twice.
+
+## 2026-09-13 - CREATIVE - COMPLETE (docs tree)
+
+* Work completed
+    - Architecture creative for folder tree and catalog map.
+* Decisions made
+    - Option B: `visual-language/`, `css/`, `js/`, `components/` with `index.md` homes; root `docs/.pages`; markdown not in asset dirs.
+    - Two radar docs: timing essay stays under visual-language; usage islands go under components.
+    - Track `docs-init.js` / `docs-islands.css`; gitignore only `nerv.css` / `nerv.js` in those dirs.
+* Insights
+    - Alphabetical inferred nav would put Components first; that is the legitimate `.pages` exception.
