@@ -1,0 +1,1 @@
+Docs pages must not call NERV.init(); injectScanlines is a viewport-fixed overlay on body. Use scoped NERV methods inside example islands.

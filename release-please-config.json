@@ -5,6 +5,12 @@
   "include-component-in-tag": false,
   "packages": {
     ".": {
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "skills/nerv/SKILL.md"
+        }
+      ],
       "pull-request-header": ":service_dog: I have created a release \\*bark\\* \\*woof\\*"
     }
   }

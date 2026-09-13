@@ -1,0 +1,13 @@
+.nerv-docs-island {
+  box-sizing: border-box;
+  isolation: isolate;
+  overflow: auto;
+  margin: 1.25rem 0;
+  padding: 1.5rem;
+  background: var(--nerv-bg, #000);
+  color: var(--nerv-primary, #ffaa00);
+}
+
+.nerv-docs-island > * + * {
+  margin-top: 0.75rem;
+}

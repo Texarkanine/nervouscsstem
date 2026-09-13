@@ -7,7 +7,8 @@ Pure-CSS design system with minimal vanilla JS orchestration. SCSS (Dart Sass) i
 - **Git LFS** — The screenshot library is `docs/img/` and `planning/selected-ref-images/`, stored via [Git LFS](https://git-lfs.com/). After clone, run `git lfs install` once per machine; use `git lfs pull` if images are missing. Those trees are repo-only; do not copy them into an installable skill, and do not add a repo-wide `*.png` LFS rule. Path contract: [`docs/service-manual.md`](../docs/service-manual.md).
 - Node.js required (for Dart Sass via npm)
 - `npm install` to fetch the `sass` dev dependency
-- No other tooling or frameworks
+- **uv + ProperDocs** — docs site. `uv sync --group docs` (lockfile `uv.lock`, config `properdocs.yml`). Relock with `uv lock --no-config --default-index https://pypi.org/simple --upgrade` so a user-level extra index (this machine: PyTorch CUDA in `~/.config/uv/uv.toml`) cannot enter the lock. Dual-load of `nerv.css` / `nerv.js` is [`scripts/resolve-docs-assets.mjs`](../scripts/resolve-docs-assets.mjs): `--mode local` copies `dist/`, `--mode cdn` writes jsDelivr stand-ins.
+- **Installable skill** — `skills/nerv/` is the product skill for `npx skills add`. `.cursor/skills/` is this repo's Niko bootstrap, not the published skill.
 
 ## Build Tools
 
@@ -17,12 +18,13 @@ Pure-CSS design system with minimal vanilla JS orchestration. SCSS (Dart Sass) i
 - `npm run watch` — file watcher for development
 - `nerv.js` is vanilla JS — copied to `dist/` without compilation
 - `dist/` is gitignored. CI builds it before `npm publish` and before attaching `dist/nerv.css` / `dist/nerv.js` to the GitHub Release. Release automation is `.github/workflows/release-please.yaml` (npm trusted publisher matches that filename; GitHub environment `npmjs.org`).
+- Docs site: `npm run docs:serve` / `docs:build` (both compile `dist/` first). PR builds use local mode; the `publish-pages` job on `release-please.yaml` uses CDN mode after `publish-npm`.
 
 ## Testing Process
 
 Visual verification against reference HTML pages in `ref/`. Each page (`ref-foundation.html` through `ref-alert-cascade.html`) tests a cumulative subset of the design system's layers.
 
-Automated checks via Node.js built-in test runner (`node --test`) in `test/`. Stylelint enforces `.nerv-` prefix convention and is configured in `.stylelintrc.json`. Test and lint commands are defined in `package.json`. The npm tarball must contain `dist/nerv.css` and `dist/nerv.js` from `dist/` and not other dist artifacts; that contract is `test/publish-contract.test.mjs`.
+Automated checks via Node.js built-in test runner (`node --test`) in `test/`. Stylelint enforces `.nerv-` prefix convention and is configured in `.stylelintrc.json`. Test and lint commands are defined in `package.json`. The npm tarball must contain `dist/nerv.css` and `dist/nerv.js` from `dist/` and not other dist artifacts; that contract is `test/publish-contract.test.mjs`. The docs local-vs-CDN load path and PyPI-only `uv.lock` hosts are `test/docs-assets.test.mjs`. Skill copy-identity is `test/skill-contract.test.mjs` (skips `docs/reading.md`; `SKILL.md` is placeholder).
 
 ## Design System
 
