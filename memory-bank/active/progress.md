@@ -59,3 +59,15 @@ Fix four PR #10 review findings: bar-meter copy-paste example, CDN handshake ass
     - Accepted the PyPI-host whitelist as a stronger version of the planned PyTorch-channel check.
 * Insights
     - Advisory only: the `pyproject.toml` relock comment should include `--upgrade` when it is intended to repair an already contaminated lockfile; the committed lock is clean.
+
+## 2026-09-13 - REFLECT - COMPLETE
+
+* Work completed
+    - Wrote `memory-bank/active/reflection/reflection-pr10-review-fixes.md`.
+    - Updated `techContext.md` with isolated PyPI relock and `docs:build` compiling `dist/` first.
+* Decisions made
+    - productContext skip — no change to who the product serves.
+    - systemPatterns skip — lock hygiene is not a CSS-architecture pattern.
+* Insights
+    - Relock of a contaminated lock needs `--upgrade`, not only `--no-config`.
+
