@@ -95,3 +95,14 @@ Add a placeholder agent skill installable via `npx skills` that carries the docu
 * Insights
     - `packedPaths()` duplication between `test/skill-contract.test.mjs` and `test/publish-contract.test.mjs` is consistent with this repo's existing convention of self-contained test files with no shared test-helper module — not a DRY violation to flag
 
+## 2026-09-12 - REFLECT - COMPLETE
+
+* Work completed
+    - Wrote `memory-bank/active/reflection/reflection-nerv-v01-m5-installable-docs-skill.md`
+    - Reconciled persistent files; no surgical updates (techContext already updated in Build)
+* Decisions made
+    - Consumer spec (agentskills.io) belongs in Plan, not as a first-preflight surprise
+    - Copy-plus-identity-test is the 0.1 skill/docs split; a generator stays later
+* Insights
+    - Next command is `/niko` (check off M5, then capstone archive) — this is the last milestone
+
