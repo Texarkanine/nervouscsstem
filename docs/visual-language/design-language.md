@@ -12,10 +12,10 @@ Diagonal warning stripes — usually in red/black, red/darker-red, or orange/bla
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/cNZvxpR.png) | NGE-5 00:02:19 | Dense multi-layer chevrons with ABSOLUTE-LINE / BORDER-LINE labels and section codes |
-| ![](img/Qrql43u.png) | NGE-13 00:06:31 | ALERT card with upper/lower chevron borders — the archetypal hazard frame |
-| ![](img/yIRZpZ6.png) | NGE-6 00:19:13 | Same ALERT pattern, lighter palette variant (red text on bright red ground) |
-| ![](img/2GSN18J.png) | NGE-19 00:16:15 | REFUSED card flanked by chevrons — same frame pattern applied to system denial state |
+| ![](../img/stripe-bars.png) | NGE-5 00:02:19 | Dense multi-layer chevrons with ABSOLUTE-LINE / BORDER-LINE labels and section codes |
+| ![](../img/status-text.png) | NGE-13 00:06:31 | ALERT card with upper/lower chevron borders — the archetypal hazard frame |
+| ![](../img/yIRZpZ6.png) | NGE-6 00:19:13 | Same ALERT pattern, lighter palette variant (red text on bright red ground) |
+| ![](../img/2GSN18J.png) | NGE-19 00:16:15 | REFUSED card flanked by chevrons — same frame pattern applied to system denial state |
 
 ---
 
@@ -25,10 +25,10 @@ A single dominant English word — ALERT, DANGER, LOST, REFUSED, EMERGENCY — r
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/Qrql43u.png) | NGE-13 00:06:31 | ALERT — dark red text on red ground with chevron border |
-| ![](img/xmJtM4d.png) | NGE-7 00:13:39 | DANGER with bilingual 危険 labels and corner ALERT badges |
-| ![](img/7RgUpsv.png) | NGE-12 00:14:29 | LOST — maximally reduced: just the word, the red field, the glow |
-| ![](img/XKpjdGH.png) | NGE-20 00:05:05 | REFUSED with system context (EVA-01 ENTRY PLUG EJECT COMMAND) above the status word |
+| ![](../img/status-text.png) | NGE-13 00:06:31 | ALERT — dark red text on red ground with chevron border |
+| ![](../img/xmJtM4d.png) | NGE-7 00:13:39 | DANGER with bilingual 危険 labels and corner ALERT badges |
+| ![](../img/7RgUpsv.png) | NGE-12 00:14:29 | LOST — maximally reduced: just the word, the red field, the glow |
+| ![](../img/XKpjdGH.png) | NGE-20 00:05:05 | REFUSED with system context (EVA-01 ENTRY PLUG EJECT COMMAND) above the status word |
 
 ---
 
@@ -38,10 +38,10 @@ Simultaneous display of Japanese (kanji/kana) and English text for all system la
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/CbJ9Ki8.png) | NGE-11 00:19:17 | 活動限界まで / ACTIVE TIME REMAINING with 内部 / INTERNAL and 主電源供給システム / MAIN ENERGY SUPPLY SYSTEM |
-| ![](img/87OcKIy.png) | EoE 00:38:15 | Same countdown format at 0:00:00 — DANGER EMERGENCY below |
-| ![](img/xmJtM4d.png) | NGE-7 00:13:39 | DANGER / 危険 with ALERT corner badges |
-| ![](img/ySW5Yiq.png) | NGE-6 00:04:59 | 日本標準時 J.S.T. clock with あと (remaining) countdown — full Japanese-primary display |
+| ![](../img/segment-display.png) | NGE-11 00:19:17 | 活動限界まで / ACTIVE TIME REMAINING with 内部 / INTERNAL and 主電源供給システム / MAIN ENERGY SUPPLY SYSTEM |
+| ![](../img/87OcKIy.png) | EoE 00:38:15 | Same countdown format at 0:00:00 — DANGER EMERGENCY below |
+| ![](../img/xmJtM4d.png) | NGE-7 00:13:39 | DANGER / 危険 with ALERT corner badges |
+| ![](../img/ySW5Yiq.png) | NGE-6 00:04:59 | 日本標準時 J.S.T. clock with あと (remaining) countdown — full Japanese-primary display |
 
 ---
 
@@ -51,10 +51,10 @@ Terrain data rendered as green contour lines on a black background, often with r
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/v3b5V2a.png) | NGE-1 00:03:15 | Overhead terrain map with purple/pink trajectory cone projecting Angel approach path |
-| ![](img/vQTFvcg.png) | NGE-1 00:06:37 | Close-up of contour detail with red road overlays and crosshair registration marks |
-| ![](img/QiO6Qub.png) | NGE-24 00:02:49 | Gendo silhouetted against full-wall terrain display with "CENTER OF THE EXPLOSION" label |
-| ![](img/dhVGRMc.png) | NGE-8 00:17:41 | Operation schematic overlaying city street map with ship positions and 作戦行動予定図 label |
+| ![](../img/v3b5V2a.png) | NGE-1 00:03:15 | Overhead terrain map with purple/pink trajectory cone projecting Angel approach path |
+| ![](../img/vQTFvcg.png) | NGE-1 00:06:37 | Close-up of contour detail with red road overlays and crosshair registration marks |
+| ![](../img/QiO6Qub.png) | NGE-24 00:02:49 | Gendo silhouetted against full-wall terrain display with "CENTER OF THE EXPLOSION" label |
+| ![](../img/dhVGRMc.png) | NGE-8 00:17:41 | Operation schematic overlaying city street map with ship positions and 作戦行動予定図 label |
 
 ---
 
@@ -64,10 +64,10 @@ Hexagonal tessellation used as the underlying geometry for network status displa
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/O135US9.png) | EoE 00:07:17 | NETWORK STATUS ANALYSIS — cyan hex grid with numbered nodes, BREAK and DISCONNECTED labels |
-| ![](img/udvUehQ.png) | EoE 00:07:19 | Same network, moments later — more BREAK labels propagating across the grid |
-| ![](img/TSZIP8p.png) | EoE 00:07:43 | Hex grid with MAGI-01 nodes, WARNING and SECURITY BREACH labels propagating across sectors |
-| ![](img/Q5LJykb.png) | EoE 00:07:35 | Global MAGI defense network with diamond-rotated MAGI status indicators at each city node |
+| ![](../img/hex-grid.png) | EoE 00:07:17 | NETWORK STATUS ANALYSIS — cyan hex grid with numbered nodes, BREAK and DISCONNECTED labels |
+| ![](../img/udvUehQ.png) | EoE 00:07:19 | Same network, moments later — more BREAK labels propagating across the grid |
+| ![](../img/TSZIP8p.png) | EoE 00:07:43 | Hex grid with MAGI-01 nodes, WARNING and SECURITY BREACH labels propagating across sectors |
+| ![](../img/Q5LJykb.png) | EoE 00:07:35 | Global MAGI defense network with diamond-rotated MAGI status indicators at each city node |
 
 ---
 
@@ -77,10 +77,10 @@ The three MAGI supercomputers — MELCHIOR·1, BALTHASAR·2, CASPER·3 — displ
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/q9TxzN7.png) | NGE-13 00:13:31 | All three nodes green/cyan — unanimous acceptance with CODE:239 metadata |
-| ![](img/KlPbyHv.png) | NGE-13 00:13:35 | MELCHIOR·1 in red (否決), others in blue/cyan — dissenting vote visualized |
-| ![](img/Q5LJykb.png) | EoE 00:07:35 | Global MAGI instances across multiple cities, each showing its own triad voting state |
-| ![](img/19MU4g8.png) | NGE-13 00:13:33 | Close variant of the triad during rapid voting sequence |
+| ![](../img/magi.png) | NGE-13 00:13:31 | All three nodes green/cyan — unanimous acceptance with CODE:239 metadata |
+| ![](../img/KlPbyHv.png) | NGE-13 00:13:35 | MELCHIOR·1 in red (否決), others in blue/cyan — dissenting vote visualized |
+| ![](../img/Q5LJykb.png) | EoE 00:07:35 | Global MAGI instances across multiple cities, each showing its own triad voting state |
+| ![](../img/19MU4g8.png) | NGE-13 00:13:33 | Close variant of the triad during rapid voting sequence |
 
 ---
 
@@ -92,9 +92,9 @@ Note: the specific Psychographic / Sync Curve Trace is cataloged as an atomic el
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/3RBI9q8.png) | NGE-1 00:19:59 | Dual interleaved sinusoidal waveforms (red/blue) with ±5 axis scale and timecode |
-| ![](img/rvsHbYJ.png) | NGE-13 00:11:41 | 11th ANGEL PATTERN: BLOOD TYPE BLUE — scan-line interference with scale bar (10⁻⁶m) |
-| ![](img/dHx5yEG.png) | NGE-13 00:11:45 | Same pattern shifted to blue — the waveform as Angel detection signature |
+| ![](../img/3RBI9q8.png) | NGE-1 00:19:59 | Dual interleaved sinusoidal waveforms (red/blue) with ±5 axis scale and timecode |
+| ![](../img/rvsHbYJ.png) | NGE-13 00:11:41 | 11th ANGEL PATTERN: BLOOD TYPE BLUE — scan-line interference with scale bar (10⁻⁶m) |
+| ![](../img/dHx5yEG.png) | NGE-13 00:11:45 | Same pattern shifted to blue — the waveform as Angel detection signature |
 
 ---
 
@@ -104,8 +104,8 @@ Grainy, heavily scanlined monochrome video with visible interlacing artifacts, t
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/gt2ZUBU.png) | EoE 00:13:29 | F-46b LIVE feed — extreme scanline degradation with timecode 07:23:21:80 |
-| ![](img/2T49Xkl.png) | EoE 00:13:31 | Same camera with I.D Comparison overlay identifying IKARI.SHINJI, 1st.C, EVA-01 PILOT |
+| ![](../img/gt2ZUBU.png) | EoE 00:13:29 | F-46b LIVE feed — extreme scanline degradation with timecode 07:23:21:80 |
+| ![](../img/2T49Xkl.png) | EoE 00:13:31 | Same camera with I.D Comparison overlay identifying IKARI.SHINJI, 1st.C, EVA-01 PILOT |
 
 ---
 
@@ -115,10 +115,10 @@ Three vertical panels arranged side-by-side, each showing a live video feed of o
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/hLY2paq.png) | NGE-12 00:04:57 | Standard three-panel layout with colored headers and status readouts |
-| ![](img/cgMrCom.png) | NGE-15 00:04:57 | Same composition, slightly different framing — the format is invariant across episodes |
-| ![](img/M0bvTs1.png) | NGE-13 00:03:43 | Variant: green wireframe body silhouettes instead of video feeds, same triptych layout |
-| ![](img/W0RUXE2.png) | NGE-12 00:05:19 | Entry plug physical labels (TEST 00/01/02 PLUG) — the triptych pattern in hardware |
+| ![](../img/hLY2paq.png) | NGE-12 00:04:57 | Standard three-panel layout with colored headers and status readouts |
+| ![](../img/cgMrCom.png) | NGE-15 00:04:57 | Same composition, slightly different framing — the format is invariant across episodes |
+| ![](../img/M0bvTs1.png) | NGE-13 00:03:43 | Variant: green wireframe body silhouettes instead of video feeds, same triptych layout |
+| ![](../img/W0RUXE2.png) | NGE-12 00:05:19 | Entry plug physical labels (TEST 00/01/02 PLUG) — the triptych pattern in hardware |
 
 ---
 
@@ -128,8 +128,8 @@ Crosshairs, registration grids, and annotation callouts superimposed directly ov
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/0BM2iet.png) | NGE-4 00:08:29 | Rei Ayanami face scan with grid, triangular markers, and REI AYANAMI AGE 14 SAMPLE 0001 data box |
-| ![](img/N8sR6Us.png) | NGE-3 00:17:27 | Personnel identification through glass display — mirrored text with photo ID overlays |
+| ![](../img/0BM2iet.png) | NGE-4 00:08:29 | Rei Ayanami face scan with grid, triangular markers, and REI AYANAMI AGE 14 SAMPLE 0001 data box |
+| ![](../img/N8sR6Us.png) | NGE-3 00:17:27 | Personnel identification through glass display — mirrored text with photo ID overlays |
 
 ---
 
@@ -139,9 +139,9 @@ Semi-transparent rectangular data panels suspended in three-dimensional space at
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/PeBlKKx.png) | EoE 00:03:53 | EVA status panels floating in 3D above command center — EVA-01/02/03/04 with 待機/抹消 states |
-| ![](img/7NR0I9R.png) | NGE-12 00:09:39 | Holographic text banner (EAST INDIAN OCEAN SEGMENT / SATELLITE TRAJECTORY) over bridge viewport |
-| ![](img/Ii2qJE4.png) | NGE-12 00:09:41 | Same viewport — holographic layer composited over real-world view through window |
+| ![](../img/PeBlKKx.png) | EoE 00:03:53 | EVA status panels floating in 3D above command center — EVA-01/02/03/04 with 待機/抹消 states |
+| ![](../img/7NR0I9R.png) | NGE-12 00:09:39 | Holographic text banner (EAST INDIAN OCEAN SEGMENT / SATELLITE TRAJECTORY) over bridge viewport |
+| ![](../img/Ii2qJE4.png) | NGE-12 00:09:41 | Same viewport — holographic layer composited over real-world view through window |
 
 ---
 
@@ -151,10 +151,10 @@ Detailed technical diagrams showing MAGI subsystem internals — LOGICsys, CIsys
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/6kGwpjD.png) | NGE-13 00:13:17 | Full system architecture: LOGICsys, I/Osys, CIsys, X-prog with assembly listings and red invasion indicators |
-| ![](img/Unis3xF.png) | NGE-13 00:13:23 | Ritsuko and Maya at terminals with red code/diagram displays during MAGI defense |
-| ![](img/mUwrLH1.png) | NGE-13 00:12:07 | INTRUDER TRACE PATH with hex dump data and dual countdown timers |
-| ![](img/54Hy4Oq.png) | NGE-13 00:17:19 | Physical hardware access — Maya directly plugged into MAGI internals with portable terminal |
+| ![](../img/6kGwpjD.png) | NGE-13 00:13:17 | Full system architecture: LOGICsys, I/Osys, CIsys, X-prog with assembly listings and red invasion indicators |
+| ![](../img/Unis3xF.png) | NGE-13 00:13:23 | Ritsuko and Maya at terminals with red code/diagram displays during MAGI defense |
+| ![](../img/mUwrLH1.png) | NGE-13 00:12:07 | INTRUDER TRACE PATH with hex dump data and dual countdown timers |
+| ![](../img/54Hy4Oq.png) | NGE-13 00:17:19 | Physical hardware access — Maya directly plugged into MAGI internals with portable terminal |
 
 ---
 
@@ -166,12 +166,12 @@ Includes specialized variants: the Japanese naval engine order telegraph (前進
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/6mDPV0L.png) | NGE-10 00:06:49 | Analog CRT monitor with physical rotary dials and scale markings — sonar/thermal display |
-| ![](img/68H21Nq.png) | NGE-13 00:06:49 | Keyboard, flip-cover switches, red illuminated kanji buttons, yellow safety-guarded lever |
-| ![](img/iIj8SNc.png) | NGE-1 00:02:23 | Misato's car dashboard — GPS screen flanked by physical controls, Sony branding visible |
-| ![](img/6RqxXRQ.png) | NGE-7 00:12:27 | Japanese naval engine order panel with 停止 (stop) highlighted in green |
-| ![](img/VjAT9n5.png) | NGE-21 00:15:03 | GEHIRN PDA with Ritsuko Akagi personnel record — the NERV iPhone |
-| ![](img/slvV1xa.png) | EoE 00:36:45 | Handheld terminal with MAGI triad, 承認 stamps, MOTION: SELF-DESTRUCTION |
+| ![](../img/6mDPV0L.png) | NGE-10 00:06:49 | Analog CRT monitor with physical rotary dials and scale markings — sonar/thermal display |
+| ![](../img/68H21Nq.png) | NGE-13 00:06:49 | Keyboard, flip-cover switches, red illuminated kanji buttons, yellow safety-guarded lever |
+| ![](../img/iIj8SNc.png) | NGE-1 00:02:23 | Misato's car dashboard — GPS screen flanked by physical controls, Sony branding visible |
+| ![](../img/6RqxXRQ.png) | NGE-7 00:12:27 | Japanese naval engine order panel with 停止 (stop) highlighted in green |
+| ![](../img/VjAT9n5.png) | NGE-21 00:15:03 | GEHIRN PDA with Ritsuko Akagi personnel record — the NERV iPhone |
+| ![](../img/slvV1xa.png) | EoE 00:36:45 | Handheld terminal with MAGI triad, 承認 stamps, MOTION: SELF-DESTRUCTION |
 
 ---
 
@@ -181,9 +181,9 @@ Human or Eva body outlines rendered as solid-fill or wireframe figures, used to 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/M0bvTs1.png) | NGE-13 00:03:43 | Three green pilot silhouettes in entry plug cross-sections with TEST PLUG and SUBJECT labels |
-| ![](img/IWZTOZT.png) | NGE-1 00:18:51 | EVA-01 full body schematic with POSITION listing (R-01 L-01 through R-21 L-21) and ACCORD status |
-| ![](img/mimMSj0.png) | NGE-4 00:08:27 | Thermal wireframe body scan — multicolor heat map over polygonal mesh with crosshair grid |
+| ![](../img/M0bvTs1.png) | NGE-13 00:03:43 | Three green pilot silhouettes in entry plug cross-sections with TEST PLUG and SUBJECT labels |
+| ![](../img/IWZTOZT.png) | NGE-1 00:18:51 | EVA-01 full body schematic with POSITION listing (R-01 L-01 through R-21 L-21) and ACCORD status |
+| ![](../img/mimMSj0.png) | NGE-4 00:08:27 | Thermal wireframe body scan — multicolor heat map over polygonal mesh with crosshair grid |
 
 ---
 
@@ -193,7 +193,7 @@ A grid of repeated status tags — typically "LOCKED" — overlaid across a syst
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/er1k2Ug.png) | EoE 00:07:47 | Dozens of LOCKED tags in green/orange/red overlaying system map — MAGI lockdown during invasion |
+| ![](../img/er1k2Ug.png) | EoE 00:07:47 | Dozens of LOCKED tags in green/orange/red overlaying system map — MAGI lockdown during invasion |
 
 ---
 
@@ -203,10 +203,10 @@ Physical signs, wall-mounted displays, floor markings, and painted designations 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/inOxi2t.png) | EoE 00:33:05 | R-20 ATU wall sign with green indicator light and red/white hazard stripe below |
-| ![](img/wiBczRg.png) | NGE-1 00:11:43 | ここはです elevator indicator — No.55, mechanical floor counter with scale arc |
-| ![](img/eEUy0qL.png) | NGE-1 00:02:13 | 全線運転中止 (All lines suspended) transit signboard with red indicator lights |
-| ![](img/GUQIfrh.png) | NGE-1 00:21:27 | City street map with illuminated route — navigation/transit UI at urban scale |
+| ![](../img/inOxi2t.png) | EoE 00:33:05 | R-20 ATU wall sign with green indicator light and red/white hazard stripe below |
+| ![](../img/wiBczRg.png) | NGE-1 00:11:43 | ここはです elevator indicator — No.55, mechanical floor counter with scale arc |
+| ![](../img/eEUy0qL.png) | NGE-1 00:02:13 | 全線運転中止 (All lines suspended) transit signboard with red indicator lights |
+| ![](../img/GUQIfrh.png) | NGE-1 00:21:27 | City street map with illuminated route — navigation/transit UI at urban scale |
 
 ---
 
@@ -216,9 +216,9 @@ The NERV command bridge seen from above, with operators at individual workstatio
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/o2GoRaR.png) | NGE-10 00:08:47 | Overhead view: five distinct workstation colors in pyramidal arrangement |
-| ![](img/88tEExT.png) | NGE-13 00:06:33 | Bridge from behind operators — colored wall displays flanking MAGI core, floating panels visible |
-| ![](img/QiO6Qub.png) | NGE-24 00:02:49 | Gendo silhouetted against wall display — the command hierarchy visualized as spatial position |
+| ![](../img/o2GoRaR.png) | NGE-10 00:08:47 | Overhead view: five distinct workstation colors in pyramidal arrangement |
+| ![](../img/88tEExT.png) | NGE-13 00:06:33 | Bridge from behind operators — colored wall displays flanking MAGI core, floating panels visible |
+| ![](../img/QiO6Qub.png) | NGE-24 00:02:49 | Gendo silhouetted against wall display — the command hierarchy visualized as spatial position |
 
 ---
 
@@ -228,10 +228,10 @@ When NERV enters crisis mode, the entire visual palette collapses to red. Screen
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/RtL6Byc.png) | NGE-9 00:04:23 | Full red-monochrome emergency state — hexagonal EMERGENCY panels, red-lit command center |
-| ![](img/vv72le8.png) | EoE 00:07:41 | Hexagonal EMERGENCY wallpaper behind character — the red mode consuming physical space |
-| ![](img/mUwrLH1.png) | NGE-13 00:12:07 | INTRUDER TRACE PATH — red monochrome with circuit-board background texture |
-| ![](img/2GSN18J.png) | NGE-19 00:16:15 | WARNING / REFUSED / DUMMYPLUG REI-00 — deep red on red |
+| ![](../img/states.png) | NGE-9 00:04:23 | Full red-monochrome emergency state — hexagonal EMERGENCY panels, red-lit command center |
+| ![](../img/vv72le8.png) | EoE 00:07:41 | Hexagonal EMERGENCY wallpaper behind character — the red mode consuming physical space |
+| ![](../img/mUwrLH1.png) | NGE-13 00:12:07 | INTRUDER TRACE PATH — red monochrome with circuit-board background texture |
+| ![](../img/2GSN18J.png) | NGE-19 00:16:15 | WARNING / REFUSED / DUMMYPLUG REI-00 — deep red on red |
 
 ---
 
@@ -241,8 +241,8 @@ Dense, non-functional text and numerical strings used as visual texture — hex 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/mUwrLH1.png) | NGE-13 00:12:07 | Hex dump array above INTRUDER TRACE PATH — rows of digits as visual texture |
-| ![](img/6kGwpjD.png) | NGE-13 00:13:17 | Assembly-like code columns flanking system architecture — plausible but decorative |
+| ![](../img/mUwrLH1.png) | NGE-13 00:12:07 | Hex dump array above INTRUDER TRACE PATH — rows of digits as visual texture |
+| ![](../img/6kGwpjD.png) | NGE-13 00:13:17 | Assembly-like code columns flanking system architecture — plausible but decorative |
 
 ---
 
@@ -252,9 +252,9 @@ Two-axis calibrated grids rendered in slight perspective or with deliberate conv
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/3RBI9q8.png) | NGE-1 00:19:59 | Dual-axis grid (-5 to +5) with crosshair registration and timecode — slightly converging verticals |
-| ![](img/DZ42SSa.png) | NGE-20 00:05:13 | Axis-grid with cascading DISCONNECT/REFUSED status blocks — warm-to-cool gradient data |
-| ![](img/rvsHbYJ.png) | NGE-13 00:11:41 | Horizontal axis (-3 to +3) with scale bar — Angel pattern display |
+| ![](../img/3RBI9q8.png) | NGE-1 00:19:59 | Dual-axis grid (-5 to +5) with crosshair registration and timecode — slightly converging verticals |
+| ![](../img/DZ42SSa.png) | NGE-20 00:05:13 | Axis-grid with cascading DISCONNECT/REFUSED status blocks — warm-to-cool gradient data |
+| ![](../img/rvsHbYJ.png) | NGE-13 00:11:41 | Horizontal axis (-3 to +3) with scale bar — Angel pattern display |
 
 ---
 
@@ -264,10 +264,10 @@ A full-screen anatomical readout mapping the neural interface between pilot and 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/wcIp8VE.png) | NGE-13 00:06:19 | Canonical form: full layout with all four text columns, Eva-00 silhouette, red trace |
-| ![](img/OukNbNR.png) | NGE-5 00:19:35 | Same composition, different moment — anatomical listings fully legible |
-| ![](img/9jAZG2y.png) | NGE-14 00:17:59 | Wider shot showing red/purple waveform trace column on left edge |
-| ![](img/rCuxhRO.png) | NGE-14 00:16:35 | Close-up variant with MOTOR NEURON body part list fully readable |
+| ![](../img/wcIp8VE.png) | NGE-13 00:06:19 | Canonical form: full layout with all four text columns, Eva-00 silhouette, red trace |
+| ![](../img/OukNbNR.png) | NGE-5 00:19:35 | Same composition, different moment — anatomical listings fully legible |
+| ![](../img/9jAZG2y.png) | NGE-14 00:17:59 | Wider shot showing red/purple waveform trace column on left edge |
+| ![](../img/rCuxhRO.png) | NGE-14 00:16:35 | Close-up variant with MOTOR NEURON body part list fully readable |
 
 ---
 
@@ -277,10 +277,10 @@ The recurring display used when MAGI performs genetic analysis on an Angel. A gr
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/ScjGpEV.png) | NGE-14 00:05:11 | 4th ANGEL — full display with numbered nucleotide sidebar |
-| ![](img/ga4MzuJ.png) | NGE-5 00:06:33 | 4th ANGEL — wider frame showing binary border strings |
-| ![](img/OBuMT8A.png) | NGE-9 00:03:27 | 6th ANGEL — split screen with gel on left, pixelated Angel body scan on right |
-| ![](img/oj4K1Sr.png) | NGE-9 00:03:28 | 6th ANGEL — same display, wider frame |
+| ![](../img/ScjGpEV.png) | NGE-14 00:05:11 | 4th ANGEL — full display with numbered nucleotide sidebar |
+| ![](../img/ga4MzuJ.png) | NGE-5 00:06:33 | 4th ANGEL — wider frame showing binary border strings |
+| ![](../img/OBuMT8A.png) | NGE-9 00:03:27 | 6th ANGEL — split screen with gel on left, pixelated Angel body scan on right |
+| ![](../img/oj4K1Sr.png) | NGE-9 00:03:28 | 6th ANGEL — same display, wider frame |
 
 ---
 
@@ -290,9 +290,9 @@ A side-view cross-section showing the Geofront's horizontal armor layers as numb
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/Njqu6kQ.png) | NGE-6 00:04:45 | Upper layers with crosshairs and barber-pole column beginning descent |
-| ![](img/L5Jy5Ff.png) | NGE-6 00:05:03 | Mid-depth: layers 08–10 with crosshairs, column passing through |
-| ![](img/clGX1a9.png) | NGE-6 00:05:05 | Bottom: layers 21–22, GEO FRONT label, column reaching the void |
+| ![](../img/Njqu6kQ.png) | NGE-6 00:04:45 | Upper layers with crosshairs and barber-pole column beginning descent |
+| ![](../img/L5Jy5Ff.png) | NGE-6 00:05:03 | Mid-depth: layers 08–10 with crosshairs, column passing through |
+| ![](../img/clGX1a9.png) | NGE-6 00:05:05 | Bottom: layers 21–22, GEO FRONT label, column reaching the void |
 
 ---
 
@@ -302,7 +302,7 @@ The visual representation of SEELE's remote committee meetings: tall, dark, rect
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/HrOTgTd.png) | NGE-21 00:02:55 | Single SEELE 03 monolith — the form in isolation |
+| ![](../img/HrOTgTd.png) | NGE-21 00:02:55 | Single SEELE 03 monolith — the form in isolation |
 
 ---
 
@@ -312,10 +312,10 @@ A diagonal grid showing NERV HQ's physical defense layers being penetrated by an
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/z9siV87.png) | NGE-19 00:10:13 | PARTINTION No. 17–19 with green/red bars, red downward chevrons |
-| ![](img/8NQPZvM.png) | NGE-24 00:14:21 | Blue DAMAGED / CONDITION:BLUE cartouche overlaid on breached section |
-| ![](img/WgPSDJd.png) | NGE-24 00:16:57 | CENTRAL DOGMA labels emerging as breach reaches critical depth |
-| ![](img/mhEtwU8.png) | NGE-24 00:16:39 | 17th ANGEL PROCEEDING cartouche over green lattice with red/amber layer bars |
+| ![](../img/z9siV87.png) | NGE-19 00:10:13 | PARTINTION No. 17–19 with green/red bars, red downward chevrons |
+| ![](../img/8NQPZvM.png) | NGE-24 00:14:21 | Blue DAMAGED / CONDITION:BLUE cartouche overlaid on breached section |
+| ![](../img/WgPSDJd.png) | NGE-24 00:16:57 | CENTRAL DOGMA labels emerging as breach reaches critical depth |
+| ![](../img/mhEtwU8.png) | NGE-24 00:16:39 | 17th ANGEL PROCEEDING cartouche over green lattice with red/amber layer bars |
 
 ---
 
@@ -325,7 +325,7 @@ A grid of live camera feeds from observation stations around Tokyo-3, each label
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/bXKShF4.png) | EoE 00:11:13 | Multiple SIGNAL LOST overlays propagating across the camera grid |
+| ![](../img/bXKShF4.png) | EoE 00:11:13 | Multiple SIGNAL LOST overlays propagating across the camera grid |
 
 ---
 
@@ -335,10 +335,10 @@ A single sentence or word repeated in rows to fill the entire display surface �
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/ByzTdQ6.png) | NGE-13 00:18:49 | COMPUTERS HAVE OPTED FOR SELF DESTRUCTION — mirrored on ceiling display, green topo below |
-| ![](img/eom6gka.png) | NGE-13 00:19:39 | Same message, different angle — scale of repetition visible |
-| ![](img/0WzwffM.png) | NGE-8 00:12:05 | FEHLER FEHLER FEHLER spiraling behind Asuka — cylindrical display topology |
-| ![](img/a9ZPerb.png) | EoE 00:06:55 | DELETED filling laptop display panels over amber data text |
+| ![](../img/ByzTdQ6.png) | NGE-13 00:18:49 | COMPUTERS HAVE OPTED FOR SELF DESTRUCTION — mirrored on ceiling display, green topo below |
+| ![](../img/eom6gka.png) | NGE-13 00:19:39 | Same message, different angle — scale of repetition visible |
+| ![](../img/0WzwffM.png) | NGE-8 00:12:05 | FEHLER FEHLER FEHLER spiraling behind Asuka — cylindrical display topology |
+| ![](../img/a9ZPerb.png) | EoE 00:06:55 | DELETED filling laptop display panels over amber data text |
 
 ---
 
@@ -348,10 +348,10 @@ An orange or red-filled silhouette of a ship, Eva unit, or Angel, rendered as a 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/dhVGRMc.png) | NGE-8 00:17:41 | Ships positioned on street map with named cartouche labels |
-| ![](img/MCToaNd.png) | NGE-8 00:17:55 | 6th ANGEL WITH EVA-02 silhouette descending through city grid |
-| ![](img/pcBpmeH.png) | NGE-8 00:17:51 | Wider view of same operation showing full map coverage |
-| ![](img/E4GIH4U.png) | NGE-8 00:17:45 | Multiple ship silhouettes (CGN 021 GMCN Kirov, BB-66 Kentucky) positioned on map |
+| ![](../img/dhVGRMc.png) | NGE-8 00:17:41 | Ships positioned on street map with named cartouche labels |
+| ![](../img/MCToaNd.png) | NGE-8 00:17:55 | 6th ANGEL WITH EVA-02 silhouette descending through city grid |
+| ![](../img/pcBpmeH.png) | NGE-8 00:17:51 | Wider view of same operation showing full map coverage |
+| ![](../img/E4GIH4U.png) | NGE-8 00:17:45 | Multiple ship silhouettes (CGN 021 GMCN Kirov, BB-66 Kentucky) positioned on map |
 
 ---
 
@@ -361,8 +361,8 @@ Amber-on-black schematic of an Eva unit with a numbered list of OPERATING PARTS 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/enCAQLB.png) | EoE 00:39:31 | EVA-0[2] PRESENT STATUS with mixed OPERATING/DAMAGED part list — green/red mixed |
-| ![](img/o4e9gRi.png) | EoE 00:39:32 | Same display moments later — more parts going dark/damaged |
+| ![](../img/enCAQLB.png) | EoE 00:39:31 | EVA-0[2] PRESENT STATUS with mixed OPERATING/DAMAGED part list — green/red mixed |
+| ![](../img/o4e9gRi.png) | EoE 00:39:32 | Same display moments later — more parts going dark/damaged |
 
 ---
 
@@ -372,8 +372,8 @@ Contour-like flowing lines on a calibrated axis grid, showing field interactions
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/8DRyXOQ.png) | NGE-2 00:19:15 | Green upper / red lower field lines bending around central distortion, ± numeric readouts |
-| ![](img/L5T3abb.png) | NGE-23 00:10:57 | Blue contour lines in chaotic disruption pattern — same axis structure, more turbulent |
+| ![](../img/8DRyXOQ.png) | NGE-2 00:19:15 | Green upper / red lower field lines bending around central distortion, ± numeric readouts |
+| ![](../img/L5T3abb.png) | NGE-23 00:10:57 | Blue contour lines in chaotic disruption pattern — same axis structure, more turbulent |
 
 ---
 
@@ -383,7 +383,7 @@ A green gradient field with orange segmented diagonal chevron stripes and amber 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/RFF0QcU.png) | EoE 00:53:29 | Full display: green gradient, orange diagonal chevrons, multiple cartouche labels |
+| ![](../img/RFF0QcU.png) | EoE 00:53:29 | Full display: green gradient, orange diagonal chevrons, multiple cartouche labels |
 
 ---
 
@@ -393,8 +393,8 @@ During the MAGI cyber-warfare sequence in EoE, a hex-tiled background fills with
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/FFYiJuK.png) | EoE 00:09:57 | 666 hex pattern surrounding MAGI-01 ORIGINAL triad center |
-| ![](img/cR7ORrU.png) | EoE 00:10:01 | PROTECT NO. 666 defense screen with TIME REMAINING TO COLLAPSE countdown |
+| ![](../img/FFYiJuK.png) | EoE 00:09:57 | 666 hex pattern surrounding MAGI-01 ORIGINAL triad center |
+| ![](../img/cR7ORrU.png) | EoE 00:10:01 | PROTECT NO. 666 defense screen with TIME REMAINING TO COLLAPSE countdown |
 
 ---
 
@@ -404,7 +404,7 @@ A stepped descending display showing RESERVE ENERGY REMAINING for an Eva's entry
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/tcmoORZ.png) | NGE-16 00:16:03 | Full staircase display with system failure labels and BORDER LINE — RESERVE ENERGY REMAINING / EVA-01: ENTRY PLUG |
+| ![](../img/tcmoORZ.png) | NGE-16 00:16:03 | Full staircase display with system failure labels and BORDER LINE — RESERVE ENERGY REMAINING / EVA-01: ENTRY PLUG |
 
 ---
 
@@ -414,7 +414,7 @@ Paired 3D wireframe trace patterns — one green (FIELD NEGATIVE), one red (FIEL
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/uMwls4h.png) | EoE 00:56:35 | Green (EVA-01 PILOT) and red (EVA-01 ENTRY PLUG) solenoid traces side by side |
+| ![](../img/uMwls4h.png) | EoE 00:56:35 | Green (EVA-01 PILOT) and red (EVA-01 ENTRY PLUG) solenoid traces side by side |
 
 ---
 
@@ -424,8 +424,8 @@ Columns of segmented bars connected by branching lines that merge and split — 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/UhmRP7b.png) | NGE-6 00:17:55 | Black-to-red transition across bracket columns with branching connectors |
-| ![](img/MMGaGzD.png) | NGE-6 00:18:27 | Same display further into the sequence — more segments lit red |
+| ![](../img/UhmRP7b.png) | NGE-6 00:17:55 | Black-to-red transition across bracket columns with branching connectors |
+| ![](../img/MMGaGzD.png) | NGE-6 00:18:27 | Same display further into the sequence — more segments lit red |
 
 ---
 

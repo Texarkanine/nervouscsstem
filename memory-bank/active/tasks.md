@@ -231,6 +231,13 @@ Do not publish `ref-panels`, `ref-patterns`, `ref-components`, or `ref-alert-cas
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
+  - [x] 1. Docs chrome gitignore
+  - [x] 2. Swatch HTML
+  - [x] 3. ProperDocs IA (awesome-pages 2.10.1 loaded; `docs:build --strict` passed)
+  - [x] 4. Folder moves and section homes
+  - [x] 5. Component catalog pages (19 families)
+  - [x] 6. docs-init kinds
+  - [x] 7. Stills rename
 - [ ] QA

@@ -6,19 +6,26 @@ Authoring source of truth is this `docs/` tree. The published site is [GitHub Pa
 
 Catalog of the Evangelion FUI, from stills.
 
-- [Design language](design-language.md)
-- [Atomic elements](atomic-elements.md)
-- [Radar](radar.md)
+- [Visual language](visual-language/index.md) — design language, atomic elements, radar timing
 
-## Using
+## CSS
 
-Live examples on the page: preview, then spec, then code. Released pages load CSS and JS from the npm CDN. A local serve or build uses `dist/` and errors if those files are missing.
+Tokens, type, glow, and motion classes. CSS only.
 
-- [CSS](css.md) — tokens and type, CSS only
-- [Panels](components/panels.md) — CSS-only component islands
-- [Bar meters](components/bar-meters.md) — scoped `NERV.initBarMeters`
+- [CSS](css/index.md) — tokens, type, glow
+- [Effects](css/effects.md) — scanlines, flicker, blink, glitch
 
-This is the pattern, not a page for every component.
+## JavaScript
+
+- [JavaScript](js/index.md) — scoped `NERV.init*` and `setState`. Do not call `NERV.init()` from a docs page.
+
+## Components
+
+Live examples: name, still when one exists, island, then spec plus HTML.
+
+- [Components](components/index.md)
+
+Released pages load CSS and JS from the npm CDN. A local serve or build uses `dist/` and errors if those files are missing.
 
 ## Service manual
 

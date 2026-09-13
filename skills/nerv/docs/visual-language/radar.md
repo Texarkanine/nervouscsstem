@@ -1,7 +1,8 @@
 # NERV radar (display + sweep + blips)
 
-**Source of truth:** `src/_radar.scss` (compiled into `dist/nerv.css` via `src/nerv.scss`).  
-**Live example:** `ref/ref-patterns.html` (tactical scope block).  
+**Source of truth:** `src/_radar.scss` (compiled into `dist/nerv.css` via `src/nerv.scss`).
+**Usage islands:** [components/radar.md](../components/radar.md).
+**Live combination:** `ref/ref-patterns.html` (tactical scope block).
 **Optional JS:** `src/nerv.js` — sweep phase + Cartesian blip phase (see below).
 
 This doc explains *why* the timing works the way it does. The SCSS file has shorter section comments; read both when changing behavior.

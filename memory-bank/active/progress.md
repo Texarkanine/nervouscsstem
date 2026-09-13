@@ -100,4 +100,17 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
     - In-phase advisory fold-in only. Did not adopt the catalog-manifest idea.
     - Build waits for `/niko-build`.
 
+## 2026-09-13 - BUILD - COMPLETE
+
+* Work completed
+    - Implemented the seven plan steps: gitignore chrome, five `docs/boards/` HTML files, awesome-pages + `.pages` + `not_in_nav`, folder moves and section homes, 19 catalog pages, `docs-init.js` kinds, LFS stills rename.
+    - `npm test` 370/370. `npm run docs:build --strict` passed. Skill markdown lockstep holds. Boards copy unaltered.
+* Decisions made
+    - `mkdocs-awesome-pages-plugin` 2.10.1 loaded under ProperDocs 1.6; did not need the awesome-nav fallback.
+    - Combined the first `docs:build` with folder moves so `.pages` listed real directories.
+    - Stylelint's 7 dist errors are pre-existing; no product CSS/JS change in this task.
+* Insights
+    - Step 1 chrome files were already tracked; the gitignore change was what unblocked future files in those dirs.
+    - Linking catalog pages from `js/index.md` before they exist fails `--strict`; write the target first.
+
 

@@ -10,18 +10,15 @@ theme:
   features:
     - content.code.copy
     - navigation.sections
+    - navigation.indexes
 
-nav:
-  - Home: index.md
-  - Visual language:
-      - Design language: design-language.md
-      - Atomic elements: atomic-elements.md
-      - Radar: radar.md
-  - Using:
-      - CSS: css.md
-      - Panels: components/panels.md
-      - Bar meters: components/bar-meters.md
-  - Service manual: service-manual.md
+plugins:
+  - search
+  - awesome-pages
+
+not_in_nav: |
+  /reading.md
+  boards/**
 
 extra_css:
   - stylesheets/docs-islands.css

@@ -1,14 +1,14 @@
 # Panels
 
-Four CSS-only variants. No `nerv.js`. Override color with `--nerv-panel-color` / `--nerv-panel-color-rgb`.
+Four CSS-only variants. No `nerv.js`. Override color with `--nerv-panel-color` / `--nerv-panel-color-rgb`. Filler is the same three telemetry lines on every variant.
+
+![Video feed frame](../img/panels.png)
 
 ## Basic
 
 <div class="nerv-docs-island">
   <div class="nerv-panel">
-    <p class="nerv-type-boot nerv-text-green">NERV BIOS v3.14 — MAGI SYSTEM CHECK
-Base Memory:       640K OK
-Extended Memory:   131072K OK</p>
+    <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
   </div>
 </div>
 
@@ -16,7 +16,7 @@ Extended Memory:   131072K OK</p>
 
 ```html
 <div class="nerv-panel">
-  <p class="nerv-type-boot nerv-text-green">NERV BIOS v3.14 — MAGI SYSTEM CHECK</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
 </div>
 ```
 
@@ -24,7 +24,7 @@ Extended Memory:   131072K OK</p>
 
 <div class="nerv-docs-island">
   <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
-    <p class="nerv-type-data" style="color: var(--nerv-cyan); font-size: 0.75rem;">EGO_BORDER: 0.83<br>CONTAMINATION: 0.02%<br>HARMONICS: +4.7σ</p>
+    <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
   </div>
 </div>
 
@@ -32,15 +32,15 @@ Extended Memory:   131072K OK</p>
 
 ```html
 <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
-  <p class="nerv-type-data">EGO_BORDER: 0.83</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
 </div>
 ```
 
 ## Double
 
 <div class="nerv-docs-island">
-  <div class="nerv-panel-double" style="text-align: center;">
-    <p class="nerv-type-segment" style="color: var(--nerv-amber); font-size: 2rem;">04:00:00</p>
+  <div class="nerv-panel-double">
+    <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
   </div>
 </div>
 
@@ -48,7 +48,7 @@ Extended Memory:   131072K OK</p>
 
 ```html
 <div class="nerv-panel-double">
-  <p class="nerv-type-segment">04:00:00</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
 </div>
 ```
 
@@ -67,3 +67,16 @@ Extended Memory:   131072K OK</p>
   <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
 </div>
 ```
+
+## Modifier classes
+
+Color is a custom property, not a class. Glow is a class. One example each, same filler.
+
+<div class="nerv-docs-island">
+  <div class="nerv-panel" style="--nerv-panel-color: var(--nerv-cyan); --nerv-panel-color-rgb: var(--nerv-cyan-rgb);">
+    <p class="nerv-type-data" style="color: var(--nerv-cyan); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
+  </div>
+  <div class="nerv-panel nerv-glow-cyan">
+    <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
+  </div>
+</div>

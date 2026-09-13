@@ -16,10 +16,10 @@ The cartouche changes color to match its semantic context: amber/orange for info
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/96MYsJJ.png) | NGE-24 00:13:29 | Red IDENTIFIED cartouche below 17th ANGEL — the canonical example |
-| ![](img/6AFNuBx.png) | NGE-10 00:15:53 | Amber CAPTURE cartouche centered on AT Field targeting display |
-| ![](img/v5IGB8l.png) | NGE-20 00:05:23 | White PILOT VANISHED and OBJECT: EVA-01 cartouches on observation feed |
-| ![](img/IL7a4b7.png) | NGE-15 00:20:39 | Amber LOCKED on physical hardware display, with adjacent green OPEN state |
+| ![](../img/cartouches.png) | NGE-24 00:13:29 | Red IDENTIFIED cartouche below 17th ANGEL — the canonical example |
+| ![](../img/6AFNuBx.png) | NGE-10 00:15:53 | Amber CAPTURE cartouche centered on AT Field targeting display |
+| ![](../img/v5IGB8l.png) | NGE-20 00:05:23 | White PILOT VANISHED and OBJECT: EVA-01 cartouches on observation feed |
+| ![](../img/IL7a4b7.png) | NGE-15 00:20:39 | Amber LOCKED on physical hardware display, with adjacent green OPEN state |
 
 ---
 
@@ -31,10 +31,10 @@ Appears in two distinct sub-variants: the **dual-helix sync waveform** (two inte
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/oLImu0Z.png) | NGE-22 00:15:13 | PSYCHOGRAPHIC DISPLAY Phase 4, S.A.LANGLEY: EVA-02 PILOT — ten LINK channels fanning into chaos |
-| ![](img/xpXqrIF.png) | EoE 00:55:39 | PSYCHOGRAPHIC DISPLAY with exponential curve and histogram — Shinji's trace |
-| ![](img/CVRmev3.png) | NGE-19 00:13:29 | Dual-helix sync waveform, orderly state — the red/blue interleave at full coherence |
-| ![](img/fAfmHO4.png) | NGE-14 00:18:05 | Same dual-helix waveform with slight phase offset, orange dominant |
+| ![](../img/oLImu0Z.png) | NGE-22 00:15:13 | PSYCHOGRAPHIC DISPLAY Phase 4, S.A.LANGLEY: EVA-02 PILOT — ten LINK channels fanning into chaos |
+| ![](../img/xpXqrIF.png) | EoE 00:55:39 | PSYCHOGRAPHIC DISPLAY with exponential curve and histogram — Shinji's trace |
+| ![](../img/CVRmev3.png) | NGE-19 00:13:29 | Dual-helix sync waveform, orderly state — the red/blue interleave at full coherence |
+| ![](../img/fAfmHO4.png) | NGE-14 00:18:05 | Same dual-helix waveform with slight phase offset, orange dominant |
 
 ---
 
@@ -46,9 +46,9 @@ A variant exists for SEELE communications: red text (SEELE ##, SOUND ONLY) on a 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/UWyUOzO.png) | NGE-12 00:20:13 | Standard form: blue card with red border, FROM:DDG-099 source tag, viewed by Misato |
-| ![](img/oBFKlZo.png) | NGE-20 00:13:11 | Same card, slightly different angle — the FROM:DDG-099 tag visible at top-left |
-| ![](img/HrOTgTd.png) | NGE-21 00:02:55 | SEELE variant: red SEELE 03 / SOUND ONLY on black monolith |
+| ![](../img/UWyUOzO.png) | NGE-12 00:20:13 | Standard form: blue card with red border, FROM:DDG-099 source tag, viewed by Misato |
+| ![](../img/oBFKlZo.png) | NGE-20 00:13:11 | Same card, slightly different angle — the FROM:DDG-099 tag visible at top-left |
+| ![](../img/HrOTgTd.png) | NGE-21 00:02:55 | SEELE variant: red SEELE 03 / SOUND ONLY on black monolith |
 
 ---
 
@@ -63,10 +63,10 @@ Grid spacing is consistent within a single shot but varies across scenes to matc
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/svC4Ejk.png) | NGE-10 00:07:11 | Canonical `+` form: white crosshairs over live satellite feed with DEPTH/PRESSURE readout |
-| ![](img/Ii2qJE4.png) | NGE-12 00:09:41 | Green `+` crosshairs over orbital view during Angel approach — active tracking mode |
-| ![](img/7oWALLU.png) | NGE-17 00:05:01 | White `×` grid over OBSERVATION SAT. 8 / NEVADA U.S. satellite imagery with COUNTDOWN badge |
-| ![](img/qE5Q5bw.png) | NGE-20 00:15:59 | Orange `×` grid on red-tinted EVA-01 entry plug interior feed — emergency variant |
+| ![](../img/grid-marks.png) | NGE-10 00:07:11 | Canonical `+` form: white crosshairs over live satellite feed with DEPTH/PRESSURE readout |
+| ![](../img/Ii2qJE4.png) | NGE-12 00:09:41 | Green `+` crosshairs over orbital view during Angel approach — active tracking mode |
+| ![](../img/7oWALLU.png) | NGE-17 00:05:01 | White `×` grid over OBSERVATION SAT. 8 / NEVADA U.S. satellite imagery with COUNTDOWN badge |
+| ![](../img/qE5Q5bw.png) | NGE-20 00:15:59 | Orange `×` grid on red-tinted EVA-01 entry plug interior feed — emergency variant |
 
 ---
 
@@ -76,10 +76,10 @@ A boxed label reading LIVE followed by source/channel identification: PICTURE ×
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/MU0Vwc5.png) | NGE-10 00:15:43 | LIVE PICTURE ×01 in bottom-right corner of thermal feed |
-| ![](img/VKEziDO.png) | NGE-5 00:09:57 | LIVE ×08 badge in bottom-right of crosshair-overlaid observation feed |
-| ![](img/1bfh9W4.png) | NGE-13 00:12:19 | MAGNIFICATION ×10⁵ / LIVE in top-left of Pribnow Box microscopy |
-| ![](img/JZhvj02.png) | NGE-11 00:07:47 | LIVE badge with Japanese source ID (第22警戒群) on topo map display |
+| ![](../img/MU0Vwc5.png) | NGE-10 00:15:43 | LIVE PICTURE ×01 in bottom-right corner of thermal feed |
+| ![](../img/VKEziDO.png) | NGE-5 00:09:57 | LIVE ×08 badge in bottom-right of crosshair-overlaid observation feed |
+| ![](../img/1bfh9W4.png) | NGE-13 00:12:19 | MAGNIFICATION ×10⁵ / LIVE in top-left of Pribnow Box microscopy |
+| ![](../img/JZhvj02.png) | NGE-11 00:07:47 | LIVE badge with Japanese source ID (第22警戒群) on topo map display |
 
 ---
 
@@ -89,8 +89,8 @@ Parallel columns of labeled horizontal bars (PHASE 01 through PHASE 17+), one co
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/6SVwfsn.png) | NGE-13 00:03:03 | Three columns, PHASE 08–17 visible, green above / red below the transition point |
-| ![](img/qm9Gk24.png) | NGE-13 00:03:05 | Same display scrolled: PHASE 10–17 all green, orange summary blocks below |
+| ![](../img/6SVwfsn.png) | NGE-13 00:03:03 | Three columns, PHASE 08–17 visible, green above / red below the transition point |
+| ![](../img/qm9Gk24.png) | NGE-13 00:03:05 | Same display scrolled: PHASE 10–17 all green, orange summary blocks below |
 
 ---
 
@@ -100,9 +100,9 @@ Vertical waveform traces arranged side-by-side, each labeled with a brain region
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/1JIgnwg.png) | NGE-2 00:03:17 | Green vertical bars with labeled brain regions, horizontal red baseline |
-| ![](img/SQOGIws.png) | NGE-6 00:02:19 | Cyan/white variant of same display — traces more active, same layout |
-| ![](img/mvMuagY.png) | NGE-22 00:13:49 | Green traces during Asuka's mental contamination — HIPPOCAMPUS trace spiking wildly |
+| ![](../img/1JIgnwg.png) | NGE-2 00:03:17 | Green vertical bars with labeled brain regions, horizontal red baseline |
+| ![](../img/SQOGIws.png) | NGE-6 00:02:19 | Cyan/white variant of same display — traces more active, same layout |
+| ![](../img/mvMuagY.png) | NGE-22 00:13:49 | Green traces during Asuka's mental contamination — HIPPOCAMPUS trace spiking wildly |
 
 ---
 
@@ -112,8 +112,8 @@ The Eva cockpit heads-up display in combat mode: a wireframe diamond (octahedron
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/TuARHzn.png) | NGE-6 00:19:47 | Full HUD: diamond wireframe, MODE:SHOOT, coordinate readouts, through cockpit viewport |
-| ![](img/6mH23k8.png) | NGE-18 00:14:41 | Circle-and-crosshair variant with ATTACK label and ±0.00000000 readouts |
+| ![](../img/reticles.png) | NGE-6 00:19:47 | Full HUD: diamond wireframe, MODE:SHOOT, coordinate readouts, through cockpit viewport |
+| ![](../img/6mH23k8.png) | NGE-18 00:14:41 | Circle-and-crosshair variant with ATTACK label and ±0.00000000 readouts |
 
 ---
 
@@ -123,10 +123,10 @@ Strings of 0s and 1s (0100110100111100100110...) rendered along display borders,
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/96MYsJJ.png) | NGE-24 00:13:29 | Binary strings above and below the 17th ANGEL / IDENTIFIED display |
-| ![](img/W2dR94V.png) | NGE-24 00:17:59 | Binary strings above A.T.FIELD / GENERATION readout |
-| ![](img/ga4MzuJ.png) | NGE-5 00:06:33 | Binary strings as border of Angel gel electrophoresis display |
-| ![](img/AJMPx0q.png) | NGE-24 00:17:03 | Binary strings alongside LOST status and A.T. FIELD PROJECT data |
+| ![](../img/cartouches.png) | NGE-24 00:13:29 | Binary strings above and below the 17th ANGEL / IDENTIFIED display |
+| ![](../img/W2dR94V.png) | NGE-24 00:17:59 | Binary strings above A.T.FIELD / GENERATION readout |
+| ![](../img/ga4MzuJ.png) | NGE-5 00:06:33 | Binary strings as border of Angel gel electrophoresis display |
+| ![](../img/AJMPx0q.png) | NGE-24 00:17:03 | Binary strings alongside LOST status and A.T. FIELD PROJECT data |
 
 ---
 
@@ -136,10 +136,10 @@ Base pair letter sequences (AGTG, ITCAA, TAGTG, CTCAG...) displayed as scrolling
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/2EnlpYh.png) | NGE-11 00:03:33 | Mirrored nucleotide codes (CCTOI1OO, AGTIIOI0...) on transparent display in front of Maya and Ritsuko |
-| ![](img/HRwUCm3.png) | NGE-15 00:20:15 | TAGTG / ITCAA scrolling past Rei clone in tube |
-| ![](img/B3NyKBK.png) | NGE-15 00:20:17 | Same nucleotide ticker, wider shot showing green text orbiting the containment tube |
-| ![](img/cO3cL7S.png) | EoE 00:38:33 | MODE A/B/C/D/E with nucleotide triplet timers (ATG, ACC, CGA, GAC...) on EVA-02 power gauge |
+| ![](../img/data-bg.png) | NGE-11 00:03:33 | Mirrored nucleotide codes (CCTOI1OO, AGTIIOI0...) on transparent display in front of Maya and Ritsuko |
+| ![](../img/HRwUCm3.png) | NGE-15 00:20:15 | TAGTG / ITCAA scrolling past Rei clone in tube |
+| ![](../img/B3NyKBK.png) | NGE-15 00:20:17 | Same nucleotide ticker, wider shot showing green text orbiting the containment tube |
+| ![](../img/cO3cL7S.png) | EoE 00:38:33 | MODE A/B/C/D/E with nucleotide triplet timers (ATG, ACC, CGA, GAC...) on EVA-02 power gauge |
 
 ---
 
@@ -149,8 +149,8 @@ Calibrated tick marks running along one or more edges of a display, numbered at 
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/OHnviQM.png) | NGE-16 00:09:09 | Horizontal and vertical rulers with numbered 00-50 intervals on MODE STARLIGHT observation |
-| ![](img/vojQDUy.png) | NGE-16 00:03:09 | EVANGELION HARMONICS SIMULATION GRAPH DISPLAY — full calibrated axis with -A through +A and ±0 through ±10 |
+| ![](../img/OHnviQM.png) | NGE-16 00:09:09 | Horizontal and vertical rulers with numbered 00-50 intervals on MODE STARLIGHT observation |
+| ![](../img/vojQDUy.png) | NGE-16 00:03:09 | EVANGELION HARMONICS SIMULATION GRAPH DISPLAY — full calibrated axis with -A through +A and ±0 through ±10 |
 
 ---
 
@@ -160,10 +160,10 @@ A rectangular border — typically amber or red with a slight glow — enclosing
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/iPW3uoc.png) | NGE-18 00:14:07 | Red-bordered frame with FROM EVA-02 label bar, heavily scanlined content |
-| ![](img/awZtyY4.png) | NGE-14 00:17:23 | Amber-bordered frame with FROM EVA-02, showing Asuka in entry plug |
-| ![](img/XhyzjeK.png) | NGE-16 00:05:55 | Three video feed frames (FROM EVA-01, EVA-02, EVA-00) on command center display |
-| ![](img/xd52U16.png) | EoE 00:27:31 | Red-bordered REALTIME IMAGE frame held by Fuyutsuki — handheld holographic variant |
+| ![](../img/panels.png) | NGE-18 00:14:07 | Red-bordered frame with FROM EVA-02 label bar, heavily scanlined content |
+| ![](../img/awZtyY4.png) | NGE-14 00:17:23 | Amber-bordered frame with FROM EVA-02, showing Asuka in entry plug |
+| ![](../img/XhyzjeK.png) | NGE-16 00:05:55 | Three video feed frames (FROM EVA-01, EVA-02, EVA-00) on command center display |
+| ![](../img/xd52U16.png) | EoE 00:27:31 | Red-bordered REALTIME IMAGE frame held by Fuyutsuki — handheld holographic variant |
 
 ---
 
@@ -173,8 +173,8 @@ L-shaped marks at two or four corners of a rectangular region, framing an area o
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/v5IGB8l.png) | NGE-20 00:05:23 | White L-brackets at corners of entry plug interior observation area |
-| ![](img/6AFNuBx.png) | NGE-10 00:15:53 | Red targeting brackets surrounding AT Field capture zone with center crosshair |
+| ![](../img/v5IGB8l.png) | NGE-20 00:05:23 | White L-brackets at corners of entry plug interior observation area |
+| ![](../img/6AFNuBx.png) | NGE-10 00:15:53 | Red targeting brackets surrounding AT Field capture zone with center crosshair |
 
 ---
 
@@ -186,11 +186,11 @@ NERV applies this atom everywhere something has an amount: LIFE gauges with SAFE
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/TkOO9fF.png) | NGE-11 00:05:19 | Green/red segmented bars in a herringbone arrangement — dense system status panel |
-| ![](img/7DguZ3V.png) | NGE-6 00:09:33 | LIFE indicator: red segmented columns with SAFETY LINE threshold marker |
-| ![](img/OrMeGB9.png) | NGE-7 00:13:01 | CIRCULATION PUMP: REACTOR COOLANT — bar chart variant with labeled axis and cyan segments |
-| ![](img/Z4W8hAh.png) | NGE-12 00:05:01 | MENTAL TOXICITY LEVEL — three-pilot display with green-to-purple color-graded bars |
-| ![](img/mqhMsV4.png) | NGE-22 00:07:33 | Same display in abnormal state — pink/red bars at +16 alongside cyan/green at +18-23 |
+| ![](../img/bar-meters.png) | NGE-11 00:05:19 | Green/red segmented bars in a herringbone arrangement — dense system status panel |
+| ![](../img/7DguZ3V.png) | NGE-6 00:09:33 | LIFE indicator: red segmented columns with SAFETY LINE threshold marker |
+| ![](../img/OrMeGB9.png) | NGE-7 00:13:01 | CIRCULATION PUMP: REACTOR COOLANT — bar chart variant with labeled axis and cyan segments |
+| ![](../img/Z4W8hAh.png) | NGE-12 00:05:01 | MENTAL TOXICITY LEVEL — three-pilot display with green-to-purple color-graded bars |
+| ![](../img/mqhMsV4.png) | NGE-22 00:07:33 | Same display in abnormal state — pink/red bars at +16 alongside cyan/green at +18-23 |
 
 ---
 
@@ -200,10 +200,10 @@ Large seven-segment LED numerals displaying time remaining, rendered as physical
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/CbJ9Ki8.png) | NGE-11 00:19:17 | Full context: timer with 内部/INTERNAL label, mode buttons, hazard striping on edges |
-| ![](img/87OcKIy.png) | EoE 00:38:15 | Timer at 0:00:00 — end state with DANGER EMERGENCY readout |
-| ![](img/ySW5Yiq.png) | NGE-6 00:04:59 | JST clock variant with あと (remaining) secondary countdown |
-| ![](img/L61sfBd.png) | NGE-16 00:10:43 | Wristwatch-embedded seven-segment display — the format miniaturized to personal scale |
+| ![](../img/segment-display.png) | NGE-11 00:19:17 | Full context: timer with 内部/INTERNAL label, mode buttons, hazard striping on edges |
+| ![](../img/87OcKIy.png) | EoE 00:38:15 | Timer at 0:00:00 — end state with DANGER EMERGENCY readout |
+| ![](../img/ySW5Yiq.png) | NGE-6 00:04:59 | JST clock variant with あと (remaining) secondary countdown |
+| ![](../img/L61sfBd.png) | NGE-16 00:10:43 | Wristwatch-embedded seven-segment display — the format miniaturized to personal scale |
 
 ---
 
@@ -213,7 +213,7 @@ A grid of cells — typically chevron-shaped or triangular — each representing
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/9G5zYvK.png) | EoE 00:15:05 | Dense grid of CAPTURED sectors with location labels — Misato's fist against the display |
+| ![](../img/9G5zYvK.png) | EoE 00:15:05 | Dense grid of CAPTURED sectors with location labels — Misato's fist against the display |
 
 ---
 
@@ -223,7 +223,7 @@ A massive wall-filling grid of numbered cells (C110, C111, C112... C510, C511...
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/mt6eovo.png) | EoE 00:51:53 | Full error matrix: Fuyutsuki standing before hundreds of unique error labels during Instrumentality |
+| ![](../img/mt6eovo.png) | EoE 00:51:53 | Full error matrix: Fuyutsuki standing before hundreds of unique error labels during Instrumentality |
 
 ---
 
@@ -233,7 +233,7 @@ A full-screen monospaced text display resembling a real PC boot sequence: copyri
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/LnjlaVD.png) | NGE-7 00:11:49 | Full BIOS-style boot screen with system config table, 53 TB UMB, HEMS ver14.0 |
+| ![](../img/LnjlaVD.png) | NGE-7 00:11:49 | Full BIOS-style boot screen with system config table, 53 TB UMB, HEMS ver14.0 |
 
 ---
 
@@ -243,9 +243,9 @@ A circular calibrated gauge with tick marks at regular angular intervals, used f
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/NPlqlrb.png) | NGE-6 00:19:25 | Circular gauge: INNER TORUS REACTOR / active, with crosshairs and axis rulers surrounding it |
-| ![](img/0q4F9YS.png) | NGE-7 00:12:55 | J.A. FUEL BUNDLE circular cross-section: green/red hex cells with CONTROL ROD status list |
-| ![](img/YJ9WI8R.png) | NGE-7 00:18:51 | Same fuel bundle display in degraded state — mostly red cells |
+| ![](../img/radar.png) | NGE-6 00:19:25 | Circular gauge: INNER TORUS REACTOR / active, with crosshairs and axis rulers surrounding it |
+| ![](../img/0q4F9YS.png) | NGE-7 00:12:55 | J.A. FUEL BUNDLE circular cross-section: green/red hex cells with CONTROL ROD status list |
+| ![](../img/YJ9WI8R.png) | NGE-7 00:18:51 | Same fuel bundle display in degraded state — mostly red cells |
 
 ---
 
@@ -255,8 +255,8 @@ Circular glowing rings mounted on facility walls, evenly spaced. Green when nomi
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/RoiG8p1.png) | NGE-7 00:20:17 | Green ring indicators on corridor wall — nominal state |
-| ![](img/x6PpDgZ.png) | NGE-7 00:19:47 | Same rings in red — emergency state, entire environment red-shifted |
+| ![](../img/RoiG8p1.png) | NGE-7 00:20:17 | Green ring indicators on corridor wall — nominal state |
+| ![](../img/x6PpDgZ.png) | NGE-7 00:19:47 | Same rings in red — emergency state, entire environment red-shifted |
 
 ---
 
@@ -266,8 +266,8 @@ Large-format physical wall signage with KEEP OUT in massive red type, 立入禁�
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/CboX2cv.png) | NGE-15 00:20:37 | KEEP OUT / MAIN L.C.L. PLANT variant with full threat text |
-| ![](img/Vs80JJP.png) | NGE-23 00:19:23 | KEEP OUT / TERMINAL DOGMA: LEVEL 1 SECTOR 2 — same format, different location |
+| ![](../img/CboX2cv.png) | NGE-15 00:20:37 | KEEP OUT / MAIN L.C.L. PLANT variant with full threat text |
+| ![](../img/Vs80JJP.png) | NGE-23 00:19:23 | KEEP OUT / TERMINAL DOGMA: LEVEL 1 SECTOR 2 — same format, different location |
 
 ---
 
@@ -277,8 +277,8 @@ An illuminated overhead sign reading CAUTION / DANGER LOCK BOLT-OUT in red LED-s
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/aZ6L9gE.png) | NGE-14 00:04:15 | CAUTION / DANGER LOCK BOLT-OUT with traffic signals, 40km speed sign, no-stopping sign |
-| ![](img/9PaNLx2.png) | NGE-3 00:11:41 | Same barrier design, different angle — barriers in locked position |
+| ![](../img/aZ6L9gE.png) | NGE-14 00:04:15 | CAUTION / DANGER LOCK BOLT-OUT with traffic signals, 40km speed sign, no-stopping sign |
+| ![](../img/9PaNLx2.png) | NGE-3 00:11:41 | Same barrier design, different angle — barriers in locked position |
 
 ---
 
@@ -288,7 +288,7 @@ A red-bordered box containing REC in red text, typically in the upper-left corne
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/Q9T9tya.png) | NGE-3 00:16:19 | REC badge with ‖ pause indicator, green X50 magnification badge — handheld camera POV |
+| ![](../img/Q9T9tya.png) | NGE-3 00:16:19 | REC badge with ‖ pause indicator, green X50 magnification badge — handheld camera POV |
 
 ---
 
@@ -298,8 +298,8 @@ Physical infrastructure signage for NERV's internal transportation systems. Incl
 
 | Reference | Source | Notes |
 |-----------|--------|-------|
-| ![](img/Przr18g.png) | EoE 00:11:41 | NERV platform signs 1–5 with red no-entry symbols, South Hub Station label |
-| ![](img/8Juhn8a.png) | NGE-4 00:03:55 | JR TOKYO-3 train with LED destination board |
+| ![](../img/Przr18g.png) | EoE 00:11:41 | NERV platform signs 1–5 with red no-entry symbols, South Hub Station label |
+| ![](../img/8Juhn8a.png) | NGE-4 00:03:55 | JR TOKYO-3 train with LED destination board |
 
 ---
 

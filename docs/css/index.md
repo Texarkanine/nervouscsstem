@@ -1,6 +1,6 @@
 # CSS
 
-Tokens and type. These islands are CSS only — they do not need `nerv.js`.
+Tokens, type, and glow. These islands are CSS only — they do not need `nerv.js`. Motion classes live on [Effects](effects.md).
 
 ## Tokens
 
@@ -40,3 +40,25 @@ Six roles. Each class sets `font-family` (and a little tracking / casing). Color
 <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
 <p class="nerv-type-segment">04:00:00</p>
 ```
+
+## Glow
+
+Three kinds. One example each, all amber, all the same filler. Color variants are `.nerv-glow-{name}`, `.nerv-glow-text-{name}`, `.nerv-glow-drop-{name}` for every glow-flagged token; do not learn them by listing every name.
+
+<div class="nerv-docs-island">
+  <p class="nerv-type-hud nerv-text-amber nerv-glow-text-amber" style="font-size: 1.4rem;">MAGI SYSTEM CHECK</p>
+  <div class="nerv-panel nerv-glow-amber">
+    <p class="nerv-type-hud nerv-text-amber">MAGI SYSTEM CHECK</p>
+  </div>
+  <span class="nerv-cartouche nerv-glow-drop-amber">MAGI SYSTEM CHECK</span>
+</div>
+
+**Spec:** `.nerv-glow-text-*` is text-shadow bloom (pair with `.nerv-text-*` for the fill color). `.nerv-glow-*` is box-shadow bloom. `.nerv-glow-drop-*` is `filter: drop-shadow` and follows the rendered shape. Bare `.nerv-glow`, `.nerv-glow-text`, and `.nerv-glow-drop` follow `--nerv-primary`. `--nerv-glow-intensity` scales every kind and drops under `prefers-contrast: more`.
+
+```html
+<p class="nerv-type-hud nerv-text-amber nerv-glow-text-amber">MAGI SYSTEM CHECK</p>
+<div class="nerv-panel nerv-glow-amber">…</div>
+<span class="nerv-cartouche nerv-glow-drop-amber">MAGI SYSTEM CHECK</span>
+```
+
+[Swatch board](../boards/foundation.html)
