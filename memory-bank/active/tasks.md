@@ -13,7 +13,7 @@ Operator TDD bar (binding): test what this repo ships to consumers. Do not TDD A
 ### Behaviors to Verify
 
 - Discoverable skill: `skills/nerv/SKILL.md` exists → YAML frontmatter has `name: nerv` matching the parent directory, and a non-empty `description`
-- Version lockstep: frontmatter `version` → equals `package.json` `"version"` (published contract for AC6; npm semver does not update this file by itself)
+- Version lockstep: frontmatter `metadata.version` (string) → equals `package.json` `"version"` (published contract for AC6; npm semver does not update this file by itself). `version` is not a top-level SKILL.md key; [agentskills.io](https://agentskills.io/specification) only allows `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools` there.
 - Docs travel: every tracked `docs/**/*.md` → a byte-identical file at `skills/nerv/docs/<same relative path>`
 - No screenshot library: walking `skills/nerv/` → no `img/` directory, no path under `docs/img`, and no file whose contents start with the Git LFS pointer header (`version https://git-lfs.github.com/spec/v1`)
 - npm pack unchanged: `npm pack --dry-run` → packed paths do not include anything under `skills/`
@@ -32,8 +32,8 @@ Operator TDD bar (binding): test what this repo ships to consumers. Do not TDD A
 - Files: `test/skill-contract.test.mjs`, `skills/nerv/SKILL.md`, `skills/nerv/docs/**/*.md` (copy of tracked `docs/**/*.md`), `package.json` (`test` script only)
 
 1. Stub tests: add `test/skill-contract.test.mjs` with empty `it()` cases for the five behaviors above; add the file name to `package.json` `"test"`.
-2. Stub interface: create `skills/nerv/SKILL.md` with the required frontmatter shape (`name`, `description`, `version: 0.1.0 # x-release-please-version`) and empty placeholder body; do not copy docs yet.
-3. Write tests and run red: parse SKILL.md frontmatter (first `---` block); assert name/directory lockstep, non-empty description, version equals `package.json`; list tracked `docs/**/*.md` and assert each has an identical counterpart under `skills/nerv/docs/`; walk `skills/nerv` and reject `img/` and LFS pointer bytes; reuse `npm pack --dry-run --json` (same helper shape as `test/publish-contract.test.mjs`) and assert no `skills/` path. Expect red: docs copies missing; possibly pack still green.
+2. Stub interface: create `skills/nerv/SKILL.md` with spec-valid frontmatter (`name`, `description`, and `metadata.version: "0.1.0" # x-release-please-version` as a quoted string) and empty placeholder body; do not copy docs yet. Do not put `version` at the top level.
+3. Write tests and run red: parse SKILL.md frontmatter (first `---` block); assert name/directory lockstep, non-empty description, `metadata.version` equals `package.json` as a string; list tracked `docs/**/*.md` and assert each has an identical counterpart under `skills/nerv/docs/`; walk `skills/nerv` and reject `img/` and LFS pointer bytes; reuse `npm pack --dry-run --json` (same helper shape as `test/publish-contract.test.mjs`) and assert no `skills/` path. Expect red: docs copies missing; possibly pack still green.
 4. Write code and run green: copy each tracked `docs/**/*.md` to `skills/nerv/docs/` preserving relative paths (do not copy `docs/img/**`, `docs/stylesheets/`, `docs/javascripts/`, or `site/`); fill SKILL.md placeholder body (how to apply the design system; stills and live examples live on GitHub Pages; authoring SoT remains `docs/`); do not add `skills/` to `package.json` `"files"`. Run `npm test`.
 
 ### 2. release-please extra-files — prose/policy
@@ -66,7 +66,8 @@ No new technology - validation not required. Consumers already have `npx`; this 
 
 - Gallery pages (`design-language.md`, `atomic-elements.md`) reference `img/` stills that must not be copied: copy the markdown anyway; SKILL.md tells installers the stills live on Pages / in the git repo. Do not invent a non-LFS image path in this milestone.
 - SLOBAC's live pattern is `docs_dir` inside the skill and a plugin marketplace, not `npx skills`: follow this repo's invariants and the brief's install command, not SLOBAC's relocated authoring tree.
-- YAML extra-files cannot parse markdown frontmatter: generic updater + `# x-release-please-version` on the version line.
+- YAML extra-files cannot parse markdown frontmatter: generic updater + `# x-release-please-version` on the `metadata.version` line (the annotation matches by line content, not by YAML path).
+- A top-level `version` key is not in the Agent Skills spec and can fail `skills-ref validate`: keep version under `metadata` as a quoted string.
 - `npx skills add` discovery looks at `skills/<name>/SKILL.md`, not `.cursor/skills/`: put the product skill at repo-root `skills/nerv/`.
 - Byte-identical copy tests fail on every `docs/` edit until the copy is updated: that is the carry-the-docs contract, not a prose pin. Do not add a sync script in 0.1.
 
@@ -76,6 +77,7 @@ No new technology - validation not required. Consumers already have `npx`; this 
 - Plan copies the built `site/` or `docs/img/` and ships LFS pointers: already covered by the no-library behavior and unit 1 copy rules.
 - Relocating `docs/` or retargeting `properdocs.yml` to the skill (SLOBAC) violates invariants 1 and 9: plan copies into `skills/nerv/docs/` and leaves authoring and the site load contract untouched.
 - Version lockstep test is struck as "semver already signals it": keep it. Installers never read `package.json`; extra-files is CI, not the consumer-visible contract.
+- Top-level `version` in SKILL.md fails install-spec conformance: already covered — nest under `metadata`.
 
 ## Status
 

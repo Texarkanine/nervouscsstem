@@ -5,10 +5,10 @@
 
 ## What Was Done
 
-- Classified M5 as Level 2
-- Planned a placeholder skill at `skills/nerv/` with a markdown copy of `docs/**/*.md`, generic extra-files on `SKILL.md`, and a `test/skill-contract.test.mjs` TDD surface
-- Left `docs/` authoring, ProperDocs dual-load, and the release workflow alone
+- First preflight `FAIL (fixable)`: top-level `version` is not a valid Agent Skills frontmatter key
+- Replanned unit 1: `metadata.version` as a quoted string with `# x-release-please-version`; extra-files entry unchanged
+- Did not adopt the generator-script advisory
 
 ## Next Step
 
-- Preflight validation
+- Re-run preflight

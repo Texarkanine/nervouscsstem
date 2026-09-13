@@ -32,3 +32,28 @@ Add a placeholder agent skill installable via `npx skills` that carries the docu
 * Insights
     - SLOBAC's current install path is a plugin marketplace; this milestone follows the brief's `npx skills` command and this repo's copy-not-relocate invariants
     - YAML extra-files cannot bump markdown frontmatter; the generic updater is the documented hook
+
+## 2026-09-12 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Validated `tasks.md` against `.cursor/skills/shared/niko-preflight/references/default-preflight.md`
+    - Confirmed release-please's `generic` updater and `x-release-please-version` annotation approach against upstream docs and this repo's own `.summem/summem` precedent
+    - Checked the plan's SKILL.md frontmatter shape against the actual `npx skills` / agentskills.io specification
+* Decisions made
+    - `.preflight-status` first line: `FAIL (fixable)`
+* Insights
+    - The agentskills.io spec (which `npx skills` installers validate against) only recognizes `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools` at the frontmatter top level; version data belongs under `metadata`, not as a bare top-level key
+    - TDD encoding, file-location conventions, dependency ordering, and requirement coverage were otherwise sound; no TDD swap/strike was needed
+
+## 2026-09-12 - PLAN - COMPLETE (replan, metadata.version)
+
+* Work completed
+    - Nested SKILL.md version under `metadata` as a quoted string
+    - Updated the version-lockstep behavior and unit 1 stub/red steps to assert `metadata.version`
+    - Left unit 2 extra-files as generic (line annotation, not jsonpath)
+* Decisions made
+    - Follow [agentskills.io specification](https://agentskills.io/specification) optional-fields example: `metadata.version`
+    - Did not add a skill-docs generator; the copy-contract test stays the 0.1 enforcement
+* Insights
+    - A first-preflight miss on the consumer spec is cheaper than a `skills-ref validate` failure after build
+
