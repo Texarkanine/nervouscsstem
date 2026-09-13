@@ -25,6 +25,8 @@ Those URLs are [jsDelivr’s npm CDN](https://www.jsdelivr.com/documentation#id-
 
 ## Documentation
 
+The published site is <https://texarkanine.github.io/nervouscsstem/>. Using pages carry live examples (preview, spec, then code).
+
 Authoring source of truth is [`docs/`](docs/). Do not treat this README as the design-system spec. Operator notes that must not be forgotten (Git LFS vs skill install, and similar) live in [`docs/service-manual.md`](docs/service-manual.md).
 
 ## Releases

@@ -109,17 +109,17 @@ graph TD
 - Files: `.github/workflows/docs.yaml`, `.github/workflows/reusable-docs-build.yml`, `.github/workflows/release-please.yaml` (add a Pages job only)
 - No tests: prose/policy artifact
 
-1. PR / `workflow_dispatch` docs build: checkout with `lfs: true`; Node 24 + `npm ci` + `npm run build`; `uv sync --group docs --frozen`; `--mode local`; `uv run properdocs build --strict`.
-2. Release Pages: a job on `release-please.yaml` with `needs: publish-npm` so CDN rewrite cannot race the tarball. Give that job `permissions: pages: write`, `id-token: write`, and `contents: read` (the workflow-level map does not include `pages: write`; do not add it to every job). Checkout with `lfs: true`; `uv sync --group docs --frozen`; `--mode cdn`; `properdocs build --strict`; `actions/upload-pages-artifact` + `actions/deploy-pages`; `environment: github-pages`.
-3. Do not add extra-files or skill install. Do not redesign the existing publish steps.
+1. [x] PR / `workflow_dispatch` docs build: checkout with `lfs: true`; Node 24 + `npm ci` + `npm run build`; `uv sync --group docs --frozen`; `--mode local`; `uv run properdocs build --strict`.
+2. [x] Release Pages: a job on `release-please.yaml` with `needs: publish-npm` so CDN rewrite cannot race the tarball. Give that job `permissions: pages: write`, `id-token: write`, and `contents: read` (the workflow-level map does not include `pages: write`; do not add it to every job). Checkout with `lfs: true`; `uv sync --group docs --frozen`; `--mode cdn`; `properdocs build --strict`; `actions/upload-pages-artifact` + `actions/deploy-pages`; `environment: github-pages`.
+3. [x] Do not add extra-files or skill install. Do not redesign the existing publish steps.
 
 ### 4. README and techContext pointers — prose/policy
 
 - Files: `README.md`, `memory-bank/techContext.md`
 - No tests: prose/policy artifact
 
-1. Under Documentation, add the GitHub Pages URL and that Using pages carry live examples. Keep `docs/` as the authoring source of truth. Do not move SumMem’s block in `AGENTS.md`.
-2. Surgical `techContext.md` pointer: docs site is ProperDocs + uv (`uv sync --group docs`), dual-load via `scripts/resolve-docs-assets.mjs`.
+1. [x] Under Documentation, add the GitHub Pages URL and that Using pages carry live examples. Keep `docs/` as the authoring source of truth. Do not move SumMem’s block in `AGENTS.md`.
+2. [x] Surgical `techContext.md` pointer: docs site is ProperDocs + uv (`uv sync --group docs`), dual-load via `scripts/resolve-docs-assets.mjs`.
 
 ## Technology Validation
 

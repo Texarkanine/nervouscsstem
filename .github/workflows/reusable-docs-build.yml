@@ -1,0 +1,44 @@
+# PR and workflow_dispatch docs build in local mode (dist/ copied into docs/).
+name: Documentation Site
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          lfs: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build CSS and JS
+        run: npm run build
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v10.0.1
+        with:
+          enable-cache: true
+
+      - name: Install docs dependencies
+        run: uv sync --group docs --frozen
+
+      - name: Resolve local docs assets
+        run: node scripts/resolve-docs-assets.mjs --mode local
+
+      - name: Build site (strict)
+        run: uv run properdocs build --strict
