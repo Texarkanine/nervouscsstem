@@ -69,3 +69,17 @@ Add a placeholder agent skill installable via `npx skills` that carries the docu
 * Insights
     - A future explicit documentation-sync script could remove copy drift while retaining `docs/` as the authoring source; it remains outside this milestone
 
+## 2026-09-12 - BUILD - COMPLETE
+
+* Work completed
+    - Skill at `skills/nerv/` with placeholder SKILL.md and markdown copies of `docs/**/*.md`
+    - `test/skill-contract.test.mjs` (5 cases) green; registered in `package.json` `"test"`
+    - Generic extra-files, README Agent skill section, techContext pointer
+    - Full suite 369/369 pass
+* Decisions made
+    - Did not add `skills/` to npm `files`; installers use `npx skills add`
+    - Did not copy `docs/img/`, site chrome JS/CSS, or the built `site/`
+    - Did not adopt the docs-sync generator advisory
+* Insights
+    - `npm run lint` still fails on generated `dist/nerv.css` (Antonio quotes, `0px`); predates this milestone
+

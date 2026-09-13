@@ -23,6 +23,14 @@ Replace `<version>` with a published tag (for example `0.1.0`):
 
 Those URLs are [jsDelivr’s npm CDN](https://www.jsdelivr.com/documentation#id-npm). This package does not run its own file host.
 
+## Agent skill
+
+```bash
+npx skills add Texarkanine/nervouscsstem
+```
+
+That installs a placeholder skill. A markdown copy of `docs/` travels with it. The screenshot library (`docs/img/`) does not.
+
 ## Documentation
 
 The published site is <https://texarkanine.github.io/nervouscsstem/>. Using pages carry live examples (preview, spec, then code).

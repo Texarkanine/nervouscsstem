@@ -8,6 +8,7 @@ Pure-CSS design system with minimal vanilla JS orchestration. SCSS (Dart Sass) i
 - Node.js required (for Dart Sass via npm)
 - `npm install` to fetch the `sass` dev dependency
 - **uv + ProperDocs** — docs site. `uv sync --group docs` (lockfile `uv.lock`, config `properdocs.yml`). Dual-load of `nerv.css` / `nerv.js` is [`scripts/resolve-docs-assets.mjs`](../scripts/resolve-docs-assets.mjs): `--mode local` copies `dist/`, `--mode cdn` writes jsDelivr stand-ins.
+- **Installable skill** — `skills/nerv/` is the product skill for `npx skills add`. `.cursor/skills/` is this repo's Niko bootstrap, not the published skill.
 
 ## Build Tools
 
