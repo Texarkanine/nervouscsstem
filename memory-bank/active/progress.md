@@ -57,3 +57,15 @@ Add a placeholder agent skill installable via `npx skills` that carries the docu
 * Insights
     - A first-preflight miss on the consumer spec is cheaper than a `skills-ref validate` failure after build
 
+## 2026-09-12 - PREFLIGHT - COMPLETE
+
+* Work completed
+    - Revalidated the Level 2 implementation plan after the `metadata.version` replan
+    - Confirmed Agent Skills frontmatter and release-please generic extra-file behavior against their current official documentation
+    - Checked test conventions, npm packaging boundaries, LFS exclusions, dependencies, and requirement mapping
+* Decisions made
+    - `.preflight-status` first line: `PASS WITH ADVISORY`
+    - No TDD step swaps, test strikes, or plan changes were required
+* Insights
+    - A future explicit documentation-sync script could remove copy drift while retaining `docs/` as the authoring source; it remains outside this milestone
+

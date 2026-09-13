@@ -1,14 +1,14 @@
 # Active Context
 
 ## Current Task: nerv-v01-m5-installable-docs-skill
-**Phase:** PLAN - COMPLETE
+**Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
 
 ## What Was Done
 
-- First preflight `FAIL (fixable)`: top-level `version` is not a valid Agent Skills frontmatter key
-- Replanned unit 1: `metadata.version` as a quoted string with `# x-release-please-version`; extra-files entry unchanged
-- Did not adopt the generator-script advisory
+- Replanned the first preflight finding: the frontmatter version is now the quoted `metadata.version` string with `# x-release-please-version`
+- Re-run preflight passed the test-first plan, Agent Skills frontmatter, generic release-please updater, packaging boundary, LFS exclusion, and requirement mapping checks
+- A documentation-sync script remains an out-of-scope advisory
 
 ## Next Step
 
-- Re-run preflight
+- Run `/niko-build`
