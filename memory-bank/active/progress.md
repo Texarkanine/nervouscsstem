@@ -80,4 +80,24 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
 * Insights
     - Preflight's blocking item (test built nav) and its advisory (catalog manifest) are the same class of change-detector. Operator rejected both.
 
+## 2026-09-13 - PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
+
+* Work completed
+    - Re-validated the reworked, all-prose Level 3 plan against `always-tdd`, codebase reality (`properdocs.yml`, `.gitignore`, `package.json` test list, existing tests, `docs/` tree, `src/*.scss` partials), and the two creative decisions.
+    - Confirmed both prior blocking/fixable findings (untested nav/output, missing test files in `npm test`'s explicit list, mislabeled red/green step) no longer apply now that all new test files were removed from the plan.
+    - Verified step 5's 19-page catalog is an exact 1:1 map to every `src/_*.scss` component partial — no orphan, no invented page.
+* Decisions made
+    - First line of `.preflight-status` is `PASS WITH ADVISORY`; the plan is a valid build gate as written.
+* Insights
+    - Found one real, unaddressed cross-reference: `service-manual.md` links to the three visual-language files by same-directory relative path and is not updated when they move into `visual-language/`. Self-caught by the plan's own `docs:build --strict` gate, so recorded as advisory rather than blocking, with a one-line fix recommended for step 4.
+    - `docs-init.js`'s new dispatch branches are executable behavior, not content-lockstep; not a new gap since the existing `bar-meters` branch is already untested by the same convention.
+
+## 2026-09-13 - PREFLIGHT ADVISORY - FOLDED
+
+* Work completed
+    - Added step 4.7: retarget `service-manual.md` links after the visual-language move.
+* Decisions made
+    - In-phase advisory fold-in only. Did not adopt the catalog-manifest idea.
+    - Build waits for `/niko-build`.
+
 

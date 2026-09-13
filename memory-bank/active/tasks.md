@@ -136,7 +136,7 @@ No new executable behavior.
 
 ### 4. Folder moves and section homes — prose/policy
 
-- Files: `docs/visual-language/*`, `docs/css/index.md`, `docs/js/index.md`, `docs/components/index.md`, `docs/index.md`, `skills/nerv/docs/**`
+- Files: `docs/visual-language/*`, `docs/css/index.md`, `docs/js/index.md`, `docs/components/index.md`, `docs/index.md`, `docs/service-manual.md`, `skills/nerv/docs/**`
 - No tests: prose/policy artifact (existing skill-contract fails until copies exist — comply, do not extend the test)
 - Creative ref: `creative-docs-tree.md`
 
@@ -146,7 +146,8 @@ No new executable behavior.
 4. Add `js/index.md` (scoped `NERV.*`; never `NERV.init()` on Material pages)
 5. Add `components/index.md`
 6. Rewrite `docs/index.md` links to the new folders
-7. Copy every new/moved markdown into `skills/nerv/docs/` at the same relative path; delete stale skill paths (`skills/nerv/docs/css.md`, old taxonomy paths)
+7. Update `docs/service-manual.md` links to `visual-language/design-language.md`, `visual-language/atomic-elements.md`, `visual-language/radar.md` (same-directory paths would fail `docs:build --strict` after the move)
+8. Copy every new/moved markdown into `skills/nerv/docs/` at the same relative path; delete stale skill paths (`skills/nerv/docs/css.md`, old taxonomy paths)
 
 ### 5. Component catalog pages — prose/policy
 
