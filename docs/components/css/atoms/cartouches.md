@@ -1,8 +1,8 @@
 # Cartouches
 
-A single-color bordered rectangle around a status word. CSS flex sizes to the text. By adding JavaScript you can [stretch text to a fixed box](../javascript/cartouches.md).
+A single-color bordered rectangle around a status word. CSS flex sizes to the text. By adding JavaScript you can [stretch text to a fixed box](../../javascript/atoms/cartouches.md).
 
-![Status cartouche](../../img/cartouches.png)
+![Status cartouche](../../../img/cartouches.png)
 
 ## Flex
 
@@ -18,7 +18,7 @@ A single-color bordered rectangle around a status word. CSS flex sizes to the te
 
 ## Red
 
-`.nerv-cartouche-{name}` exists for every [glow color](index.md#glow-colors).
+`.nerv-cartouche-{name}` exists for every [glow color](../core/colors.md#glow-colors).
 
 <div class="nerv-docs-island">
   <span class="nerv-cartouche nerv-cartouche-red">IDENTIFIED</span>

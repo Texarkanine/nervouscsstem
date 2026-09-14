@@ -1,8 +1,8 @@
 # Hex grid
 
-Honeycomb cells with named data-token states. Cell text is invented and held constant: A-01, A-02, A-03 / B-01, B-02, B-03. CSS paints a static honeycomb. By adding JavaScript you can [flicker cell states at random](../javascript/hex-grid.md).
+Honeycomb cells with named data-token states. Cell text is invented and held constant: A-01, A-02, A-03 / B-01, B-02, B-03. CSS paints a static honeycomb. By adding JavaScript you can [flicker cell states at random](../../javascript/structure/hex-grid.md).
 
-![Hexagonal network grid](../../img/hex-grid.png)
+![Hexagonal network grid](../../../img/hex-grid.png)
 
 ## Default
 

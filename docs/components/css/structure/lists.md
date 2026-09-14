@@ -294,7 +294,7 @@ Same four systems; Power Grid contains two districts.
 
 ## Cyan
 
-`.nerv-list-{name}` exists for every [glow color](index.md#glow-colors).
+`.nerv-list-{name}` exists for every [glow color](../core/colors.md#glow-colors).
 
 <div class="nerv-docs-island">
   <ul class="nerv-list nerv-list-rect nerv-list-cyan">
@@ -314,4 +314,4 @@ Same four systems; Power Grid contains two districts.
 </ul>
 ```
 
-[Swatch board](../../boards/lists.html)
+[Swatch board](../../../boards/lists.html)

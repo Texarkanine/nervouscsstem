@@ -70,7 +70,7 @@ Key insights:
 - `css/` vs `stylesheets/` and `js/` vs `javascripts/` is the only collision to avoid. Documentation folders must not be the asset dirs.
 - Alphabetical inferred nav puts `components` first. That is exactly the case “`.pages` when absolutely necessary.”
 - `index.md` is the MkDocs/Material default for section homes. `README.md` would need extra config. Use `index.md`.
-- Two radar documents are different jobs: `visual-language/radar.md` is the timing essay already in tree; `components/css/radar.md` and `components/javascript/radar.md` are the usage pages issue #9 requires. Cross-link. Do not merge.
+- Two radar documents are different jobs: `visual-language/radar.md` is the timing essay already in tree; `components/css/heavies/radar.md` and `components/javascript/heavies/radar.md` are the usage pages issue #9 requires. Cross-link. Do not merge.
 
 ## Decision
 

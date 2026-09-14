@@ -1,8 +1,8 @@
 # MAGI
 
-N-system consensus display. CSS Grid of `.nerv-magi-system` boxes plus one `.nerv-magi-output`. CSS defaults to a triad (`repeat(3, 1fr)`). By adding JavaScript you can [line up any other count](../javascript/magi.md).
+N-system consensus display. CSS Grid of `.nerv-magi-system` boxes plus one `.nerv-magi-output`. CSS defaults to a triad (`repeat(3, 1fr)`). By adding JavaScript you can [line up any other count](../../javascript/structure/magi.md).
 
-![MAGI triad diagram](../../img/magi.png)
+![MAGI triad diagram](../../../img/magi.png)
 
 ## Three systems
 

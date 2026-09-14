@@ -4,7 +4,7 @@ CSS MAGI is a triad (`repeat(3, 1fr)`). By adding JavaScript you can line up any
 
 `NERV.initMagiPanels(container)` writes `repeat(N, 1fr)` from the number of `.nerv-magi-system` children.
 
-![MAGI triad diagram](../../img/magi.png)
+![MAGI triad diagram](../../../img/magi.png)
 
 ## Four systems
 

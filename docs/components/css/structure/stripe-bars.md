@@ -2,7 +2,7 @@
 
 Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Dark band is `--nerv-bg` or fully transparent — no in-between alpha. There is no JavaScript hook.
 
-![Hazard chevron striping](../../img/stripe-bars.png)
+![Hazard chevron striping](../../../img/stripe-bars.png)
 
 ## Horizontal
 
@@ -30,7 +30,7 @@ Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Da
 
 ## Red
 
-`.nerv-stripe-{name}` exists for every [glow color](index.md#glow-colors).
+`.nerv-stripe-{name}` exists for every [glow color](../core/colors.md#glow-colors).
 
 <div class="nerv-docs-island">
   <div class="nerv-stripe nerv-stripe-red" style="height: 0.75rem;"></div>

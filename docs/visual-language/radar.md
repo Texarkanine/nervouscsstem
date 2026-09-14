@@ -1,7 +1,7 @@
 # NERV radar (display + sweep + blips)
 
 **Source of truth:** `src/_radar.scss` (compiled into `dist/nerv.css` via `src/nerv.scss`).
-**Catalog:** [CSS radar](../components/css/radar.md), [JavaScript radar](../components/javascript/radar.md).
+**Catalog:** [CSS radar](../components/css/heavies/radar.md), [JavaScript radar](../components/javascript/heavies/radar.md).
 **Live combination:** `ref/ref-patterns.html` (tactical scope block).
 **Optional JS:** `src/nerv.js` — sweep phase + Cartesian blip phase (see below).
 

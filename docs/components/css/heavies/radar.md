@@ -1,8 +1,8 @@
 # Radar
 
-CSS radar is the disc, rotating sweep, and blips. Polar placement uses `--nerv-radar-blip-bear-turn`. Cartesian `top` / `left` still paints. By adding JavaScript you can [sync sweep phase and auto-layout Cartesian blips](../javascript/radar.md).
+CSS radar is the disc, rotating sweep, and blips. Polar placement uses `--nerv-radar-blip-bear-turn`. Cartesian `top` / `left` still paints. By adding JavaScript you can [sync sweep phase and auto-layout Cartesian blips](../../javascript/heavies/radar.md).
 
-![Circular dial / radar display](../../img/radar.png)
+![Circular dial / radar display](../../../img/radar.png)
 
 ## Disc and sweep
 
@@ -12,7 +12,7 @@ CSS radar is the disc, rotating sweep, and blips. Polar placement uses `--nerv-r
   </div>
 </div>
 
-**Spec:** `.nerv-radar` is the square disc (rings and crosshairs are `::before` / `::after`). `.nerv-radar-sweep` is the conic wedge, animated in CSS. Sweep and blip share `--nerv-radar-duration`. [Why that lockstep](../../visual-language/radar.md).
+**Spec:** `.nerv-radar` is the square disc (rings and crosshairs are `::before` / `::after`). `.nerv-radar-sweep` is the conic wedge, animated in CSS. Sweep and blip share `--nerv-radar-duration`. [Why that lockstep](../../../visual-language/radar.md).
 
 ```html
 <div class="nerv-radar">

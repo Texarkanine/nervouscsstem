@@ -2,7 +2,7 @@
 
 Tick marks along container edges. The host must be a positioning context; the class sets `position: relative`. These classes consume `::after`. There is no JavaScript hook.
 
-![Targeting reticle / HUD diamond](../../img/reticles.png)
+![Targeting reticle / HUD diamond](../../../img/reticles.png)
 
 ## All edges
 
@@ -68,7 +68,7 @@ Tick marks along container edges. The host must be a positioning context; the cl
 
 ## Cyan
 
-`.nerv-reticle-{name}` exists for every [glow color](index.md#glow-colors).
+`.nerv-reticle-{name}` exists for every [glow color](../core/colors.md#glow-colors).
 
 <div class="nerv-docs-island">
   <div class="nerv-reticle nerv-reticle-cyan nerv-panel" style="height: 8rem;">

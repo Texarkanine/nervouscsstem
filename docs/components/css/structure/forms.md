@@ -95,7 +95,7 @@ CRT-console styling on ordinary form controls. Each control is shown in isolatio
 
 ## Cyan
 
-`.nerv-form-{name}` exists for every [glow color](index.md#glow-colors). Put it on any of the controls above.
+`.nerv-form-{name}` exists for every [glow color](../core/colors.md#glow-colors). Put it on any of the controls above.
 
 <div class="nerv-docs-island">
   <input class="nerv-input nerv-form-cyan" type="text" value="Ikari Shinji" aria-label="Pilot designation, cyan">
@@ -105,4 +105,4 @@ CRT-console styling on ordinary form controls. Each control is shown in isolatio
 <input class="nerv-input nerv-form-cyan" type="text" value="Ikari Shinji">
 ```
 
-[Swatch board](../../boards/forms.html)
+[Swatch board](../../../boards/forms.html)

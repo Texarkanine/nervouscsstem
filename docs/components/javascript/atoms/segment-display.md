@@ -4,7 +4,7 @@ CSS segment display is the DSEG7 readout and the ghost overlay, if you set `data
 
 `NERV.initGhostSegments(container)` replaces digits with 8s unless `data-ghost` is already set.
 
-![Seven-segment countdown timer](../../img/segment-display.png)
+![Seven-segment countdown timer](../../../img/segment-display.png)
 
 ## Ghost from text
 

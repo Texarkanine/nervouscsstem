@@ -148,4 +148,16 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
 * Insights
     - “Flourishes / delete it and the console still reads” is the wrong test. Heavies are still elements, higher atomic weight. Molecules would be the wrong chemistry word.
 
+## 2026-09-14 - POST-REFLECT - nested catalog
+
+* Work completed
+    - Nested `docs/components/css/{core,structure,atoms,heavies}` and matching JS leaves. Layer `index.md` homes. Dividers folded into panels. Gradients folded into colors.
+    - Inbound links retargeted (`visual-language/radar.md`, JS `setState` / scanlines, dual-family CSS→JS links, boards/img one extra `../`).
+    - `npm run docs:build --strict` passed. `npm test` 373/373.
+* Decisions made
+    - Fourth layer folder is `heavies/` (operator accepted; lanthanoid/actinoid skipped as undiscoverable).
+    - No nested `.pages`. Alphabetical inside a layer.
+* Insights
+    - Sidebar remains the TOC; layer homes explain the inclusion test, not the child list.
+
 

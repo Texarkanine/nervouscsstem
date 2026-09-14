@@ -40,7 +40,7 @@ Each function looks up its own selectors inside the container you pass.
 
 ## `NERV.setState`
 
-Applies `.nerv-state-nominal` / `active` / `caution` / `alert` / `critical` on `document.documentElement` (and a flash overlay for `critical`). Whole viewport. To tint a fragment, put the state class on that element so ambiance tokens inherit. See [Alert cascade](../css/index.md#alert-cascade).
+Applies `.nerv-state-nominal` / `active` / `caution` / `alert` / `critical` on `document.documentElement` (and a flash overlay for `critical`). Whole viewport. To tint a fragment, put the state class on that element so ambiance tokens inherit. See [Alert cascade](../css/core/alert-cascade.md).
 
 ```js
 NERV.setState('alert');
@@ -48,4 +48,4 @@ NERV.setState('alert');
 
 ## `NERV.injectScanlines`
 
-Appends `<div class="nerv-scanlines">` to `body` if none exists. Viewport-fixed. `NERV.init()` already does this. See [Scanlines](../css/index.md#scanlines).
+Appends `<div class="nerv-scanlines">` to `body` if none exists. Viewport-fixed. `NERV.init()` already does this. See [Scanlines](../css/core/effects.md#scanlines).

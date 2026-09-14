@@ -2,7 +2,7 @@
 
 Four CSS-only frame variants. Override color with `--nerv-panel-color` / `--nerv-panel-color-rgb`. Filler is the same three telemetry lines on every variant. There is no JavaScript hook.
 
-![Video feed frame](../../img/panels.png)
+![Video feed frame](../../../img/panels.png)
 
 ## Basic
 
@@ -98,4 +98,44 @@ Glow is a separate class. Pair any panel with `.nerv-glow-{name}`.
 <div class="nerv-panel nerv-glow-cyan">
   <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
 </div>
+```
+
+## Dividers
+
+Zone-separator rules. Color follows `--nerv-primary` unless a variant class is set. There is no JavaScript hook.
+
+### Horizontal
+
+<div class="nerv-docs-island">
+  <div class="nerv-divider"></div>
+</div>
+
+**Spec:** `.nerv-divider` is a horizontal rule. Thickness is `--nerv-border-width`. Glow uses the glow mixin.
+
+```html
+<div class="nerv-divider"></div>
+```
+
+### Vertical
+
+<div class="nerv-docs-island">
+  <div class="nerv-divider nerv-divider-vertical" style="height: 6rem;"></div>
+</div>
+
+**Spec:** `.nerv-divider-vertical` is the upright rule. Give it a height.
+
+```html
+<div class="nerv-divider nerv-divider-vertical"></div>
+```
+
+### Cyan
+
+`.nerv-divider-{name}` exists for every [glow color](../core/colors.md#glow-colors).
+
+<div class="nerv-docs-island">
+  <div class="nerv-divider nerv-divider-cyan"></div>
+</div>
+
+```html
+<div class="nerv-divider nerv-divider-cyan"></div>
 ```

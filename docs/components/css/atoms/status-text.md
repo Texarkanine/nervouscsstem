@@ -1,8 +1,8 @@
 # Status text
 
-Large alert labels. Severity classes set color. Animation is opt-in via [Effects](index.md#effects). CSS does not compose a suggested serving.
+Large alert labels. Severity classes set color. Animation is opt-in via [Effects](../core/effects.md). CSS does not compose a suggested serving.
 
-![Full-bleed status card](../../img/status-text.png)
+![Full-bleed status card](../../../img/status-text.png)
 
 ## Base
 
@@ -68,7 +68,7 @@ Filler is the same word on every severity.
 
 ## Danger with blink
 
-`.nerv-blink` is documented under [Blink](index.md#blink).
+`.nerv-blink` is documented under [Blink](../core/effects.md#blink).
 
 <div class="nerv-docs-island">
   <span class="nerv-status-text nerv-status-danger nerv-blink">NOMINAL</span>
@@ -80,7 +80,7 @@ Filler is the same word on every severity.
 
 ## Critical with glitch
 
-`.nerv-glitch` needs `data-text` matching the label. Documented under [Glitch](index.md#glitch).
+`.nerv-glitch` needs `data-text` matching the label. Documented under [Glitch](../core/effects.md#glitch).
 
 <div class="nerv-docs-island">
   <span class="nerv-status-text nerv-status-critical nerv-glitch" data-text="NOMINAL">NOMINAL</span>

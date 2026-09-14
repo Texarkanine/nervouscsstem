@@ -1,8 +1,8 @@
 # Bar meters
 
-Discrete bars. Fill is a percentage. CSS paints hand-authored `.nerv-bar-meter-bar` children marked with `.nerv-bar-active`. By adding JavaScript you can [build those children from `data-bars` / `data-fill`](../javascript/bar-meters.md).
+Discrete bars. Fill is a percentage. CSS paints hand-authored `.nerv-bar-meter-bar` children marked with `.nerv-bar-active`. By adding JavaScript you can [build those children from `data-bars` / `data-fill`](../../javascript/atoms/bar-meters.md).
 
-![Segmented bar indicator](../../img/bar-meters.png)
+![Segmented bar indicator](../../../img/bar-meters.png)
 
 ## Horizontal
 

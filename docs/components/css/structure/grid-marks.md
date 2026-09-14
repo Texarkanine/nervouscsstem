@@ -1,8 +1,8 @@
 # Grid marks
 
-SVG data-URI registration grids, tiled as `background-image`. Density is `background-size`. Put them on a sized box. CSS paints the grid. By adding JavaScript you can [label the axes](../javascript/grid-marks.md).
+SVG data-URI registration grids, tiled as `background-image`. Density is `background-size`. Put them on a sized box. CSS paints the grid. By adding JavaScript you can [label the axes](../../javascript/structure/grid-marks.md).
 
-![Registration grid overlay](../../img/grid-marks.png)
+![Registration grid overlay](../../../img/grid-marks.png)
 
 ## Plus
 
@@ -42,7 +42,7 @@ SVG data-URI registration grids, tiled as `background-image`. Density is `backgr
 
 ## Cyan
 
-`.nerv-grid-marks-{name}`, `.nerv-grid-marks-x-{name}`, and `.nerv-grid-marks-hex-{name}` exist for every [glow color](index.md#glow-colors).
+`.nerv-grid-marks-{name}`, `.nerv-grid-marks-x-{name}`, and `.nerv-grid-marks-hex-{name}` exist for every [glow color](../core/colors.md#glow-colors).
 
 <div class="nerv-docs-island">
   <div class="nerv-grid-marks-cyan" style="height: 10rem;"></div>

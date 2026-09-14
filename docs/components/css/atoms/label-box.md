@@ -1,6 +1,6 @@
 # Label box
 
-Skewed parallelogram mode buttons. Inner children are counter-skewed so the text stays upright. CSS paints a single button. By adding JavaScript you can [radio-toggle a group](../javascript/label-box.md).
+Skewed parallelogram mode buttons. Inner children are counter-skewed so the text stays upright. CSS paints a single button. By adding JavaScript you can [radio-toggle a group](../../javascript/atoms/label-box.md).
 
 ## Single
 

@@ -1,3 +1,3 @@
 # Components
 
-Catalog of NERV families. CSS pages are the look. JavaScript pages are the hooks. Families that paint without `nerv.js` and gain an enhancement when it is present have an entry in both folders.
+Catalog of NERV families. CSS is four layers: core, structure, atoms, heavies. JavaScript mirrors a leaf only when that family has a hook. `NERV.init`, `setState`, and `injectScanlines` live on the JavaScript section home.

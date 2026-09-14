@@ -206,7 +206,7 @@ Phosphor-outline tables. Fill, geometry, and color follow the same language as l
 
 ## Cyan
 
-`.nerv-table-{name}` exists for every [glow color](index.md#glow-colors). You can also put a color class on a `<td>` or `<tr>`.
+`.nerv-table-{name}` exists for every [glow color](../core/colors.md#glow-colors). You can also put a color class on a `<td>` or `<tr>`.
 
 <div class="nerv-docs-island">
   <table class="nerv-table nerv-table-cyan">
@@ -226,4 +226,4 @@ Phosphor-outline tables. Fill, geometry, and color follow the same language as l
 </table>
 ```
 
-[Swatch board](../../boards/tables.html)
+[Swatch board](../../../boards/tables.html)

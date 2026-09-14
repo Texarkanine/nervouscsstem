@@ -2,7 +2,7 @@
 
 CSS can scroll `.nerv-data-bg-inner`, but it cannot create that node. By adding JavaScript you inject the character grid. Without JS the inner grid is missing.
 
-![Scrolling nucleotide ticker](../../img/data-bg.png)
+![Scrolling nucleotide ticker](../../../img/data-bg.png)
 
 ## Binary
 

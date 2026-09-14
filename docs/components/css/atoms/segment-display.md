@@ -1,8 +1,8 @@
 # Segment display
 
-Seven-segment readout with a ghost all-8s overlay. CSS paints `attr(data-ghost)` if you set it yourself. By adding JavaScript you can [fill `data-ghost` from the visible text](../javascript/segment-display.md).
+Seven-segment readout with a ghost all-8s overlay. CSS paints `attr(data-ghost)` if you set it yourself. By adding JavaScript you can [fill `data-ghost` from the visible text](../../javascript/atoms/segment-display.md).
 
-![Seven-segment countdown timer](../../img/segment-display.png)
+![Seven-segment countdown timer](../../../img/segment-display.png)
 
 ## Readout
 

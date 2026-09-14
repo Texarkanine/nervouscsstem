@@ -2,7 +2,7 @@
 
 CSS bar meters paint hand-authored bars. By adding JavaScript you can build those children from `data-bars` / `data-fill`.
 
-![Segmented bar indicator](../../img/bar-meters.png)
+![Segmented bar indicator](../../../img/bar-meters.png)
 
 ## Horizontal
 
