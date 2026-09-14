@@ -1,0 +1,1 @@
+Polar radar orbit is 50cqmin on the blip, not 50% in transform (that % is the label box). Counter-rotate after translateY so labels stay screen-upright; origin is the phosphor, not the flex box. .nerv-radar cannot use cqmin on itself. ref/*.html radar is Cartesian only.

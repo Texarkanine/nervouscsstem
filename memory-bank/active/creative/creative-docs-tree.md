@@ -8,7 +8,6 @@
 - Section homes are `index.md` or `README.md`.
 - One catalog page per component *family* (all panel variants together, all list variants together). Not one class per page. Not a suggested serving.
 - Existing visual-language essays stay reachable.
-- Skill markdown copy-identity continues for every `docs/**/*.md` except `reading.md`.
 
 **Quality attributes (ranked)**
 1. Maintainability — a later page must have an obvious folder.
@@ -41,18 +40,16 @@ graph TD
     Tree --> Comp["components"]:::md
     Tree --> Boards["boards HTML"]:::asset
     Tree --> Assets["stylesheets and javascripts"]:::asset
-    Tree --> Skill["skills/nerv/docs markdown copies"]:::skill
     CSS --> Assets
     JS --> Assets
     Comp --> Boards
 ```
 
 - `docs/visual-language/` — stills-and-feel essays (existing three files).
-- `docs/css/` — CSS-only catalog (tokens, type, glow, scanlines, flicker, glitch).
-- `docs/js/` — `NERV` methods. Distinct from `docs/javascripts/` (scripts).
-- `docs/components/` — HTML component families with islands.
+- `docs/components/css/` — colors, fonts, effects, and the alert cascade on the section home; CSS family pages.
+- `docs/components/javascript/` — `NERV` method table on the section home; JS family pages. Distinct from `docs/javascripts/` (scripts).
 - Asset dirs — tracked `docs-islands.css` / `docs-init.js`; gitignored `nerv.css` / `nerv.js`.
-- Skill copies — markdown only, same relative paths after the move.
+- `skills/nerv/` is a placeholder `SKILL.md`. Catalog markdown is not copied there.
 
 ## Options Evaluated
 
@@ -73,7 +70,7 @@ Key insights:
 - `css/` vs `stylesheets/` and `js/` vs `javascripts/` is the only collision to avoid. Documentation folders must not be the asset dirs.
 - Alphabetical inferred nav puts `components` first. That is exactly the case “`.pages` when absolutely necessary.”
 - `index.md` is the MkDocs/Material default for section homes. `README.md` would need extra config. Use `index.md`.
-- Two radar documents are different jobs: `visual-language/radar.md` is the timing essay already in tree; `components/radar.md` is the usage island page issue #9 requires. Cross-link. Do not merge.
+- Two radar documents are different jobs: `visual-language/radar.md` is the timing essay already in tree; `components/css/radar.md` and `components/javascript/radar.md` are the usage pages issue #9 requires. Cross-link. Do not merge.
 
 ## Decision
 
@@ -84,22 +81,29 @@ Key insights:
 - Putting JS docs in `docs/javascripts/` seemed to satisfy “JS in a folder” and then inferred nav lists `nerv.js`: **checked** — markdown goes in `docs/js/` only.
 
 **Selected**: Option B — layered folders, `index.md` section homes, one root `.pages`, `not_in_nav` for non-catalog markdown/HTML.
+
+**Operator correction 2026-09-13 (later):** CSS, JS, and a nested `components/css`+`components/js` was the same split twice. Flattened briefly to `docs/css/` + `docs/js/`.
+
+**Operator correction 2026-09-13 (latest):** Wanted IA is `components/css` and `components/javascript` only. Tokens/type/glow live on `components/css/index.md`; the `NERV` method table lives on `components/javascript/index.md`. No top-level `docs/css/` or `docs/js/`. Dual families have an entry in both. Nested `.pages` are not used — awesome-pages infers child nav. One root `docs/.pages` only. Sidebar is the TOC; pages do not repeat it.
+
+**Operator correction 2026-09-13 (layers):** Nested CSS layers `core` / `structure` / `atoms` / `heavies`. Core is paint (colors + folded gradients, typography, effects, alert cascade). Structure is regions (panels absorb dividers; MAGI and grid-marks are siblings). Atoms are one-job instruments. Heavies are named wholes of higher atomic weight (radar, reticles, JS-only data-bg) — not optional flourishes. JS mirrors only when a leaf has a hook. No nested `.pages`.
+
 **Rationale**: Maintainability and fitness beat A’s fewer moves. C pollutes URLs to avoid a plugin the operator already allowed for ordering.
 **Tradeoff**: One new docs dependency (`mkdocs-awesome-pages-plugin`). Visual-language file order can be a second `.pages` only if alpha puts atomic-elements before design-language and that proves annoying; default to alpha inside the folder unless a `.pages` is required.
 
 ## Implementation Notes
 
 - Enable Material `navigation.indexes` next to existing `navigation.sections`.
-- Root `docs/.pages` order: `index.md`, `visual-language`, `css`, `js`, `components`, `service-manual.md`. Hide `reading.md` via `not_in_nav`, not via `.pages` hide, so it still builds.
+- Root `docs/.pages` order: `index.md`, `visual-language`, `components`, `service-manual.md`. Hide `reading.md` via `not_in_nav`, not via `.pages` hide, so it still builds.
 - **Catalog inventory**
   - `visual-language/index.md` — short section home linking the three essays.
   - `visual-language/design-language.md`, `atomic-elements.md`, `radar.md` — move, fix relative `img/` links (`../img/`).
   - `css/index.md` — tokens, type, then glow as modifier classes (one example per glow *kind*: text, box, drop — not every color).
-  - `css/effects.md` — scanlines, `.nerv-flicker` / `flicker-fast` / `flicker-staccato` / `.nerv-blink`, `.nerv-glitch`. Current names. Link the effects board at the bottom.
+  - `components/css/index.md` — colors, fonts, effects (including flicker family, blink, glitch, scanlines), alert cascade. Link the effects board from Effects.
   - `js/index.md` — scoped `NERV.init*` and `setState`. State that Material pages must not call `NERV.init()`.
   - `components/` one family per file: `panels`, `bar-meters`, `lists`, `tables`, `forms`, `cartouches`, `hex-grid`, `radar`, `stripe-bars`, `dividers`, `grid-marks`, `reticles`, `magi`, `label-box`, `status-text`, `segment-display`, `gradients`, `data-bg`, `states`.
   - `components/index.md` — section home, not a serving.
-  - `components/states.md` — `.nerv-state-*` token cascade only. Not the alert-cascade viewport.
+  - Alert cascade lives on `components/css/index.md` (`#alert-cascade`). No sibling `states.md`. `NERV.setState` is on the JavaScript landing.
 - Gitignore: keep `docs/stylesheets/nerv.css` and `docs/javascripts/nerv.js`; **delete** the directory-wide `docs/stylesheets` and `docs/javascripts` ignores; track `docs-islands.css` and `docs-init.js`.
 - Move `docs/css.md` → `docs/css/index.md`. Move `docs/components/*.md` in place (already correct folder).
 - `docs/index.md` links become folder links.

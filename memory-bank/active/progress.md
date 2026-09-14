@@ -134,4 +134,18 @@ Fill out the documentation site as a canonical usage catalog for every design-sy
 * Insights
     - See the reflection document.
 
+## 2026-09-13 - POST-REFLECT - catalog IA + radar (in progress)
+
+* Work completed
+    - Operator iterated on catalog IA after reflect: effects and alert cascade folded onto the CSS landing, then a four-layer split was accepted.
+    - Radar polar labelling: orbit `50cqmin` on the blip (not `50%` in transform); phosphor origin; counter-rotate. Cartesian contact is the phosphor. `layoutRadarBlips` uses `transform-origin`. Label-below/above center on the phosphor.
+    - Fourth layer named **heavies** (not flourishes): bigger than atoms, not decomposable, not optional. Radar is a live status surface.
+* Decisions made
+    - Layers: core (colors, typography, effects, alert cascade), structure, atoms, heavies.
+    - Fold dividers into panels. Fold gradients into colors. MAGI sibling of panels. Grid-marks stay a structure leaf.
+    - JS mirrors only when that leaf has a hook. `NERV.init` / `setState` / `injectScanlines` stay on the JS section home.
+    - No nested `.pages`. Alphabetical inside a layer.
+* Insights
+    - “Flourishes / delete it and the console still reads” is the wrong test. Heavies are still elements, higher atomic weight. Molecules would be the wrong chemistry word.
+
 

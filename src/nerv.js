@@ -442,8 +442,9 @@
 
     /**
      * Sets `--nerv-radar-blip-phase` on each `.nerv-radar-blip` from pixel position: bearing
-     * only (clockwise from top, 0–1). Radius does not change hit timing along a ray. Skips
-     * `data-nerv-radar-manual-phase` and `.nerv-radar-blip-polar` (phase from CSS).
+     * of the phosphor (`transform-origin`) clockwise from top, 0–1. Radius does not change
+     * hit timing along a ray. Skips `data-nerv-radar-manual-phase` and `.nerv-radar-blip-polar`
+     * (phase from CSS).
      *
      * @param {HTMLElement} radarEl - `.nerv-radar` container
      */
@@ -463,8 +464,19 @@
         if (b.classList.contains('nerv-radar-blip-polar')) continue;
 
         var br = b.getBoundingClientRect();
-        var bx = br.left + br.width / 2;
-        var by = br.top + br.height / 2;
+        var origin = (
+          typeof getComputedStyle === 'function' ? getComputedStyle(b).transformOrigin : '50% 50%'
+        )
+          .trim()
+          .split(/\s+/);
+        var ox = parseFloat(origin[0]);
+        var oy = parseFloat(origin[1]);
+        if (isNaN(ox) || isNaN(oy)) {
+          ox = br.width / 2;
+          oy = br.height / 2;
+        }
+        var bx = br.left + ox;
+        var by = br.top + oy;
         var dx = bx - cx;
         var dy = by - cy;
         var bearing = Math.atan2(dx, -dy);

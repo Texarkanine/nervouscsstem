@@ -16,7 +16,7 @@ After reading a catalog page in isolation, I want a swatch board of major combin
 
 ### Use-Case 3
 
-I browse the site by directory: visual language, CSS, JS, and components are separate folders. Section homes are `README.md` or `index.md`. There is no hand-written `nav:` tree in `properdocs.yml`.
+I browse the site by directory: visual language, then components. CSS is four layers — core (colors, typography, effects, alert cascade), structure, atoms, heavies. JavaScript mirrors a leaf only when that family has a hook; `NERV.init` / `setState` / `injectScanlines` live on the JavaScript section home. Section homes are `index.md`. There is no hand-written `nav:` tree in `properdocs.yml`. One root `docs/.pages` sets top-level order; nested folders are inferred. The sidebar is the table of contents; pages do not repeat it.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ I browse the site by directory: visual language, CSS, JS, and components are sep
 6. Where an existing `docs/img/` still illustrates a component: rename the file so the name names that component; place it in the section as name/variant → NGE still → example island → spec + HTML → extra detail only if needed. Update existing taxonomy links after rename.
 7. Remove the explicit `nav:` tree from `properdocs.yml`. Directory hierarchy drives navigation. CSS docs and JS docs live in separate folders. awesome-pages / `.pages` only when ordering cannot come from the tree. Section home pages are `README.md` or `index.md`.
 8. Host the five swatch-board HTML pages (`ref-foundation.html`, `ref-lists.html`, `ref-tables.html`, `ref-forms.html`, `ref-effects.html`) on the documentation site as visual-inspiration boards. Link each from the bottom of the matching catalog page. Keep them out of the installable skill. GitHub Pages will serve the HTML (dump into `site/` via Actions if ProperDocs will not serve plain HTML itself).
-9. New catalog markdown in `docs/` must stay in lockstep with `skills/nerv/docs/` (existing skill copy-identity, skipping `docs/reading.md`). Swatch-board HTML is repo/Pages only.
+9. Catalog markdown lives only under `docs/`. `skills/nerv/` is a placeholder `SKILL.md`; do not maintain a second copy. Swatch-board HTML is repo/Pages only.
 10. No new tests. Boards, sidebar order, and `not_in_nav` are design-time. Operator deletes `ref/` originals later; this ticket does not.
 
 ## Constraints
@@ -38,7 +38,7 @@ I browse the site by directory: visual language, CSS, JS, and components are sep
 3. Motion-class rename (flicker / pulse) is out of scope. Investigation is [issue #12](https://github.com/Texarkanine/nervouscsstem/issues/12). Document current class names.
 4. Screenshot library stays Git LFS under `docs/img/**`. Do not copy stills or swatch HTML into `skills/nerv/`.
 5. No image files in the CSS product, no canvas, `.nerv-` prefix, `prefers-reduced-motion` / `prefers-contrast` unchanged.
-6. `docs/reading.md` is research bibliography; skill copy-identity already skips it.
+6. `docs/reading.md` is research bibliography; it stays out of the skill with the rest of `docs/`.
 
 ## Acceptance Criteria
 
@@ -47,4 +47,4 @@ I browse the site by directory: visual language, CSS, JS, and components are sep
 3. Matching NGE stills that illustrate a documented component are renamed and linked in the agreed section order; taxonomy pages that pointed at the old filenames still resolve.
 4. Site navigation comes from the `docs/` directory tree, not `properdocs.yml` `nav:`. CSS and JS documentation are in separate folders.
 5. The five swatch boards are reachable from the matching catalog pages on GitHub Pages and are absent from the skill install.
-6. `skills/nerv/docs/**/*.md` matches `docs/**/*.md` except `reading.md`, as today.
+6. The installable skill does not carry a `docs/` tree. Usage catalog is the ProperDocs site.

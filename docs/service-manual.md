@@ -15,9 +15,10 @@ graph TD
     Md["docs markdown"]:::repo --> Site["ProperDocs site"]
     Img["docs/img PNG library"]:::lfs --> Lfs["Git LFS repo only"]
     Plan["planning/selected-ref-images"]:::lfs --> Lfs
-    Md --> Skill["npx skills install"]
+    Skill["skills/nerv SKILL.md placeholder"]:::skill
     Img -.->|"do not copy"] Skill
     Plan -.->|"do not copy"] Skill
+    Md -.->|"do not copy yet"] Skill
 ```
 
 [`.gitattributes`](https://github.com/Texarkanine/nervouscsstem/blob/main/.gitattributes) is the control surface:
@@ -29,10 +30,16 @@ Do not add a repo-wide `*.png` LFS rule. A global glob would turn a tiny PNG we 
 
 Do not put a file meant to travel with the skill under `docs/img/` or `planning/selected-ref-images/`. Give skill-shipped media a different path that is **not** in `.gitattributes`. Until that path exists, do not invent one in a drive-by; M5 owns the split.
 
-[`visual-language/design-language.md`](visual-language/design-language.md) and [`visual-language/atomic-elements.md`](visual-language/atomic-elements.md) inline almost every still via `../img/…`. Copying `docs/` wholesale into a skill would either ship the whole library or ship LFS pointer files that do not render. That is the SLOBAC split: repo-only docs (the stills, and any page that is only a gallery of them) stay in this git tree; the skill gets prose plus, at most, a couple of deliberately chosen images from a non-LFS path.
+[`visual-language/design-language.md`](visual-language/design-language.md) and [`visual-language/atomic-elements.md`](visual-language/atomic-elements.md) inline stills via `../img/…`. The catalog lives only under `docs/` so those stills can stay Git LFS. `skills/nerv/` is a placeholder `SKILL.md` until a later pass promotes selected pages into the skill as ordinary blobs — not LFS, and not a second copy of this tree.
 
 After clone: `git lfs install` once per machine, `git lfs pull` if the stills are missing.
 
 ## Authoring source of truth
 
-`docs/` stays the editor-facing tree. The skill may carry a copy or a build-time inclusion. Do not relocate this directory into the skill.
+`docs/` is the only documentation tree. ProperDocs builds from it. Do not copy it into `skills/nerv/`. When the catalog is mature enough to ship in the skill, promote selected pages — do not invent a lockstep copy.
+
+## Catalog live examples
+
+Material pages must not call `NERV.init()`. That method injects viewport-fixed scanlines on `body` and runs every sub-initializer against the document. Islands opt in with `data-nerv-init`; `docs-init.js` calls the matching `NERV.init*(island)` on that element only. Standalone swatch boards may call `NERV.init()` — they are a NERV viewport.
+
+That rule is authoring, not catalog copy. User-facing pages teach `NERV.init()` vs scoped `init*(container)`. Do not explain Material, `docs-init.js`, or `data-nerv-init` in catalog prose. Live demo markup may still carry `data-nerv-init` so this site can initialize fragments.

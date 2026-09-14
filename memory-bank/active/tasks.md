@@ -6,7 +6,7 @@
 
 Fill out the ProperDocs site as the teaching surface for every design-system capability ([issue #9](https://github.com/Texarkanine/nervouscsstem/issues/9)). Catalog pages teach isolation (variants together, constant filler, modifiers last as classes). Five `ref/` swatch HTML pages become unthemed void boards on Pages, not in the skill. Motion rename is [issue #12](https://github.com/Texarkanine/nervouscsstem/issues/12).
 
-Operator 2026-09-13: this work is user-facing prose (markdown and visual). No new tests. Sidebar order, `not_in_nav`, board HTML, and ProperDocs copying extra HTML are design-time choices; the HTML copy was probed and is vendor behavior. Do not delete `ref/` originals (operator will).
+Operator 2026-09-13: this work is user-facing prose (markdown and visual). No new tests. Sidebar order, `not_in_nav`, board HTML, and ProperDocs copying extra HTML are design-time choices; the HTML copy was probed and is vendor behavior. Do not delete `ref/` originals (operator will). Catalog lives only under `docs/`. Do not copy it into `skills/nerv/`. The old skill copy-identity test was a prose-pin; it is gone.
 
 ## Pinned Info
 
@@ -21,18 +21,24 @@ graph TD
     classDef void fill:#111,stroke:#ffaa00,color:#ffaa00;
 
     Home["docs/index.md"]:::md --> VL["visual-language/"]:::md
-    Home --> CSS["css/"]:::md
-    Home --> JS["js/"]:::md
     Home --> Comp["components/"]:::md
-    CSS --> Glow["tokens type glow"]:::md
-    CSS --> FX["effects.md"]:::md
-    Comp --> BoardLink["swatch board link"]:::md
+    Comp --> CssFam["components/css"]:::md
+    Comp --> JsFam["components/javascript"]:::md
+    CssFam --> Core["core"]:::md
+    CssFam --> Structure["structure"]:::md
+    CssFam --> Atoms["atoms"]:::md
+    CssFam --> Heavies["heavies"]:::md
+    JsFam --> JStruct["structure leaves"]:::md
+    JsFam --> JAtoms["atoms leaves"]:::md
+    JsFam --> JHeavies["heavies leaves"]:::md
+    Core --> BoardLink["swatch board link"]:::md
     BoardLink --> Boards["docs/boards/*.html"]:::void
     Boards --> Site["site/boards copied unaltered"]:::void
     Assets["stylesheets/ javascripts/"]:::asset
-    CSS --> Assets
-    JS --> Assets
+    Home --> Assets
 ```
+
+Post-reflect 2026-09-13: four CSS layers core / structure / atoms / heavies. JS mirrors only when a leaf has a hook. Dividers fold into panels. Gradients fold into colors.
 
 Creative refs: `memory-bank/active/creative/creative-docs-tree.md`, `memory-bank/active/creative/creative-swatch-boards.md`.
 
@@ -42,7 +48,7 @@ Creative refs: `memory-bank/active/creative/creative-docs-tree.md`, `memory-bank
 - `docs/` markdown tree: catalog pages, section homes, moves of existing Using and visual-language files
 - `properdocs.yml`: drop `nav:`; `navigation.indexes`; `not_in_nav` for boards and `reading.md`; awesome-pages plugin
 - `docs/.pages`: root sidebar order (design-time, not tested)
-- `skills/nerv/docs/`: keep in lockstep with `docs/**/*.md` except `reading.md` (existing `skill-contract.test.mjs`; no new assertions)
+- `skills/nerv/SKILL.md`: placeholder skill. No docs tree.
 - `docs/img/` LFS stills: rename those that illustrate a catalogued component; retarget taxonomy links
 - `docs/boards/*.html`: five adapted swatch pages (void HTML, visual prose)
 - `ref/*.html`: source of boards this ticket; operator deletes the originals later
@@ -68,7 +74,7 @@ Creative refs: `memory-bank/active/creative/creative-docs-tree.md`, `memory-bank
 
 ### Invariants
 - Must preserve `.nerv-` prefix, no canvas, no product image files, `prefers-reduced-motion` / `prefers-contrast`
-- Must preserve existing skill markdown copy-identity except `reading.md`
+- Must not copy `docs/` into `skills/nerv/`
 - Must preserve dual-load of `nerv.css` / `nerv.js`
 - Must not call `NERV.init()` from Material docs chrome
 - Boards remain unthemed void HTML (ProperDocs copy already probed; do not list as `extra_templates`)

@@ -1,0 +1,1 @@
+MkDocs extra_templates Jinja-wraps extra HTML so boards stay static copies; extra_css is not injected into them; CDN nerv.js is async so wrap NERV.init for nerv-docs:ready

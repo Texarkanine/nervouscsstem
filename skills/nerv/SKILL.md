@@ -9,11 +9,7 @@ metadata:
 
 Placeholder skill. Apply the NERV visual language (`.nerv-` CSS, optional `nerv.js` orchestration) to a host page. Constraints: no canvas/WebGL, no image files in the stylesheet, `prefers-reduced-motion` and `prefers-contrast` respected.
 
-Authoring source of truth remains the repository `docs/` tree. This skill carries a markdown copy of that tree so installers get the docs without cloning the whole repo.
-
-## Docs in this skill
-
-Read [docs/index.md](docs/index.md) first. Using pages (CSS, panels, bar meters) show preview / spec / code. Live rendered examples and the screenshot library live on [GitHub Pages](https://texarkanine.github.io/nervouscsstem/). Do not expect `img/` stills inside this skill.
+Usage catalog, stills, and live examples live on the [documentation site](https://texarkanine.github.io/nervouscsstem/). This skill does not carry a docs tree yet.
 
 ## Install
 

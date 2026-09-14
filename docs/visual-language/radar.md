@@ -1,7 +1,7 @@
 # NERV radar (display + sweep + blips)
 
 **Source of truth:** `src/_radar.scss` (compiled into `dist/nerv.css` via `src/nerv.scss`).
-**Usage islands:** [components/radar.md](../components/radar.md).
+**Catalog:** [CSS radar](../components/css/radar.md), [JavaScript radar](../components/javascript/radar.md).
 **Live combination:** `ref/ref-patterns.html` (tactical scope block).
 **Optional JS:** `src/nerv.js` — sweep phase + Cartesian blip phase (see below).
 
@@ -69,7 +69,8 @@ Older versions aligned the **50%** keyframe with the sweep. The current model pu
 
 | Token | Purpose |
 |--------|---------|
-| `--nerv-radar-blip-orbit` | Polar: radius from disc center to dot (`calc(50% - 0.9rem)` default). |
+| `--nerv-radar-blip-dot` | Phosphor disc size (`0.45rem` default). Polar transform-origin is this disc’s center. |
+| `--nerv-radar-blip-orbit` | Polar: radius from disc center to phosphor. Default `calc(50cqmin - 0.9rem)` on the **blip** (`.nerv-radar` is the container). A `%` length in `transform` is the **label box**, not the disc. |
 | `--nerv-radar-blip-sweep-align` | Fine-tune blip vs sweep (turns). |
 | `--nerv-radar-blip-opacity-floor` | Opacity at end of fade / tail (default **0**; raised under `prefers-contrast: more`). |
 | `--nerv-radar-blip-phase` | Bearing 0–1 for delay (set by CSS for polar, or JS for auto Cartesian). |
@@ -89,14 +90,15 @@ Root timing: **`--nerv-radar-duration`**, **`--nerv-animation-speed`** (shared w
 
 - Set **`--nerv-radar-blip-bear-turn`** (0–1, unitless).
 - Phase is **`--nerv-radar-blip-phase: var(--nerv-radar-blip-bear-turn)`**.
-- **`transform`**: `translate(-50%,-50%) rotate(bear × 1turn) translateY(-orbit)` so the dot sits on a true circle; bearing matches pulse phase by construction.
+- Origin is the **phosphor**, not the flex box. **`transform`**: translate origin to disc center → `rotate(bear × 1turn)` → `translateY(-orbit)` → **`rotate(bear × -1turn)`** so the label stays screen-upright. Label-side modifiers shift origin to the matching edge of `::before`.
+- Do **not** put `cqmin` on `.nerv-radar` itself — an element cannot query itself. Orbit lives on the blip.
+- `.nerv-radar` has **`overflow: hidden`**. Long labels past the rim clip; point labels toward the interior.
 
 ### Cartesian — `top` / `left` %
 
-- Container uses **`transform: translate(-50%,-50%)`** so **`top` / `left`** are the **contact center** (middle of the phosphor dot intent).
-- **`data-nerv-radar-auto-blips`** on `.nerv-radar` runs **`NERV.initRadarBlipAutoLayout`**: **`ResizeObserver`** + layout passes call **`layoutRadarBlips`**, which sets **`--nerv-radar-blip-phase`** from `atan2` (bearing only; **range along the ray does not change timing**).
+- Same phosphor origin as polar: **`top` / `left`** are the **contact**, labels hang off. Empty dots and labeled Cartesian share that geometry.
+- **`data-nerv-radar-auto-blips`** on `.nerv-radar` runs **`NERV.initRadarBlipAutoLayout`**: **`ResizeObserver`** + layout passes call **`layoutRadarBlips`**, which sets **`--nerv-radar-blip-phase`** from `atan2` of **`transform-origin`** (the phosphor). Bearing only; **range along the ray does not change timing**.
 - Skipped for: **`data-nerv-radar-manual-phase`**, **`.nerv-radar-blip-polar`**.
-- **Caveat:** labeled blips use the **whole** flex box for `getBoundingClientRect`; for precise bearing with long labels, use **polar** or **manual** phase.
 
 ---
 
@@ -106,6 +108,7 @@ Root timing: **`--nerv-radar-duration`**, **`--nerv-animation-speed`** (shared w
   - **`.nerv-radar-blip-label-left` / `-right`** (default row = label right of dot)
   - **`.nerv-radar-blip-label-above` / `-below`**
   - **`.nerv-radar-blip-label-nowrap`**, **`.nerv-radar-blip-label-align-end`**
+- Polar + a label-side modifier re-anchors origin on the phosphor so the **dot** stays on the ring while the label hangs off that side. **`-below` / `-above`** center the caption on the phosphor.
 - **`.nerv-glow-text-*`** only adds **text-shadow**. Pair with **`.nerv-text-*`** for **`color`** (see `_glow.scss` / `ref/ref-foundation.html`).
 
 ---

@@ -8,7 +8,7 @@ The architecture is five layers with strict upward dependency flow: **Foundation
 
 Reference HTML pages in `ref/` serve as visual test fixtures. Each page shows only its own layer's features — no duplication of prior layers' content. Where a layer needs backdrop content to be visible (e.g., scanlines need text underneath), the page uses distinct text that is clearly not a copy of earlier pages.
 
-The documentation site is the teaching surface. Five `docs/boards/*.html` files are published void swatches adapted from matching `ref/` pages; they may drift. `ref/` stays the fixture. Do not list boards as MkDocs `extra_templates` (that Jinja-processes them into Material). Material docs chrome must not call `NERV.init()`.
+The documentation site is the teaching surface, authored only under `docs/`. Five `docs/boards/*.html` files are published void swatches adapted from matching `ref/` pages; they may drift. `ref/` stays the fixture. Do not list boards as MkDocs `extra_templates` (that Jinja-processes them into Material). Material docs chrome must not call `NERV.init()`. `skills/nerv/` is a placeholder `SKILL.md` until selected pages are promoted into the skill; do not lockstep-copy this tree.
 
 ## SCSS Module System
 
