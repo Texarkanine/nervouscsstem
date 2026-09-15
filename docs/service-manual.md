@@ -1,6 +1,6 @@
 # Service manual
 
-Scratch notes for things this repo must not forget. This is not the design-system spec. Spec lives in [`visual-language/design-language.md`](visual-language/design-language.md), [`visual-language/atomic-elements.md`](visual-language/atomic-elements.md), and [`visual-language/radar.md`](visual-language/radar.md). Add a section here when a future milestone would otherwise re-learn it the hard way.
+Scratch notes for things this repo must not forget. This is not the design-system spec. Spec lives in [`visual-language/design-language.md`](visual-language/design-language.md), [`visual-language/atomic-elements.md`](visual-language/atomic-elements.md), and [`visual-language/radar.md`](visual-language/radar.md) (radar timing). Radar usage is the catalog. Add a section here when a future milestone would otherwise re-learn it the hard way.
 
 ## Screenshot library vs skill install
 

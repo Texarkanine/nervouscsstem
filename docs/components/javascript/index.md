@@ -26,8 +26,9 @@ Each function looks up its own selectors inside the container you pass.
 | `NERV.initMagiPanels(container)` | Set `grid-template-columns` from the count of `.nerv-magi-system` children |
 | `NERV.initDataBackgrounds(container)` | Inject `.nerv-data-bg-inner` character grids |
 | `NERV.initGridLabels(container)` | Axis labels on a `.nerv-grid-marks` element |
-| `NERV.initRadarBlipAutoLayout(radarEl)` | Cartesian blip phase from bearing. Pair with `data-nerv-radar-auto-blips` |
-| `NERV.initRadarSweepSync(radarEl)` | Keep sweep and blips in one period. Opt-in: `data-nerv-radar-sync` |
+| `NERV.initRadarBlipAutoLayout(radarEl)` | Cartesian blip phase from phosphor bearing. Pair with `data-nerv-radar-auto-blips` |
+| `NERV.layoutRadarBlips(radarEl)` | Set Cartesian blip phases (call after DOM changes) |
+| `NERV.initRadarSweepSync(radarEl)` | Write `--nerv-radar-sweep-phase` from the sweep animation. Opt-in: `data-nerv-radar-sync` |
 
 ```html
 <div id="meters">

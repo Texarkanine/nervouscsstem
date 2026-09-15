@@ -12,7 +12,7 @@ CSS radar is the disc, sweep, and polar blips. By adding JavaScript you can sync
   </div>
 </div>
 
-**Spec:** `NERV.initRadarSweepSync` writes `--nerv-radar-sweep-phase` from the sweep animation so other UI can read it. Opt-in: `data-nerv-radar-sync`. Polar placement is CSS; this hook does not move the blip.
+**Spec:** `NERV.initRadarSweepSync` writes `--nerv-radar-sweep-phase` (0–1) from WAAPI on `.nerv-radar-sweep` so other UI can read it. Opt-in: `data-nerv-radar-sync`. Polar placement is CSS; this hook does not move the blip.
 
 ```html
 <div class="nerv-radar" data-nerv-radar-sync>
@@ -35,7 +35,7 @@ CSS radar is the disc, sweep, and polar blips. By adding JavaScript you can sync
   </div>
 </div>
 
-**Spec:** `NERV.initRadarBlipAutoLayout` sets `--nerv-radar-blip-phase` from the phosphor’s bearing (skips polar blips). `data-nerv-radar-manual-phase` skips auto layout for that blip. Opt-in: `data-nerv-radar-auto-blips`. Cartesian `top` / `left` is the phosphor.
+**Spec:** `NERV.initRadarBlipAutoLayout` uses `ResizeObserver` and calls `NERV.layoutRadarBlips`, which sets `--nerv-radar-blip-phase` from `atan2` of the phosphor’s `transform-origin` (skips polar blips). Bearing only; range along the ray does not change timing. `data-nerv-radar-manual-phase` skips auto layout for that blip. Opt-in: `data-nerv-radar-auto-blips`. Call `NERV.layoutRadarBlips` yourself after DOM changes. Cartesian `top` / `left` is the phosphor.
 
 ```html
 <div class="nerv-radar" data-nerv-radar-auto-blips>

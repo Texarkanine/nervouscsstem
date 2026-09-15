@@ -1,6 +1,7 @@
 /// _radar.scss — Tactical radar disc, rotating sweep, and phased blips.
 ///
-/// **Long-form narrative:** `docs/visual-language/radar.md` (timing model, polar vs Cartesian, JS hooks, a11y).
+/// **Timing why:** `docs/visual-language/radar.md`.
+/// **Usage:** `docs/components/css/heavies/radar.md`, `docs/components/javascript/heavies/radar.md`.
 ///
 /// **Visual stack:** rings + crosshairs + 45° lines on `.nerv-radar` (`::before` / `::after`);
 /// conic “wedge” on `.nerv-radar-sweep` rotated by `@keyframes nerv-radar-sweep`. Sweep trails
@@ -18,7 +19,7 @@
 /// **Classes:** `.nerv-radar`, `.nerv-radar-sweep`, `.nerv-radar-blip` (dot `::before`, label in flex).
 /// Label modifiers: `.nerv-radar-blip-label-{left|above|below}`, `-nowrap`, `-align-end`.
 ///
-/// **Tokens (see also `docs/visual-language/radar.md` §4):** `--nerv-primary`, `--nerv-primary-rgb`,
+/// **Tokens (see CSS catalog):** `--nerv-primary`, `--nerv-primary-rgb`,
 /// `--nerv-radar-duration`, `--nerv-animation-speed`; on `.nerv-radar` defaults for sweep align,
 /// opacity floor, label layout; polar `--nerv-radar-blip-orbit` is `50cqmin` on the blip.
 
