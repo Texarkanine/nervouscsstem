@@ -205,4 +205,11 @@ No new dependencies. Browser features (`@property`, `sin()`, unprefixed `mask`, 
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [ ] QA: FAIL, Build must rerun (see QA Results)
+
+## QA Results
+
+Result: **FAIL**. Two documentation fixes are needed. The implementation code passes review. Details are in `.qa-validation-status`.
+
+- [ ] Add wave graphs to the list of color-modifier families in `docs/components/css/core/colors.md` ("Glow colors"). `.nerv-wave-{name}` is the only `$nerv-colors` modifier loop missing from that list.
+- [ ] Correct the "Older browsers show the traces holding still" claim in `docs/components/css/heavies/wave-graph.md`. Chromium 85–119 has only `-webkit-mask-*`, so the stroke `::before` paints a solid color block there. Fix the wording, or make the fallback true (for example, gate the stroke on `@supports`).

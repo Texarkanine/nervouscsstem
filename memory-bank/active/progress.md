@@ -60,3 +60,12 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
 * Insights
     - Cross-axis error overstates visual error on steep slopes; perpendicular distance is the honest "on the line" metric. Firefox snaps mask position to device pixels (≤0.5px along travel).
     - The geometry tests (evaluating the shipped Bézier path) guard the real failure mode—points drifting off the line—better than shape assertions.
+
+## 2026-09-23 - QA - COMPLETE (FAIL)
+
+* Result: `FAIL`. Build must rerun for two documentation fixes. No plan change is needed.
+* Findings
+    - The code passes review: all of B1–B18 are implemented, and stroke and point share one phase expression with matching signs and scale in both orientations. No KISS, DRY, YAGNI, or integrity issues. QA reran `npm test` (392/392) and the strict docs build, and both pass. Lint errors predate this task.
+    - Blocking: the color-modifier family list in `colors.md` omits `.nerv-wave-{name}`.
+    - Blocking: the wave-graph page says older browsers show static traces, but Chromium 85–119 (prefixed mask only) paints a solid block.
+    - Advisory: summem nap churn landed in the `feat:` commit. The `nerv.scss` header comment "not @use" was already stale before this task.
