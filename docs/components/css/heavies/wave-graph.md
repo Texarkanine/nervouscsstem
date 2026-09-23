@@ -1,6 +1,6 @@
 # Wave graph
 
-CSS wave graph is a box of scrolling sine traces, with dots that ride their trace up and down. Every number is a custom property. There is no JavaScript hook. It needs `@property` and CSS `sin()` (Chrome 120, Firefox 128, Safari 16.4 or newer). Older browsers show the traces holding still. The oscillograph displays it draws on are in the [design language](../../../visual-language/design-language.md#7-waveform-oscillograph-display) and the [atomic elements](../../../visual-language/atomic-elements.md).
+CSS wave graph is a box of scrolling sine traces, with dots that ride their trace up and down. Every number is a custom property. There is no JavaScript hook. It needs `@property`, CSS `sin()`, and unprefixed `mask` (Chrome 120, Firefox 128, Safari 16.4 or newer). Without `@property` the traces hold still. Without unprefixed `mask` they are not drawn at all. The oscillograph displays it draws on are in the [design language](../../../visual-language/design-language.md#7-waveform-oscillograph-display) and the [atomic elements](../../../visual-language/atomic-elements.md).
 
 ![Sync waveform with ±5 axis and timecode](../../../img/wave-graph.png)
 

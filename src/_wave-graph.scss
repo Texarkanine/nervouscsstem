@@ -164,7 +164,6 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
   content: '';
   position: absolute;
   inset: 0;
-  background-color: var(--nerv-wave-color);
   mask-image: _wave-mask(false, $_stroke);
   mask-repeat: repeat-x;
   // Cross size = amplitude × 200cq: 4 amplitudes, the viewBox's ±2. Points offset by
@@ -175,6 +174,14 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
   mask-position:
     calc(-1 * (var(--nerv-wave-phase) + var(--nerv-wave-t)) * var(--nerv-wave-wavelength) * 100cqw)
     center;
+}
+
+// Paint only through a mask. Where unprefixed mask is missing (Chromium < 120), an unmasked
+// ::before would be a solid block over the box and whatever it overlays.
+@supports (mask-image: none) {
+  .nerv-wave::before {
+    background-color: var(--nerv-wave-color);
+  }
 }
 
 .nerv-wave-point {

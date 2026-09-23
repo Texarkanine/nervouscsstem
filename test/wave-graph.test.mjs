@@ -265,6 +265,17 @@ describe('Wave graph — API surface', () => {
     assert.doesNotMatch(css, /\.nerv-wave-graph(-vertical)?::(before|after)/, '.nerv-wave-graph must not use its pseudo-elements');
   });
 
+  it('stroke paints only where unprefixed mask is supported', () => {
+    // Without mask support (Chromium < 120 only has -webkit-mask-*), a painted ::before would
+    // cover the box — and the host UI under it — with a solid block of wave color.
+    for (const selector of [H_STROKE, V_STROKE]) {
+      assert.doesNotMatch(rule(selector), /background/, `${selector} must not paint outside @supports`);
+    }
+    const idx = css.search(/@supports\s*\(mask-image:\s*none\)/);
+    assert.ok(idx !== -1, 'missing @supports (mask-image: none)');
+    assert.match(rule(H_STROKE, braced(css, idx)) ?? '', /background-color:\s*var\(--nerv-wave-color\)/);
+  });
+
   it('glow filter sits on .nerv-wave, not on the masked stroke', () => {
     assert.match(rule('.nerv-wave') ?? '', /filter:[^;]*drop-shadow[^;]*--nerv-wave-color/);
     assert.doesNotMatch(rule(H_STROKE), /filter/, 'a filter on the masked element is cut away by its own mask');
