@@ -134,7 +134,7 @@ graph LR
 3. Single-source variant → build → `site/`; run Checks A and B; record per-page results in `progress.md`.
 4. Confirm no `nerv-docs-island` string remains in `docs/components/**/*.md` and scanlines is still a plain fence.
 
-### 6. Service manual — prose/policy
+### ✅ 6. Service manual — prose/policy
 
 - Files: `docs/service-manual.md`
 - No tests: prose/policy artifact
@@ -142,7 +142,7 @@ graph LR
 1. In "Catalog live examples", document: write one ```` ```html island ```` fence; `init="<kind>"` → scoped init via `docs-init.js`; `state="<name>"` tints the island; `<script>` stays in the copy and is stripped from the island; scanlines stays a plain `html` fence; bad options fail the build; formatter lives in `scripts/nervouscsstem_docs/`, tests via `uv run python -m unittest discover -s test -v`.
 2. Replace the "Live demo markup may still carry `data-nerv-init`" sentence.
 
-### 7. Memory bank persistent files — prose/policy
+### ✅ 7. Memory bank persistent files — prose/policy
 
 - Files: `memory-bank/systemPatterns.md`, `memory-bank/techContext.md`
 - No tests: prose/policy artifact
@@ -150,7 +150,7 @@ graph LR
 1. `systemPatterns.md`: replace the island+fence sentence and "Generating both from one source is issue #14" with the fence-option contract.
 2. `techContext.md`: note the editable docs package and the Python test command.
 
-### 8. Full verification — verification
+### ✅ 8. Full verification — verification
 
 1. `npm test`, `npm run lint`, `npm run docs:build`, `uv run python -m unittest discover -s test -v`; read all output.
 2. Clean-checkout import check: fresh `git worktree`/clone into `/tmp`, `uv sync --group docs --frozen`, `npm ci`, `npm run docs:build`.
@@ -181,6 +181,6 @@ graph LR
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight (PASS WITH ADVISORY)
+- [x] Build
 - [ ] QA
