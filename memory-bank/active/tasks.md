@@ -118,7 +118,7 @@ Edge cases (verified in the browser harness, not unit-testable without a browser
 
 ## Implementation Plan
 
-### 1. Token — executable
+### 1. Token — executable ✅
 
 - Files: `src/_tokens.scss`, `test/wave-graph.test.mjs`, `package.json`
 
@@ -127,7 +127,7 @@ Edge cases (verified in the browser harness, not unit-testable without a browser
 3. Write tests and run red: implement B9 (and all other tests, see step 2.3); run `node --test test/wave-graph.test.mjs` → all red.
 4. Write code and run green: add `--nerv-wave-duration: 1s;` to `:root` → B9 green.
 
-### 2. Wave graph partial — executable
+### 2. Wave graph partial — executable ✅
 
 - Files: `src/_wave-graph.scss` (new), `src/nerv.scss`
 - Creative ref: `creative-wave-rendering.md`, `creative-wave-api.md`
@@ -147,7 +147,7 @@ Edge cases (verified in the browser harness, not unit-testable without a browser
    - Reduced motion, contrast blocks → B5, B17, B18.
    - `npm test` (whole suite) and `npm run lint` green.
 
-### 3. Browser verification — executable (harness, not shipped)
+### 3. Browser verification — executable (harness, not shipped) ✅
 
 - Files: `/tmp/nerv-wave-proto/*` (outside repo)
 
@@ -155,7 +155,7 @@ Edge cases (verified in the browser harness, not unit-testable without a browser
 2. Measure point-vs-stroke error in Chromium and Firefox at several paused times; require ≤1.5px.
 3. Screenshot reference-look and vertical frames for the PR; record numbers in `progress.md`.
 
-### 4. Catalog page — prose/policy
+### 4. Catalog page — prose/policy ✅
 
 - Files: `docs/components/css/heavies/wave-graph.md`, `docs/img/wave-graph.jpg`, `docs/components/css/index.md`
 - No tests: prose/policy artifact
@@ -166,7 +166,7 @@ Edge cases (verified in the browser harness, not unit-testable without a browser
 3. Mention the wave graph in the Heavies blurb of `docs/components/css/index.md`.
 4. `npm run docs:build` (strict) green; view the page in a browser.
 
-### 5. Ref fixture — prose/policy
+### 5. Ref fixture — prose/policy ✅
 
 - Files: `ref/ref-patterns.html`
 - No tests: prose/policy artifact (visual fixture)
@@ -203,6 +203,6 @@ No new dependencies. Browser features (`@property`, `sin()`, unprefixed `mask`, 
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
 - [ ] QA

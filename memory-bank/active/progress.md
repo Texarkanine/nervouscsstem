@@ -42,3 +42,21 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Advisory: the reference still is already in the repo as `docs/img/3RBI9q8.png`. Use a PNG copy named `docs/img/wave-graph.png`, not the planned `.jpg`.
     - Advisory (low): steps 1.3 and 2.3 overlap; test file placement departs from per-layer grouping; the timing rationale has no visual-language page.
     - Radical idea (advisory): an alert-cascade `--nerv-wave-desync` phase term, so synced waves fan apart under warning and critical.
+
+## 2026-09-23 - PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
+
+* Decisions made (operator gate, pre-authorized)
+    - Use library still `docs/img/3RBI9q8.png` as `docs/img/wave-graph.png`; keep separate test file; link existing waveform docs; defer alert "desync" token to a follow-up.
+
+## 2026-09-23 - BUILD - COMPLETE
+
+* Work completed
+    - `_wave-graph.scss`, token, forward, 19-test suite, catalog page, ref fixture section (commit `badf035`).
+    - Full suite 392/392, strict docs build green, lint clean for new rules (10 pre-existing errors elsewhere).
+    - Browser verification of built CSS in Chromium and Firefox: ≤0.56px perpendicular point-to-stroke distance, exact periods, reduced motion exact.
+* Decisions made
+    - Defaults on the graph box (inherit) instead of per wave, so shared settings are written once.
+    - Portrait default ratio for the vertical variant; 6px mask floor; 3.5 contrast stroke.
+* Insights
+    - Cross-axis error overstates visual error on steep slopes; perpendicular distance is the honest "on the line" metric. Firefox snaps mask position to device pixels (≤0.5px along travel).
+    - The geometry tests (evaluating the shipped Bézier path) guard the real failure mode—points drifting off the line—better than shape assertions.
