@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: sine-wave-graph rework — point labels (PR #18)
-**Phase:** QA - COMPLETE (PASS)
+**Phase:** REFLECT COMPLETE (rework: point labels)
 
 ## What Was Done
 - Rework initiated from PR #18 human feedback (labels on points; PR screenshots). Re-classified Level 2: one sub-feature on one component.
@@ -21,5 +21,8 @@
 - Verification: suite 399/399; docs strict green; lint unchanged (10). Harness: dots unchanged (0.35 / 0.57px perpendicular); labels never outside the box (≤0.02px) on built CSS edge cases, docs page, and fixture, both engines; unclamped labels centered on their dot to ≤0.01px.
 - PR assets: orphan `pr-assets` @ `1928e75` (fresh `git init`, no history), 7 files under `pr-18/`, all raw URLs 200 image/*. GIF 2.2 MB.
 
+## Reflection
+- `reflection/reflection-sine-wave-graph-labels.md`. Persistent files skipped (no system-wide contract); pr-assets convention recorded in SumMem.
+
 ## Next Step
-- QA in a subagent; then Reflect; then PR body + push + CI.
+- Update PR #18 body with screenshots, push, watch CI. Then operator review/manual QA and `/niko-archive`.

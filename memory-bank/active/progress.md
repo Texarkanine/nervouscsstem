@@ -163,3 +163,7 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - The wide-label wording matches the code: the x clamp's minimum is the left edge, and `clamp()` lets the minimum win when max < min. The aria-label advisory is also fixed.
     - Advisory: the rule comment above `.nerv-wave-point-label` does not repeat the wide-label caveat; the file header has it.
     - Advisory: the PR #18 body screenshots are pending, as planned after Reflect.
+
+## 2026-09-23 - REFLECT (rework) - COMPLETE
+
+* Reflection written; persistent files unchanged; SumMem notes: label overlap norm, pr-assets convention.

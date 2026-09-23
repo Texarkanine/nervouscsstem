@@ -1,0 +1,1 @@
+Release: first npm publish needs operator bootstrap before OIDC trusted publisher; dist gitignored, so no RP-branch amend jobs. Test shipped product, not our CI unless brittle. main+initialdev roots were joined by merging main in.
