@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/Texarkanine/nervouscsstem/compare/v0.2.0...v0.3.0) (2026-09-23)
+
+
+### Features
+
+* canonical usage catalog and radar blip geometry ([#13](https://github.com/Texarkanine/nervouscsstem/issues/13)) ([e24adae](https://github.com/Texarkanine/nervouscsstem/commit/e24adaee51ad4c45262c4de19e2164905d371be4))
+
 ## [0.2.0](https://github.com/Texarkanine/nervouscsstem/compare/v0.1.0...v0.2.0) (2026-09-13)
 
 
