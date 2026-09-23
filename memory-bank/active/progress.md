@@ -53,3 +53,12 @@ Replace every hand-duplicated catalog island+fence pair with one `pymdownx.super
     - Kept the missing blank line between island and copy (inter-block whitespace, no rendering effect) rather than padding output to match.
 * Insights
     - The old form's only structural difference from single-source was whitespace; the hand-sync on PR #13 had already made every pair exact.
+
+## 2026-09-23 - QA - COMPLETE
+
+* Result: PASS (advisories only).
+* Re-verified: formatter tests 13/13, `npm test` 373/373, strict docs build clean, 133 built islands, site comparison ALL CHECKS PASS.
+* Advisories
+    - Formatter tests are not in `npm test` or CI; consider adding them to the docs build job.
+    - Commit 56caa5b includes an automatic SumMem nap of two pre-existing notes (possible merge friction with sibling branches).
+    - Unplanned guard (`init=` / `state=` without `island` fails the build) is tested and documented.

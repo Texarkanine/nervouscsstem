@@ -183,4 +183,8 @@ graph LR
 - [x] Pre-Mortem complete
 - [x] Preflight (PASS WITH ADVISORY)
 - [x] Build
-- [ ] QA
+- [x] QA (PASS; see `.qa-validation-status`)
+
+## QA Results
+
+PASS. No blocking findings. Advisories: formatter tests are outside `npm test` / CI (planned); commit 56caa5b carries an automatic SumMem nap of two main notes; the `init=`/`state=`-without-`island` guard is an unplanned but tested and documented addition.
