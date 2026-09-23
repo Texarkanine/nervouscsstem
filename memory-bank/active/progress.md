@@ -11,3 +11,17 @@ Replace every hand-duplicated catalog island+fence pair with one `pymdownx.super
     - Surveyed 29 pages / 133 islands; all islands already match their fences minus `<script>`.
 * Decisions made
     - Level 3: multi-component feature with design choices, not architectural.
+
+## 2026-09-23 - PLAN - COMPLETE
+
+* Work completed
+    - Component analysis, test plan, 8-step implementation plan in `tasks.md`.
+    - Four creative decisions (high confidence, PoC-backed) in `creative/`.
+    - PoC: cwd module not importable by `properdocs`; editable `uv_build` install under `scripts/` works with `uv sync --frozen`; custom `html` fence gated on `island` leaves plain fences stock and reproduces stock highlight byte-for-byte.
+* Decisions made (operator gates delegated; made within approved scope)
+    - Import path: editable install of root docs project (`uv_build`, `module-root = "scripts"`, package `nervouscsstem_docs`).
+    - Syntax: ```` ```html island init="…" state="…" ````; unknown/valueless/malformed options abort the build.
+    - Spec paragraph moves after the fence (keeps "name then demo then code").
+    - Python tests: stdlib `unittest`, not wired into CI.
+* Insights
+    - Superfences validators that raise `SuperFencesException` abort the build; other exceptions are swallowed and fall through.
