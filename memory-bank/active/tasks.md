@@ -99,8 +99,16 @@ No new technology. `clamp()` with self-percentages in `translate` proven in Chro
 - [x] Preflight
 - [x] Build
 - [x] QA — FAIL (Build rerun, docs only)
+- [x] QA (rerun) — PASS
 
-## QA Results
+## QA Results (rerun)
+
+- PASS. The wide-label limit is now documented in the docs Spec and the SCSS header, and the wording matches the code: the x clamp's minimum is the box's left edge, and `clamp()` lets the minimum win. Example and fixture `aria-label`s name their labels.
+- Advisory: the rule comment above `.nerv-wave-point-label` still says "stays inside the wave box" with no wide-label caveat. The file header has the caveat.
+- Advisory: the PR #18 body screenshots (acceptance criterion 4) are still pending. The plan schedules them after Reflect.
+- QA reran the checks: `npm test` 399/399; strict docs build green; lint shows only the 10 pre-existing errors.
+
+## QA Results (first run)
 
 - Blocking: the wide-label limit is not documented. The plan says it would be documented, but the docs Spec and the `_wave-graph.scss` header both claim the label never leaves the box. A label wider than the box pins to the left edge and is cut off on the right. Fix: add one clause in each place.
 - Advisory: the alert example's `aria-label` does not name its SYNC label. The `ref/ref-patterns.html` aria-labels do not mention labels, and the vertical graph's still says "plotted points".

@@ -155,3 +155,11 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
 ## 2026-09-23 - BUILD (rework, QA fix) - COMPLETE
 
 * QA FAIL (fixable): docs/SCSS header overstated containment. Now state that a label wider than the box pins left and clips right; example and fixture `aria-label`s name their labels. 26/26 wave tests, docs strict green.
+
+## 2026-09-23 - QA (rework rerun) - COMPLETE (PASS)
+
+* Result: `PASS`. The blocking finding from the first run is fixed (`4aa86fb`). QA reran `npm test` (399/399) and the strict docs build, and both pass. Lint shows only the 10 pre-existing errors.
+* Findings
+    - The wide-label wording matches the code: the x clamp's minimum is the left edge, and `clamp()` lets the minimum win when max < min. The aria-label advisory is also fixed.
+    - Advisory: the rule comment above `.nerv-wave-point-label` does not repeat the wide-label caveat; the file header has it.
+    - Advisory: the PR #18 body screenshots are pending, as planned after Reflect.
