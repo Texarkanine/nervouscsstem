@@ -39,7 +39,7 @@ flowchart LR
 - `test/wave-graph.test.mjs` (new) + `package.json` `test` script → register the file.
 - `docs/components/css/heavies/wave-graph.md` (new) — catalog page, today's island + verbatim fence convention. No JS page (no hook).
 - `docs/components/css/index.md` — Heavies blurb names radar; mention the wave graph.
-- `docs/img/wave-graph.jpg` (new, LFS via `docs/img/**`) — the issue's reference still, shown atop the page like radar/reticles.
+- `docs/img/wave-graph.png` (new, LFS via `docs/img/**`) — copy of library still `3RBI9q8.png` (the issue's reference), shown atop the page like radar/reticles.
 - `ref/ref-patterns.html` — add a wave-graph fixture section next to radar.
 - `memory-bank/systemPatterns.md` — at reflect: registered-clock pattern + filter-before-mask gotcha.
 
@@ -161,7 +161,7 @@ Edge cases (verified in the browser harness, not unit-testable without a browser
 - No tests: prose/policy artifact
 - Creative ref: `creative-wave-api.md`
 
-1. Copy the reference still to `docs/img/wave-graph.jpg` (LFS-tracked by `docs/img/**`).
+1. Copy the library still `docs/img/3RBI9q8.png` (NGE-1 00:19:59, the issue's reference) to `docs/img/wave-graph.png` (LFS-tracked by `docs/img/**`), matching radar/reticles named copies.
 2. Write the page: lead (what CSS does; no JS hook), reference still, then examples, each name → `.nerv-docs-island` → `html` fence of the island's inner HTML verbatim, with a **Spec:** paragraph: single wave; sync graph (four phases, composed with panel / grid marks / reticle ticks / segment timer); frequency pair; plotted points; vertical; colors and reverse; alert speed (`nerv-state-critical` on the island wrapper, out of the fence).
 3. Mention the wave graph in the Heavies blurb of `docs/components/css/index.md`.
 4. `npm run docs:build` (strict) green; view the page in a browser.

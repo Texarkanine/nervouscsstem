@@ -33,3 +33,12 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Ref fixture: one section in `ref/ref-patterns.html` beside radar (manual QA surface without Material chrome).
     - Docs page lives under heavies; no JavaScript page (no hook). Reference still added to `docs/img/` (LFS).
     - New test file `test/wave-graph.test.mjs`, with geometry tests that evaluate the shipped Bézier paths numerically.
+
+## 2026-09-23 - PREFLIGHT - COMPLETE
+
+* Result: `PASS WITH ADVISORY` (first line of `.preflight-status`). No plan edits.
+* Findings
+    - TDD encoding, conventions, dependency impact, conflicts, and completeness all pass. Grid marks and reticles compose on the graph box as planned.
+    - Advisory: the reference still is already in the repo as `docs/img/3RBI9q8.png`. Use a PNG copy named `docs/img/wave-graph.png`, not the planned `.jpg`.
+    - Advisory (low): steps 1.3 and 2.3 overlap; test file placement departs from per-layer grouping; the timing rationale has no visual-language page.
+    - Radical idea (advisory): an alert-cascade `--nerv-wave-desync` phase term, so synced waves fan apart under warning and critical.
