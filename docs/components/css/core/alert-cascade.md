@@ -18,8 +18,9 @@ Five root classes override ambiance tokens. Named data does not move — that is
 **Spec:** `.nerv-state-nominal` — `--nerv-primary` green, `--nerv-bg` void, `--nerv-animation-speed` 1.
 
 ```html
-<div class="nerv-state-nominal">
-  <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">…</div>
+<div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
+  <p class="nerv-type-hud">CONDITION</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -35,8 +36,9 @@ Five root classes override ambiance tokens. Named data does not move — that is
 **Spec:** `.nerv-state-active` — `--nerv-primary` amber. Active+ flickers `.nerv-type-data`.
 
 ```html
-<div class="nerv-state-active">
-  <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">…</div>
+<div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
+  <p class="nerv-type-hud">CONDITION</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -52,8 +54,9 @@ Five root classes override ambiance tokens. Named data does not move — that is
 **Spec:** `.nerv-state-caution` — `--nerv-primary` amber-dark, `--nerv-animation-speed` 1.5.
 
 ```html
-<div class="nerv-state-caution">
-  <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">…</div>
+<div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
+  <p class="nerv-type-hud">CONDITION</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -69,8 +72,9 @@ Five root classes override ambiance tokens. Named data does not move — that is
 **Spec:** `.nerv-state-alert` — `--nerv-primary` red, `--nerv-animation-speed` 2. Alert+ blinks `.nerv-status-text` and tints the scanline overlay.
 
 ```html
-<div class="nerv-state-alert">
-  <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">…</div>
+<div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
+  <p class="nerv-type-hud">CONDITION</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -86,7 +90,8 @@ Five root classes override ambiance tokens. Named data does not move — that is
 **Spec:** `.nerv-state-critical` — `--nerv-primary` red, `--nerv-bg` red-deep, `--nerv-animation-speed` 3. Critical glitches status text. `NERV.setState('critical')` also flashes the screen.
 
 ```html
-<div class="nerv-state-critical">
-  <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">…</div>
+<div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
+  <p class="nerv-type-hud">CONDITION</p>
+  <p class="nerv-type-data">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```

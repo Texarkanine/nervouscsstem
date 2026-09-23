@@ -44,8 +44,6 @@ When a family page says a class exists “for every glow color,” it means that
 <p class="nerv-type-hud nerv-text-cyan">.nerv-text-cyan</p>
 ```
 
-[Swatch board](../../../boards/foundation.html)
-
 ## Gradients
 
 Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
@@ -59,7 +57,7 @@ Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
 **Spec:** `.nerv-gradient` goes from `--nerv-primary-rgb` to `--nerv-bg-rgb`. `--nerv-gradient-direction` defaults to `to right`. `--nerv-gradient-opacity` defaults to 1.
 
 ```html
-<div class="nerv-gradient"></div>
+<div class="nerv-gradient" style="height: 4rem;"></div>
 ```
 
 ### Thermal
@@ -71,7 +69,7 @@ Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
 **Spec:** `.nerv-gradient-thermal` is green→red.
 
 ```html
-<div class="nerv-gradient nerv-gradient-thermal"></div>
+<div class="nerv-gradient nerv-gradient-thermal" style="height: 4rem;"></div>
 ```
 
 ### Energy
@@ -83,7 +81,7 @@ Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
 **Spec:** `.nerv-gradient-energy` is cyan→blue.
 
 ```html
-<div class="nerv-gradient nerv-gradient-energy"></div>
+<div class="nerv-gradient nerv-gradient-energy" style="height: 4rem;"></div>
 ```
 
 ### Warning
@@ -95,7 +93,7 @@ Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
 **Spec:** `.nerv-gradient-warning` is amber→red.
 
 ```html
-<div class="nerv-gradient nerv-gradient-warning"></div>
+<div class="nerv-gradient nerv-gradient-warning" style="height: 4rem;"></div>
 ```
 
 ### Field
@@ -107,7 +105,7 @@ Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
 **Spec:** `.nerv-gradient-field` is void→amber.
 
 ```html
-<div class="nerv-gradient nerv-gradient-field"></div>
+<div class="nerv-gradient nerv-gradient-field" style="height: 4rem;"></div>
 ```
 
 ### Rainbow
@@ -119,7 +117,7 @@ Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
 **Spec:** `.nerv-gradient-rainbow` is a multi-stop hue sweep.
 
 ```html
-<div class="nerv-gradient nerv-gradient-rainbow"></div>
+<div class="nerv-gradient nerv-gradient-rainbow" style="height: 4rem;"></div>
 ```
 
 ### From / to
@@ -131,5 +129,7 @@ Composable endpoints. `.nerv-gradient-from-{name}` and `.nerv-gradient-to-{name}
 </div>
 
 ```html
-<div class="nerv-gradient nerv-gradient-from-cyan nerv-gradient-to-red"></div>
+<div class="nerv-gradient nerv-gradient-from-cyan nerv-gradient-to-red" style="height: 4rem;"></div>
 ```
+
+[Swatch board](../../../boards/foundation.html)

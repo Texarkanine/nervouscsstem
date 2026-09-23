@@ -15,7 +15,9 @@ Tick marks along container edges. The host must be a positioning context; the cl
 **Spec:** `.nerv-reticle` draws ticks on all four edges. `--nerv-reticle-size` is tick length. `--nerv-reticle-spacing` is the repeat. `--nerv-reticle-width` is stroke width (2px under `prefers-contrast: more`).
 
 ```html
-<div class="nerv-reticle nerv-panel">…</div>
+<div class="nerv-reticle nerv-panel" style="height: 8rem;">
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
+</div>
 ```
 
 ## Top
@@ -27,7 +29,9 @@ Tick marks along container edges. The host must be a positioning context; the cl
 </div>
 
 ```html
-<div class="nerv-reticle-top nerv-panel">…</div>
+<div class="nerv-reticle-top nerv-panel" style="height: 5rem;">
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C</p>
+</div>
 ```
 
 ## Right
@@ -39,7 +43,9 @@ Tick marks along container edges. The host must be a positioning context; the cl
 </div>
 
 ```html
-<div class="nerv-reticle-right nerv-panel">…</div>
+<div class="nerv-reticle-right nerv-panel" style="height: 5rem;">
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C</p>
+</div>
 ```
 
 ## Bottom
@@ -51,7 +57,9 @@ Tick marks along container edges. The host must be a positioning context; the cl
 </div>
 
 ```html
-<div class="nerv-reticle-bottom nerv-panel">…</div>
+<div class="nerv-reticle-bottom nerv-panel" style="height: 5rem;">
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C</p>
+</div>
 ```
 
 ## Left
@@ -63,7 +71,9 @@ Tick marks along container edges. The host must be a positioning context; the cl
 </div>
 
 ```html
-<div class="nerv-reticle-left nerv-panel">…</div>
+<div class="nerv-reticle-left nerv-panel" style="height: 5rem;">
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C</p>
+</div>
 ```
 
 ## Cyan
@@ -77,5 +87,7 @@ Tick marks along container edges. The host must be a positioning context; the cl
 </div>
 
 ```html
-<div class="nerv-reticle nerv-reticle-cyan nerv-panel">…</div>
+<div class="nerv-reticle nerv-reticle-cyan nerv-panel" style="height: 8rem;">
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
+</div>
 ```

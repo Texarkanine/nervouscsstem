@@ -13,7 +13,7 @@ Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Da
 **Spec:** `.nerv-stripe` is a horizontal bar. `--nerv-stripe-width` is the band width. `--nerv-stripe-color-rgb` defaults to `--nerv-primary-rgb`.
 
 ```html
-<div class="nerv-stripe"></div>
+<div class="nerv-stripe" style="height: 0.75rem;"></div>
 ```
 
 ## Vertical
@@ -25,7 +25,7 @@ Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Da
 **Spec:** `.nerv-stripe-vertical` turns the bands 90°.
 
 ```html
-<div class="nerv-stripe nerv-stripe-vertical"></div>
+<div class="nerv-stripe nerv-stripe-vertical" style="height: 6rem; width: 0.75rem;"></div>
 ```
 
 ## Red
@@ -37,7 +37,7 @@ Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Da
 </div>
 
 ```html
-<div class="nerv-stripe nerv-stripe-red"></div>
+<div class="nerv-stripe nerv-stripe-red" style="height: 0.75rem;"></div>
 ```
 
 ## Transparent
@@ -49,7 +49,7 @@ Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Da
 **Spec:** `.nerv-stripe-transparent` makes the dark band see-through.
 
 ```html
-<div class="nerv-stripe nerv-stripe-transparent"></div>
+<div class="nerv-stripe nerv-stripe-transparent" style="height: 0.75rem;"></div>
 ```
 
 ## Animated
@@ -61,5 +61,5 @@ Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Da
 **Spec:** `.nerv-stripe-animated` scrolls via barberpole (`background-size: 200%` + position shift). `--nerv-stripe-duration` is the cycle.
 
 ```html
-<div class="nerv-stripe nerv-stripe-animated"></div>
+<div class="nerv-stripe nerv-stripe-animated" style="height: 0.75rem;"></div>
 ```

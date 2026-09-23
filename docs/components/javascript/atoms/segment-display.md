@@ -13,8 +13,8 @@ CSS segment display is the DSEG7 readout and the ghost overlay, if you set `data
 </div>
 
 ```html
-<div class="nerv-segment-display">00:42:17</div>
+<div class="nerv-segment-display" style="font-size: 2rem;">00:42:17</div>
 <script>
-  NERV.initGhostSegments(document.getElementById('timer'));
+  NERV.initGhostSegments(document.querySelector('.nerv-segment-display').parentElement);
 </script>
 ```

@@ -13,7 +13,7 @@ CSS cartouches flex to the text. By adding JavaScript you can stretch text to fi
 ```html
 <span class="nerv-cartouche nerv-cartouche-fixed" style="width: 180px; height: 36px;"><span>IDENTIFIED</span></span>
 <script>
-  NERV.initCartouches(document.getElementById('cartouches'));
+  NERV.initCartouches(document.querySelector('.nerv-cartouche-fixed').parentElement);
 </script>
 ```
 
@@ -34,6 +34,6 @@ Same status word, two cells.
   <table><tr><td>IDENTIFIED</td><td>17th ANGEL</td></tr></table>
 </span>
 <script>
-  NERV.initCartouches(document.getElementById('cartouches'));
+  NERV.initCartouches(document.querySelector('.nerv-cartouche-fixed').parentElement);
 </script>
 ```

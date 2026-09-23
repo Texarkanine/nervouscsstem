@@ -19,6 +19,7 @@ Discrete bars. Fill is a percentage. CSS paints hand-authored `.nerv-bar-meter-b
 **Spec:** `.nerv-bar-meter` is a flex row of `.nerv-bar-meter-bar`. `.nerv-bar-active` is the filled prefix.
 
 ```html
+<p class="nerv-type-hud" style="color: var(--nerv-amber);">SUBJECT 00</p>
 <div class="nerv-bar-meter nerv-bar-thermal">
   <div class="nerv-bar-meter-bar nerv-bar-active"></div>
   <div class="nerv-bar-meter-bar nerv-bar-active"></div>

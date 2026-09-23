@@ -193,7 +193,13 @@ Cell states use named data tokens — they do not follow the alert cascade.
 **Spec:** `.nerv-hex-danger` uses `--nerv-red`.
 
 ```html
-<div class="nerv-hex-cell nerv-hex-danger">A-01</div>
+<div class="nerv-hex-grid">
+  <div class="nerv-hex-row">
+    <div class="nerv-hex-cell nerv-hex-danger">A-01</div>
+    <div class="nerv-hex-cell nerv-hex-danger">A-02</div>
+    <div class="nerv-hex-cell nerv-hex-danger">A-03</div>
+  </div>
+</div>
 ```
 
 ## Warn
@@ -211,7 +217,13 @@ Cell states use named data tokens — they do not follow the alert cascade.
 **Spec:** `.nerv-hex-warn` uses `--nerv-amber`.
 
 ```html
-<div class="nerv-hex-cell nerv-hex-warn">A-01</div>
+<div class="nerv-hex-grid">
+  <div class="nerv-hex-row">
+    <div class="nerv-hex-cell nerv-hex-warn">A-01</div>
+    <div class="nerv-hex-cell nerv-hex-warn">A-02</div>
+    <div class="nerv-hex-cell nerv-hex-warn">A-03</div>
+  </div>
+</div>
 ```
 
 ## Safe
@@ -229,5 +241,11 @@ Cell states use named data tokens — they do not follow the alert cascade.
 **Spec:** `.nerv-hex-safe` uses `--nerv-green`.
 
 ```html
-<div class="nerv-hex-cell nerv-hex-safe">A-01</div>
+<div class="nerv-hex-grid">
+  <div class="nerv-hex-row">
+    <div class="nerv-hex-cell nerv-hex-safe">A-01</div>
+    <div class="nerv-hex-cell nerv-hex-safe">A-02</div>
+    <div class="nerv-hex-cell nerv-hex-safe">A-03</div>
+  </div>
+</div>
 ```

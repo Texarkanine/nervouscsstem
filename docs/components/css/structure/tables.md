@@ -21,10 +21,14 @@ Phosphor-outline tables. Fill, geometry, and color follow the same language as l
 
 ```html
 <table class="nerv-table">
-  <tr><th>Unit</th><th>Status</th><th>Sync</th></tr>
-  <tr><td>EVA-01</td><td>Online</td><td>98.2%</td></tr>
-  <tr><td>EVA-02</td><td>Online</td><td>72.1%</td></tr>
-  <tr><td>EVA-00</td><td>Standby</td><td>88.7%</td></tr>
+  <thead>
+    <tr><th>Unit</th><th>Status</th><th>Sync</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>EVA-01</td><td>Online</td><td>98.2%</td></tr>
+    <tr><td>EVA-02</td><td>Online</td><td>72.1%</td></tr>
+    <tr><td>EVA-00</td><td>Standby</td><td>88.7%</td></tr>
+  </tbody>
 </table>
 ```
 

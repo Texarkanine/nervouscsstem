@@ -30,12 +30,14 @@ Each function looks up its own selectors inside the container you pass.
 | `NERV.layoutRadarBlips(radarEl)` | Set Cartesian blip phases (call after DOM changes) |
 | `NERV.initRadarSweepSync(radarEl)` | Write `--nerv-radar-sweep-phase` from the sweep animation. Opt-in: `data-nerv-radar-sync` |
 
-```html
-<div id="meters">
+<div class="nerv-docs-island" data-nerv-init="bar-meters">
   <div class="nerv-bar-meter nerv-bar-thermal" data-bars="40" data-fill="72"></div>
 </div>
+
+```html
+<div class="nerv-bar-meter nerv-bar-thermal" data-bars="40" data-fill="72"></div>
 <script>
-  NERV.initBarMeters(document.getElementById('meters'));
+  NERV.initBarMeters(document.querySelector('.nerv-bar-meter').parentElement);
 </script>
 ```
 

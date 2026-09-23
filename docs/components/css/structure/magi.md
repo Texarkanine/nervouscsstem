@@ -30,10 +30,21 @@ N-system consensus display. CSS Grid of `.nerv-magi-system` boxes plus one `.ner
 
 ```html
 <div class="nerv-magi-panel">
-  <div class="nerv-magi-system"><strong>CASPER·3</strong></div>
-  <div class="nerv-magi-system"><strong>BALTHASAR·2</strong></div>
-  <div class="nerv-magi-system"><strong>MELCHIOR·1</strong></div>
-  <div class="nerv-magi-output">APPROVED (2:1)</div>
+  <div class="nerv-magi-system">
+    <strong>CASPER·3</strong><br>
+    <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
+  </div>
+  <div class="nerv-magi-system">
+    <strong>BALTHASAR·2</strong><br>
+    <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
+  </div>
+  <div class="nerv-magi-system">
+    <strong>MELCHIOR·1</strong><br>
+    <span class="nerv-type-data" style="font-size: 0.65rem;">DENY</span>
+  </div>
+  <div class="nerv-magi-output">
+    <strong>MAGI</strong> — <span class="nerv-type-data" style="font-size: 0.7rem;">APPROVED (2:1)</span>
+  </div>
 </div>
 ```
 
@@ -62,7 +73,21 @@ N-system consensus display. CSS Grid of `.nerv-magi-system` boxes plus one `.ner
 **Spec:** `--nerv-magi-system-color` / `--nerv-magi-system-color-rgb` on that box.
 
 ```html
-<div class="nerv-magi-system" style="--nerv-magi-system-color: var(--nerv-red); --nerv-magi-system-color-rgb: var(--nerv-red-rgb);">
-  <strong>MELCHIOR·1</strong>
+<div class="nerv-magi-panel">
+  <div class="nerv-magi-system" style="--nerv-magi-system-color: var(--nerv-red); --nerv-magi-system-color-rgb: var(--nerv-red-rgb);">
+    <strong>MELCHIOR·1</strong><br>
+    <span class="nerv-type-data" style="font-size: 0.65rem;">DENY</span>
+  </div>
+  <div class="nerv-magi-system">
+    <strong>BALTHASAR·2</strong><br>
+    <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
+  </div>
+  <div class="nerv-magi-system">
+    <strong>CASPER·3</strong><br>
+    <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
+  </div>
+  <div class="nerv-magi-output">
+    <strong>MAGI</strong> — <span class="nerv-type-data" style="font-size: 0.7rem;">APPROVED (2:1)</span>
+  </div>
 </div>
 ```

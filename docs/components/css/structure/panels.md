@@ -16,7 +16,7 @@ Four CSS-only frame variants. Override color with `--nerv-panel-color` / `--nerv
 
 ```html
 <div class="nerv-panel">
-  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -32,7 +32,7 @@ Four CSS-only frame variants. Override color with `--nerv-panel-color` / `--nerv
 
 ```html
 <div class="nerv-panel-titled" data-title="PSYCHOGRAPHIC DISPLAY">
-  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -48,7 +48,7 @@ Four CSS-only frame variants. Override color with `--nerv-panel-color` / `--nerv
 
 ```html
 <div class="nerv-panel-double">
-  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -64,7 +64,7 @@ Four CSS-only frame variants. Override color with `--nerv-panel-color` / `--nerv
 
 ```html
 <div class="nerv-panel-inset">
-  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -80,7 +80,7 @@ Color is a custom property, not a generated class.
 
 ```html
 <div class="nerv-panel" style="--nerv-panel-color: var(--nerv-cyan); --nerv-panel-color-rgb: var(--nerv-cyan-rgb);">
-  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
+  <p class="nerv-type-data" style="color: var(--nerv-cyan); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -96,7 +96,7 @@ Glow is a separate class. Pair any panel with `.nerv-glow-{name}`.
 
 ```html
 <div class="nerv-panel nerv-glow-cyan">
-  <p class="nerv-type-data">CORE_TEMP: 227.4°C</p>
+  <p class="nerv-type-data" style="color: var(--nerv-green); font-size: 0.75rem;">CORE_TEMP: 227.4°C<br>S2_OUTPUT: 1.8×10⁹ J/s<br>AT_FIELD: PHASE-3 LOCK</p>
 </div>
 ```
 
@@ -125,7 +125,7 @@ Zone-separator rules. Color follows `--nerv-primary` unless a variant class is s
 **Spec:** `.nerv-divider-vertical` is the upright rule. Give it a height.
 
 ```html
-<div class="nerv-divider nerv-divider-vertical"></div>
+<div class="nerv-divider nerv-divider-vertical" style="height: 6rem;"></div>
 ```
 
 ### Cyan

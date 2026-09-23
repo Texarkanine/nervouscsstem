@@ -11,7 +11,7 @@ CSS grid marks are tiled backgrounds. By adding JavaScript you can label the axe
 </div>
 
 ```html
-<div class="nerv-grid-marks"></div>
+<div class="nerv-grid-marks" style="height: 10rem; margin: 0 2.5rem 1.5rem;"></div>
 <script>
   NERV.initGridLabels(document.querySelector('.nerv-grid-marks'));
 </script>

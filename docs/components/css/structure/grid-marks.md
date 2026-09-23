@@ -13,7 +13,7 @@ SVG data-URI registration grids, tiled as `background-image`. Density is `backgr
 **Spec:** `.nerv-grid-marks` is the `+` crosshair grid.
 
 ```html
-<div class="nerv-grid-marks"></div>
+<div class="nerv-grid-marks" style="height: 10rem;"></div>
 ```
 
 ## Rotated
@@ -25,7 +25,7 @@ SVG data-URI registration grids, tiled as `background-image`. Density is `backgr
 **Spec:** `.nerv-grid-marks-x` is discrete `×` marks at each grid point.
 
 ```html
-<div class="nerv-grid-marks-x"></div>
+<div class="nerv-grid-marks-x" style="height: 10rem;"></div>
 ```
 
 ## Hex
@@ -37,7 +37,7 @@ SVG data-URI registration grids, tiled as `background-image`. Density is `backgr
 **Spec:** `.nerv-grid-marks-hex` is a flat-top honeycomb tile.
 
 ```html
-<div class="nerv-grid-marks-hex"></div>
+<div class="nerv-grid-marks-hex" style="height: 10rem;"></div>
 ```
 
 ## Cyan
@@ -49,5 +49,5 @@ SVG data-URI registration grids, tiled as `background-image`. Density is `backgr
 </div>
 
 ```html
-<div class="nerv-grid-marks-cyan"></div>
+<div class="nerv-grid-marks-cyan" style="height: 10rem;"></div>
 ```

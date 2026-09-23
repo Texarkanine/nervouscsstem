@@ -11,7 +11,7 @@ Pair `.nerv-glow-text-*` with `.nerv-text-*` for the fill color.
 </div>
 
 ```html
-<p class="nerv-type-hud nerv-text-amber nerv-glow-text-amber">MAGI SYSTEM CHECK</p>
+<p class="nerv-type-hud nerv-text-amber nerv-glow-text-amber" style="font-size: 1.4rem;">MAGI SYSTEM CHECK</p>
 ```
 
 ## Box glow
@@ -25,7 +25,9 @@ Pair `.nerv-glow-text-*` with `.nerv-text-*` for the fill color.
 **Spec:** `.nerv-glow-*` is box-shadow bloom.
 
 ```html
-<div class="nerv-panel nerv-glow-amber">…</div>
+<div class="nerv-panel nerv-glow-amber">
+  <p class="nerv-type-hud nerv-text-amber">MAGI SYSTEM CHECK</p>
+</div>
 ```
 
 ## Drop glow
@@ -51,7 +53,7 @@ Hard-cut `step()` timing. Interfaces snap; they do not interpolate.
 **Spec:** `.nerv-flicker` is the standard staccato on/off. `--nerv-stagger-index` delays grouped elements; `:nth-child()` sets a default so siblings do not flash in unison.
 
 ```html
-<p class="nerv-type-hud nerv-flicker">CONDITION: NORMAL</p>
+<p class="nerv-type-hud nerv-flicker nerv-glow-text-amber" style="color: var(--nerv-amber); font-size: 1.4rem;">CONDITION: NORMAL</p>
 ```
 
 ## Flicker fast
@@ -63,7 +65,7 @@ Hard-cut `step()` timing. Interfaces snap; they do not interpolate.
 **Spec:** `.nerv-flicker-fast` is a shorter cycle.
 
 ```html
-<p class="nerv-type-hud nerv-flicker-fast">CONDITION: NORMAL</p>
+<p class="nerv-type-hud nerv-flicker-fast nerv-glow-text-amber" style="color: var(--nerv-amber); font-size: 1.4rem;">CONDITION: NORMAL</p>
 ```
 
 ## Flicker staccato
@@ -75,7 +77,7 @@ Hard-cut `step()` timing. Interfaces snap; they do not interpolate.
 **Spec:** `.nerv-flicker-staccato` is a hard two-state visibility toggle.
 
 ```html
-<p class="nerv-type-hud nerv-flicker-staccato">CONDITION: NORMAL</p>
+<p class="nerv-type-hud nerv-flicker-staccato nerv-glow-text-amber" style="color: var(--nerv-amber); font-size: 1.4rem;">CONDITION: NORMAL</p>
 ```
 
 ## Blink
@@ -87,7 +89,7 @@ Hard-cut `step()` timing. Interfaces snap; they do not interpolate.
 **Spec:** `.nerv-blink` is the ~1s pulse. Pair it with status text when you want a held alarm, not a staccato CRT flicker.
 
 ```html
-<p class="nerv-type-hud nerv-blink">CONDITION: NORMAL</p>
+<p class="nerv-type-hud nerv-blink nerv-glow-text-amber" style="color: var(--nerv-amber); font-size: 1.6rem;">CONDITION: NORMAL</p>
 ```
 
 ## Glitch
@@ -101,7 +103,7 @@ Digital corruption. The element must carry `data-text` matching its text content
 **Spec:** `.nerv-glitch` slices the glyph with cyan and red copies. Most of the cycle is rest; bursts use `step-end` so there is no tween. `--nerv-glitch-duration` is the base cycle (default 3s).
 
 ```html
-<span class="nerv-glitch" data-text="EMERGENCY">EMERGENCY</span>
+<p class="nerv-type-hud nerv-glitch nerv-text-red" data-text="EMERGENCY" style="font-size: 1.6rem;">EMERGENCY</p>
 ```
 
 ## Scanlines

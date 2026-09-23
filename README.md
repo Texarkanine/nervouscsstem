@@ -32,11 +32,11 @@ Those URLs are [jsDelivr’s npm CDN](https://www.jsdelivr.com/documentation#id-
 npx skills add Texarkanine/nervouscsstem
 ```
 
-That installs a placeholder skill. A markdown copy of `docs/` travels with it. The screenshot library (`docs/img/`) does not.
+That installs a placeholder skill. It does not carry a docs tree. Usage catalog, stills, and live examples live on the documentation site.
 
 ## Documentation
 
-The published site is <https://texarkanine.github.io/nervouscsstem/>. Using pages carry live examples (preview, spec, then code).
+The published site is <https://texarkanine.github.io/nervouscsstem/>. Catalog pages carry live examples (preview, spec, then the same HTML in a copyable fence).
 
 Authoring source of truth is [`docs/`](docs/). Do not treat this README as the design-system spec. Operator notes that must not be forgotten (Git LFS vs skill install, and similar) live in [`docs/service-manual.md`](docs/service-manual.md).
 
