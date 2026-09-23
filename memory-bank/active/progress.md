@@ -2,7 +2,7 @@
 
 Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more scrolling sine waves in a box, each with amplitude, wavelength, temporal frequency, phase offset, and a design-system color; points that ride on the line; a vertical variant; speed tied to `--nerv-animation-speed`; reduced-motion and high-contrast handling; catalog docs with a demo composed from existing chrome components.
 
-**Complexity:** Level 3
+**Complexity:** Level 2 (rework: point labels; original task Level 3)
 
 ## 2026-09-23 - COMPLEXITY-ANALYSIS - COMPLETE
 
@@ -106,3 +106,16 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Keep labels readable inside the clipped box at swing extremes if cleanly doable (e.g. sin()-driven inward offset), else document the limit. Prove in a browser.
     - Constraints: reduced motion, high contrast, alert cascade, `.nerv-` prefix, TDD, catalog docs (island+fence), ref fixture.
     - Also: screenshots on the PR description, hosted on an orphan `pr-assets` branch (not the feature branch).
+
+## 2026-09-23 - COMPLEXITY-ANALYSIS (rework) - COMPLETE
+
+* Decisions made
+    - Level 2: labels are one sub-feature of the existing component; the only design question (clipping) was proven before planning.
+
+## 2026-09-23 - PLAN (rework) - COMPLETE
+
+* Work completed
+    - Proved a clamped `translate` on the label using hoisted `--nerv-wave-point-x/y` (Chromium + Firefox, ≤0.02px outside the box).
+    - Plan: 7 label behaviors + 3 modified tests, docs/fixture, harness, PR assets.
+* Decisions made
+    - Default placement right; `-left` modifier only. Labels clamp inside the box and may cross their dot at extremes.
