@@ -50,9 +50,16 @@ That rule is authoring, not catalog copy. User-facing pages teach `NERV.init()` 
 
 Antonio is the variable font on Google Fonts, so one file serving both 400 and 700 is correct. Its package is `@fontsource-variable/antonio`, not `@fontsource/antonio`.
 
-When `src/_typography.scss` changes a font URL, a `unicode-range`, or adds a face, the bundle build fails and names the URL it cannot map. PR CI builds the bundle, so this shows up before merge. To fix it:
+The bundle build fails, naming the URL, when `src/_typography.scss` does any of these:
 
-- Bump the matching `@fontsource*` pin to a version whose subsets match, or add a row to `FONT_FAMILIES` for a new family, with the verbatim copyright line from its upstream OFL.txt.
+- moves a Google Fonts URL to a new version (the `/vNN/` segment no longer equals the pinned package's `metadata.json` `version`)
+- changes a `unicode-range`
+- changes the DSEG7 jsDelivr version
+- adds a face in a family without a `FONT_FAMILIES` row
+
+PR CI builds the bundle, so this shows up before merge. To fix it:
+
+- Bump the matching `@fontsource*` pin to a version built from the same Google Fonts version, or add a row to `FONT_FAMILIES` for a new family, with the verbatim copyright line from its upstream OFL.txt.
 - For DSEG7, keep the version in the CSS URL and the devDependency pin identical.
 - Do not commit gstatic font hashes or font files to the repo.
 

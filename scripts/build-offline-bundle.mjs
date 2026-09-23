@@ -2,7 +2,6 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseArgs } from 'node:util';
 import { strToU8, zipSync } from 'fflate';
 
 /**
@@ -92,6 +91,7 @@ const ZIP_MTIME = new Date(1980, 0, 1, 12, 0, 0);
 const URL_RE = /url\(\s*(?:"([^"]*)"|'([^']*)'|([^)"'\s]*))\s*\)/g;
 const JSDELIVR_FONTSOURCE_RE =
   /^https:\/\/cdn\.jsdelivr\.net\/npm\/(@fontsource(?:-variable)?\/[^@/]+)@([^/]+)\/files\/([^/]+)$/;
+const GSTATIC_VERSION_RE = /^https:\/\/fonts\.gstatic\.com\/s\/[^/]+\/(v\d+)\//;
 
 /**
  * Every `url()` in a stylesheet, honoring quotes so values such as
@@ -133,15 +133,18 @@ function fontFaces(css) {
 /**
  * @param {string} root
  * @param {string} name npm package name
- * @returns {{ dir: string, id: string, version: string, unicode: Record<string, string> }}
+ * @returns {{ dir: string, id: string, version: string, upstreamVersion: string, unicode: Record<string, string> }}
+ *   `upstreamVersion` is the Google Fonts version the package was built from (e.g. `v13`).
  */
 function readFontPackage(root, name) {
   const dir = join(root, 'node_modules', name);
   const readJson = (file) => JSON.parse(readFileSync(join(dir, file), 'utf8'));
+  const metadata = readJson('metadata.json');
   return {
     dir,
-    id: readJson('metadata.json').id,
+    id: metadata.id,
     version: readJson('package.json').version,
+    upstreamVersion: metadata.version,
     unicode: readJson('unicode.json'),
   };
 }
@@ -159,6 +162,12 @@ function fontsourceFile(face, spec, pkg, url) {
     }
     file = fileName;
   } else {
+    const upstream = url.match(GSTATIC_VERSION_RE)?.[1];
+    if (upstream && upstream !== pkg.upstreamVersion) {
+      throw new Error(
+        `offline bundle: ${url} is Google Fonts ${upstream}, but ${spec.package}@${pkg.version} is built from ${pkg.upstreamVersion}`,
+      );
+    }
     if (!face.range) {
       throw new Error(`offline bundle: "${spec.family}" face for ${url} has no unicode-range to match`);
     }
@@ -367,15 +376,9 @@ export function buildOfflineBundle({ root, outFile }) {
   return { outFile, manifest };
 }
 
-function main(argv = process.argv.slice(2)) {
-  const { values } = parseArgs({
-    args: argv,
-    options: {
-      out: { type: 'string' },
-    },
-  });
+function main() {
   const root = process.cwd();
-  const { outFile } = buildOfflineBundle({ root, outFile: resolve(root, values.out ?? DEFAULT_OUT) });
+  const { outFile } = buildOfflineBundle({ root, outFile: resolve(root, DEFAULT_OUT) });
   console.log(`offline bundle: ${outFile}`);
 }
 

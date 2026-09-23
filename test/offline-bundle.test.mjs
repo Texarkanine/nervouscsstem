@@ -282,6 +282,22 @@ describe('offline bundle generator failures', () => {
     );
   });
 
+  it('throws when a Google Fonts URL version differs from the pinned package upstream version', () => {
+    const pkgDir = join(ROOT, 'node_modules', '@fontsource', 'vt323');
+    const upstream = JSON.parse(readFileSync(join(pkgDir, 'metadata.json'), 'utf8')).version;
+    const latin = JSON.parse(readFileSync(join(pkgDir, 'unicode.json'), 'utf8')).latin;
+    const css = `@font-face {
+  font-family: "VT323";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/vt323/v99/newer.woff2") format("woff2");
+  unicode-range: ${latin};
+}
+`;
+    assert.notEqual(upstream, 'v99');
+    assertRefuses(fixtureRoot({ css }), new RegExp(`v99.*${upstream}`));
+  });
+
   it('throws when a jsDelivr fontsource version differs from the installed one', () => {
     const installed = installedVersion('@fontsource/dseg7-classic');
     const css = `@font-face {
