@@ -70,3 +70,9 @@ Replace every hand-duplicated catalog island+fence pair with one `pymdownx.super
 * Insights
     - Superfences swallows non-`SuperFencesException` validator errors; a custom fence's output is one block, so inter-block blank lines vanish from HTML.
     - Isolating the one intended change in an intermediate build (reorder-only) kept both equivalence checks strict.
+
+## 2026-09-23 - POST-REFLECT OPERATOR CHANGE - COMPLETE
+
+* Operator corrected the earlier "no new CI jobs" brief: CI should run tests.
+* Added `.github/workflows/tests.yaml` (workflow `Tests`, job `Test`, on `pull_request`): `npm ci`, `npm run build`, `npm test`, `uv sync --group docs --frozen`, `npm run test:py`. Lint stays out (pre-existing `dist/nerv.css` failures).
+* New npm script `test:py` for the formatter `unittest` suite; `npm test` stays Node-only so it does not require uv.

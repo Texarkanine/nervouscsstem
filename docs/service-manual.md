@@ -64,4 +64,4 @@ Write each live example once, as an `html` fence with the `island` option. At bu
 - An unknown option, a missing or malformed value (values are `[a-z][a-z0-9-]*`), or `init` / `state` without `island` fails the build.
 - A plain `html` fence (no `island`) is copy only. Scanlines is written that way: it is a viewport overlay, so it never goes in an island.
 
-The formatter is `scripts/nervouscsstem_docs/island_fence.py`, registered as a superfences custom fence in `properdocs.yml`. `uv sync --group docs` installs it editable. Its tests: `uv run python -m unittest discover -s test -v`.
+The formatter is `scripts/nervouscsstem_docs/island_fence.py`, registered as a superfences custom fence in `properdocs.yml`. `uv sync --group docs` installs it editable. Its tests: `npm run test:py`; PR CI runs them with `npm test`.

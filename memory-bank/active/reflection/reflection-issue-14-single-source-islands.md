@@ -12,7 +12,7 @@ A `pymdownx.superfences` custom fence (`html` + `island`) now renders each catal
 
 ## Requirements vs Outcome
 
-All ten requirements and four acceptance criteria are met. One addition: `init=` / `state=` without `island` fails the build (a forgotten `island` would otherwise render as nothing useful). One forced layout change: 103 Spec paragraphs moved from between demo and code to after the code, because one fence emits both as one block. Nothing descoped. Python tests are documented but not in CI, per the "no new CI jobs" constraint.
+All ten requirements and four acceptance criteria are met. One addition: `init=` / `state=` without `island` fails the build (a forgotten `island` would otherwise render as nothing useful). One forced layout change: 103 Spec paragraphs moved from between demo and code to after the code, because one fence emits both as one block. Nothing descoped. Python tests were first left out of CI under a "no new CI jobs" brief; after Reflect the operator corrected that, and the new `Tests` workflow now runs `npm test` and `npm run test:py` on every PR.
 
 ## Plan Accuracy
 
