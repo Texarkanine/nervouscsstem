@@ -390,7 +390,7 @@ describe('Radar CSS', () => {
 
   it('.nerv-radar-blip supports phase alignment via --nerv-radar-blip-phase', () => {
     const idx = css.indexOf('.nerv-radar-blip');
-    const section = css.slice(idx, idx + 900);
+    const section = css.slice(idx, idx + 1800);
     assert.ok(
       section.includes('--nerv-radar-blip-phase'),
       'animation-delay should reference --nerv-radar-blip-phase for sweep alignment'
@@ -400,7 +400,7 @@ describe('Radar CSS', () => {
   it('.nerv-radar-blip uses phase×period delay (first frame = first sweep hit; cold start opacity 0)', () => {
     const idx = css.indexOf('.nerv-radar .nerv-radar-blip');
     assert.ok(idx >= 0, 'blip rule block should exist');
-    const section = css.slice(idx, idx + 950);
+    const section = css.slice(idx, idx + 1800);
     assert.ok(
       section.includes('opacity: 0'),
       'blips should start off until animation-delay elapses'
@@ -452,6 +452,48 @@ describe('Radar CSS', () => {
       'blip disc should be ::before so inner text does not stretch the glow'
     );
   });
+
+  it('.nerv-radar-blip polar orbit uses cqmin so radius follows the disc not the label box', () => {
+    assert.ok(
+      css.includes('50cqmin'),
+      'polar orbit must use 50cqmin; a 50% length would be the blip box and pile labeled polar contacts at the center'
+    );
+  });
+
+  it('.nerv-radar-blip-polar counter-rotates so labels stay screen-upright', () => {
+    const idx = css.indexOf('.nerv-radar-blip-polar');
+    assert.ok(idx >= 0, '.nerv-radar-blip-polar should exist');
+    const section = css.slice(idx, idx + 1200);
+    assert.ok(
+      section.includes('-1turn'),
+      'polar transform should counter-rotate by the bearing so label text is not painted along the ray'
+    );
+  });
+
+  it('.nerv-radar-blip cartesian contact is the phosphor origin not the flex-box center', () => {
+    const idx = css.indexOf('.nerv-radar .nerv-radar-blip {');
+    assert.ok(idx >= 0, '.nerv-radar .nerv-radar-blip block should exist');
+    const polarIdx = css.indexOf('.nerv-radar-blip-polar', idx);
+    const section = css.slice(idx, polarIdx > idx ? polarIdx : idx + 1800);
+    assert.ok(
+      section.includes('--nerv-radar-blip-origin-x') && section.includes('transform-origin'),
+      'cartesian blips must pin transform-origin to the phosphor'
+    );
+    assert.ok(
+      !/translate\(\s*-50%\s*,\s*-50%\s*\)/.test(section),
+      'translate(-50%,-50%) centers the labeled flex box so the sweep misses the phosphor'
+    );
+  });
+
+  it('.nerv-radar-blip-label-below centers the caption on the phosphor', () => {
+    const idx = css.indexOf('nerv-radar-blip-label-below');
+    assert.ok(idx >= 0, '.nerv-radar-blip-label-below should exist');
+    const block = css.slice(idx, idx + 400);
+    assert.ok(
+      block.includes('align-items: center'),
+      'label-below must center the caption under the phosphor, not flex-start'
+    );
+  });
 });
 
 describe('Text color utilities (pair with nerv-glow-text-*)', () => {
@@ -497,6 +539,46 @@ describe('nerv.js API surface', () => {
       'function',
       'NERV.initRadarBlipAutoLayout should be a function'
     );
+
+    const prevDocument = globalThis.document;
+    const prevGetComputedStyle = globalThis.getComputedStyle;
+    globalThis.document = {};
+    globalThis.getComputedStyle = () => ({ transformOrigin: '4.5px 4.5px' });
+    try {
+      const stored = {};
+      const blip = {
+        hasAttribute: () => false,
+        classList: { contains: () => false },
+        getBoundingClientRect: () => ({ left: 10, top: 10, width: 60, height: 40 }),
+        style: {
+          setProperty(name, value) {
+            stored[name] = value;
+          },
+        },
+      };
+      const radar = {
+        getBoundingClientRect: () => ({ left: 0, top: 0, width: 200, height: 200 }),
+        querySelectorAll: () => [blip],
+      };
+      NERV.layoutRadarBlips(radar);
+      const phase = Number(stored['--nerv-radar-blip-phase']);
+      const boxCx = 10 + 60 / 2;
+      const boxCy = 10 + 40 / 2;
+      const boxBearing = Math.atan2(boxCx - 100, -(boxCy - 100));
+      const boxPhase = (boxBearing < 0 ? boxBearing + 2 * Math.PI : boxBearing) / (2 * Math.PI);
+      assert.notEqual(
+        phase,
+        boxPhase,
+        'auto-layout must not use the labeled flex-box center as the contact'
+      );
+      assert.ok(
+        Math.abs(phase - 0.875) < 0.01,
+        `phosphor at (14.5, 14.5) in a 200px disc should bear ~0.875 turn, got ${phase}`
+      );
+    } finally {
+      globalThis.document = prevDocument;
+      globalThis.getComputedStyle = prevGetComputedStyle;
+    }
     assert.equal(
       typeof NERV.initDataBackgrounds,
       'function',

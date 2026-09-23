@@ -8,6 +8,8 @@ The architecture is five layers with strict upward dependency flow: **Foundation
 
 Reference HTML pages in `ref/` serve as visual test fixtures. Each page shows only its own layer's features — no duplication of prior layers' content. Where a layer needs backdrop content to be visible (e.g., scanlines need text underneath), the page uses distinct text that is clearly not a copy of earlier pages.
 
+The documentation site is the teaching surface, authored only under `docs/`. Five `docs/boards/*.html` files are published void swatches adapted from matching `ref/` pages; they may drift. `ref/` stays the fixture. Do not list boards as MkDocs `extra_templates` (that Jinja-processes them into Material). Material docs chrome must not call `NERV.init()`. Each catalog example is a `.nerv-docs-island` followed by an `html` fence whose markup is the island's inner HTML verbatim; island chrome (`data-nerv-init`, `nerv-state-*` on the wrapper) stays out of the fence, and JS recipes `querySelector` a class present in that markup. Scanlines is the one fence-only example (viewport overlay). Generating both from one source is issue #14. `skills/nerv/` is a placeholder `SKILL.md` until selected pages are promoted into the skill; do not lockstep-copy this tree.
+
 ## SCSS Module System
 
 Source files are SCSS partials (prefixed with `_`) that are `@forward`ed by the entry point `nerv.scss`. The `@forward` order follows the dependency graph. Dart Sass compiles this into a single `dist/nerv.css`. No consumer-facing SCSS is required — consumers use the compiled CSS.

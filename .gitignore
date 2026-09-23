@@ -5,6 +5,3 @@ site/
 docs/stylesheets/nerv.css
 docs/javascripts/nerv.js
 **/.summem/__pycache__/
-site/
-docs/stylesheets
-docs/javascripts

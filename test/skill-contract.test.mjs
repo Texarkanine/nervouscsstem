@@ -12,8 +12,6 @@ import { dirname, join, resolve, sep } from 'node:path';
 const ROOT = resolve(import.meta.dirname, '..');
 const SKILL_DIR = join(ROOT, 'skills', 'nerv');
 const SKILL_MD = join(SKILL_DIR, 'SKILL.md');
-const DOCS_DIR = join(ROOT, 'docs');
-const SKILL_DOCS = join(SKILL_DIR, 'docs');
 const LFS_POINTER_PREFIX = 'version https://git-lfs.github.com/spec/v1';
 
 /**
@@ -61,16 +59,6 @@ function listFiles(dir) {
 }
 
 /**
- * @param {string} dir
- * @returns {string[]}
- */
-function markdownDocs(dir) {
-  return listFiles(dir)
-    .filter((rel) => rel.endsWith('.md'))
-    .sort();
-}
-
-/**
  * Parse `npm pack --dry-run --json` into packed paths.
  *
  * @returns {string[]}
@@ -100,21 +88,6 @@ describe('skill install contract', () => {
     const fm = parseSkillFrontmatter(readFileSync(SKILL_MD, 'utf8'));
     assert.equal(typeof fm.metadata.version, 'string');
     assert.equal(fm.metadata.version, pkg.version);
-  });
-
-  it('copies every docs markdown file into skills/nerv/docs at the same relative path', () => {
-    const docs = markdownDocs(DOCS_DIR).filter((rel) => rel !== 'reading.md');
-    assert.ok(docs.length > 0, 'docs/ must contain markdown');
-    for (const rel of docs) {
-      const source = join(DOCS_DIR, rel);
-      const copy = join(SKILL_DOCS, rel);
-      assert.ok(existsSync(copy), `missing skill copy of docs/${rel.replaceAll('\\', '/')}`);
-      assert.equal(
-        readFileSync(copy, 'utf8'),
-        readFileSync(source, 'utf8'),
-        `skills/nerv/docs/${rel.replaceAll('\\', '/')} must match docs/${rel.replaceAll('\\', '/')}`,
-      );
-    }
   });
 
   it('does not ship the screenshot library or Git LFS pointer files in the skill', () => {

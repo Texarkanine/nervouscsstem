@@ -1,0 +1,1 @@
+Catalog is components/css + components/javascript; dual families have both pages; nested .pages are not used (awesome-pages infers); only root docs/.pages
