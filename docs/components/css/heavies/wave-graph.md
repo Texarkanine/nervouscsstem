@@ -113,7 +113,7 @@ CSS wave graph is a box of scrolling sine traces, with dots that ride their trac
   </div>
 </div>
 
-**Spec:** A `.nerv-wave-point-label` inside a point is a text label beside its dot: to the right by default, to the left with `.nerv-wave-point-label-left`. It is placed from the dot's own position, so it moves with the dot and the dot keeps tracking the line. It takes the wave's color and glow; add `.nerv-type-hud` or your own type classes. `--nerv-wave-point-label-gap` sets the space between dot and label (default `0.35rem`). The label never leaves the box: near an edge or at the end of a swing it slides inward and can pass over its own dot for a moment. Labels on different waves overlap while they cross and separate again; that is intended, and there is no collision avoidance. The label is ordinary text, so a page script can rewrite it to show a live value (give the box an `id` and update the label's `textContent`). `role="img"` hides child text from screen readers, so a script that changes labels should keep the box's `aria-label` in step.
+**Spec:** A `.nerv-wave-point-label` inside a point is a text label beside its dot: to the right by default, to the left with `.nerv-wave-point-label-left`. It is placed from the dot's own position, so it moves with the dot and the dot keeps tracking the line. It takes the wave's color and glow; add `.nerv-type-hud` or your own type classes. `--nerv-wave-point-label-gap` sets the space between dot and label (default `0.35rem`). The label stays inside the box: near an edge or at the end of a swing it slides inward and can pass over its own dot for a moment. A label wider than the box pins to the left edge and is cut off on the right, so keep live values short. Labels on different waves overlap while they cross and separate again; that is intended, and there is no collision avoidance. The label is ordinary text, so a page script can rewrite it to show a live value (give the box an `id` and update the label's `textContent`). `role="img"` hides child text from screen readers, so a script that changes labels should keep the box's `aria-label` in step.
 
 ```html
 <div class="nerv-wave-graph nerv-grid-marks" role="img" aria-label="Two waves with labeled points, EVA-02 and EVA-01" style="max-width: 32rem; margin: 0 auto;">
@@ -155,7 +155,7 @@ CSS wave graph is a box of scrolling sine traces, with dots that ride their trac
 ## Alert speed
 
 <div class="nerv-docs-island nerv-state-alert">
-  <div class="nerv-wave-graph" role="img" aria-label="Sine traces at alert speed" style="max-width: 32rem; margin: 0 auto;">
+  <div class="nerv-wave-graph" role="img" aria-label="Sine traces at alert speed, one point labeled SYNC" style="max-width: 32rem; margin: 0 auto;">
     <div class="nerv-wave">
       <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-type-hud">SYNC</span></span>
     </div>
@@ -166,7 +166,7 @@ CSS wave graph is a box of scrolling sine traces, with dots that ride their trac
 **Spec:** This island sits under `.nerv-state-alert`. The alert states raise `--nerv-animation-speed`, so every wave cycles faster: 2× at alert, 3× at critical. The uncolored wave and its label turn red with `--nerv-primary`, and the cyan wave keeps its data color. Changing state mid-flight makes the waves jump once to a new position. `prefers-reduced-motion: reduce` stops the clock, and each wave holds at its phase with its points and labels still in place. `prefers-contrast: more` draws heavier traces, cuts the glow, rings points in `--nerv-bg`, and haloes labels in `--nerv-bg` so they stand off crossing lines.
 
 ```html
-<div class="nerv-wave-graph" role="img" aria-label="Sine traces at alert speed" style="max-width: 32rem; margin: 0 auto;">
+<div class="nerv-wave-graph" role="img" aria-label="Sine traces at alert speed, one point labeled SYNC" style="max-width: 32rem; margin: 0 auto;">
   <div class="nerv-wave">
     <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-type-hud">SYNC</span></span>
   </div>

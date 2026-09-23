@@ -22,8 +22,9 @@
 ///   .nerv-wave-point-label-left — puts the label left of its dot
 ///
 /// **Labels:** a label reads its dot's position from `--nerv-wave-point-x/-y` (the same values
-/// that place the dot) and clamps its `translate` so it never leaves the clipped box. At a swing
-/// extreme it slides inward and may cross its own dot. Labels on different waves overlap freely.
+/// that place the dot) and clamps its `translate` so it stays inside the clipped box. At a swing
+/// extreme it slides inward and may cross its own dot. A label wider than the box pins to the
+/// left edge and is cut off on the right. Labels on different waves overlap freely.
 ///
 /// **Custom properties** (set on the box for every wave, or on one wave; unitless unless noted):
 ///   --nerv-wave-amplitude  — fraction of half the cross-axis span (default 0.8)
