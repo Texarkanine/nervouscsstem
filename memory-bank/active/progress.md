@@ -119,3 +119,14 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Plan: 7 label behaviors + 3 modified tests, docs/fixture, harness, PR assets.
 * Decisions made
     - Default placement right; `-left` modifier only. Labels clamp inside the box and may cross their dot at extremes.
+
+## 2026-09-23 - PREFLIGHT (rework) - COMPLETE (PASS WITH ADVISORY)
+
+* Result: `PASS WITH ADVISORY` (first line of `.preflight-status`). No plan edits.
+* Findings
+    - TDD encoding, conventions, dependency impact, conflicts, and completeness pass. The three affected existing tests are all named in the plan. `.nerv-type-hud` does not collide with label `font-size` or `text-shadow`. `origin` has no `pr-assets` branch yet.
+    - Advisory: L1 and step 1.4 disagree on whether the vertical point rule re-declares `left`/`top`. Pick one shape and test it.
+    - Advisory: `-left` should override only a preferred-offset property, not repeat the whole two-axis clamp.
+    - Advisory: `role="img"` hides label text from assistive tech. The docs Spec should tell script authors to keep `aria-label` in sync.
+    - Advisory: skip LFS smudge when cloning for `pr-assets`.
+    - Radical idea (advisory, follow-up): CSS-only live readouts via a registered `<integer>` displacement plus `counter()`.

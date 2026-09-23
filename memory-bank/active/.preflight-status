@@ -1,0 +1,23 @@
+PASS WITH ADVISORY
+
+Preflight of the point-labels rework (Level 2). No plan edits: no TDD step swaps and no strikes.
+
+TDD plan encoding passes. Unit 1 (label CSS) is the only executable product unit. Its substeps are ordered: stub tests, stub interface, then implement tests and run them red, then write code and run green. Units 2 (docs and fixture) and 4 (PR screenshots) are prose or policy and owe no tests. Unit 3 is a browser harness that verifies the build; nothing in it ships. L1–L7 assert on compiled `dist/nerv.css`, like the existing suite. They are not change-detectors on documents.
+
+Convention compliance passes. New selectors keep the `.nerv-` prefix, so stylelint's `selector-class-pattern` is satisfied. The gap default goes on `.nerv-wave-graph` beside the other inheritable defaults, the header doc comment is updated, and tests stay in the existing `test/wave-graph.test.mjs`, which is already in `npm test`.
+
+Dependency impact passes. Hoisting position into `--nerv-wave-point-x/-y` breaks three existing tests: the tile/point scale regex (`amplitude * N%` on the point rule), the "same clock" test (reads `top:`), and the vertical axis-swap test (reads `left:` for `sin(`). The plan names all three for modification. `100cqw` equals the point's old `100%` because `.nerv-wave` is the size container and the containing block, with `inset: 0` and no padding. The label's cq units resolve against the same `.nerv-wave`. Unregistered custom properties substitute `var()` on the point and the label inherits the result, so the label cannot re-evaluate a different position.
+
+Conflict detection passes. `.nerv-type-hud` (the planned docs type) sets no `font-size` or `text-shadow`, so it does not collide with the label's `0.7rem` or with the contrast `text-shadow` halo. No other rule sets `text-shadow` on wave elements. The public API is unchanged, since `left`/`top` only change form. `origin` has no `pr-assets` branch yet, so the plan's "reuse if it exists" path will create it.
+
+Completeness passes. Rework requirements 1–6 and acceptance criteria 1–4 each map to a concrete step. The prototype (`/tmp/nerv-wave-proto/label.{html,mjs}`) exists and uses the planned selectors and clamp.
+
+Advisory (low): L1 says the horizontal and vertical `.nerv-wave-point` rules both set `left: var(--nerv-wave-point-x)` / `top: var(--nerv-wave-point-y)`. Step 1.4 says the vertical override "redefines x/y only", while the prototype re-declares `left`/`top` in the vertical rule too. Pick one shape and write L1 to match it. If the vertical rule only redefines x/y, L1 should assert that `V_POINT` defines both properties and that the base `H_POINT` rule holds the only `left`/`top`.
+
+Advisory (low): keep one clamp. In the prototype, `.nerv-wave-point-label-left` repeats the full two-axis `translate: clamp(...) clamp(...)`, which is a second copy of the box-clamp formula. Instead, give the label an internal preferred-offset property (the prototype already has `--nerv-wave-point-label-offset`) and let `-left` override only that property, for example to `calc(-1 * (size / 2 + gap) - 100%)`. The clamp then exists once, and L4 can assert on the one property. Document the internal property in the header next to `--nerv-wave-point-x/-y`.
+
+Advisory (medium, docs only): every docs and fixture wave box has `role="img"` plus `aria-label`. Children of `role="img"` are presentational, so assistive tech never reads label text, including text a page script rewrites. The "Point labels" Spec should say this: a page that updates labels with meaningful values should also update the box's `aria-label` (or expose the values outside the graph).
+
+Advisory (low, tooling): clone `pr-assets` into `/tmp` with `GIT_LFS_SKIP_SMUDGE=1` (or `--no-checkout --filter=blob:none`) so the LFS screenshot library is not downloaded just to push an orphan branch. The orphan tree has no `.gitattributes`, so files under `pr-18/` are ordinary blobs and raw.githubusercontent.com serves them directly.
+
+Radical idea (advisory, out of scope for this rework): live readouts in pure CSS, with no JS and no `attr()`. Add a registered `@property --nerv-wave-point-value { syntax: '<integer>'; inherits: false; initial-value: 0 }`. Set it on the point as `calc(sin((phase-turns) * 1turn) * 100)`; it recomputes every frame from the inherited `--nerv-wave-t`. Then a `.nerv-wave-point-readout` child renders `counter-reset: nerv-v var(--nerv-wave-point-value); content: counter(nerv-v)` inside the same clamped label box. The dot would carry a ticking −100…100 displacement readout in HUD type, still derived from one formula. The human scoped live values out, so treat this as a follow-up issue, and prove it in Firefox before promising it.
