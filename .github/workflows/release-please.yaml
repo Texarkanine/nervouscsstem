@@ -63,6 +63,10 @@ jobs:
       - name: Build package
         run: npm run build
 
+      # Before publishing, so a font the bundle cannot resolve blocks npm publish.
+      - name: Build offline bundle
+        run: npm run build:offline
+
       - name: Publish to npm
         run: npm publish
 
@@ -74,10 +78,10 @@ jobs:
           path: ~/.npm/_logs/
           if-no-files-found: ignore
 
-      - name: Attach CSS and JS to the GitHub Release
+      - name: Attach CSS, JS, and offline bundle to the GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "${{ needs.release-please.outputs.tag_name }}" dist/nerv.css dist/nerv.js
+        run: gh release upload "${{ needs.release-please.outputs.tag_name }}" dist/nerv.css dist/nerv.js dist/nervouscsstem-offline.zip
 
   publish-pages:
     name: Publish GitHub Pages
