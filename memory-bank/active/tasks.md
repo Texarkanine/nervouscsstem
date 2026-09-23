@@ -98,4 +98,11 @@ No new technology. `clamp()` with self-percentages in `translate` proven in Chro
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA — FAIL (Build rerun, docs only)
+
+## QA Results
+
+- Blocking: the wide-label limit is not documented. The plan says it would be documented, but the docs Spec and the `_wave-graph.scss` header both claim the label never leaves the box. A label wider than the box pins to the left edge and is cut off on the right. Fix: add one clause in each place.
+- Advisory: the alert example's `aria-label` does not name its SYNC label. The `ref/ref-patterns.html` aria-labels do not mention labels, and the vertical graph's still says "plotted points".
+- Advisory: `-left` repeats the clearance term. Accepted, because removing it would need a third internal property.
+- QA reran the checks: `npm test` 399/399; strict docs build green; lint shows only the 10 pre-existing errors.

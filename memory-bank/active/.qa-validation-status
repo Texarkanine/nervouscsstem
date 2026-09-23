@@ -1,0 +1,13 @@
+FAIL
+Task: sine-wave-graph (rework: point labels)
+Reviewed: a4c4dd4..df4f3df (feat 26c52df, chore 94489a9)
+Checks rerun by QA: npm test 399/399; npm run docs:build (strict) green; npm run lint 10 errors, all pre-existing (Antonio quotes, radar custom-property spacing, zero units).
+
+Blocking (Build rerun, docs only):
+- Wide-label limit undocumented. The plan (Challenges & Mitigations) says a label wider than the box pins to the left edge because clamp() resolves to its minimum, and it says this is "Documented as a limit." It is not documented. The docs Spec ("The label never leaves the box") and the _wave-graph.scss header ("never leaves the clipped box") state the guarantee as absolute. In that case the label overflows the right edge and is cut off by overflow: hidden. Fix: one clause in both places.
+
+Advisory (non-blocking):
+- The alert docs example has a SYNC label, but its aria-label ("Sine traces at alert speed") does not name it. The page tells authors to keep aria-label in step with labels. In ref/ref-patterns.html, the aria-labels of the sync and critical graphs do not mention their labels, and the vertical graph still says "plotted points".
+- .nerv-wave-point-label-left repeats the clearance term (point-size / 2 + gap) from the base shift. Removing it would need a third internal property, and two terms do not justify one.
+
+Passed: L1-L7 implemented and tested; one position source (label rules have no sin/clock/point-at); -left overrides only the shift, so the clamp exists once; vertical rule redefines only x/y; contrast halo; .nerv-type-hud does not collide with label font-size/text-shadow; naming matches radar's -label-left; feat commit is free of SumMem churn.

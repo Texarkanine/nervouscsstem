@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: sine-wave-graph rework — point labels (PR #18)
-**Phase:** BUILD - COMPLETE
+**Phase:** QA - COMPLETE (FAIL)
 
 ## What Was Done
 - Rework initiated from PR #18 human feedback (labels on points; PR screenshots). Re-classified Level 2: one sub-feature on one component.
