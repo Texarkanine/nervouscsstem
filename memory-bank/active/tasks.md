@@ -239,4 +239,4 @@ npm tarball:
 - [x] Pre-Mortem complete
 - [x] Preflight (PASS WITH ADVISORY; advisories 1–3 folded in, 4 `specimen.html` declined as scope creep → manual QA item)
 - [x] Build (steps 1–6 done; 391/391 tests, docs strict build clean, lint unchanged from base)
-- [ ] QA
+- [x] QA (PASS; advisories: service-manual overstates that any font URL change fails the build, since gstatic version bumps with unchanged ranges pass silently; unused `--out` CLI flag; manual offline render check still open. Details in `.qa-validation-status`)

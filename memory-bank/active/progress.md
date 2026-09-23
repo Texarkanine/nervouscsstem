@@ -58,3 +58,22 @@ Build an optional offline zip (issue #7): `nerv.css` rewritten to local `@font-f
     - Tarball test verified by mutation, not only by passing.
 * Insights
     - The zip is ~414 KB for 22 fonts; Shippori's 10 CJK slices dominate.
+
+## 2026-09-23 - QA - COMPLETE
+
+* Result: `PASS` (first line of `.qa-validation-status`). No implementation edits.
+* Verified
+    - All 6 plan steps and all 18 planned behaviors are implemented and tested; invariants hold; hardcoded copyright lines match the fontsource LICENSE texts; `npm test` 391/391; lint unchanged (10 pre-existing errors in compiled CSS).
+* Advisories
+    - `docs/service-manual.md` claims any font URL change fails the bundle build. A gstatic version bump with unchanged `unicode-range`s passes and silently keeps the pinned fontsource version. Reword.
+    - The CLI `--out` flag is unplanned and unused.
+    - Manual offline render check of the extracted zip is still open for the operator.
+
+## 2026-09-23 - POST-QA FIX - COMPLETE
+
+* Work completed
+    - Advisory 1 fixed in code, not only prose: the generator now fails when a gstatic URL's `/vNN/` differs from the pinned package's `metadata.json` `version` (fontsource records the Google Fonts version it was built from; all five gstatic families match today). New failure test written first and seen red.
+    - Service manual lists the exact failure conditions (text arrived in the working tree during QA; kept because it matches the new check).
+    - Advisory 2: removed the unused `--out` CLI flag.
+* Insights
+    - fontsource `metadata.json` `version` is the upstream Google Fonts version (`v13`, `v22`, …); DSEG7 (`type: other`) carries its own upstream version and is pinned through its jsDelivr URL instead.

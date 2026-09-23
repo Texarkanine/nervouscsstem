@@ -1,7 +1,7 @@
 # Active Context
 
 - **Current Task:** Offline font-and-JS bundle (issue #7)
-- **Phase:** BUILD - COMPLETE
+- **Phase:** QA - COMPLETE (PASS)
 - **What Was Done:** Built to plan, steps 1–6.
     - Created: `scripts/build-offline-bundle.mjs`, `test/offline-bundle.test.mjs`.
     - Modified: `package.json` / `package-lock.json` (7 exact-pinned devDeps, `build:offline`, test list), `test/publish-contract.test.mjs` (zip exclusion), `.github/workflows/release-please.yaml` (build before publish, upload zip), `.github/workflows/reusable-docs-build.yml` (PR builds zip), `README.md` (Offline bundle section), `docs/service-manual.md` (Offline bundle fonts), `memory-bank/techContext.md`.
