@@ -1,0 +1,1 @@
+Wave point labels on different waves may overlap and be unreadable while crossing; that is intended NERV look. Do not add label collision avoidance (human norm, PR #18)

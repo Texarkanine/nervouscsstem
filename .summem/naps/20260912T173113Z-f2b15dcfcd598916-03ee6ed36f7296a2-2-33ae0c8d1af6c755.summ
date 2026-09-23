@@ -1,0 +1,1 @@
+With dist gitignored, skip release-please RP-branch amend jobs (node strategy already patches package-lock versions). main (LICENSE-only) and initialdev were unrelated roots, joined by merging main into initialdev so GitHub could open a PR.
