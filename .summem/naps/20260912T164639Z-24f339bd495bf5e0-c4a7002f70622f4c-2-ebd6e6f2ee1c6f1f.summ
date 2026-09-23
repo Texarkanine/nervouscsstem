@@ -1,0 +1,1 @@
+First npm publish needs operator bootstrap before OIDC trusted publisher (release-please.yaml); test what ships to consumers, not our own CI unless brittle or critical
