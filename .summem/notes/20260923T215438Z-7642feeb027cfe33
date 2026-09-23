@@ -1,0 +1,1 @@
+Masked elements cut away their own filter glow (filter applies before mask); put drop-shadow on the parent, as .nerv-wave does for its masked ::before stroke
