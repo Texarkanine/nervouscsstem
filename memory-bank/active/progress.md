@@ -78,3 +78,11 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Re-verified in Chromium + Firefox (unchanged numbers). Verified the no-`@property` fallback: `t` flips 0↔1 discretely, frames identical up to 4/255 anti-aliasing.
 * Decisions made
     - Fixed behavior, not just prose: an unmasked solid block over a host UI is worse than no trace.
+
+## 2026-09-23 - QA (rerun) - COMPLETE (PASS)
+
+* Result: `PASS`. Both first-run findings are fixed (`0ed65d8`). QA reran `npm test` (393/393) and the strict docs build, and both pass. Lint shows only the 10 pre-existing errors.
+* Findings
+    - The `@supports (mask-image: none)` gate is correct and tested, and it covers both orientations. The catalog text now describes both fallbacks correctly. `colors.md` names wave graphs.
+    - Advisory: in Chromium 111–119 the points still paint without the trace. This is below the support floor.
+    - Advisories carried over: summem churn in the `feat:` commit; stale `nerv.scss` "not @use" header; `systemPatterns.md` updates deferred to Reflect.

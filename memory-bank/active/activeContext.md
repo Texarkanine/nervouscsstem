@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: sine-wave-graph (issue #8)
-**Phase:** BUILD - COMPLETE (QA rework)
+**Phase:** QA - COMPLETE (PASS)
 
 ## What Was Done
 - Operator gate decisions (pre-authorized by the orchestrating operator): creative results accepted at high confidence; ref fixture in `ref/ref-patterns.html`; support floor Chrome 120 / Firefox 128 / Safari 16.4. Preflight advisories: reference still copied from `docs/img/3RBI9q8.png`; separate test file kept; catalog links existing waveform docs; alert "desync" token deferred as a follow-up idea.
@@ -21,4 +21,4 @@
     - Docs page screenshotted in both engines in normal, reduced-motion, and high-contrast modes; no page errors.
 
 ## Next Step
-- Re-run QA in a subagent.
+- QA rerun passed (see `.qa-validation-status`). Next: Reflect.

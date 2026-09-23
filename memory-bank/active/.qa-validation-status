@@ -1,0 +1,17 @@
+PASS
+
+QA rerun of sine-wave-graph (issue #8) after the Build rework, on 2026-09-23. The review covers rework commit `0ed65d8` against the two blocking findings from the first QA run. It also checks the whole task diff (`e24adae..HEAD`) against the Level 3 plan in `tasks.md` and both creative docs. Result: acceptable as-is, with advisories.
+
+Mechanical checks, rerun by QA: `npm test` 393/393 pass. `npm run docs:build` (strict) passes. `npm run lint` shows the same 10 errors as before, all in typography, radar, and cartouche output that predates this task. None are in wave-graph rules.
+
+First-run blocking findings:
+
+1. `colors.md` color-modifier family list: fixed. "Glow colors" now names wave graphs.
+2. Wrong older-browser fallback claim: fixed in the code, not just the prose. The stroke `::before` sets `background-color` only inside `@supports (mask-image: none)`. Chromium 85–119, which has only `-webkit-mask-*`, now draws no trace instead of a solid block. A new test checks that no base stroke rule (horizontal or vertical) paints, and that the `@supports` block sets the wave color. Both orientations are covered, because the vertical rule inherits the `::before` paint and changes only mask geometry. The catalog now names unprefixed `mask` as a requirement and describes both fallbacks correctly. Without `@property`, the clock stays at a fixed value and traces hold still; Build verified this in the browser. Without unprefixed `mask`, no trace is drawn. The other `mask-*` declarations outside the gate have no effect where unsupported. Safari (15.4+) and Firefox (53+) support unprefixed `mask-image`, so the stated support floor is not affected.
+
+Code review of the whole diff: the first QA run found no KISS, DRY, YAGNI, completeness, regression, or integrity issues. The rework adds one small, commented `@supports` block and one test. It adds no new abstractions, magic numbers, or debris. The `fix:` commit type fits the change.
+
+Advisories (non-blocking):
+
+- In Chromium 111–119 (which has `sin()` but no unprefixed mask), points still paint while the trace does not. The catalog says only that the traces are not drawn. This is below the stated support floor, so the text is not wrong, only incomplete.
+- Carried over from the first run: summem nap churn landed in the `feat:` commit. The `src/nerv.scss` header comment "not @use" was already stale before this task. The `systemPatterns.md` updates are deferred to Reflect, as planned.

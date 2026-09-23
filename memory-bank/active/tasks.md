@@ -205,11 +205,17 @@ No new dependencies. Browser features (`@property`, `sin()`, unprefixed `mask`, 
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA: FAIL, Build must rerun (see QA Results)
+- [x] QA: PASS on rerun (see QA Results)
 
 ## QA Results
 
-Result: **FAIL**. Two documentation fixes are needed. The implementation code passes review. Details are in `.qa-validation-status`.
+### Rerun
 
-- [ ] Add wave graphs to the list of color-modifier families in `docs/components/css/core/colors.md` ("Glow colors"). `.nerv-wave-{name}` is the only `$nerv-colors` modifier loop missing from that list.
-- [ ] Correct the "Older browsers show the traces holding still" claim in `docs/components/css/heavies/wave-graph.md`. Chromium 85–119 has only `-webkit-mask-*`, so the stroke `::before` paints a solid color block there. Fix the wording, or make the fallback true (for example, gate the stroke on `@supports`).
+Result: **PASS**. Both first-run findings are fixed (`0ed65d8`). The stroke is now gated behind `@supports (mask-image: none)`, and a test covers the gate. The catalog text and the `colors.md` list are corrected. Tests pass (393/393), the strict docs build passes, and lint shows only the 10 pre-existing errors. Advisory: in Chromium 111–119 the points still paint without the trace, which is below the support floor. Details are in `.qa-validation-status`.
+
+### First Run
+
+Result: **FAIL**. Two documentation fixes were needed. The implementation code passed review.
+
+- [x] Add wave graphs to the list of color-modifier families in `docs/components/css/core/colors.md` ("Glow colors"). `.nerv-wave-{name}` is the only `$nerv-colors` modifier loop missing from that list.
+- [x] Correct the "Older browsers show the traces holding still" claim in `docs/components/css/heavies/wave-graph.md`. Chromium 85–119 has only `-webkit-mask-*`, so the stroke `::before` paints a solid color block there. Fix the wording, or make the fallback true (for example, gate the stroke on `@supports`).
