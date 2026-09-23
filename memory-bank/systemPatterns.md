@@ -43,6 +43,10 @@ This distinction is load-bearing for the alert cascade system.
 
 Instances discovered: M5 (drop-shadow not border, source-order cascade, background override, double-border bleed), M6 (checkbox checked+focus shadow collision).
 
+## Glow Goes Outside the Clip
+
+Paint order is filter, then `clip-path`, then `mask`. A `drop-shadow` glow on a clipped or masked element is cut away by its own clip or mask, so the glow belongs on a parent. `_wave-graph.scss` is the instance: the masked stroke is `.nerv-wave::before`, and the glow is on `.nerv-wave`.
+
 ## Animation Patterns
 
 - **Token-driven durations** — Every animation whose speed a consumer might want to tune gets its own `--nerv-*-duration` token (e.g., `--nerv-flicker-duration`, `--nerv-glitch-duration`). Durations use `calc(var(--nerv-*-duration) * N / var(--nerv-animation-speed))` so the global speed multiplier and per-effect tokens compose.

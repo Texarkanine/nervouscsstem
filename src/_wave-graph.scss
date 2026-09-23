@@ -1,0 +1,302 @@
+/// _wave-graph.scss — Scrolling sine traces with plotted points (sync graph).
+///
+/// **Usage:** `docs/components/css/heavies/wave-graph.md`.
+///
+/// **One clock per wave:** `@keyframes nerv-wave-travel` animates the registered number
+/// `--nerv-wave-t` from 0 to 1 once per period on `.nerv-wave`. The stroke (`::before`, an SVG
+/// sine used as a repeating mask over `background-color`) and every `.nerv-wave-point` compute
+/// their position from that one value, so they cannot drift apart. Displacement at position `s`
+/// (fraction of the travel axis) is `A · sin((s / λ + φ + t) turns)`.
+///
+/// **Glow:** `filter` runs before `mask`, so the drop-shadow lives on `.nerv-wave` (the masked
+/// `::before` would cut its own glow away). Points inherit the same glow.
+///
+/// **Classes:**
+///   .nerv-wave-graph          — the box (positioning context, clips; no background/border/pseudos)
+///   .nerv-wave-graph-vertical — waves travel vertically; points move side to side
+///   .nerv-wave                — one sine trace (child of the box)
+///   .nerv-wave-{color}        — pins a named data color (glow-flagged tokens), on a wave or the box
+///   .nerv-wave-reverse        — flips a wave's travel direction (default: toward left / top)
+///   .nerv-wave-point          — dot riding the trace (child of a wave)
+///   .nerv-wave-point-label    — plain-text label beside its dot (child of a point; right by default)
+///   .nerv-wave-point-label-left — puts the label left of its dot
+///
+/// **Labels:** a label reads its dot's position from `--nerv-wave-point-x/-y` (the same values
+/// that place the dot) and clamps its `translate` so it stays inside the clipped box. At a swing
+/// extreme it slides inward and may cross its own dot. A label wider than the box pins to the
+/// left edge and is cut off on the right. Labels on different waves overlap freely.
+///
+/// **Custom properties** (set on the box for every wave, or on one wave; unitless unless noted):
+///   --nerv-wave-amplitude  — fraction of half the cross-axis span (default 0.8)
+///   --nerv-wave-wavelength — fraction of the travel-axis span (default 0.5)
+///   --nerv-wave-frequency  — cycles per --nerv-wave-duration; 0 holds still (default 0.25)
+///   --nerv-wave-phase      — starting offset in turns, 0.25 = 90° (default 0)
+///   --nerv-wave-color      — stroke, point, and glow color (default --nerv-primary)
+///   --nerv-wave-point-at   — point position, fraction of the travel axis (default 0.5)
+///   --nerv-wave-point-size — point diameter, a length (default 0.5rem)
+///   --nerv-wave-point-label-gap — space between dot edge and label, a length (default 0.35rem)
+///   --nerv-wave-t          — internal animated clock; do not set
+///   --nerv-wave-point-x/-y — internal: the dot's center in the wave box; do not set
+///
+/// **Tokens consumed:** --nerv-wave-duration, --nerv-animation-speed, --nerv-primary, --nerv-bg,
+/// --nerv-glow-spread, --nerv-glow-intensity; color values from tokens.$nerv-colors.
+
+@use 'sass:list';
+@use 'glow';
+@use 'tokens';
+
+// --- Stroke geometry ---
+// One wavelength = 4 quarter-wave units along the travel axis; amplitude = 1 unit. Each quarter
+// of sin() is one cubic Bézier (max error ≈0.1% of amplitude). The path overruns the tile by a
+// quarter on each side so the SVG viewport cuts it flush at the seam and the next tile continues
+// it. The viewBox spans ±2 across, so the tile is 4 amplitudes tall and peaks never clip.
+
+$_c1-along: 0.3261;
+$_c1-across: 0.5123;
+$_c2-along: 0.6381;
+
+/// Path `d` for quarters -1 … 4. Horizontal: y grows downward, so displacement up is -sin().
+/// Vertical: the same curve transposed, displacement to the right is +sin().
+@function _wave-path($vertical) {
+  $sign: -1;
+  @if $vertical {
+    $sign: 1;
+  }
+  $pts: ();
+  @for $k from -1 through 4 {
+    $q: ($k + 4) % 4;
+    // Each quarter: start, control 1, control 2, end — as (along, across) in amplitude units.
+    $seg: null;
+    @if $q == 0 {
+      $seg: (($k, 0), ($k + $_c1-along, $_c1-across), ($k + $_c2-along, 1), ($k + 1, 1));
+    } @else if $q == 1 {
+      $seg: (($k, 1), ($k + 1 - $_c2-along, 1), ($k + 1 - $_c1-along, $_c1-across), ($k + 1, 0));
+    } @else if $q == 2 {
+      $seg: (($k, 0), ($k + $_c1-along, -$_c1-across), ($k + $_c2-along, -1), ($k + 1, -1));
+    } @else {
+      $seg: (($k, -1), ($k + 1 - $_c2-along, -1), ($k + 1 - $_c1-along, -$_c1-across), ($k + 1, 0));
+    }
+    @if $k == -1 {
+      $pts: list.append($pts, list.nth($seg, 1));
+    }
+    @for $i from 2 through 4 {
+      $pts: list.append($pts, list.nth($seg, $i));
+    }
+  }
+  $d: '';
+  @for $i from 1 through list.length($pts) {
+    $along: list.nth(list.nth($pts, $i), 1);
+    $across: $sign * list.nth(list.nth($pts, $i), 2);
+    $xy: '#{$along},#{$across}';
+    @if $vertical {
+      $xy: '#{$across},#{$along}';
+    }
+    @if $i == 1 {
+      $d: 'M#{$xy}';
+    } @else if ($i - 2) % 3 == 0 {
+      $d: '#{$d} C#{$xy}';
+    } @else {
+      $d: '#{$d} #{$xy}';
+    }
+  }
+  @return $d;
+}
+
+@function _wave-mask($vertical, $stroke-width) {
+  $view-box: '0 -2 4 4';
+  @if $vertical {
+    $view-box: '-2 0 4 4';
+  }
+  @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='#{$view-box}' preserveAspectRatio='none'%3E%3Cpath d='#{_wave-path($vertical)}' fill='none' stroke='white' stroke-width='#{$stroke-width}' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+}
+
+$_stroke: 2;
+$_stroke-heavy: 3.5;
+
+// Point phase in turns; the stroke's mask offset encodes the same expression.
+$_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--nerv-wave-phase) + var(--nerv-wave-t)';
+
+// --- Clock ---
+
+@property --nerv-wave-t {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes nerv-wave-travel {
+  from {
+    --nerv-wave-t: 0;
+  }
+
+  to {
+    --nerv-wave-t: 1;
+  }
+}
+
+// --- Box: defaults inherit to every wave; no background/border/pseudos so chrome composes ---
+
+.nerv-wave-graph {
+  --nerv-wave-amplitude: 0.8;
+  --nerv-wave-wavelength: 0.5;
+  --nerv-wave-frequency: 0.25;
+  --nerv-wave-phase: 0;
+  --nerv-wave-color: var(--nerv-primary);
+  --nerv-wave-point-at: 0.5;
+  --nerv-wave-point-size: 0.5rem;
+  --nerv-wave-point-label-gap: 0.35rem;
+
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.nerv-wave-graph-vertical {
+  aspect-ratio: 10 / 16;
+}
+
+// --- Wave: owns the clock and the glow (filter before mask, so not on ::before) ---
+
+.nerv-wave {
+  position: absolute;
+  inset: 0;
+  container-type: size;
+  pointer-events: none;
+  @include glow.nerv-glow-drop(--nerv-wave-color);
+  animation:
+    nerv-wave-travel
+    calc(var(--nerv-wave-duration) / (var(--nerv-wave-frequency) * var(--nerv-animation-speed)))
+    linear
+    infinite;
+}
+
+.nerv-wave::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  mask-image: _wave-mask(false, $_stroke);
+  mask-repeat: repeat-x;
+  // Cross size = amplitude × 200cq: 4 amplitudes, the viewBox's ±2. Points offset by
+  // amplitude × 50cq of the same axis (200 / 50 = 4). Floored so a flat wave still draws.
+  mask-size:
+    calc(var(--nerv-wave-wavelength) * 100cqw)
+    max(calc(var(--nerv-wave-amplitude) * 200cqh), 6px);
+  mask-position:
+    calc(-1 * (var(--nerv-wave-phase) + var(--nerv-wave-t)) * var(--nerv-wave-wavelength) * 100cqw)
+    center;
+}
+
+// Paint only through a mask. Where unprefixed mask is missing (Chromium < 120), an unmasked
+// ::before would be a solid block over the box and whatever it overlays.
+@supports (mask-image: none) {
+  .nerv-wave::before {
+    background-color: var(--nerv-wave-color);
+  }
+}
+
+// The dot's center in the wave box (cq units = the wave box). Labels read the same values.
+.nerv-wave-point {
+  --nerv-wave-point-x: calc(var(--nerv-wave-point-at) * 100cqw);
+  --nerv-wave-point-y: calc(50cqh - var(--nerv-wave-amplitude) * 50cqh * sin((#{$_phase-turns}) * 1turn));
+
+  position: absolute;
+  left: var(--nerv-wave-point-x);
+  top: var(--nerv-wave-point-y);
+  width: var(--nerv-wave-point-size);
+  height: var(--nerv-wave-point-size);
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--nerv-wave-color);
+  translate: -50% -50%;
+}
+
+// Anchored at the dot center, then shifted beside it. Each axis is clamped so the label box
+// stays inside the wave box: at a swing extreme it slides inward (and may cross its dot).
+.nerv-wave-point-label {
+  --nerv-wave-point-label-shift: calc(var(--nerv-wave-point-size) / 2 + var(--nerv-wave-point-label-gap));
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  padding: 0;
+  color: var(--nerv-wave-color);
+  font-size: 0.7rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  translate:
+    clamp(
+      calc(-1 * var(--nerv-wave-point-x)),
+      var(--nerv-wave-point-label-shift),
+      calc(100cqw - var(--nerv-wave-point-x) - 100%)
+    )
+    clamp(
+      calc(-1 * var(--nerv-wave-point-y)),
+      -50%,
+      calc(100cqh - var(--nerv-wave-point-y) - 100%)
+    );
+}
+
+.nerv-wave-point-label-left {
+  --nerv-wave-point-label-shift: calc(-1 * (var(--nerv-wave-point-size) / 2 + var(--nerv-wave-point-label-gap)) - 100%);
+}
+
+.nerv-wave-reverse {
+  animation-direction: reverse;
+}
+
+// Named data colors stay put through the alert cascade (unlike the --nerv-primary default).
+@each $name, $vals in tokens.$nerv-colors {
+  @if list.nth($vals, 3) {
+    .nerv-wave-#{$name} {
+      --nerv-wave-color: var(--nerv-#{$name});
+    }
+  }
+}
+
+// --- Vertical: travel along y, displacement along x ---
+
+.nerv-wave-graph-vertical .nerv-wave::before {
+  mask-image: _wave-mask(true, $_stroke);
+  mask-repeat: repeat-y;
+  mask-size:
+    max(calc(var(--nerv-wave-amplitude) * 200cqw), 6px)
+    calc(var(--nerv-wave-wavelength) * 100cqh);
+  mask-position:
+    center
+    calc(-1 * (var(--nerv-wave-phase) + var(--nerv-wave-t)) * var(--nerv-wave-wavelength) * 100cqh);
+}
+
+.nerv-wave-graph-vertical .nerv-wave-point {
+  --nerv-wave-point-x: calc(50cqw + var(--nerv-wave-amplitude) * 50cqw * sin((#{$_phase-turns}) * 1turn));
+  --nerv-wave-point-y: calc(var(--nerv-wave-point-at) * 100cqh);
+}
+
+// Clock at its initial 0: each wave holds at its phase and points stay on the line.
+@media (prefers-reduced-motion: reduce) {
+  .nerv-wave {
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nerv-wave::before {
+    mask-image: _wave-mask(false, $_stroke-heavy);
+  }
+
+  .nerv-wave-graph-vertical .nerv-wave::before {
+    mask-image: _wave-mask(true, $_stroke-heavy);
+  }
+
+  .nerv-wave-point {
+    box-shadow: 0 0 0 2px var(--nerv-bg);
+  }
+
+  .nerv-wave-point-label {
+    text-shadow:
+      0 0 2px var(--nerv-bg),
+      0 0 2px var(--nerv-bg),
+      0 0 4px var(--nerv-bg);
+  }
+}

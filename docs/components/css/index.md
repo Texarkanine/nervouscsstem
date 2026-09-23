@@ -8,6 +8,6 @@ How NERV looks. Four layers, from paint that has no box of its own up to named w
 
 **Atoms** are one labeled instrument, one job.
 
-**Heavies** are a named whole, built on other pieces. Not ornament. Radar with live status in the blips is load-bearing.
+**Heavies** are a named whole, built on other pieces. Not ornament. Radar with live status in the blips is load-bearing, and so is a wave graph whose points ride their traces.
 
 JavaScript mirrors a leaf only when that family has a hook.
