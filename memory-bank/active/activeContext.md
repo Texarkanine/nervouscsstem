@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Task: sine-wave-graph (issue #8)
-**Phase:** QA - COMPLETE (PASS)
+**Phase:** REFLECT COMPLETE
 
 ## What Was Done
 - Operator gate decisions (pre-authorized by the orchestrating operator): creative results accepted at high confidence; ref fixture in `ref/ref-patterns.html`; support floor Chrome 120 / Firefox 128 / Safari 16.4. Preflight advisories: reference still copied from `docs/img/3RBI9q8.png`; separate test file kept; catalog links existing waveform docs; alert "desync" token deferred as a follow-up idea.
@@ -20,5 +20,9 @@
     - Browser harness on built `dist/nerv.css` (Chromium 1243, Firefox 1543): point-to-stroke perpendicular distance worst 0.35px / 0.56px (cross-axis 0.61 / 1.78px on steep slopes: Firefox snaps mask position to whole pixels); periods exact incl. 3× under `nerv-state-critical`; reduced motion stops all wave animations with points on the line (≤0.39px).
     - Docs page screenshotted in both engines in normal, reduced-motion, and high-contrast modes; no page errors.
 
+## Reflection
+- `reflection/reflection-sine-wave-graph.md`. Key insights: a registered `@property` clock keeps derived geometries in lockstep; state what each missing feature paints when writing a support floor (the one unverified claim was the QA failure).
+- `systemPatterns.md`: added "Glow Goes Outside the Clip" (filter before clip-path/mask).
+
 ## Next Step
-- QA rerun passed (see `.qa-validation-status`). Next: Reflect.
+- Operator: review PR, manual visual QA, then `/niko-archive`.

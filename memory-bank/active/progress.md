@@ -86,3 +86,11 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - The `@supports (mask-image: none)` gate is correct and tested, and it covers both orientations. The catalog text now describes both fallbacks correctly. `colors.md` names wave graphs.
     - Advisory: in Chromium 111–119 the points still paint without the trace. This is below the support floor.
     - Advisories carried over: summem churn in the `feat:` commit; stale `nerv.scss` "not @use" header; `systemPatterns.md` updates deferred to Reflect.
+
+## 2026-09-23 - REFLECT - COMPLETE
+
+* Work completed
+    - Reflection written (`reflection/reflection-sine-wave-graph.md`).
+    - Reconciled persistent files: `systemPatterns.md` gained "Glow Goes Outside the Clip"; productContext and techContext skipped (no invalidation, no new system-wide contract).
+* Insights
+    - The browser proof during creative made build uneventful; the one creative claim not exercised (degradation below the floor) is what QA failed.
