@@ -45,3 +45,16 @@ Build an optional offline zip (issue #7): `nerv.css` rewritten to local `@font-f
     - DSEG7 face has no `unicode-range`; only non-jsDelivr faces go through range matching.
     - release-please creates the GitHub Release before `publish-npm`, so a bundle failure still leaves a release with no assets. Consider `npm run build:offline` in PR CI.
     - Innovation: generated `specimen.html` in the zip for one-click offline QA.
+* Decisions made (worker, at the operator gate)
+    - Advisories 1–2 folded into the build step; advisory 3: corrected the ordering claim and added a bundle build to the PR docs workflow; advisory 4 (`specimen.html`) declined as scope creep and left as a manual QA item.
+
+## 2026-09-23 - BUILD - COMPLETE
+
+* Work completed
+    - Generator, 17 bundle tests, 1 tarball-exclusion test, release + PR workflow wiring, README and service-manual docs, techContext.
+    - `npm test` 391/391; strict docs build clean; lint unchanged from base (10 pre-existing errors in compiled CSS).
+* Decisions made
+    - Tests carry an independent quote-aware `url()` regex.
+    - Tarball test verified by mutation, not only by passing.
+* Insights
+    - The zip is ~414 KB for 22 fonts; Shippori's 10 CJK slices dominate.

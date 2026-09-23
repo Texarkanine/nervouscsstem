@@ -238,5 +238,5 @@ npm tarball:
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
 - [x] Preflight (PASS WITH ADVISORY; advisories 1–3 folded in, 4 `specimen.html` declined as scope creep → manual QA item)
-- [ ] Build
+- [x] Build (steps 1–6 done; 391/391 tests, docs strict build clean, lint unchanged from base)
 - [ ] QA

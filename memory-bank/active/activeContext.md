@@ -1,6 +1,15 @@
 # Active Context
 
 - **Current Task:** Offline font-and-JS bundle (issue #7)
-- **Phase:** PREFLIGHT - COMPLETE (PASS WITH ADVISORY)
-- **What Was Done:** Level 3 plan written to `tasks.md`. Two creative decisions resolved with high confidence: `fflate` zip writer with a fixed local-field `mtime`, and deriving each face's fontsource file from the CSS by `unicode-range` equality. Inline decisions: pin Shippori's 12 CSS subsets, follow the CSS for Antonio (variable font), DSEG7 at 5.2.5, upstream copyright lines (with the Plex RFN) in README + manifest.
-- **Next Step:** Preflight (subagent).
+- **Phase:** BUILD - COMPLETE
+- **What Was Done:** Built to plan, steps 1–6.
+    - Created: `scripts/build-offline-bundle.mjs`, `test/offline-bundle.test.mjs`.
+    - Modified: `package.json` / `package-lock.json` (7 exact-pinned devDeps, `build:offline`, test list), `test/publish-contract.test.mjs` (zip exclusion), `.github/workflows/release-please.yaml` (build before publish, upload zip), `.github/workflows/reusable-docs-build.yml` (PR builds zip), `README.md` (Offline bundle section), `docs/service-manual.md` (Offline bundle fonts), `memory-bank/techContext.md`.
+    - Output: `dist/nervouscsstem-offline.zip`, 33 entries (22 fonts, 6 OFL texts, css, js, LICENSE, README.md, manifest.json), ~414 KB; Python `zipfile -t` clean.
+- **Build decisions not in creative docs:**
+    - Tests use their own quote-aware `url()` regex instead of importing the generator's tokenizer, so a tokenizer bug cannot mask itself; `cssUrls` stays module-private.
+    - Tarball-exclusion test proven non-vacuous by mutation (`files: ["dist"]` → test fails naming the zip), then reverted.
+    - Failure tests also assert no zip is written.
+- **Deviations:** None from the plan beyond preflight advisories already folded in.
+- **Verification:** `npm test` 391/391 (18 new); `npm run docs:build` strict clean; `npm run lint` 10 errors, all pre-existing in `dist/nerv.css` compiled from untouched `src/`.
+- **Next Step:** QA (subagent).
