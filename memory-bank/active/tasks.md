@@ -124,7 +124,7 @@ graph LR
 1. Add the `html` custom fence after Mermaid.
 2. `npm run docs:build` → strict pass; diff `site/` against `/tmp/i14-site-before` → identical HTML (no page uses `island` yet), proving registration is a no-op for plain fences.
 
-### 5. Migrate catalog pages — content (verified by site diff, no tests: catalog content)
+### ✅ 5. Migrate catalog pages — content (verified by site diff, no tests: catalog content)
 
 - Files: `docs/components/**/*.md` (29 pages)
 - Creative ref: `creative-spec-placement.md`

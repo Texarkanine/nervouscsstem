@@ -6,60 +6,40 @@ Hard-stop two-tone chevrons. Bright band is the stripe color at full opacity. Da
 
 ## Horizontal
 
-<div class="nerv-docs-island">
-  <div class="nerv-stripe" style="height: 0.75rem;"></div>
-</div>
-
-**Spec:** `.nerv-stripe` is a horizontal bar. `--nerv-stripe-width` is the band width. `--nerv-stripe-color-rgb` defaults to `--nerv-primary-rgb`.
-
-```html
+```html island
 <div class="nerv-stripe" style="height: 0.75rem;"></div>
 ```
 
+**Spec:** `.nerv-stripe` is a horizontal bar. `--nerv-stripe-width` is the band width. `--nerv-stripe-color-rgb` defaults to `--nerv-primary-rgb`.
+
 ## Vertical
 
-<div class="nerv-docs-island">
-  <div class="nerv-stripe nerv-stripe-vertical" style="height: 6rem; width: 0.75rem;"></div>
-</div>
-
-**Spec:** `.nerv-stripe-vertical` turns the bands 90°.
-
-```html
+```html island
 <div class="nerv-stripe nerv-stripe-vertical" style="height: 6rem; width: 0.75rem;"></div>
 ```
+
+**Spec:** `.nerv-stripe-vertical` turns the bands 90°.
 
 ## Red
 
 `.nerv-stripe-{name}` exists for every [glow color](../core/colors.md#glow-colors).
 
-<div class="nerv-docs-island">
-  <div class="nerv-stripe nerv-stripe-red" style="height: 0.75rem;"></div>
-</div>
-
-```html
+```html island
 <div class="nerv-stripe nerv-stripe-red" style="height: 0.75rem;"></div>
 ```
 
 ## Transparent
 
-<div class="nerv-docs-island">
-  <div class="nerv-stripe nerv-stripe-transparent" style="height: 0.75rem;"></div>
-</div>
-
-**Spec:** `.nerv-stripe-transparent` makes the dark band see-through.
-
-```html
+```html island
 <div class="nerv-stripe nerv-stripe-transparent" style="height: 0.75rem;"></div>
 ```
 
+**Spec:** `.nerv-stripe-transparent` makes the dark band see-through.
+
 ## Animated
 
-<div class="nerv-docs-island">
-  <div class="nerv-stripe nerv-stripe-animated" style="height: 0.75rem;"></div>
-</div>
-
-**Spec:** `.nerv-stripe-animated` scrolls via barberpole (`background-size: 200%` + position shift). `--nerv-stripe-duration` is the cycle.
-
-```html
+```html island
 <div class="nerv-stripe nerv-stripe-animated" style="height: 0.75rem;"></div>
 ```
+
+**Spec:** `.nerv-stripe-animated` scrolls via barberpole (`background-size: 200%` + position shift). `--nerv-stripe-duration` is the cycle.

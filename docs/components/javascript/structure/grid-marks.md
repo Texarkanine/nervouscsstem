@@ -6,11 +6,7 @@ CSS grid marks are tiled backgrounds. By adding JavaScript you can label the axe
 
 ## Axis labels
 
-<div class="nerv-docs-island" data-nerv-init="grid-labels">
-  <div class="nerv-grid-marks" style="height: 10rem; margin: 0 2.5rem 1.5rem;"></div>
-</div>
-
-```html
+```html island init="grid-labels"
 <div class="nerv-grid-marks" style="height: 10rem; margin: 0 2.5rem 1.5rem;"></div>
 <script>
   NERV.initGridLabels(document.querySelector('.nerv-grid-marks'));
