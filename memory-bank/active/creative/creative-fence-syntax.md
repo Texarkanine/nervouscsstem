@@ -7,7 +7,7 @@
 - Plain `html` fences (scanlines, any recipe without a demo) must keep rendering exactly as today.
 - Mistyped options must fail the build, not silently render a dead island.
 
-Evidence (superfences 10.x source + PoC): custom fences are tried in reverse registration order; a validator returning `False` falls through to the next entry and finally to stock highlighting; a `SuperFencesException` raised by a validator propagates and aborts the build; bare options arrive as `key=key`; the formatter can call `md.preprocessors['fenced_code_block'].highlight(...)` to get byte-identical stock output (PoC confirmed identical `<div class="highlight">`).
+Evidence (pymdown-extensions 11.0.2 superfences source, the version pinned in `uv.lock`, + PoC): custom fences are tried in reverse registration order; a validator returning `False` falls through to the next entry and finally to stock highlighting; a `SuperFencesException` raised by a validator propagates and aborts the build; bare options arrive as `key=key`; the formatter can call `md.preprocessors['fenced_code_block'].highlight(...)` to get byte-identical stock output (PoC confirmed identical `<div class="highlight">`).
 
 ## Options Evaluated
 

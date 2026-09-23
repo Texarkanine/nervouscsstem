@@ -25,3 +25,12 @@ Replace every hand-duplicated catalog island+fence pair with one `pymdownx.super
     - Python tests: stdlib `unittest`, not wired into CI.
 * Insights
     - Superfences validators that raise `SuperFencesException` abort the build; other exceptions are swallowed and fall through.
+
+## 2026-09-23 - PREFLIGHT - COMPLETE
+
+* Result: `PASS WITH ADVISORY` (no plan edits).
+* Advisories
+    - Add `__pycache__/` to `.gitignore` (tests and the properdocs import create caches under `scripts/` and `test/`).
+    - Creative evidence cites superfences 10.x; lock pins pymdown-extensions 11.0.2 (PoC ran on 11.0.2, so the conclusions hold).
+    - `uv_build<0.9` pin may make a newer CI uv fetch an older backend; widen the bound if CI objects.
+    - Radical: validate `init` / `state` values against `docs-init.js` kinds and `dist/nerv.css` state selectors at build time.
