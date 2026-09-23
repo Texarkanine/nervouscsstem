@@ -85,3 +85,12 @@ Build an optional offline zip (issue #7): `nerv.css` rewritten to local `@font-f
     - Reconciled persistent files: `techContext.md` updated (version-drift rule, trimmed to pointers); `systemPatterns.md`, `productContext.md` skipped.
 * Insights
     - Both false claims in this task were failure guarantees stated in the plan without a test; the pre-plan probe and the tech-validation PoC are why the build itself had no surprises.
+
+## 2026-09-23 - OFFLINE RENDER CHECK - PASS
+
+* Work completed
+    - Operator-requested manual-QA gap closed in headless Chromium (Playwright, scratch package under /tmp; harness not committed). Page over `file://` linking the extracted zip's `nerv.css` / `nerv.js`, every non-`file:` request aborted.
+    - 0 requests attempted to any http(s) host. All six families plus `NERV Mixed` / `NERV Cartouche`: every face used reports `loaded`, none `error`, `document.fonts.check()` true at the weight used. 12 faces stayed `unloaded` (subsets the sample text doesn't need). Screenshot shows real glyphs.
+    - PR #17 body "How I know it works" updated. No product change.
+* Insights
+    - `document.fonts.check()` must use the weight actually rendered: `.nerv-cartouche` is 700, so checking at the default 400 reports false for a face that correctly never loaded.
