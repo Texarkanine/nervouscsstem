@@ -91,13 +91,13 @@ graph LR
 
 ## Implementation Plan
 
-### 1. Capture baseline site — verification setup
+### ✅ 1. Capture baseline site — verification setup
 
 - Files: none committed (`/tmp/i14-site-before`)
 
 1. `npm run docs:build` on the untouched tree; copy `site/` to `/tmp/i14-site-before`.
 
-### 2. Package the docs tooling — executable (build config)
+### ✅ 2. Package the docs tooling — executable (build config)
 
 - Files: `pyproject.toml`, `uv.lock`, `scripts/nervouscsstem_docs/__init__.py`
 - Creative ref: `creative-formatter-import-path.md`
@@ -107,7 +107,7 @@ graph LR
 2. Create empty `scripts/nervouscsstem_docs/__init__.py`.
 3. `uv lock --no-config --default-index https://pypi.org/simple`; confirm the lock diff is only `virtual` → `editable`; `uv sync --group docs`.
 
-### 3. Island fence formatter — executable
+### ✅ 3. Island fence formatter — executable
 
 - Files: `scripts/nervouscsstem_docs/island_fence.py`, `test/test_island_fence.py`
 - Creative ref: `creative-fence-syntax.md`, `creative-python-test-runner.md`
@@ -117,7 +117,7 @@ graph LR
 3. Write tests and run red: build `markdown.Markdown(extensions=["pymdownx.superfences"], extension_configs=…)` with the Mermaid-free config (`name: html`, `class: nerv-docs-island`, validator, format); assert on `convert()` output; exception cases use `assertRaises(SuperFencesException)`. Run `uv run python -m unittest discover -s test -v` → all fail.
 4. Write code and run green: `validate` returns `False` without `island`; raises on unknown keys, valueless or malformed `init`/`state`; copies `init`/`state` into `options`. `format` strips `<script\b…</script>` (DOTALL, IGNORECASE) plus its line, `rstrip`s, wraps in `<div class="{class_name}[ nerv-state-{state}]"[ data-nerv-init="{init}"]>\n…\n</div>\n`, then appends `md.preprocessors['fenced_code_block'].highlight(src=src, language=language, options={}, md=md, **kwargs)`. Run → green.
 
-### 4. Register the fence — executable (config)
+### ✅ 4. Register the fence — executable (config)
 
 - Files: `properdocs.yml`
 
