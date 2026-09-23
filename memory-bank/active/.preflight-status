@@ -1,0 +1,21 @@
+PASS WITH ADVISORY
+
+Prerequisites: Level 3 plan complete; all four creative decisions exist and are referenced by the steps that use them. No plan edits made (no TDD swap, no strike).
+
+TDD encoding: pass. Step 3 (island fence formatter, the only unit with user-observable executable behavior) orders stub tests, stub interface, red tests, then code. Steps 2 and 4 (build config) are covered by the strict docs build and the unit tests importing the module. Step 5 is catalog content verified by scripted site diff, correctly without tests. Steps 6 and 7 are prose. No change-detectors scheduled.
+
+Convention compliance: pass. Python test in `test/` beside the `.mjs` tests, discovered by `test*.py`; package under `scripts/` beside `resolve-docs-assets.mjs`; module name `nervouscsstem_docs` matches uv_build's default for project `nervouscsstem-docs`; fence registered in `properdocs.yml` next to Mermaid as the brief requires.
+
+Dependency impact: pass. `release-please.yaml` publish-pages and `reusable-docs-build.yml` both run `uv sync --group docs --frozen`, so both get the editable install with no workflow edit. `test/docs-assets.test.mjs` checks only URLs in `uv.lock`; `source = { editable = "." }` carries no URL. Installed superfences `highlight(self, src, language, options, md, **kwargs)` matches the planned call. `docs-init.js` still selects `.nerv-docs-island[data-nerv-init]`. The service-manual sentence to replace exists at line 45 under "Catalog live examples".
+
+Conflict detection: pass. No existing formatter or fence helper to duplicate. No public contract affected (docs tooling, unpublished Python project, npm `files` unchanged).
+
+Completeness: pass. All ten requirements and four acceptance criteria map to concrete steps and files; test plan covers every behavior acceptance criterion 3 names.
+
+Advisory 1 (minor, unaccounted side effect): `.gitignore` has no `__pycache__/` rule except under `.summem/`. Running the unit tests and the properdocs import will create `scripts/nervouscsstem_docs/__pycache__/` and `test/__pycache__/`. Add `__pycache__/` to `.gitignore` in Step 2 so they are not committed.
+
+Advisory 2 (evidence note): the fence-syntax creative doc cites "superfences 10.x source", but `uv.lock` pins pymdown-extensions 11.0.2. The PoC ran against the installed 11.0.2 venv, so the conclusions hold; the copy-parity test is the guard if internals differ.
+
+Advisory 3 (pin note): `uv_build>=0.8.22,<0.9` matches the local uv 0.8.22. CI's `setup-uv` may install a newer uv that fetches this older backend from PyPI instead of using its bundled one. Works, but consider widening the upper bound if CI shows a slow or failing backend fetch.
+
+Advisory 4 (radical innovation): close the accepted "values are only syntax-checked" gap by validating option values against their owners at build time. In `validate()`, read the allowed `init` kinds from `docs/javascripts/docs-init.js` (the `kind === '…'` literals) and the allowed `state` names from `dist/nerv.css` (`.nerv-state-<name>` selectors; `docs:build` compiles `dist/` first). Then `init="radr"` or `state="alrt"` fails the build instead of silently rendering a dead or untinted island. It duplicates no list (it reads the source of truth) and costs one cached parse per build plus two tests. Trade-off: couples the formatter to the file shape of `docs-init.js` and to `dist/` existing before `properdocs build`, which is true for npm scripts and both CI workflows, but not for bare `uv run properdocs serve` on a clean tree.

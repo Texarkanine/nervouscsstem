@@ -6,29 +6,7 @@ N-system consensus display. CSS Grid of `.nerv-magi-system` boxes plus one `.ner
 
 ## Three systems
 
-<div class="nerv-docs-island">
-  <div class="nerv-magi-panel">
-    <div class="nerv-magi-system">
-      <strong>CASPER·3</strong><br>
-      <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
-    </div>
-    <div class="nerv-magi-system">
-      <strong>BALTHASAR·2</strong><br>
-      <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
-    </div>
-    <div class="nerv-magi-system">
-      <strong>MELCHIOR·1</strong><br>
-      <span class="nerv-type-data" style="font-size: 0.65rem;">DENY</span>
-    </div>
-    <div class="nerv-magi-output">
-      <strong>MAGI</strong> — <span class="nerv-type-data" style="font-size: 0.7rem;">APPROVED (2:1)</span>
-    </div>
-  </div>
-</div>
-
-**Spec:** `.nerv-magi-panel` is the grid. Each `.nerv-magi-system` draws a connector via `::after`. `.nerv-magi-output` spans the full width on the last row. The panel defaults to `--nerv-primary`.
-
-```html
+```html island
 <div class="nerv-magi-panel">
   <div class="nerv-magi-system">
     <strong>CASPER·3</strong><br>
@@ -48,31 +26,11 @@ N-system consensus display. CSS Grid of `.nerv-magi-system` boxes plus one `.ner
 </div>
 ```
 
+**Spec:** `.nerv-magi-panel` is the grid. Each `.nerv-magi-system` draws a connector via `::after`. `.nerv-magi-output` spans the full width on the last row. The panel defaults to `--nerv-primary`.
+
 ## Per-system color
 
-<div class="nerv-docs-island">
-  <div class="nerv-magi-panel">
-    <div class="nerv-magi-system" style="--nerv-magi-system-color: var(--nerv-red); --nerv-magi-system-color-rgb: var(--nerv-red-rgb);">
-      <strong>MELCHIOR·1</strong><br>
-      <span class="nerv-type-data" style="font-size: 0.65rem;">DENY</span>
-    </div>
-    <div class="nerv-magi-system">
-      <strong>BALTHASAR·2</strong><br>
-      <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
-    </div>
-    <div class="nerv-magi-system">
-      <strong>CASPER·3</strong><br>
-      <span class="nerv-type-data" style="font-size: 0.65rem;">APPROVE</span>
-    </div>
-    <div class="nerv-magi-output">
-      <strong>MAGI</strong> — <span class="nerv-type-data" style="font-size: 0.7rem;">APPROVED (2:1)</span>
-    </div>
-  </div>
-</div>
-
-**Spec:** `--nerv-magi-system-color` / `--nerv-magi-system-color-rgb` on that box.
-
-```html
+```html island
 <div class="nerv-magi-panel">
   <div class="nerv-magi-system" style="--nerv-magi-system-color: var(--nerv-red); --nerv-magi-system-color-rgb: var(--nerv-red-rgb);">
     <strong>MELCHIOR·1</strong><br>
@@ -91,3 +49,5 @@ N-system consensus display. CSS Grid of `.nerv-magi-system` boxes plus one `.ner
   </div>
 </div>
 ```
+
+**Spec:** `--nerv-magi-system-color` / `--nerv-magi-system-color-rgb` on that box.

@@ -26,6 +26,7 @@
     "build:min": "sass src/nerv.scss dist/nerv.min.css --style=compressed --no-source-map",
     "watch": "sass --watch src/nerv.scss dist/nerv.css",
     "test": "node --test --test-concurrency=1 test/foundation.test.mjs test/effects.test.mjs test/panels.test.mjs test/patterns.test.mjs test/components.test.mjs test/states.test.mjs test/publish-contract.test.mjs test/docs-assets.test.mjs test/skill-contract.test.mjs",
+    "test:py": "uv run python -m unittest discover -s test -v",
     "lint": "stylelint dist/nerv.css",
     "docs:serve": "npm run build && node scripts/resolve-docs-assets.mjs --mode local && uv run properdocs serve",
     "docs:build": "npm run build && node scripts/resolve-docs-assets.mjs --mode local && uv run properdocs build --strict"
