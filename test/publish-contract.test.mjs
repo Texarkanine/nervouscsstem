@@ -1,11 +1,13 @@
 import { describe, it, before } from 'node:test';
 import assert from 'node:assert/strict';
 import { execSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { DEFAULT_OUT } from '../scripts/build-offline-bundle.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const PACKAGE_JSON = resolve(ROOT, 'package.json');
+const OFFLINE_ZIP = resolve(ROOT, DEFAULT_OUT);
 
 /**
  * Parse `npm pack --dry-run --json` into the list of paths that would be in the tarball.
@@ -31,6 +33,7 @@ describe('npm publish contract', () => {
   before(() => {
     execSync('npm run build', { cwd: ROOT, stdio: 'pipe' });
     execSync('npm run build:min', { cwd: ROOT, stdio: 'pipe' });
+    execSync('npm run build:offline', { cwd: ROOT, stdio: 'pipe' });
     pkg = JSON.parse(readFileSync(PACKAGE_JSON, 'utf8'));
     files = packedPaths();
   });
@@ -45,6 +48,12 @@ describe('npm publish contract', () => {
       !files.includes('dist/nerv.min.css'),
       'files must list only dist/nerv.css and dist/nerv.js, not dist/nerv.min.css',
     );
+  });
+
+  it('does not include the offline bundle zip', () => {
+    assert.ok(existsSync(OFFLINE_ZIP), 'npm run build:offline must have written the zip before packing');
+    const leaked = files.filter((path) => path.endsWith('.zip') || path.includes('nervouscsstem-offline'));
+    assert.deepEqual(leaked, [], 'the offline bundle is a GitHub Release asset, not part of the npm tarball');
   });
 
   it('is not marked private', () => {
