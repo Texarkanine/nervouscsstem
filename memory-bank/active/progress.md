@@ -130,3 +130,16 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Advisory: `role="img"` hides label text from assistive tech. The docs Spec should tell script authors to keep `aria-label` in sync.
     - Advisory: skip LFS smudge when cloning for `pr-assets`.
     - Radical idea (advisory, follow-up): CSS-only live readouts via a registered `<integer>` displacement plus `counter()`.
+
+## 2026-09-23 - PREFLIGHT (rework) - COMPLETE (PASS WITH ADVISORY)
+
+* Decisions made: vertical rule redefines only x/y; `-left` overrides only the shift property; docs note on `aria-label`; LFS-skip for asset clone; `counter()` live readouts deferred.
+
+## 2026-09-23 - BUILD (rework) - COMPLETE
+
+* Work completed
+    - Labels built TDD (26 wave tests; suite 399/399); docs + fixture; browser-verified in Chromium and Firefox.
+    - Screenshots + GIF published on orphan `pr-assets` branch.
+* Insights
+    - A partial clone + `checkout --orphan` lazily fetches every blob; an orphan branch needs no history, so `git init` + push is the fast path.
+    - Docs examples must actually exercise the edge behavior they describe; the first label layout never clamped.

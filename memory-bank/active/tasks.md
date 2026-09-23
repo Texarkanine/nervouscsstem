@@ -31,7 +31,7 @@ Pre-plan proof (`/tmp/nerv-wave-proto/label.{html,mjs}`, Chromium + Firefox): 21
 
 ## Implementation Plan
 
-### 1. Label CSS — executable
+### 1. Label CSS — executable ✅
 
 - Files: `test/wave-graph.test.mjs`, `src/_wave-graph.scss`
 
@@ -45,7 +45,7 @@ Pre-plan proof (`/tmp/nerv-wave-proto/label.{html,mjs}`, Chromium + Firefox): 21
    - Contrast block: label `text-shadow` halo in `--nerv-bg`.
    - Full `npm test`, `npm run lint` (10 pre-existing expected).
 
-### 2. Docs and fixture — prose/policy
+### 2. Docs and fixture — prose/policy ✅
 
 - Files: `docs/components/css/heavies/wave-graph.md`, `ref/ref-patterns.html`
 - No tests: prose/policy artifact
@@ -55,11 +55,11 @@ Pre-plan proof (`/tmp/nerv-wave-proto/label.{html,mjs}`, Chromium + Firefox): 21
 3. Ref fixture: labels on the sync graph, the vertical graph, and the critical twin.
 4. `npm run docs:build` strict.
 
-### 3. Browser verification — executable (harness, not shipped)
+### 3. Browser verification — executable (harness, not shipped) ✅
 
 1. Re-run `verify.mjs` (point-on-line; labels must not change point accuracy) and a label harness against the built CSS and the docs page: labels inside the box, beside dots when unclamped, both engines, reduced motion.
 
-### 4. PR screenshots — prose/policy
+### 4. PR screenshots — prose/policy ✅ (steps 1–2; PR body edit at finish)
 
 - No tests: prose/policy artifact
 
@@ -96,6 +96,6 @@ No new technology. `clamp()` with self-percentages in `translate` proven in Chro
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
 - [ ] QA
