@@ -151,3 +151,7 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - The code passes review. L1–L7 are implemented and tested. Dot and label read one position source, the clamp exists once, and the vertical rule redefines only x/y. No KISS, DRY, YAGNI, or integrity issues. QA reran `npm test` (399/399) and the strict docs build, and both pass. Lint shows only the 10 pre-existing errors.
     - Blocking: the plan promised to document the wide-label limit, but the docs Spec and the SCSS header say the label never leaves the box. A label wider than the box pins left and is cut off.
     - Advisory: the alert example's `aria-label` omits its SYNC label, and the fixture aria-labels are not updated for labels. `-left` repeats the clearance term; this is accepted.
+
+## 2026-09-23 - BUILD (rework, QA fix) - COMPLETE
+
+* QA FAIL (fixable): docs/SCSS header overstated containment. Now state that a label wider than the box pins left and clips right; example and fixture `aria-label`s name their labels. 26/26 wave tests, docs strict green.
