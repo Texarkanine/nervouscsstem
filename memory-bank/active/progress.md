@@ -69,3 +69,12 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Blocking: the color-modifier family list in `colors.md` omits `.nerv-wave-{name}`.
     - Blocking: the wave-graph page says older browsers show static traces, but Chromium 85–119 (prefixed mask only) paints a solid block.
     - Advisory: summem nap churn landed in the `feat:` commit. The `nerv.scss` header comment "not @use" was already stale before this task.
+
+## 2026-09-23 - BUILD (QA rework) - COMPLETE
+
+* Work completed
+    - QA FAIL (fixable) items fixed: stroke paint gated behind `@supports (mask-image: none)` (new test, red then green); support sentence corrected; `colors.md` glow-color family list names wave graphs.
+    - Suite 393/393; strict docs build green; lint unchanged (10 pre-existing).
+    - Re-verified in Chromium + Firefox (unchanged numbers). Verified the no-`@property` fallback: `t` flips 0↔1 discretely, frames identical up to 4/255 anti-aliasing.
+* Decisions made
+    - Fixed behavior, not just prose: an unmasked solid block over a host UI is worse than no trace.
