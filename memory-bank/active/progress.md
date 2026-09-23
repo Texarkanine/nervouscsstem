@@ -36,3 +36,12 @@ Build an optional offline zip (issue #7): `nerv.css` rewritten to local `@font-f
     - Plex RFN: verbatim fontsource LICENSE plus verbatim upstream copyright lines in generated README + manifest.
     - Zip name unversioned (`nervouscsstem-offline.zip`), single top folder, version in manifest.
     - Bundle builds before `npm publish` in the release job.
+
+## 2026-09-23 - PREFLIGHT - COMPLETE
+
+* Result: `PASS WITH ADVISORY` (first line of `.preflight-status`). No plan edits.
+* Advisories
+    - `dist/nerv.css` data-URI SVGs contain `)` and `http://` inside quoted `url()` values; generator and tests need quote-aware `url()` tokenizing.
+    - DSEG7 face has no `unicode-range`; only non-jsDelivr faces go through range matching.
+    - release-please creates the GitHub Release before `publish-npm`, so a bundle failure still leaves a release with no assets. Consider `npm run build:offline` in PR CI.
+    - Innovation: generated `specimen.html` in the zip for one-click offline QA.

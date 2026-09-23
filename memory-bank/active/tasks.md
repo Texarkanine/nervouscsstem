@@ -54,6 +54,7 @@ nervouscsstem-offline/
 - `test/offline-bundle.test.mjs` (new): consumer-facing checks on the zip plus generator failure modes.
 - `test/publish-contract.test.mjs`: builds the zip too and asserts `npm pack` excludes it.
 - `.github/workflows/release-please.yaml`: `publish-npm` builds the zip before `npm publish` and uploads it with the CSS/JS.
+- `.github/workflows/reusable-docs-build.yml`: PR build also builds the zip (preflight advisory 3).
 - `README.md`: new "Offline bundle" section.
 - `docs/service-manual.md`: maintainer note on bumping font pins when `_typography.scss` URLs change.
 - `memory-bank/techContext.md`: build/test facts for the bundle.
@@ -165,7 +166,8 @@ npm tarball:
     - CLI `main()` guarded like `resolve-docs-assets.mjs`.
 3. Write tests and run red: implement B1–B11 (one shared `before`: `npm run build`, `buildOfflineBundle` into a tmp `outFile`, `unzipSync`), E1–E6 (fixture roots: `package.json`, `LICENSE`, `dist/nerv.css` fixture text, `dist/nerv.js`, `node_modules` symlink to repo `node_modules`). Run `node --test test/offline-bundle.test.mjs`; all fail.
 4. Write code and run green:
-    - Parse `@font-face { … }` blocks: `font-family`, `font-style`, `font-weight`, `unicode-range`, `src` `url()`s.
+    - Parse `@font-face { … }` blocks: `font-family`, `font-style`, `font-weight`, optional `unicode-range` (DSEG7 has none), `src` `url()`s.
+    - Preflight advisory 1: `url()` extraction must honor quotes — SVG `url("data:…")` values contain `)` and `http://www.w3.org/2000/svg`. Use one quote-aware tokenizer (`url\(\s*(?:"([^"]*)"|'([^']*)'|([^)"'\s]*))\s*\)`) shared by generator and tests; classify by prefix (`data:` / relative / absolute or `//`), never by substring.
     - Pass 1 (primary families): jsDelivr fontsource URL → parse package/version/file, check package matches the family row and version equals installed; otherwise match normalized `unicode-range` (strip whitespace, lowercase) against `unicode.json`, subset key without brackets, weight = `wght` if `variable` else declared weight, style, extension from URL → `<metadata.id>-<subset>-<weight>-<style>.<ext>`; assert file exists.
     - Pass 2 (alias families): URL must already be mapped.
     - Unknown family with a remote URL → throw.
@@ -188,8 +190,9 @@ npm tarball:
 - Files: `.github/workflows/release-please.yaml`
 - No tests: prose/policy artifact (CI wiring, verified by review per repo norm)
 
-1. In `publish-npm`, after "Build package", add "Build offline bundle" → `npm run build:offline` (before `npm publish`, so a failing bundle blocks the release).
+1. In `publish-npm`, after "Build package", add "Build offline bundle" → `npm run build:offline` (before `npm publish`, so a failing bundle blocks npm publish; release-please has already created the tag and GitHub Release by then, same exposure `npm run build` already has).
 2. Extend the upload step: `gh release upload "<tag>" dist/nerv.css dist/nerv.js dist/nervouscsstem-offline.zip`; rename the step to cover the zip.
+3. Preflight advisory 3: in `.github/workflows/reusable-docs-build.yml`, after "Build CSS and JS", add "Build offline bundle" → `node scripts/build-offline-bundle.mjs`, so a CSS font change that breaks the bundle fails on the PR, not at release.
 
 ### 5. Documentation — prose/policy
 
@@ -215,7 +218,7 @@ npm tarball:
 - fontsource `exports` hides `files/*` and `package.json` from `require.resolve`: read `node_modules/<pkg>/…` via `fs` from `root`.
 - Timezone-dependent zip bytes: local-field `mtime` (validated by PoC); B11 guards determinism on one machine.
 - Future CSS edits (new gstatic version, new face) break the bundle build: intended; the failure names the URL, and the service manual says how to re-pin. It surfaces in `npm test` (B-suite builds from the real CSS) before release.
-- Release ordering: bundle builds before `npm publish`, so a bundle failure cannot leave a half-published release.
+- Release ordering: bundle builds before `npm publish`, so a bundle failure blocks npm publish; the GitHub Release already exists by then (pre-existing exposure shared with `npm run build`). PR docs build also builds the bundle so breakage surfaces before merge.
 - `npm test` is not in PR CI (PR CI is the strict docs build only): out of scope to change; flag to operator for review.
 - Fixture tests need fontsource data: symlink repo `node_modules` into the tmp root rather than copying.
 
@@ -234,6 +237,6 @@ npm tarball:
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
+- [x] Preflight (PASS WITH ADVISORY; advisories 1–3 folded in, 4 `specimen.html` declined as scope creep → manual QA item)
 - [ ] Build
 - [ ] QA
