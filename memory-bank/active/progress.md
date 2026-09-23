@@ -77,3 +77,11 @@ Build an optional offline zip (issue #7): `nerv.css` rewritten to local `@font-f
     - Advisory 2: removed the unused `--out` CLI flag.
 * Insights
     - fontsource `metadata.json` `version` is the upstream Google Fonts version (`v13`, `v22`, …); DSEG7 (`type: other`) carries its own upstream version and is pinned through its jsDelivr URL instead.
+
+## 2026-09-23 - REFLECT - COMPLETE
+
+* Work completed
+    - `reflection/reflection-offline-bundle.md`.
+    - Reconciled persistent files: `techContext.md` updated (version-drift rule, trimmed to pointers); `systemPatterns.md`, `productContext.md` skipped.
+* Insights
+    - Both false claims in this task were failure guarantees stated in the plan without a test; the pre-plan probe and the tech-validation PoC are why the build itself had no surprises.

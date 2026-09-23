@@ -1,1 +1,0 @@
-{"c":[{"name":"20260912T164639Z-24f339bd495bf5e0","text":"First npm publish cannot use OIDC until the package exists on the registry; operator bootstraps then attaches trusted publisher to release-please.yaml","type":"note"},{"name":"20260912T165326Z-f2c174bab504f61d","text":"Test what we ship to consumers; do not TDD our own CI unless it is brittle or critical","type":"note"}]}
