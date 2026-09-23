@@ -1,7 +1,9 @@
 # Active Context
 
 ## Current Task: issue-14-single-source-islands
-**Phase:** QA - COMPLETE (PASS)
+**Phase:** REFLECT COMPLETE
+
+Reflection: `memory-bank/active/reflection/reflection-issue-14-single-source-islands.md`. Persistent files reconciled (systemPatterns/techContext already updated in build; productContext skip). Operator archives after PR review and manual QA.
 
 ## What Was Done
 - Preflight PASS WITH ADVISORY. Operator-delegated gate decisions on advisories:

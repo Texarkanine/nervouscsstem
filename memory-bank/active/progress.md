@@ -62,3 +62,11 @@ Replace every hand-duplicated catalog island+fence pair with one `pymdownx.super
     - Formatter tests are not in `npm test` or CI; consider adding them to the docs build job.
     - Commit 56caa5b includes an automatic SumMem nap of two pre-existing notes (possible merge friction with sibling branches).
     - Unplanned guard (`init=` / `state=` without `island` fails the build) is tested and documented.
+
+## 2026-09-23 - REFLECT - COMPLETE
+
+* Work completed
+    - Reflection written; persistent files reconciled (no further edits needed).
+* Insights
+    - Superfences swallows non-`SuperFencesException` validator errors; a custom fence's output is one block, so inter-block blank lines vanish from HTML.
+    - Isolating the one intended change in an intermediate build (reorder-only) kept both equivalence checks strict.
