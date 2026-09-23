@@ -66,3 +66,27 @@ The same component with axes swapped: waves scroll vertically, points move side 
 5. Wave speed increases under `.nerv-state-*` alert classes that raise `--nerv-animation-speed`.
 6. Under `prefers-reduced-motion`, waves are static at their phase and points sit on the line.
 7. `npm test`, `npm run lint`, and `npm run docs:build` pass.
+
+## Rework: Point Labels (PR #18 feedback)
+
+### Requirements
+
+1. `.nerv-wave-point` may contain a label element with plain text that moves with the dot; the dot keeps tracking the line exactly.
+2. Label placement LEFT or RIGHT of the dot, working on both `.nerv-wave-graph` and `.nerv-wave-graph-vertical`. Minimal placement set; agent chooses the default.
+3. Label position derives from the point's own position (no second, independently drifting formula).
+4. Where cleanly doable, labels stay readable inside the clipped box at swing extremes; otherwise the limit is documented. Proven in a browser.
+5. Reduced motion, high contrast, and alert cascade behave consistently with points.
+6. Docs (island + verbatim fence) and the `ref/ref-patterns.html` fixture show labels; docs may say the label is ordinary text a page script can update.
+
+### Constraints
+
+1. No collision avoidance: overlapping labels on different waves are intended (design norm, recorded in SumMem).
+2. No shipped JS; no `content: attr()` labels.
+3. PR screenshots live on an orphan `pr-assets` branch under `pr-18/`, never on the feature branch.
+
+### Acceptance Criteria
+
+1. Left and right labels render beside their dot on both orientations and move with it (browser-verified).
+2. At swing extremes labels stay inside the box (or the documented limit holds).
+3. `npm test`, `npm run docs:build` green; lint unchanged (10 pre-existing).
+4. PR #18 body shows the screenshots via raw.githubusercontent.com URLs that return 200 image/png.

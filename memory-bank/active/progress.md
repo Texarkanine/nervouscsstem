@@ -94,3 +94,15 @@ Build a new CSS-first `.nerv-` sine-wave graph component (issue #8): one or more
     - Reconciled persistent files: `systemPatterns.md` gained "Glow Goes Outside the Clip"; productContext and techContext skipped (no invalidation, no new system-wide contract).
 * Insights
     - The browser proof during creative made build uneventful; the one creative claim not exercised (degradation below the floor) is what QA failed.
+
+## 2026-09-23 - REWORK INITIATED (PR #18 feedback)
+
+* Operator feedback (human, near verbatim)
+    - Points can carry a text label that moves with the dot; the dot still tracks the line exactly.
+    - Label sits LEFT or RIGHT of its dot, on horizontal and vertical graphs. Agent picks the default and keeps placements minimal.
+    - Overlapping labels across waves are on-brand; no collision avoidance. Record the norm in SumMem.
+    - Live values out of scope: label is plain DOM text (child of `.nerv-wave-point`, not `content: attr()`), so page JS can rewrite it. No shipped JS.
+    - Label positioned relative to the point's own box; no second position formula.
+    - Keep labels readable inside the clipped box at swing extremes if cleanly doable (e.g. sin()-driven inward offset), else document the limit. Prove in a browser.
+    - Constraints: reduced motion, high contrast, alert cascade, `.nerv-` prefix, TDD, catalog docs (island+fence), ref fixture.
+    - Also: screenshots on the PR description, hosted on an orphan `pr-assets` branch (not the feature branch).
