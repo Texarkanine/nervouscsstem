@@ -100,28 +100,54 @@ CSS wave graph is a box of scrolling sine traces, with dots that ride their trac
 </div>
 ```
 
-## Vertical
+## Point labels
 
 <div class="nerv-docs-island">
-  <div class="nerv-wave-graph nerv-wave-graph-vertical" role="img" aria-label="Two vertical traces with plotted points" style="width: 12rem; margin: 0 auto; --nerv-wave-amplitude: 0.6;">
-    <div class="nerv-wave nerv-wave-cyan">
-      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"></span>
+  <div class="nerv-wave-graph nerv-grid-marks" role="img" aria-label="Two waves with labeled points, EVA-02 and EVA-01" style="max-width: 32rem; margin: 0 auto;">
+    <div class="nerv-wave nerv-wave-red">
+      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-type-hud">EVA-02</span></span>
     </div>
-    <div class="nerv-wave nerv-wave-green" style="--nerv-wave-phase: 0.5; --nerv-wave-frequency: 0.35;">
-      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.7;"></span>
+    <div class="nerv-wave nerv-wave-blue" style="--nerv-wave-phase: 0.5;">
+      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.7;"><span class="nerv-wave-point-label nerv-wave-point-label-left nerv-type-hud">EVA-01</span></span>
     </div>
   </div>
 </div>
 
-**Spec:** `.nerv-wave-graph-vertical` on the box swaps the axes. Traces travel bottom to top, points move side to side, and the default ratio turns portrait (`10 / 16`). Amplitude becomes a fraction of half the width, and wavelength and point position become fractions of the height.
+**Spec:** A `.nerv-wave-point-label` inside a point is a text label beside its dot: to the right by default, to the left with `.nerv-wave-point-label-left`. It is placed from the dot's own position, so it moves with the dot and the dot keeps tracking the line. It takes the wave's color and glow; add `.nerv-type-hud` or your own type classes. `--nerv-wave-point-label-gap` sets the space between dot and label (default `0.35rem`). The label never leaves the box: near an edge or at the end of a swing it slides inward and can pass over its own dot for a moment. Labels on different waves overlap while they cross and separate again; that is intended, and there is no collision avoidance. The label is ordinary text, so a page script can rewrite it to show a live value (give the box an `id` and update the label's `textContent`). `role="img"` hides child text from screen readers, so a script that changes labels should keep the box's `aria-label` in step.
 
 ```html
-<div class="nerv-wave-graph nerv-wave-graph-vertical" role="img" aria-label="Two vertical traces with plotted points" style="width: 12rem; margin: 0 auto; --nerv-wave-amplitude: 0.6;">
+<div class="nerv-wave-graph nerv-grid-marks" role="img" aria-label="Two waves with labeled points, EVA-02 and EVA-01" style="max-width: 32rem; margin: 0 auto;">
+  <div class="nerv-wave nerv-wave-red">
+    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-type-hud">EVA-02</span></span>
+  </div>
+  <div class="nerv-wave nerv-wave-blue" style="--nerv-wave-phase: 0.5;">
+    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.7;"><span class="nerv-wave-point-label nerv-wave-point-label-left nerv-type-hud">EVA-01</span></span>
+  </div>
+</div>
+```
+
+## Vertical
+
+<div class="nerv-docs-island">
+  <div class="nerv-wave-graph nerv-wave-graph-vertical" role="img" aria-label="Two vertical traces with labeled points, L-01 and R-02" style="width: 12rem; margin: 0 auto;">
+    <div class="nerv-wave nerv-wave-cyan">
+      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-wave-point-label-left nerv-type-hud">L-01</span></span>
+    </div>
+    <div class="nerv-wave nerv-wave-green" style="--nerv-wave-phase: 0.5; --nerv-wave-frequency: 0.35;">
+      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.7;"><span class="nerv-wave-point-label nerv-type-hud">R-02</span></span>
+    </div>
+  </div>
+</div>
+
+**Spec:** `.nerv-wave-graph-vertical` on the box swaps the axes. Traces travel bottom to top, points move side to side, and the default ratio turns portrait (`10 / 16`). Amplitude becomes a fraction of half the width, and wavelength and point position become fractions of the height. Labels still sit left or right of their dot; at the outer end of a swing they slide inward to stay in the box.
+
+```html
+<div class="nerv-wave-graph nerv-wave-graph-vertical" role="img" aria-label="Two vertical traces with labeled points, L-01 and R-02" style="width: 12rem; margin: 0 auto;">
   <div class="nerv-wave nerv-wave-cyan">
-    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"></span>
+    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-wave-point-label-left nerv-type-hud">L-01</span></span>
   </div>
   <div class="nerv-wave nerv-wave-green" style="--nerv-wave-phase: 0.5; --nerv-wave-frequency: 0.35;">
-    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.7;"></span>
+    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.7;"><span class="nerv-wave-point-label nerv-type-hud">R-02</span></span>
   </div>
 </div>
 ```
@@ -131,18 +157,18 @@ CSS wave graph is a box of scrolling sine traces, with dots that ride their trac
 <div class="nerv-docs-island nerv-state-alert">
   <div class="nerv-wave-graph" role="img" aria-label="Sine traces at alert speed" style="max-width: 32rem; margin: 0 auto;">
     <div class="nerv-wave">
-      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"></span>
+      <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-type-hud">SYNC</span></span>
     </div>
     <div class="nerv-wave nerv-wave-cyan" style="--nerv-wave-phase: 0.5;"></div>
   </div>
 </div>
 
-**Spec:** This island sits under `.nerv-state-alert`. The alert states raise `--nerv-animation-speed`, so every wave cycles faster: 2× at alert, 3× at critical. The uncolored wave turns red with `--nerv-primary`, and the cyan wave keeps its data color. Changing state mid-flight makes the waves jump once to a new position. `prefers-reduced-motion: reduce` stops the clock, and each wave holds at its phase with its points still on the line. `prefers-contrast: more` draws heavier traces, cuts the glow, and rings points in `--nerv-bg` so they stand off their line.
+**Spec:** This island sits under `.nerv-state-alert`. The alert states raise `--nerv-animation-speed`, so every wave cycles faster: 2× at alert, 3× at critical. The uncolored wave and its label turn red with `--nerv-primary`, and the cyan wave keeps its data color. Changing state mid-flight makes the waves jump once to a new position. `prefers-reduced-motion: reduce` stops the clock, and each wave holds at its phase with its points and labels still in place. `prefers-contrast: more` draws heavier traces, cuts the glow, rings points in `--nerv-bg`, and haloes labels in `--nerv-bg` so they stand off crossing lines.
 
 ```html
 <div class="nerv-wave-graph" role="img" aria-label="Sine traces at alert speed" style="max-width: 32rem; margin: 0 auto;">
   <div class="nerv-wave">
-    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"></span>
+    <span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-type-hud">SYNC</span></span>
   </div>
   <div class="nerv-wave nerv-wave-cyan" style="--nerv-wave-phase: 0.5;"></div>
 </div>

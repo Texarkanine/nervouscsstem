@@ -18,6 +18,12 @@
 ///   .nerv-wave-{color}        — pins a named data color (glow-flagged tokens), on a wave or the box
 ///   .nerv-wave-reverse        — flips a wave's travel direction (default: toward left / top)
 ///   .nerv-wave-point          — dot riding the trace (child of a wave)
+///   .nerv-wave-point-label    — plain-text label beside its dot (child of a point; right by default)
+///   .nerv-wave-point-label-left — puts the label left of its dot
+///
+/// **Labels:** a label reads its dot's position from `--nerv-wave-point-x/-y` (the same values
+/// that place the dot) and clamps its `translate` so it never leaves the clipped box. At a swing
+/// extreme it slides inward and may cross its own dot. Labels on different waves overlap freely.
 ///
 /// **Custom properties** (set on the box for every wave, or on one wave; unitless unless noted):
 ///   --nerv-wave-amplitude  — fraction of half the cross-axis span (default 0.8)
@@ -27,7 +33,9 @@
 ///   --nerv-wave-color      — stroke, point, and glow color (default --nerv-primary)
 ///   --nerv-wave-point-at   — point position, fraction of the travel axis (default 0.5)
 ///   --nerv-wave-point-size — point diameter, a length (default 0.5rem)
+///   --nerv-wave-point-label-gap — space between dot edge and label, a length (default 0.35rem)
 ///   --nerv-wave-t          — internal animated clock; do not set
+///   --nerv-wave-point-x/-y — internal: the dot's center in the wave box; do not set
 ///
 /// **Tokens consumed:** --nerv-wave-duration, --nerv-animation-speed, --nerv-primary, --nerv-bg,
 /// --nerv-glow-spread, --nerv-glow-intensity; color values from tokens.$nerv-colors.
@@ -135,6 +143,7 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
   --nerv-wave-color: var(--nerv-primary);
   --nerv-wave-point-at: 0.5;
   --nerv-wave-point-size: 0.5rem;
+  --nerv-wave-point-label-gap: 0.35rem;
 
   position: relative;
   aspect-ratio: 16 / 10;
@@ -167,7 +176,7 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
   mask-image: _wave-mask(false, $_stroke);
   mask-repeat: repeat-x;
   // Cross size = amplitude × 200cq: 4 amplitudes, the viewBox's ±2. Points offset by
-  // amplitude × 50% of the same axis (200 / 50 = 4). Floored so a flat wave still draws.
+  // amplitude × 50cq of the same axis (200 / 50 = 4). Floored so a flat wave still draws.
   mask-size:
     calc(var(--nerv-wave-wavelength) * 100cqw)
     max(calc(var(--nerv-wave-amplitude) * 200cqh), 6px);
@@ -184,10 +193,14 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
   }
 }
 
+// The dot's center in the wave box (cq units = the wave box). Labels read the same values.
 .nerv-wave-point {
+  --nerv-wave-point-x: calc(var(--nerv-wave-point-at) * 100cqw);
+  --nerv-wave-point-y: calc(50cqh - var(--nerv-wave-amplitude) * 50cqh * sin((#{$_phase-turns}) * 1turn));
+
   position: absolute;
-  left: calc(var(--nerv-wave-point-at) * 100%);
-  top: calc(50% - var(--nerv-wave-amplitude) * 50% * sin((#{$_phase-turns}) * 1turn));
+  left: var(--nerv-wave-point-x);
+  top: var(--nerv-wave-point-y);
   width: var(--nerv-wave-point-size);
   height: var(--nerv-wave-point-size);
   margin: 0;
@@ -195,6 +208,37 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
   border-radius: 50%;
   background: var(--nerv-wave-color);
   translate: -50% -50%;
+}
+
+// Anchored at the dot center, then shifted beside it. Each axis is clamped so the label box
+// stays inside the wave box: at a swing extreme it slides inward (and may cross its dot).
+.nerv-wave-point-label {
+  --nerv-wave-point-label-shift: calc(var(--nerv-wave-point-size) / 2 + var(--nerv-wave-point-label-gap));
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  padding: 0;
+  color: var(--nerv-wave-color);
+  font-size: 0.7rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  translate:
+    clamp(
+      calc(-1 * var(--nerv-wave-point-x)),
+      var(--nerv-wave-point-label-shift),
+      calc(100cqw - var(--nerv-wave-point-x) - 100%)
+    )
+    clamp(
+      calc(-1 * var(--nerv-wave-point-y)),
+      -50%,
+      calc(100cqh - var(--nerv-wave-point-y) - 100%)
+    );
+}
+
+.nerv-wave-point-label-left {
+  --nerv-wave-point-label-shift: calc(-1 * (var(--nerv-wave-point-size) / 2 + var(--nerv-wave-point-label-gap)) - 100%);
 }
 
 .nerv-wave-reverse {
@@ -224,8 +268,8 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
 }
 
 .nerv-wave-graph-vertical .nerv-wave-point {
-  top: calc(var(--nerv-wave-point-at) * 100%);
-  left: calc(50% + var(--nerv-wave-amplitude) * 50% * sin((#{$_phase-turns}) * 1turn));
+  --nerv-wave-point-x: calc(50cqw + var(--nerv-wave-amplitude) * 50cqw * sin((#{$_phase-turns}) * 1turn));
+  --nerv-wave-point-y: calc(var(--nerv-wave-point-at) * 100cqh);
 }
 
 // Clock at its initial 0: each wave holds at its phase and points stay on the line.
@@ -246,5 +290,12 @@ $_phase-turns: 'var(--nerv-wave-point-at) / var(--nerv-wave-wavelength) + var(--
 
   .nerv-wave-point {
     box-shadow: 0 0 0 2px var(--nerv-bg);
+  }
+
+  .nerv-wave-point-label {
+    text-shadow:
+      0 0 2px var(--nerv-bg),
+      0 0 2px var(--nerv-bg),
+      0 0 4px var(--nerv-bg);
   }
 }

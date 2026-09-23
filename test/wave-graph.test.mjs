@@ -101,6 +101,8 @@ const H_STROKE = '.nerv-wave::before';
 const V_STROKE = '.nerv-wave-graph-vertical .nerv-wave::before';
 const H_POINT = '.nerv-wave-point';
 const V_POINT = '.nerv-wave-graph-vertical .nerv-wave-point';
+const LABEL = '.nerv-wave-point-label';
+const LEFT = '.nerv-wave-point-label-left';
 
 describe('Wave graph — stroke geometry', () => {
   it('horizontal stroke path traces a sine within 0.2% of amplitude', () => {
@@ -134,14 +136,15 @@ describe('Wave graph — stroke geometry', () => {
   });
 
   it('mask tile height matches the SVG viewBox so points and stroke share one scale', () => {
-    // Point offset = amplitude × P% of the cross axis. Tile cross size = amplitude × N cq-units.
-    // For the stroke's unit-amplitude peak to land where the point is, N / P must equal the
-    // viewBox cross size (in amplitude units).
+    // Point offset = amplitude × P cq-units of the cross axis. Tile cross size = amplitude × N
+    // cq-units. For the stroke's unit-amplitude peak to land where the point is, N / P must
+    // equal the viewBox cross size (in amplitude units).
     for (const [stroke, point, cq, crossIdx] of [[H_STROKE, H_POINT, 'cqh', 3], [V_STROKE, V_POINT, 'cqw', 2]]) {
       const strokeBody = rule(stroke);
       const pointBody = rule(point);
-      const n = Number(strokeBody.match(new RegExp(`var\\(--nerv-wave-amplitude\\)\\s*\\*\\s*(\\d+(?:\\.\\d+)?)${cq}`))?.[1]);
-      const p = Number(pointBody.match(/var\(--nerv-wave-amplitude\)\s*\*\s*(\d+(?:\.\d+)?)%/)?.[1]);
+      const amp = new RegExp(`var\\(--nerv-wave-amplitude\\)\\s*\\*\\s*(\\d+(?:\\.\\d+)?)${cq}`);
+      const n = Number(strokeBody.match(amp)?.[1]);
+      const p = Number(pointBody.match(amp)?.[1]);
       assert.ok(n > 0 && p > 0, `${stroke}: could not read tile and point amplitude multipliers`);
       assert.equal(n / p, maskSvg(strokeBody).viewBox[crossIdx], `${stroke}: tile/point scale mismatch`);
     }
@@ -207,10 +210,10 @@ describe('Wave graph — motion', () => {
       assert.ok(position.includes(v), `stroke mask-position should use ${v}`);
     }
     const point = rule(H_POINT);
-    const top = point.match(/top:([^;]*);/)?.[1] ?? '';
-    assert.ok(top.includes('sin('), 'point top should use sin()');
+    const y = point.match(/--nerv-wave-point-y:([^;]*);/)?.[1] ?? '';
+    assert.ok(y.includes('sin('), 'point displacement should use sin()');
     for (const v of ['--nerv-wave-t', '--nerv-wave-phase', '--nerv-wave-wavelength', '--nerv-wave-point-at', '--nerv-wave-amplitude']) {
-      assert.ok(top.includes(v), `point top should use ${v}`);
+      assert.ok(y.includes(v), `point displacement should use ${v}`);
     }
     for (const selector of [H_STROKE, H_POINT, V_STROKE, V_POINT]) {
       assert.doesNotMatch(rule(selector), /animation/, `${selector} must not run its own animation`);
@@ -253,8 +256,8 @@ describe('Wave graph — API surface', () => {
     assert.match(stroke ?? '', /mask-repeat:\s*repeat-y/);
     assert.match(stroke, /mask-position:[^;]*--nerv-wave-t[^;]*cqh/);
     const point = rule(V_POINT);
-    assert.match(point ?? '', /left:[^;]*sin\(/, 'vertical points move side to side');
-    assert.match(point, /top:[^;]*--nerv-wave-point-at/, 'vertical points sit at a fixed height');
+    assert.match(point ?? '', /--nerv-wave-point-x:[^;]*sin\(/, 'vertical points move side to side');
+    assert.match(point, /--nerv-wave-point-y:[^;]*--nerv-wave-point-at/, 'vertical points sit at a fixed height');
   });
 
   it('.nerv-wave-graph leaves background, border and pseudo-elements free for composition', () => {
@@ -282,6 +285,62 @@ describe('Wave graph — API surface', () => {
   });
 });
 
+describe('Wave graph — point labels', () => {
+  it('points read one position source on both orientations', () => {
+    // The dot and its label both read --nerv-wave-point-x/-y, so they cannot disagree.
+    const point = rule(H_POINT);
+    assert.match(point, /(^|\s)left:\s*var\(--nerv-wave-point-x\)/);
+    assert.match(point, /(^|\s)top:\s*var\(--nerv-wave-point-y\)/);
+    assert.match(point, /--nerv-wave-point-x:[^;]*--nerv-wave-point-at/);
+    assert.match(point, /--nerv-wave-point-y:[^;]*sin\(/);
+    const vertical = rule(V_POINT);
+    assert.match(vertical, /--nerv-wave-point-x:[^;]*sin\(/);
+    assert.match(vertical, /--nerv-wave-point-y:[^;]*--nerv-wave-point-at/);
+    assert.doesNotMatch(vertical, /(^|\s)(left|top):/, 'vertical only redefines the position source');
+  });
+
+  it('label anchors at the dot center as plain nowrap text in the wave color', () => {
+    const label = rule(LABEL);
+    assert.ok(label, 'missing .nerv-wave-point-label');
+    assert.match(label, /position:\s*absolute/);
+    assert.match(label, /(^|\s)left:\s*50%/);
+    assert.match(label, /(^|\s)top:\s*50%/);
+    assert.match(label, /white-space:\s*nowrap/);
+    assert.match(label, /(^|\s)color:\s*var\(--nerv-wave-color\)/);
+    assert.doesNotMatch(css, /\.nerv-wave-point[^{]*::(before|after)[^}]*attr\(/, 'label text must be DOM text a script can rewrite');
+  });
+
+  it('label translate clamps inside the wave box on both axes', () => {
+    const translate = rule(LABEL).match(/translate:([^;]*);/)?.[1] ?? '';
+    const clamps = [...translate.matchAll(/clamp\(/g)];
+    assert.equal(clamps.length, 2, 'one clamp per axis');
+    const [x, y] = translate.split(/(?<=\))\s+(?=clamp\()/);
+    assert.ok(x.includes('--nerv-wave-point-x') && x.includes('100cqw') && x.includes('--nerv-wave-point-label-shift'), 'x clamps the preferred shift to the box width');
+    assert.ok(y.includes('--nerv-wave-point-y') && y.includes('100cqh') && y.includes('-50%'), 'y centers on the dot, clamped to the box height');
+  });
+
+  it('label sits right of its dot by default and left with the -left modifier', () => {
+    const shift = rule(LABEL).match(/--nerv-wave-point-label-shift:([^;]*);/)?.[1] ?? '';
+    assert.ok(shift.includes('--nerv-wave-point-size') && shift.includes('--nerv-wave-point-label-gap'), 'default shift clears the dot by the gap');
+    assert.doesNotMatch(shift, /-\s*100%|-1\s*\*/, 'default shift points right');
+    const left = rule(LEFT);
+    assert.ok(left, 'missing .nerv-wave-point-label-left');
+    assert.match(left, /--nerv-wave-point-label-shift:[^;]*-1[^;]*100%/, 'left shift moves the label its own width plus the clearance to the left');
+    assert.doesNotMatch(left, /translate/, 'the clamp lives once, on the base label');
+    assert.ok(css.indexOf(`${LEFT} {`) > css.indexOf(`${LABEL} {`), 'modifier must follow the base label');
+  });
+
+  it('label rules carry no second position formula', () => {
+    for (const selector of [LABEL, LEFT]) {
+      assert.doesNotMatch(rule(selector), /sin\(|--nerv-wave-t\b|--nerv-wave-point-at/, `${selector} must derive from the dot's position`);
+    }
+  });
+
+  it('.nerv-wave-graph supplies an inheritable label gap', () => {
+    assert.match(rule('.nerv-wave-graph'), /--nerv-wave-point-label-gap:/);
+  });
+});
+
 describe('Wave graph — accessibility', () => {
   it('prefers-reduced-motion stops the wave clock', () => {
     assert.match(rule('.nerv-wave', media('prefers-reduced-motion: reduce')) ?? '', /animation:\s*none/);
@@ -292,5 +351,6 @@ describe('Wave graph — accessibility', () => {
     assert.ok(rule(H_STROKE, contrast), 'contrast should restyle the horizontal stroke');
     assert.ok(rule(V_STROKE, contrast), 'contrast should restyle the vertical stroke');
     assert.match(rule(H_POINT, contrast) ?? '', /box-shadow:[^;]*--nerv-bg/, 'points get a void ring to separate from their line');
+    assert.match(rule(LABEL, contrast) ?? '', /text-shadow:[^;]*--nerv-bg/, 'labels get a void halo to separate from crossing lines');
   });
 });
