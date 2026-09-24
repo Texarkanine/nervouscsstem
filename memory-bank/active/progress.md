@@ -72,3 +72,8 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 
 * Decisions made
     - Level 2: one self-contained modifier in `_form.scss` plus tests, fixture, docs, screenshots; no cross-component or architectural change
+
+## 2026-09-24 - PLAN (REWORK) - COMPLETE
+
+* Decisions made
+    - `.nerv-select-frameless` (no close `.nerv-list` analogue: `contained` is a fill-wrap mode); padding 0; gaps filled by opaque `--nerv-bg`; contrast mode regains a thick border
