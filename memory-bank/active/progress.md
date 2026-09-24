@@ -2,7 +2,7 @@
 
 Extend `.nerv-select` with CSS customizable-select styling behind `@supports (appearance: base-select)`: NERV picker, option states, per-option colored boxes with `.nerv-list` shapes, closed-button color mirroring. No JS. Firefox fallback unchanged. Tests, ref fixture section, docs, browser proof.
 
-**Complexity:** Level 3
+**Complexity:** Level 2 (rework: frameless picker; original run was Level 3)
 
 ## 2026-09-23 - COMPLEXITY-ANALYSIS - COMPLETE
 
@@ -67,3 +67,8 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 
 * Operator feedback (PR #19 human review, verbatim): "in every example there's an outline around the options. is it possible to have no outline? many list stylings would be visually superior w/out an outline."
 * Scope (operator): frameless picker modifier (no border, no frame glow, deliberate padding, opaque gap fill); option states stay visible without the frame; framed stays default; frameless used in colored-option examples where screenshots show it is better; decide contrast behavior; fallback byte-identical; TDD; docs, fixture, screenshots.
+
+## 2026-09-24 - COMPLEXITY-ANALYSIS (REWORK) - COMPLETE
+
+* Decisions made
+    - Level 2: one self-contained modifier in `_form.scss` plus tests, fixture, docs, screenshots; no cross-component or architectural change
