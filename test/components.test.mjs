@@ -1415,6 +1415,14 @@ describe('Customizable select (base-select)', () => {
     assert.match(enhanced(), /option\[class\*=nerv-option-\]:checked\s*\{[^}]*background:\s*rgba\(var\(--nerv-option-color-rgb\),\s*0\.7\)/);
   });
 
+  it('B6c: colored options keep legible ink: checkmark follows the text, hover never drops to --nerv-bg', () => {
+    const text = enhanced();
+    assert.match(text, /option\[class\*=nerv-option-\]::checkmark\s*\{[^}]*color:\s*currentcolor/);
+    const hover = text.match(/option\[class\*=nerv-option-\]:hover,[^{]*\{([^}]*)\}/);
+    assert.ok(hover, 'missing colored option hover rule');
+    assert.doesNotMatch(hover[1], /color:\s*var\(--nerv-bg\)/);
+  });
+
   it('B7: the closed select mirrors the checked option color, in every browser with :has()', () => {
     const idx = css.indexOf('.nerv-select:has(option.nerv-option-red:checked)');
     assert.ok(idx !== -1, 'missing :has() mirroring rule for red');

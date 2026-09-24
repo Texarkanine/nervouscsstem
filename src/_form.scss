@@ -279,10 +279,14 @@
     background: rgba(var(--nerv-option-color-rgb), 0.7);
   }
 
+  .nerv-select option[class*='nerv-option-']::checkmark {
+    color: currentcolor;
+  }
+
   .nerv-select option[class*='nerv-option-']:hover,
   .nerv-select option[class*='nerv-option-']:focus-visible {
-    background: rgba(var(--nerv-option-color-rgb), 0.75);
-    color: var(--nerv-bg);
+    background: rgba(var(--nerv-option-color-rgb), 0.7);
+    box-shadow: inset 0 0 0 2px currentcolor;
   }
 
   // Shapes, borrowing the .nerv-list polygons. Rect is the default.

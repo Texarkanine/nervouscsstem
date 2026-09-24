@@ -61,3 +61,4 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 
 * Work completed
     - Reflection written; systemPatterns gained a "Progressive Enhancement" contract (productContext, techContext: skip, no invalidation and no new standing contract there)
+    - PR #19 review: colored-option checkmark now `currentcolor`, and hover/focus keep the lifted ink plus an inset ring (was `--nerv-bg` ink, dark on red-deep). Test B6c. 385/385.
