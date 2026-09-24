@@ -164,6 +164,84 @@
     </div>
   </div>
 
+  <!-- ═══ Row 3b: Customizable Select (appearance: base-select) ═══ -->
+  <div class="ref-row-title">Customizable Select — Open Picker (Chrome/Edge 135+, Safari 27; others show the row above)</div>
+  <div class="ref-form-row">
+    <div class="ref-form-group">
+      <span class="ref-form-label">Plain Markup</span>
+      <select class="nerv-select" id="cs-plain">
+        <option>Unit-00 Prototype</option>
+        <option selected>Unit-01 Test Type</option>
+        <option>Unit-02 Production</option>
+        <option disabled>Unit-03 (Lost)</option>
+      </select>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Alert Level — Rect, Frameless</span>
+      <select class="nerv-select nerv-select-frameless" id="cs-alert">
+        <option class="nerv-option-green">Nominal</option>
+        <option class="nerv-option-amber">Active</option>
+        <option class="nerv-option-amber-dark" selected>Caution</option>
+        <option class="nerv-option-red">Alert</option>
+        <option class="nerv-option-red-deep">Critical</option>
+      </select>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Alert Level — Hex, Frameless, Custom Button</span>
+      <select class="nerv-select nerv-select-hex nerv-select-frameless" id="cs-hex">
+        <button><selectedcontent></selectedcontent></button>
+        <option class="nerv-option-green">Nominal</option>
+        <option class="nerv-option-amber">Active</option>
+        <option class="nerv-option-amber-dark">Caution</option>
+        <option class="nerv-option-red" selected>Alert</option>
+        <option class="nerv-option-red-deep">Critical</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="ref-form-row">
+    <div class="ref-form-group">
+      <span class="ref-form-label">Solid, Arrow, Frameless</span>
+      <select class="nerv-select nerv-select-solid nerv-select-arrow nerv-select-frameless" id="cs-solid">
+        <option class="nerv-option-cyan">Magi — Melchior</option>
+        <option class="nerv-option-blue">Magi — Balthasar</option>
+        <option class="nerv-option-steel">Magi — Casper</option>
+      </select>
+    </div>
+
+    <div class="ref-form-group">
+      <span class="ref-form-label">Arrow Reverse, Frameless</span>
+      <select class="nerv-select nerv-select-arrow-reverse nerv-select-frameless" id="cs-reverse">
+        <option class="nerv-option-orange">Sortie</option>
+        <option class="nerv-option-cyan">Standby</option>
+      </select>
+    </div>
+
+    <div class="ref-form-group nerv-state-critical" style="padding: 0.6rem; background: var(--nerv-bg);">
+      <span class="ref-form-label">Under .nerv-state-critical</span>
+      <select class="nerv-select" id="cs-critical">
+        <option>Terminal Dogma</option>
+        <option selected>Central Dogma</option>
+        <option>Geofront</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="ref-form-row">
+    <div class="ref-form-group">
+      <span class="ref-form-label">Alert Level — Rect, Framed (Default)</span>
+      <select class="nerv-select" id="cs-alert-framed">
+        <option class="nerv-option-green">Nominal</option>
+        <option class="nerv-option-amber">Active</option>
+        <option class="nerv-option-amber-dark" selected>Caution</option>
+        <option class="nerv-option-red">Alert</option>
+        <option class="nerv-option-red-deep">Critical</option>
+      </select>
+    </div>
+  </div>
+
   <!-- ═══ Row 4: Checkboxes & Radios ═══ -->
   <div class="ref-row-title">Checkboxes &amp; Radios</div>
   <div class="ref-form-row">

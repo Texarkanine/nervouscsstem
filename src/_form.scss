@@ -20,6 +20,19 @@
 /// Color variants (auto-generated per glow-flagged token):
 ///   .nerv-form-{color}  — override --nerv-form-color on any form element
 ///
+/// Customizable select (only where `appearance: base-select` is supported;
+/// other browsers keep the closed box and the OS popup):
+///   .nerv-select               — plain markup gets a NERV picker, option
+///                                hover/focus/checked states, ▶ checkmark
+///   option.nerv-option-{color} — data-color box per option (glow-flagged tokens)
+///   .nerv-select-hex / -arrow / -arrow-reverse — option shapes (rect default)
+///   .nerv-select-solid         — opaque option fills
+///   .nerv-select-frameless     — picker without border, glow or padding (the
+///                                border returns under prefers-contrast)
+///   <button><selectedcontent>  — opt-in rich closed-box content
+///   Closed-box mirroring: a checked .nerv-option-{color} recolors the select
+///   via :has(), in any browser with :has() (including the fallback path).
+///
 /// Tokens consumed:
 ///   --nerv-primary, --nerv-primary-rgb (default color, follows ambiance/alert)
 ///   --nerv-bg, --nerv-bg-rgb (background)
@@ -125,6 +138,245 @@
 
 .nerv-select:focus {
   @include _form-focus;
+}
+
+// ---------------------------------------------------------------------------
+// 3b. Customizable select (appearance: base-select)
+//
+// Browsers without base-select (Firefox as of 155) never enter this block and
+// keep section 3 plus the OS popup. Everything here is additive.
+// ---------------------------------------------------------------------------
+
+@supports (appearance: base-select) {
+  .nerv-select,
+  .nerv-select::picker(select) {
+    appearance: base-select;
+    border-radius: 0;
+  }
+
+  .nerv-select {
+    --nerv-select-inset: 0.9em;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding-right: 0.8em;
+    background-image: none;
+  }
+
+  .nerv-select > button {
+    all: unset;
+    display: contents;
+  }
+
+  .nerv-select selectedcontent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .nerv-select::picker-icon {
+    content: '';
+    width: 0.65em;
+    height: 0.4em;
+    background: currentcolor;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transition: rotate 0.12s;
+  }
+
+  .nerv-select:open::picker-icon {
+    rotate: 180deg;
+  }
+
+  .nerv-select::picker(select) {
+    margin-block: 0.3em;
+    padding: 0.3em;
+    background: var(--nerv-bg);
+    color: var(--nerv-form-color);
+    border: var(--nerv-border-width) solid var(--nerv-form-color);
+    box-shadow:
+      0 0 0 1px var(--nerv-bg),
+      0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.45),
+      inset 0 0 calc(var(--nerv-glow-spread) * 1.5) rgba(var(--nerv-form-color-rgb), 0.12);
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity 0.12s,
+      translate 0.12s,
+      overlay 0.12s allow-discrete,
+      display 0.12s allow-discrete;
+  }
+
+  // Frameless: the option boxes are the list edge, like a .nerv-list on the
+  // page. The background stays opaque so gaps show --nerv-bg, never content.
+  .nerv-select-frameless::picker(select) {
+    padding: 0;
+    background: var(--nerv-bg);
+    border: none;
+    box-shadow: none;
+  }
+
+  @starting-style {
+    .nerv-select:open::picker(select) {
+      opacity: 0;
+      translate: 0 -0.4em;
+    }
+  }
+
+  .nerv-select option {
+    --nerv-option-color: var(--nerv-form-color);
+    --nerv-option-color-rgb: var(--nerv-form-color-rgb);
+
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.35em 1em 0.35em 0.6em;
+    color: var(--nerv-option-color);
+    background: transparent;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .nerv-select option + option {
+    margin-top: 0.2em;
+  }
+
+  .nerv-select option::checkmark {
+    content: '\25B6';
+    font-size: 0.7em;
+    color: var(--nerv-option-color);
+  }
+
+  .nerv-select option:hover,
+  .nerv-select option:focus-visible {
+    background: rgba(var(--nerv-option-color-rgb), 0.3);
+  }
+
+  .nerv-select option:checked {
+    background: rgba(var(--nerv-option-color-rgb), 0.18);
+  }
+
+  .nerv-select option:checked:hover,
+  .nerv-select option:checked:focus-visible {
+    background: rgba(var(--nerv-option-color-rgb), 0.42);
+  }
+
+  .nerv-select option:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  // Per-option data colors: translucent box at rest, as in .nerv-list.
+  @each $name, $vals in tokens.$nerv-colors {
+    @if list.nth($vals, 3) {
+      .nerv-select .nerv-option-#{$name} {
+        --nerv-option-color: var(--nerv-#{$name});
+        --nerv-option-color-rgb: var(--nerv-#{$name}-rgb);
+      }
+    }
+  }
+
+  // Ink is lifted toward white so dark data colors (red-deep) stay legible on
+  // their own translucent fill.
+  .nerv-select option[class*='nerv-option-'] {
+    background: rgba(var(--nerv-option-color-rgb), 0.5);
+    color: color-mix(in srgb, var(--nerv-option-color) 60%, var(--nerv-white));
+  }
+
+  .nerv-select option[class*='nerv-option-']:checked {
+    background: rgba(var(--nerv-option-color-rgb), 0.7);
+  }
+
+  .nerv-select option[class*='nerv-option-']::checkmark {
+    color: currentcolor;
+  }
+
+  .nerv-select option[class*='nerv-option-']:hover,
+  .nerv-select option[class*='nerv-option-']:focus-visible {
+    background: rgba(var(--nerv-option-color-rgb), 0.7);
+    box-shadow: inset 0 0 0 2px currentcolor;
+  }
+
+  // Shapes, borrowing the .nerv-list polygons. Rect is the default.
+  .nerv-select-hex option {
+    padding-inline: calc(var(--nerv-select-inset) + 0.3em);
+    clip-path: polygon(
+      var(--nerv-select-inset) 0%,
+      calc(100% - var(--nerv-select-inset)) 0%,
+      100% 50%,
+      calc(100% - var(--nerv-select-inset)) 100%,
+      var(--nerv-select-inset) 100%,
+      0% 50%
+    );
+  }
+
+  .nerv-select-arrow option {
+    padding-left: calc(var(--nerv-select-inset) + 0.3em);
+    clip-path: polygon(var(--nerv-select-inset) 0%, 100% 0%, 100% 100%, var(--nerv-select-inset) 100%, 0% 50%);
+  }
+
+  .nerv-select-arrow-reverse option {
+    padding-right: calc(var(--nerv-select-inset) + 0.3em);
+    clip-path: polygon(0% 0%, calc(100% - var(--nerv-select-inset)) 0%, 100% 50%, calc(100% - var(--nerv-select-inset)) 100%, 0% 100%);
+  }
+
+  .nerv-select.nerv-select-solid option,
+  .nerv-select.nerv-select-solid option:checked {
+    background: var(--nerv-option-color);
+    color: var(--nerv-bg);
+  }
+
+  .nerv-select.nerv-select-solid option::checkmark {
+    color: var(--nerv-bg);
+  }
+
+  .nerv-select.nerv-select-solid option:hover,
+  .nerv-select.nerv-select-solid option:focus-visible {
+    background: var(--nerv-option-color);
+    color: var(--nerv-bg);
+    filter: brightness(1.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nerv-select::picker(select),
+    .nerv-select::picker-icon {
+      transition: none;
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    .nerv-select::picker(select) {
+      border-width: calc(var(--nerv-border-width) + 1px);
+      box-shadow: none;
+    }
+
+    .nerv-select-frameless::picker(select) {
+      border: calc(var(--nerv-border-width) + 1px) solid var(--nerv-form-color);
+    }
+
+    .nerv-select option {
+      clip-path: none;
+    }
+
+    .nerv-select option:focus-visible {
+      outline: calc(var(--nerv-border-width) + 1px) solid var(--nerv-option-color);
+      outline-offset: -2px;
+    }
+  }
+}
+
+// Closed-box color mirroring. Outside @supports on purpose: any browser with
+// :has() tints the closed select to the checked option's data color.
+@each $name, $vals in tokens.$nerv-colors {
+  @if list.nth($vals, 3) {
+    .nerv-select:has(option.nerv-option-#{$name}:checked) {
+      --nerv-form-color: var(--nerv-#{$name});
+      --nerv-form-color-rgb: var(--nerv-#{$name}-rgb);
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------

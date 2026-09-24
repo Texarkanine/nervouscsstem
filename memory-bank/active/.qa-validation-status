@@ -1,0 +1,2 @@
+PASS
+Rework QA rerun: plan step 4 done. 15 pr-19 images return 200 with image content-type; PR #19 body has a Frameless picker subsection (shots 13-15). Frameless SCSS matches plan; 388/388 tests pass.
