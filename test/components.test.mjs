@@ -1311,3 +1311,138 @@ describe('Regression — Phase 1–4', () => {
     assert.match(css, /\.nerv-radar\b[^-]/, 'missing .nerv-radar class');
   });
 });
+
+/**
+ * Customizable select: `.nerv-select` gains a NERV-styled open picker in
+ * browsers that support `appearance: base-select`, while every other browser
+ * keeps the original closed-box styling and the OS popup.
+ */
+describe('Customizable select (base-select)', () => {
+  const SUPPORTS = '@supports (appearance: base-select)';
+
+  /** Every `@supports (appearance: base-select) { … }` block as {start, end, text}. */
+  function supportsBlocks(source) {
+    const blocks = [];
+    let from = 0;
+    for (;;) {
+      const start = source.indexOf(SUPPORTS, from);
+      if (start === -1) return blocks;
+      let depth = 0;
+      let i = source.indexOf('{', start);
+      for (; i < source.length; i++) {
+        if (source[i] === '{') depth++;
+        else if (source[i] === '}' && --depth === 0) break;
+      }
+      blocks.push({ start, end: i, text: source.slice(start, i + 1) });
+      from = i;
+    }
+  }
+
+  /** Body of the first top-level rule whose selector is exactly `selector`. */
+  function topLevelBody(selector) {
+    const blocks = supportsBlocks(css);
+    let from = 0;
+    for (;;) {
+      const i = css.indexOf(`\n${selector} {`, from);
+      if (i === -1) return null;
+      if (!blocks.some((b) => i > b.start && i < b.end)) {
+        const open = css.indexOf('{', i);
+        return css.slice(open + 1, css.indexOf('}', open)).replace(/\s+/g, ' ').trim();
+      }
+      from = i + 1;
+    }
+  }
+
+  /** Selector lists of every style rule inside `text` (skips at-rule preludes). */
+  function selectorsIn(text) {
+    const inner = text.slice(text.indexOf('{') + 1, -1);
+    return [...inner.matchAll(/([^{};]+)\{/g)]
+      .map((m) => m[1].trim())
+      .filter((s) => !s.startsWith('@'))
+      .flatMap((s) => s.split(',').map((x) => x.trim()));
+  }
+
+  const enhanced = () => supportsBlocks(css).map((b) => b.text).join('\n');
+
+  it('B1: emits an @supports (appearance: base-select) block', () => {
+    assert.ok(supportsBlocks(css).length > 0, 'no base-select @supports block');
+  });
+
+  it('B2: opts .nerv-select and its picker into appearance: base-select', () => {
+    const text = enhanced();
+    assert.match(text, /\.nerv-select,\s*\.nerv-select::picker\(select\)\s*\{[^}]*appearance:\s*base-select/);
+  });
+
+  it('B3: every customizable-select feature sits inside the base-select @supports block', () => {
+    const blocks = supportsBlocks(css);
+    for (const re of [/::picker\(/g, /::picker-icon/g, /::checkmark/g, /:open\b/g, /selectedcontent/g, /base-select/g]) {
+      for (const m of css.matchAll(re)) {
+        assert.ok(
+          blocks.some((b) => m.index >= b.start && m.index <= b.end),
+          `${m[0]} at offset ${m.index} is outside the base-select @supports block`
+        );
+      }
+    }
+  });
+
+  it('B4: fallback .nerv-select and .nerv-select:focus rules are unchanged', () => {
+    assert.equal(
+      topLevelBody('.nerv-select'),
+      `--nerv-form-color: var(--nerv-primary); --nerv-form-color-rgb: var(--nerv-primary-rgb); background: var(--nerv-bg); color: var(--nerv-form-color); border: var(--nerv-border-width) solid var(--nerv-form-color); font-family: "Barlow Condensed", sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4em 0.8em; outline: none; transition: box-shadow 0.06s, border-color 0.06s; appearance: none; cursor: pointer; padding-right: 2.2em; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ffaa00'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.7em center; background-size: 0.65em;`
+    );
+    assert.equal(
+      topLevelBody('.nerv-select:focus'),
+      'box-shadow: 0 0 0 1px var(--nerv-bg), 0 0 calc(var(--nerv-glow-spread) * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.45), 0 0 calc(var(--nerv-glow-spread) * 2.5 * var(--nerv-glow-intensity)) rgba(var(--nerv-form-color-rgb), 0.2);'
+    );
+  });
+
+  it('B5: every enhanced selector is scoped to .nerv-select or .nerv-option-*', () => {
+    const selectors = supportsBlocks(css).flatMap((b) => selectorsIn(b.text));
+    assert.ok(selectors.length > 0, 'no selectors inside the base-select block');
+    for (const s of selectors) {
+      assert.match(s, /\.nerv-select|\.nerv-option-/, `unscoped selector in base-select block: ${s}`);
+    }
+  });
+
+  it('B6: .nerv-option-{color} sets the option color from named data tokens', () => {
+    for (const name of ['amber', 'amber-dark', 'orange', 'red', 'red-deep', 'green', 'cyan', 'blue', 'steel']) {
+      const re = new RegExp(`\\.nerv-option-${name}\\s*\\{[^}]*--nerv-option-color:\\s*var\\(--nerv-${name}\\);[^}]*--nerv-option-color-rgb:\\s*var\\(--nerv-${name}-rgb\\)`);
+      assert.match(enhanced(), re, `.nerv-option-${name} should set --nerv-option-color(-rgb)`);
+    }
+  });
+
+  it('B7: the closed select mirrors the checked option color, in every browser with :has()', () => {
+    const idx = css.indexOf('.nerv-select:has(option.nerv-option-red:checked)');
+    assert.ok(idx !== -1, 'missing :has() mirroring rule for red');
+    const block = css.slice(idx, css.indexOf('}', idx));
+    assert.match(block, /--nerv-form-color:\s*var\(--nerv-red\)/);
+    assert.match(block, /--nerv-form-color-rgb:\s*var\(--nerv-red-rgb\)/);
+    assert.ok(
+      !supportsBlocks(css).some((b) => idx > b.start && idx < b.end),
+      'mirroring must live outside @supports so :has()-capable fallback browsers get it'
+    );
+  });
+
+  it('B8: shape and fill modifiers style the options', () => {
+    const text = enhanced();
+    for (const shape of ['hex', 'arrow', 'arrow-reverse']) {
+      assert.match(text, new RegExp(`\\.nerv-select-${shape} option\\s*\\{[^}]*clip-path:\\s*polygon\\(`), `.nerv-select-${shape} option should clip to a polygon`);
+    }
+    assert.match(text, /\.nerv-select-solid option[^{]*\{[^}]*background:\s*var\(--nerv-option-color/, '.nerv-select-solid should fill options opaquely');
+  });
+
+  it('B9: reduced motion suppresses picker and picker-icon transitions', () => {
+    const m = enhanced().match(/@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?\})\s*\}/);
+    assert.ok(m, 'no reduced-motion rule inside the base-select block');
+    assert.match(m[1], /::picker\(select\)/);
+    assert.match(m[1], /::picker-icon/);
+    assert.match(m[1], /transition:\s*none/);
+  });
+
+  it('B10: high contrast drops picker glow and option clipping', () => {
+    const m = enhanced().match(/@media \(prefers-contrast: more\)\s*\{([\s\S]*?\})\s*\}/);
+    assert.ok(m, 'no prefers-contrast rule inside the base-select block');
+    assert.match(m[1], /::picker\(select\)\s*\{[^}]*box-shadow:\s*none/);
+    assert.match(m[1], /clip-path:\s*none/);
+  });
+});

@@ -36,13 +36,51 @@ CRT-console styling on ordinary form controls. Each control is shown in isolatio
   </select>
 </div>
 
-**Spec:** `.nerv-select` restyles the native dropdown and draws a custom arrow.
+**Spec:** `.nerv-select` restyles the closed box and draws a custom arrow. In Chrome and Edge 135+ and Safari 27, which support [customizable select](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select) (`appearance: base-select`), the open list is NERV-styled as well: a glowing panel, HUD type, hover and focus fills, and a ▶ mark on the chosen option. Plain `<option>`s need no extra markup. Firefox and LibreWolf do not support it yet. They show the same closed box with the operating system's own popup list.
 
 ```html
 <select class="nerv-select" aria-label="Eva unit">
   <option>Unit-00 Prototype</option>
   <option selected>Unit-01 Test Type</option>
   <option>Unit-02 Production</option>
+</select>
+```
+
+## Select with colored options
+
+<div class="nerv-docs-island">
+  <select class="nerv-select nerv-select-hex" aria-label="Alert level">
+    <button><selectedcontent></selectedcontent></button>
+    <option class="nerv-option-green">Nominal</option>
+    <option class="nerv-option-amber">Active</option>
+    <option class="nerv-option-amber-dark" selected>Caution</option>
+    <option class="nerv-option-red">Alert</option>
+    <option class="nerv-option-red-deep">Critical</option>
+  </select>
+</div>
+
+**Spec:** Put `.nerv-option-{color}` on an `<option>` to give it a box filled with that color. The colors are the named data colors (`green`, `amber`, `amber-dark`, `orange`, `red`, `red-deep`, `cyan`, `blue`, `steel`). They do not change with the alert state. The closed box takes the color of the chosen option. This works in every browser with `:has()`, Firefox included. Choosing an option does not change the page's alert state; your code does that if you want it.
+
+Add one of these to the `<select>` to change every option:
+
+| Class | Effect |
+|---|---|
+| (none) | Rectangle boxes |
+| `.nerv-select-hex` | Pointed ends, like `.nerv-list` |
+| `.nerv-select-arrow` | Point on the left |
+| `.nerv-select-arrow-reverse` | Point on the right |
+| `.nerv-select-solid` | Solid fill with dark text |
+
+The option boxes, shapes, and the open-list styling appear only in browsers that support customizable select. In Firefox the options show in the operating system's popup list. The `<button><selectedcontent></selectedcontent></button>` line is optional: it shows the chosen option's content in the closed box, and browsers that do not support it ignore it.
+
+```html
+<select class="nerv-select nerv-select-hex" aria-label="Alert level">
+  <button><selectedcontent></selectedcontent></button>
+  <option class="nerv-option-green">Nominal</option>
+  <option class="nerv-option-amber">Active</option>
+  <option class="nerv-option-amber-dark" selected>Caution</option>
+  <option class="nerv-option-red">Alert</option>
+  <option class="nerv-option-red-deep">Critical</option>
 </select>
 ```
 

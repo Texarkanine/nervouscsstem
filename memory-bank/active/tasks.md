@@ -142,6 +142,6 @@ No new dependencies. The platform feature was spiked in Chromium 153 (supported)
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
 - [ ] QA

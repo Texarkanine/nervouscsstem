@@ -36,3 +36,14 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
     - Accepted: `:has()` mirroring rules move OUTSIDE `@supports` (Firefox 121+ supports `:has()`), so Firefox/LibreWolf get a closed box tinted to the chosen level. The fallback `.nerv-select` blocks stay byte-identical; mirroring only applies to options with `.nerv-option-*` classes. B7 asserts the rule exists at top level.
     - Declined: updating `docs/boards/forms.html` (boards may drift per systemPatterns).
     - Kept: new reduced-motion/contrast rules nest inside the `@supports` block; shared lists at file end are not edited.
+
+## 2026-09-23 - BUILD - COMPLETE
+
+* Work completed
+    - TDD: B1–B10 written red (8 fail, 2 guards pass), then green
+    - SCSS section 3b, ref rows, docs example, Playwright proof in Chromium + Firefox
+* Decisions made
+    - border-radius 0 under base-select; lifted option ink; solid doubled-class specificity
+* Insights
+    - base-select UA stylesheet rounds corners and would have quietly broken the NERV look
+    - Picker flips upward near viewport bottom; screenshots must scroll the select near the top
