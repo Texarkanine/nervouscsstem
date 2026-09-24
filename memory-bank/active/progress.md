@@ -24,3 +24,15 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
     - Option colors `.nerv-option-{color}`; select-level shapes hex/arrow/arrow-reverse and `solid`; rect default; no alert-level aliases
     - Mirroring by generated `:has()` rules, not `<selectedcontent>`
     - All enhanced rules inside one `@supports (appearance: base-select)` block, including the mirroring; the fallback is byte-identical
+
+## 2026-09-23 - PREFLIGHT - COMPLETE
+
+* Result: `PASS WITH ADVISORY`
+* Advisories: `docs/boards/forms.html` not in plan; keep new motion/contrast rules nested; optional idea to move `:has()` mirroring outside `@supports` so Firefox gets it too
+
+## 2026-09-23 - PREFLIGHT ADVISORY DISPOSITION
+
+* Decisions made
+    - Accepted: `:has()` mirroring rules move OUTSIDE `@supports` (Firefox 121+ supports `:has()`), so Firefox/LibreWolf get a closed box tinted to the chosen level. The fallback `.nerv-select` blocks stay byte-identical; mirroring only applies to options with `.nerv-option-*` classes. B7 asserts the rule exists at top level.
+    - Declined: updating `docs/boards/forms.html` (boards may drift per systemPatterns).
+    - Kept: new reduced-motion/contrast rules nest inside the `@supports` block; shared lists at file end are not edited.

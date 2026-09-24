@@ -1,0 +1,11 @@
+PASS WITH ADVISORY
+
+TDD encoding: Step 1 (the only executable unit) orders stub tests, stub interface, red tests, then code. Steps 2-4 are prose/visual/evidence and owe no tests. No change-detectors were scheduled. B4 guards against a fallback regression that a user can see, so it is not a change-detector. No plan edits were made.
+
+Conventions: `.nerv-` scoping, data tokens for option fills, `--nerv-primary`-driven chrome, compound-state unions, and nested reduced-motion/contrast rules all match systemPatterns.md. The tests extend `test/components.test.mjs`, which is already in `npm test`. Stylelint runs on `dist/nerv.css`, so the `ignorePseudoElements` mitigation is aimed at the right file.
+
+Advisory (dependency impact): `docs/boards/forms.html` also references `.nerv-select` and is not in the plan. Boards may drift by policy, so this does not block. Decide whether the published forms board should show the enhanced picker.
+
+Advisory (conflict check): the existing `prefers-contrast` and `prefers-reduced-motion` lists at the end of `_form.scss` already name `.nerv-select`. The plan correctly nests the new rules inside the @supports block instead of editing those lists; keep it that way so B4 holds.
+
+Advisory (radical idea): `:has()` ships in Firefox 121+. The closed-button color mirroring (`.nerv-select:has(option.nerv-option-{c}:checked) { --nerv-form-color: ... }`) could live outside `@supports (appearance: base-select)`, so Firefox/LibreWolf users would also get an alert-colored closed box. The fallback path's existing rules stay byte-identical; it only gains additive, opt-in rules that apply when options carry classes. Cost: B3/B5 containment wording and the "everything enhanced in one block" invariant need a carve-out, and B7 must assert placement at top level. Operator call.
