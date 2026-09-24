@@ -31,3 +31,16 @@ Picking an alert level does NOT change the page's alert state; that wiring is th
 - Ref fixture: new section in `ref/ref-forms.html`.
 - Docs: `docs/components/css/structure/forms.md` in today's island+fence form; say which browsers get the enhanced picker and what others see; never call `NERV.init()`.
 - Browser proof: Playwright Chromium (enhanced) and Firefox (fallback no regression). Screenshots on the PR via orphan `pr-assets` branch.
+
+## Rework: Frameless Picker
+
+Human review of PR #19: "in every example there's an outline around the options. is it possible to have no outline? many list stylings would be visually superior w/out an outline."
+
+The outline is the open picker's frame (`.nerv-select::picker(select)` border, glow box-shadow, 0.3em padding). Requirements:
+
+- A modifier that makes the picker frameless: no border, no frame glow, padding chosen so option boxes read as a bare list. Match `.nerv-list` vocabulary if a close analogue exists.
+- The picker keeps an opaque background (no-transparency rule); choose deliberately what fills the gaps between option boxes.
+- ▶ mark, hover ring and focus ring stay clearly visible; keyboard focus stays obvious.
+- Framed stays the default (plain unfilled options need a delimiter). Use frameless in colored-option examples where screenshots show it is better.
+- Decide and record whether frameless regains a border under `prefers-contrast`.
+- Firefox fallback byte-identical; everything new inside `@supports` and `.nerv-` scoped. TDD. Update docs, fixture, PR screenshots.
