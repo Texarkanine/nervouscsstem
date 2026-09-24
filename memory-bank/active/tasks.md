@@ -94,4 +94,4 @@ No new technology - validation not required.
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA - FAIL (plan step 4: PR screenshots not published; rerun Build for step 4 only)

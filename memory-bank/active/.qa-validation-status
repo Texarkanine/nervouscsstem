@@ -1,0 +1,2 @@
+FAIL
+Plan step 4 incomplete: frameless shots 13-15 exist only in /tmp/pw-issue3/out; not pushed to pr-assets/pr-19, not curl-verified, PR #19 body Screenshots section not updated. Code, tests (388/388), fixture, docs: acceptable.
