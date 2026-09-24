@@ -77,3 +77,11 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 
 * Decisions made
     - `.nerv-select-frameless` (no close `.nerv-list` analogue: `contained` is a fill-wrap mode); padding 0; gaps filled by opaque `--nerv-bg`; contrast mode regains a thick border
+
+## 2026-09-24 - PREFLIGHT (REWORK) - COMPLETE
+
+* Result: `PASS WITH ADVISORY`
+* Advisories: keep frameless out of the shared accessibility lists; optional idea to make frameless automatic via `:has(option[class*='nerv-option-'])` with a `.nerv-select-framed` opt-out
+* Preflight advisory disposition
+    - Declined: automatic frameless for any select with colored options (`:has()` default + `.nerv-select-framed`). Operator scope asks for an explicit modifier applied per example by screenshot judgement; an implicit default removes that choice and adds a second class.
+    - Kept: `.nerv-select-frameless` stays out of the shared end-of-file accessibility lists.
