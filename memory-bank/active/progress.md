@@ -102,3 +102,8 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
     - Blocking (completeness): plan step 4 not done. Frameless shots 13–15 exist in /tmp/pw-issue3/out but are not pushed to `pr-assets/pr-19/`, not curl-verified, and the PR #19 body has no frameless screenshots. The reviewer who asked for this cannot see it. Build must rerun for step 4 only.
     - Non-blocking: `src/_form.scss` frameless rule and contrast override match the plan; F1–F3 are consumer contracts; 388/388 pass. Lint's 10 errors are pre-existing (Antonio quotes, radar custom props, cartouche `0px`), none in select code.
     - Non-blocking: KISS/DRY/YAGNI/integrity clean; docs table and prose updated; fixture labels and the `#cs-alert-framed` comparator match the plan; screenshots 13 and 15 show the intended look.
+
+## 2026-09-24 - BUILD STEP 4 (QA FIX) - COMPLETE
+
+* Work completed
+    - Pushed branch; pushed shots 01–15 + GIF to `pr-assets/pr-19/` (b5d96f7); all 15 URLs 200 with image content-type; PR body gained a "Frameless picker" subsection, updated captions, and `?v=2` on every image URL (overwritten files would otherwise be served stale by GitHub's image cache)
