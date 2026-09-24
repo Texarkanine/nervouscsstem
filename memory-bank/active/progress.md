@@ -107,3 +107,17 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 
 * Work completed
     - Pushed branch; pushed shots 01–15 + GIF to `pr-assets/pr-19/` (b5d96f7); all 15 URLs 200 with image content-type; PR body gained a "Frameless picker" subsection, updated captions, and `?v=2` on every image URL (overwritten files would otherwise be served stale by GitHub's image cache)
+
+## 2026-09-24 - QA (REWORK RERUN) - COMPLETE
+
+* Result: PASS
+* Findings
+    - Resolved: plan step 4. All 15 `pr-assets/pr-19/` URLs in the PR #19 body return 200 with image content-type; the body has a "Frameless picker" subsection (shots 13–15) and frameless captions on the colored examples.
+    - Non-blocking: frameless SCSS (base-select block and contrast override) matches the plan; 388/388 pass; KISS/DRY/YAGNI/integrity/docs clean.
+    - Non-blocking: local branch has memory-bank-only commits not yet pushed.
+
+## 2026-09-24 - REFLECT (REWORK) - COMPLETE
+
+* Work completed
+    - Reflection: `reflection/reflection-issue-3-custom-select-rework.md`
+    - Persistent files: productContext skip (no product change); systemPatterns skip (frameless is a component modifier inside the existing progressive-enhancement contract, not a new convention); techContext skip (no stack or tooling change)

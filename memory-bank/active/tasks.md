@@ -95,3 +95,5 @@ No new technology - validation not required.
 - [x] Preflight
 - [x] Build
 - [x] QA - FAIL (plan step 4: PR screenshots not published; rerun Build for step 4 only)
+- [x] Build step 4 (QA fix)
+- [x] QA rerun - PASS (all 15 PR images live, frameless subsection in PR body, 388/388)
