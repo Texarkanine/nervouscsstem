@@ -1,6 +1,6 @@
 # Active Context
 
 - **Current Task:** Customizable `.nerv-select` via `appearance: base-select` (issue #3)
-- **Phase:** COMPLEXITY-ANALYSIS - COMPLETE
-- **What Was Done:** Classified Level 3: enhancement to one component, but it spans SCSS, tests, ref fixture and docs, and has open design questions (per-option class API, closed-button mirroring, shapes).
-- **Next Step:** Load the Level 3 workflow and run Plan.
+- **Phase:** PLAN - COMPLETE
+- **What Was Done:** Classified Level 3. Plan written to `tasks.md`; creative resolved the class API (`.nerv-option-{color}`, `.nerv-select-{hex,arrow,arrow-reverse,solid}`) and `:has()` mirroring.
+- **Next Step:** Preflight (subagent).

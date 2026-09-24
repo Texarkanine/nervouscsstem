@@ -14,3 +14,13 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 * Insights
     - Chromium: `CSS.supports('appearance: base-select')` true; picker, `::checkmark`, `::picker-icon`, `:open` all style. Firefox 155: false.
     - `<selectedcontent>` clones the option's children, not the option element, so option classes do not reach the button. `.nerv-select:has(option.X:checked)` mirrors color with or without `<selectedcontent>`.
+
+## 2026-09-23 - CREATIVE + PLAN - COMPLETE
+
+* Work completed
+    - Creative (UI/UX, high confidence): `creative-select-option-api.md`
+    - Plan: 4 steps (SCSS+tests, ref fixture, docs, browser proof), 10 behaviors
+* Decisions made
+    - Option colors `.nerv-option-{color}`; select-level shapes hex/arrow/arrow-reverse and `solid`; rect default; no alert-level aliases
+    - Mirroring by generated `:has()` rules, not `<selectedcontent>`
+    - All enhanced rules inside one `@supports (appearance: base-select)` block, including the mirroring; the fallback is byte-identical
