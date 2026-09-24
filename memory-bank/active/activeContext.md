@@ -1,7 +1,7 @@
 # Active Context
 
 - **Current Task:** Customizable `.nerv-select` via `appearance: base-select` (issue #3)
-- **Phase:** BUILD - COMPLETE
+- **Phase:** QA - COMPLETE (PASS)
 - **Files modified:** `src/_form.scss` (section 3b `@supports` block + top-level `:has()` mirroring + header docs), `test/components.test.mjs` (B1–B10), `ref/ref-forms.html` (Customizable Select rows), `docs/components/css/structure/forms.md` (support prose + colored-options example + class table)
 - **Build decisions (beyond creative doc):**
     - `border-radius: 0` on select and picker: base-select UA styles round the corners.

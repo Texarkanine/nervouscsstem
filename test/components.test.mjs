@@ -1411,6 +1411,10 @@ describe('Customizable select (base-select)', () => {
     }
   });
 
+  it('B6b: a checked colored option gets a stronger fill than its resting box', () => {
+    assert.match(enhanced(), /option\[class\*=nerv-option-\]:checked\s*\{[^}]*background:\s*rgba\(var\(--nerv-option-color-rgb\),\s*0\.7\)/);
+  });
+
   it('B7: the closed select mirrors the checked option color, in every browser with :has()', () => {
     const idx = css.indexOf('.nerv-select:has(option.nerv-option-red:checked)');
     assert.ok(idx !== -1, 'missing :has() mirroring rule for red');

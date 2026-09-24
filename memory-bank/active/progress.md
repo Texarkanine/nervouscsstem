@@ -47,3 +47,12 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 * Insights
     - base-select UA stylesheet rounds corners and would have quietly broken the NERV look
     - Picker flips upward near viewport bottom; screenshots must scroll the select near the top
+
+## 2026-09-23 - QA - COMPLETE
+
+* Result: PASS
+* Findings (non-blocking)
+    - `option[class*='nerv-option-']` has equal specificity to `option:checked` and comes later, so a checked colored option keeps the rest fill; only the ▶ checkmark marks it
+    - Firefox fallback arrow SVG stays amber on a mirrored box (known, fallback locked by contract)
+    - KISS/DRY/YAGNI/completeness/integrity/docs: no issues; `docs/boards/forms.html` skip was a recorded decision
+    - Post-QA: fixed the non-blocking finding. A checked colored option now gets a 0.7 fill (test B6b). 384/384.

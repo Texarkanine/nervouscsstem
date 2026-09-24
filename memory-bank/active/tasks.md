@@ -144,4 +144,4 @@ No new dependencies. The platform feature was spiked in Chromium 153 (supported)
 - [x] Pre-Mortem complete
 - [x] Preflight
 - [x] Build
-- [ ] QA
+- [x] QA (PASS, advisories: colored :checked fill overridden by option[class*] rule; amber fallback arrow)

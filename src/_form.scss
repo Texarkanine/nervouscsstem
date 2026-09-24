@@ -275,6 +275,10 @@
     color: color-mix(in srgb, var(--nerv-option-color) 60%, var(--nerv-white));
   }
 
+  .nerv-select option[class*='nerv-option-']:checked {
+    background: rgba(var(--nerv-option-color-rgb), 0.7);
+  }
+
   .nerv-select option[class*='nerv-option-']:hover,
   .nerv-select option[class*='nerv-option-']:focus-visible {
     background: rgba(var(--nerv-option-color-rgb), 0.75);

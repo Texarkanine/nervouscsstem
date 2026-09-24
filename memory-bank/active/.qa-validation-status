@@ -1,0 +1,2 @@
+PASS
+QA 2026-09-23: 383/383 tests, lint 10 pre-existing only. Advisories: colored checked options lose the :checked fill boost (attr rule wins on source order; checkmark still marks it); Firefox fallback arrow stays amber on mirrored boxes (known).
