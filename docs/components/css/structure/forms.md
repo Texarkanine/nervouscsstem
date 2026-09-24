@@ -49,7 +49,7 @@ CRT-console styling on ordinary form controls. Each control is shown in isolatio
 ## Select with colored options
 
 <div class="nerv-docs-island">
-  <select class="nerv-select nerv-select-hex" aria-label="Alert level">
+  <select class="nerv-select nerv-select-hex nerv-select-frameless" aria-label="Alert level">
     <button><selectedcontent></selectedcontent></button>
     <option class="nerv-option-green">Nominal</option>
     <option class="nerv-option-amber">Active</option>
@@ -70,11 +70,14 @@ Add one of these to the `<select>` to change every option:
 | `.nerv-select-arrow` | Point on the left |
 | `.nerv-select-arrow-reverse` | Point on the right |
 | `.nerv-select-solid` | Solid fill with dark text |
+| `.nerv-select-frameless` | No border, glow or padding around the open list, so the boxes read as a bare list |
+
+By default the open list sits in a bordered, glowing frame. That frame keeps plain options readable, because they have no fill of their own. Colored options already have edges, so `.nerv-select-frameless` usually looks better with them, as in the example above. The space between the boxes shows the page background color, never the content behind the list. With high contrast turned on, a frameless list gets a thick border back.
 
 The option boxes, shapes, and the open-list styling appear only in browsers that support customizable select. In Firefox the options show in the operating system's popup list. The `<button><selectedcontent></selectedcontent></button>` line is optional: it shows the chosen option's content in the closed box, and browsers that do not support it ignore it.
 
 ```html
-<select class="nerv-select nerv-select-hex" aria-label="Alert level">
+<select class="nerv-select nerv-select-hex nerv-select-frameless" aria-label="Alert level">
   <button><selectedcontent></selectedcontent></button>
   <option class="nerv-option-green">Nominal</option>
   <option class="nerv-option-amber">Active</option>

@@ -85,3 +85,12 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
 * Preflight advisory disposition
     - Declined: automatic frameless for any select with colored options (`:has()` default + `.nerv-select-framed`). Operator scope asks for an explicit modifier applied per example by screenshot judgement; an implicit default removes that choice and adds a second class.
     - Kept: `.nerv-select-frameless` stays out of the shared end-of-file accessibility lists.
+
+## 2026-09-24 - BUILD (REWORK) - COMPLETE
+
+* Work completed
+    - F1–F3 red then green; frameless modifier, fixture, docs; framed vs frameless screenshots per example
+* Decisions made
+    - Frameless on all colored-option examples (rect, hex, solid+arrow, arrow-reverse, docs); framed on plain examples
+* Insights
+    - Framed vs frameless is easiest to judge by toggling the class in one browser session and stacking the two shots side by side

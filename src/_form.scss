@@ -27,6 +27,8 @@
 ///   option.nerv-option-{color} — data-color box per option (glow-flagged tokens)
 ///   .nerv-select-hex / -arrow / -arrow-reverse — option shapes (rect default)
 ///   .nerv-select-solid         — opaque option fills
+///   .nerv-select-frameless     — picker without border, glow or padding (the
+///                                border returns under prefers-contrast)
 ///   <button><selectedcontent>  — opt-in rich closed-box content
 ///   Closed-box mirroring: a checked .nerv-option-{color} recolors the select
 ///   via :has(), in any browser with :has() (including the fallback path).
@@ -205,6 +207,15 @@
       display 0.12s allow-discrete;
   }
 
+  // Frameless: the option boxes are the list edge, like a .nerv-list on the
+  // page. The background stays opaque so gaps show --nerv-bg, never content.
+  .nerv-select-frameless::picker(select) {
+    padding: 0;
+    background: var(--nerv-bg);
+    border: none;
+    box-shadow: none;
+  }
+
   @starting-style {
     .nerv-select:open::picker(select) {
       opacity: 0;
@@ -340,6 +351,10 @@
     .nerv-select::picker(select) {
       border-width: calc(var(--nerv-border-width) + 1px);
       box-shadow: none;
+    }
+
+    .nerv-select-frameless::picker(select) {
+      border: calc(var(--nerv-border-width) + 1px) solid var(--nerv-form-color);
     }
 
     .nerv-select option {

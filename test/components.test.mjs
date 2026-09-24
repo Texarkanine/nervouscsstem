@@ -1443,6 +1443,35 @@ describe('Customizable select (base-select)', () => {
     assert.match(text, /\.nerv-select-solid option[^{]*\{[^}]*background:\s*var\(--nerv-option-color/, '.nerv-select-solid should fill options opaquely');
   });
 
+  /** Body of the frameless picker rule outside any nested @media. */
+  const framelessRule = () => enhanced().match(/\n {2}\.nerv-select-frameless::picker\(select\)\s*\{([^}]*)\}/);
+
+  it('F1: .nerv-select-frameless drops the picker frame but keeps an opaque background', () => {
+    const m = framelessRule();
+    assert.ok(m, 'missing .nerv-select-frameless::picker(select) rule');
+    assert.match(m[1], /border:\s*none/);
+    assert.match(m[1], /box-shadow:\s*none/);
+    assert.match(m[1], /padding:\s*0/);
+    assert.match(m[1], /background:\s*var\(--nerv-bg\)/);
+  });
+
+  it('F2: the frameless rule follows the base picker rule so it wins at equal specificity', () => {
+    const text = enhanced();
+    const base = text.search(/\n {2}\.nerv-select::picker\(select\)\s*\{[^}]*border:/);
+    const frameless = text.search(/\n {2}\.nerv-select-frameless::picker\(select\)\s*\{/);
+    assert.ok(base !== -1 && frameless !== -1, 'both picker rules must exist');
+    assert.ok(frameless > base, 'frameless rule must come after the base picker rule');
+  });
+
+  it('F3: high contrast gives a frameless picker a thick border back', () => {
+    const m = enhanced().match(/@media \(prefers-contrast: more\)\s*\{([\s\S]*?\})\s*\}/);
+    assert.ok(m, 'no prefers-contrast rule inside the base-select block');
+    assert.match(
+      m[1],
+      /\.nerv-select-frameless::picker\(select\)\s*\{[^}]*border:\s*calc\(var\(--nerv-border-width\) \+ 1px\) solid var\(--nerv-form-color\)/
+    );
+  });
+
   it('B9: reduced motion suppresses picker and picker-icon transitions', () => {
     const m = enhanced().match(/@media \(prefers-reduced-motion: reduce\)\s*\{([\s\S]*?\})\s*\}/);
     assert.ok(m, 'no reduced-motion rule inside the base-select block');

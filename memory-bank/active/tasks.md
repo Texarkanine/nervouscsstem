@@ -13,7 +13,7 @@ Add `.nerv-select-frameless`: inside the base-select `@supports` block, the open
 - **Gap fill `var(--nerv-bg)`, opaque.** The picker keeps `background: var(--nerv-bg)`, so the 0.2em gaps between boxes (and the clipped corners of hex/arrow shapes) show the page's own background color and never page content (no-transparency rule). Under `.nerv-state-critical` that color is red-deep, matching the page.
 - **High contrast regains a border.** Under `prefers-contrast: more` a frameless picker gets `calc(var(--nerv-border-width) + 1px) solid var(--nerv-form-color)`, with no glow. Repo convention (systemPatterns): contrast mode increases border widths and relies on borders, not glow, for element distinction. The frame is the popup's only delimiter from the page, and a contrast user has asked for maximal distinction over aesthetics.
 - **Option states unchanged:** ▶ checkmark, hover/focus fill (plain options), inset ring (colored options) already live on the option, not the frame.
-- **Examples using frameless:** decided by screenshots (colored-option rows in the ref fixture and the docs colored example are the candidates; the plain select stays framed).
+- **Examples using frameless (screenshot verdicts):** frameless on ref rows rect alert, hex alert, solid+arrow, arrow-reverse, and the docs colored example; framed kept on plain markup and plain under `.nerv-state-critical` (plain options float without a delimiter). A new framed alert-level select (`#cs-alert-framed`) stays as the default comparator.
 
 ## Test Plan (TDD)
 
@@ -92,6 +92,6 @@ No new technology - validation not required.
 - [x] Implementation plan complete
 - [x] Technology validation complete
 - [x] Pre-Mortem complete
-- [ ] Preflight
-- [ ] Build
+- [x] Preflight
+- [x] Build
 - [ ] QA
