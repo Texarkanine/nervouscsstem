@@ -56,3 +56,8 @@ Extend `.nerv-select` with CSS customizable-select styling behind `@supports (ap
     - Firefox fallback arrow SVG stays amber on a mirrored box (known, fallback locked by contract)
     - KISS/DRY/YAGNI/completeness/integrity/docs: no issues; `docs/boards/forms.html` skip was a recorded decision
     - Post-QA: fixed the non-blocking finding. A checked colored option now gets a 0.7 fill (test B6b). 384/384.
+
+## 2026-09-23 - REFLECT - COMPLETE
+
+* Work completed
+    - Reflection written; systemPatterns gained a "Progressive Enhancement" contract (productContext, techContext: skip, no invalidation and no new standing contract there)
