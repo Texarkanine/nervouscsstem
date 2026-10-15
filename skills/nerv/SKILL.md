@@ -2,7 +2,7 @@
 name: nerv
 description: Apply the NERV Evangelion CRT-console design system. Use when theming a web UI with NERV visuals or when the user mentions nervouscsstem, nerv.css, or Evangelion HUD chrome.
 metadata:
-  version: "0.2.0" # x-release-please-version
+  version: "0.3.0" # x-release-please-version
 ---
 
 # NERV design system
