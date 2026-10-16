@@ -3,6 +3,9 @@
 #     uv sync --group docs
 #     npm run docs:serve
 #     npm run docs:build
+#
+# `uv sync` installs scripts/nervouscsstem_docs/ editable so properdocs.yml can
+# name its superfences formatter with !!python/name:.
 
 [project]
 name = "nervouscsstem-docs"
@@ -18,6 +21,13 @@ docs = [
     "mkdocs-material ~= 9.5",
     "mkdocs-awesome-pages-plugin ~= 2.9",
 ]
+
+[build-system]
+requires = ["uv_build>=0.8.22,<0.9"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = "scripts"
 
 [tool.uv]
 required-version = ">=0.5"

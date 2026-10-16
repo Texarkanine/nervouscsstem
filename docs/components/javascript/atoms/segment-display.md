@@ -8,11 +8,7 @@ CSS segment display is the DSEG7 readout and the ghost overlay, if you set `data
 
 ## Ghost from text
 
-<div class="nerv-docs-island" data-nerv-init="ghost-segments">
-  <div class="nerv-segment-display" style="font-size: 2rem;">00:42:17</div>
-</div>
-
-```html
+```html island init="ghost-segments"
 <div class="nerv-segment-display" style="font-size: 2rem;">00:42:17</div>
 <script>
   NERV.initGhostSegments(document.querySelector('.nerv-segment-display').parentElement);

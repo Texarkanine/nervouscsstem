@@ -1,0 +1,1 @@
+First npm publish cannot use OIDC until the package exists; operator bootstraps, then attaches trusted publisher to release-please.yaml. Test what we ship to consumers; do not TDD our own CI unless brittle or critical.

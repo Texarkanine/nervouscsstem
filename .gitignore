@@ -4,4 +4,4 @@ site/
 .venv
 docs/stylesheets/nerv.css
 docs/javascripts/nerv.js
-**/.summem/__pycache__/
+__pycache__/

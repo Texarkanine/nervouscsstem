@@ -8,23 +8,15 @@ Two kinds of token, both on `:root`.
 
 ## Ambiance
 
-<div class="nerv-docs-island">
-  <p class="nerv-type-hud" style="color: var(--nerv-primary);">AMBIANCE --nerv-primary</p>
-</div>
-
-**Spec:** `--nerv-primary` defaults to `--nerv-amber`. `--nerv-bg` defaults to `--nerv-void`.
-
-```html
+```html island
 <p class="nerv-type-hud" style="color: var(--nerv-primary);">AMBIANCE --nerv-primary</p>
 ```
 
+**Spec:** `--nerv-primary` defaults to `--nerv-amber`. `--nerv-bg` defaults to `--nerv-void`.
+
 ## Named data
 
-<div class="nerv-docs-island">
-  <p class="nerv-type-hud" style="color: var(--nerv-green);">DATA --nerv-green</p>
-</div>
-
-```html
+```html island
 <p class="nerv-type-hud" style="color: var(--nerv-green);">DATA --nerv-green</p>
 ```
 
@@ -36,11 +28,7 @@ Most named colors also generate modifier classes: `.nerv-glow-cyan`, `.nerv-text
 
 When a family page says a class exists “for every glow color,” it means that amber-through-steel list, not void or white.
 
-<div class="nerv-docs-island">
-  <p class="nerv-type-hud nerv-text-cyan">.nerv-text-cyan</p>
-</div>
-
-```html
+```html island
 <p class="nerv-type-hud nerv-text-cyan">.nerv-text-cyan</p>
 ```
 
@@ -50,85 +38,57 @@ Linear-gradient fills. CSS sets the stops. There is no JavaScript hook.
 
 ### Base
 
-<div class="nerv-docs-island">
-  <div class="nerv-gradient" style="height: 4rem;"></div>
-</div>
-
-**Spec:** `.nerv-gradient` goes from `--nerv-primary-rgb` to `--nerv-bg-rgb`. `--nerv-gradient-direction` defaults to `to right`. `--nerv-gradient-opacity` defaults to 1.
-
-```html
+```html island
 <div class="nerv-gradient" style="height: 4rem;"></div>
 ```
 
+**Spec:** `.nerv-gradient` goes from `--nerv-primary-rgb` to `--nerv-bg-rgb`. `--nerv-gradient-direction` defaults to `to right`. `--nerv-gradient-opacity` defaults to 1.
+
 ### Thermal
 
-<div class="nerv-docs-island">
-  <div class="nerv-gradient nerv-gradient-thermal" style="height: 4rem;"></div>
-</div>
-
-**Spec:** `.nerv-gradient-thermal` is green→red.
-
-```html
+```html island
 <div class="nerv-gradient nerv-gradient-thermal" style="height: 4rem;"></div>
 ```
 
+**Spec:** `.nerv-gradient-thermal` is green→red.
+
 ### Energy
 
-<div class="nerv-docs-island">
-  <div class="nerv-gradient nerv-gradient-energy" style="height: 4rem;"></div>
-</div>
-
-**Spec:** `.nerv-gradient-energy` is cyan→blue.
-
-```html
+```html island
 <div class="nerv-gradient nerv-gradient-energy" style="height: 4rem;"></div>
 ```
 
+**Spec:** `.nerv-gradient-energy` is cyan→blue.
+
 ### Warning
 
-<div class="nerv-docs-island">
-  <div class="nerv-gradient nerv-gradient-warning" style="height: 4rem;"></div>
-</div>
-
-**Spec:** `.nerv-gradient-warning` is amber→red.
-
-```html
+```html island
 <div class="nerv-gradient nerv-gradient-warning" style="height: 4rem;"></div>
 ```
 
+**Spec:** `.nerv-gradient-warning` is amber→red.
+
 ### Field
 
-<div class="nerv-docs-island">
-  <div class="nerv-gradient nerv-gradient-field" style="height: 4rem;"></div>
-</div>
-
-**Spec:** `.nerv-gradient-field` is void→amber.
-
-```html
+```html island
 <div class="nerv-gradient nerv-gradient-field" style="height: 4rem;"></div>
 ```
 
+**Spec:** `.nerv-gradient-field` is void→amber.
+
 ### Rainbow
 
-<div class="nerv-docs-island">
-  <div class="nerv-gradient nerv-gradient-rainbow" style="height: 4rem;"></div>
-</div>
-
-**Spec:** `.nerv-gradient-rainbow` is a multi-stop hue sweep.
-
-```html
+```html island
 <div class="nerv-gradient nerv-gradient-rainbow" style="height: 4rem;"></div>
 ```
+
+**Spec:** `.nerv-gradient-rainbow` is a multi-stop hue sweep.
 
 ### From / to
 
 Composable endpoints. `.nerv-gradient-from-{name}` and `.nerv-gradient-to-{name}` exist for every [glow color](#glow-colors).
 
-<div class="nerv-docs-island">
-  <div class="nerv-gradient nerv-gradient-from-cyan nerv-gradient-to-red" style="height: 4rem;"></div>
-</div>
-
-```html
+```html island
 <div class="nerv-gradient nerv-gradient-from-cyan nerv-gradient-to-red" style="height: 4rem;"></div>
 ```
 

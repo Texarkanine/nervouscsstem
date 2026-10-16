@@ -1,0 +1,1 @@
+PR CI Tests workflow (.github/workflows/tests.yaml) runs npm test and npm run test:py (formatter unittest via uv); lint is not in CI

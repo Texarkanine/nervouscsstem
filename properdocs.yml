@@ -38,3 +38,7 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: html
+          class: nerv-docs-island
+          validator: !!python/name:nervouscsstem_docs.island_fence.validator
+          format: !!python/name:nervouscsstem_docs.island_fence.formatter

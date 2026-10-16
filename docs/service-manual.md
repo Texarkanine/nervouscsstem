@@ -42,4 +42,26 @@ After clone: `git lfs install` once per machine, `git lfs pull` if the stills ar
 
 Material pages must not call `NERV.init()`. That method injects viewport-fixed scanlines on `body` and runs every sub-initializer against the document. Islands opt in with `data-nerv-init`; `docs-init.js` calls the matching `NERV.init*(island)` on that element only. Standalone swatch boards may call `NERV.init()` — they are a NERV viewport.
 
-That rule is authoring, not catalog copy. User-facing pages teach `NERV.init()` vs scoped `init*(container)`. Do not explain Material, `docs-init.js`, or `data-nerv-init` in catalog prose. Live demo markup may still carry `data-nerv-init` so this site can initialize fragments.
+That rule is authoring, not catalog copy. User-facing pages teach `NERV.init()` vs scoped `init*(container)`. Do not explain Material, `docs-init.js`, or `data-nerv-init` in catalog prose.
+
+### Island fences
+
+Write each live example once, as an `html` fence with the `island` option. At build time it renders as the live `.nerv-docs-island` followed by the highlighted copy of the same body, so the demo and its recipe cannot drift. Island chrome goes in fence options, never in the body:
+
+~~~markdown
+```html island init="bar-meters"
+<div class="nerv-bar-meter nerv-bar-thermal" data-bars="40" data-fill="72"></div>
+<script>
+  NERV.initBarMeters(document.querySelector('.nerv-bar-meter').parentElement);
+</script>
+```
+~~~
+
+- `init="<kind>"` puts `data-nerv-init="<kind>"` on the island; `docs-init.js` runs that scoped init. The kinds are the ones `docs-init.js` handles.
+- `state="<name>"` adds `nerv-state-<name>` to the island so the example shows that alert-cascade tint.
+- `<script>` elements stay in the copy and are removed from the island. The recipe's script must `querySelector` a class present in the body (use `.parentElement` when the init looks up descendants).
+- CSS examples need no options and paint with JavaScript off.
+- An unknown option, a missing or malformed value (values are `[a-z][a-z0-9-]*`), or `init` / `state` without `island` fails the build.
+- A plain `html` fence (no `island`) is copy only. Scanlines is written that way: it is a viewport overlay, so it never goes in an island.
+
+The formatter is `scripts/nervouscsstem_docs/island_fence.py`, registered as a superfences custom fence in `properdocs.yml`. `uv sync --group docs` installs it editable. Its tests: `npm run test:py`; PR CI runs them with `npm test`.
