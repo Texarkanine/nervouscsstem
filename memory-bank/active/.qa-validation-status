@@ -1,0 +1,19 @@
+PASS
+
+QA semantic review 2026-09-23, task offline-bundle (Level 3, issue #7). Reviewed commit 193ef42 (plus techContext in 08c58fc) against the `tasks.md` plan, `projectbrief.md`, and both creative docs. No blocking findings.
+
+Verified:
+
+- Completeness: plan steps 1–6 all implemented; 18 planned behaviors (B1–B11, E1–E6, P1) all have real tests; no TODOs, stubs, or debug output.
+- Invariants: bundled CSS differs from `dist/nerv.css` only in `url()` values (B4); no remote fetch left (B2, plus generator guard); font bytes only from pinned packages, versions checked against installed (B8, E6); `npm pack` excludes the zip, and the test asserts the zip exists so it cannot pass vacuously; zip bytes reproducible (B11); no `zip` CLI.
+- Licensing: hardcoded copyright lines match the fontsource LICENSE texts, and upstream supplies the Plex RFN line that fontsource omits; OFL texts shipped verbatim; AGPL LICENSE verbatim.
+- Tests assert relations (hashes, set equality with CSS-declared families, byte equality), not hardcoded file lists or counts. They are not change-detectors.
+- `npm test` 391/391 pass. `npm run lint` shows 10 errors, all in `dist/nerv.css` compiled from untouched `src/`, so none are from this change.
+
+Advisories (non-blocking):
+
+1. Documentation accuracy: `docs/service-manual.md` "Offline bundle fonts" says the build fails when `_typography.scss` "changes a font URL". For gstatic faces the generator matches by `unicode-range` and uses only the URL's extension. A gstatic version bump with the same ranges does NOT fail; the bundle keeps shipping the pinned fontsource version. Only jsDelivr version drift, range changes, or new families fail. Suggest rewording to say "changes a `unicode-range`, a jsDelivr fontsource version, or adds a face", and add that upstream font version bumps need a manual pin bump. The same overstatement is in the plan text, so this is a plan-level wording issue that carried into the docs, not a build deviation.
+2. YAGNI (minor): the CLI `--out` flag is not in the plan, and no workflow, script, or test uses it. It is harmless, but it could be removed.
+3. DRY (minor): `buildOfflineBundle` calls `readFontPackage` again for each family that `resolveFontUrls` already read. The cost is negligible and the reads are clear, so no change is needed.
+4. Deliberate duplication (accepted): the tests carry their own `URL_RE` / `isRemote` so a generator tokenizer bug cannot mask itself. The build recorded this decision in `activeContext.md`.
+5. Manual QA still open (from plan pre-mortem / preflight advisory 4): open a page from the extracted zip with network disabled and confirm glyphs render. This was not done in QA.

@@ -29,6 +29,10 @@ jobs:
       - name: Build CSS and JS
         run: npm run build
 
+      # The release job builds this zip too; failing here catches font changes before merge.
+      - name: Build offline bundle
+        run: node scripts/build-offline-bundle.mjs
+
       - name: Setup uv
         uses: astral-sh/setup-uv@v10.0.1
         with:

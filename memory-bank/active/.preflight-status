@@ -1,0 +1,27 @@
+PASS WITH ADVISORY
+
+Preflight of the Level 3 plan for the offline font-and-JS bundle (issue #7). No plan edits were made (no TDD step swap, no strike).
+
+Prerequisites: planning is complete in tasks.md. Both flagged creative docs exist (creative-zip-writer.md, creative-font-resolution.md) with high-confidence decisions. All seven pinned devDependencies exist on npm at the stated versions (the six fontsource packages are OFL-1.1; fflate 0.8.3 is MIT).
+
+TDD plan encoding: pass. Step 2 (generator) orders stub tests, stub interface, write tests and run red, then write code. Step 3 (npm tarball exclusion) adds its test before any production change, and it guards against a vacuous pass by asserting that the zip exists on disk. Step 1 is dependency setup and is exercised by the step 2 and step 3 tests. Step 4 (release workflow YAML) and step 5 (docs) are policy/prose; the brief places workflow TDD out of scope. No change-detectors are scheduled: B8, B9, and B10 assert relations (installed version, byte-equality with the package LICENSE, notices carried from the family table), not hardcoded lists or counts. P1 locks the npm tarball contents, which is this product's published contract.
+
+Convention compliance: pass. scripts/build-offline-bundle.mjs mirrors scripts/resolve-docs-assets.mjs (an exported function taking a root, a guarded CLI main, and a throw naming `npm run build` when dist is missing). test/offline-bundle.test.mjs follows the node:test, ROOT, and mkdtempSync conventions of test/docs-assets.test.mjs, and the plan adds it to the explicit `npm test` list (a known gotcha). dist/ is already gitignored, and package.json `files` already limits the tarball.
+
+Dependency impact: pass. The touchpoints are package.json and package-lock.json, the release job, publish-contract.test.mjs, README, the service manual, and techContext. The docs PR workflow runs `npm ci`, so the new devDependencies install there with no other effect. Stylelint lints only dist/nerv.css, which is unchanged.
+
+Conflict detection: pass. The repo has no zip or font tooling that overlaps. The public contracts (npm tarball, CDN default in dist/nerv.css) are preserved.
+
+Completeness: pass. Every requirement in the issue and the brief maps to a step. The zip contents map to step 2 and B1–B10. Manifest fields (package and version, hash, OFL URL, copyright, generator version) map to B7 and B8. OFL text and Reserved Font Names map to B9 and B10. Tarball exclusion maps to P1. The CDN default is unchanged by construction and is covered by B4's baseline. Reproducibility without a zip CLI maps to fflate and B11. Release delivery maps to step 4.
+
+Advisory findings:
+
+1. Quote-aware url() parsing (implementation hazard). dist/nerv.css has many `url("data:image/svg+xml,...")` values whose quoted payload contains `)` (from `rgb(255, 255, 255)`) and `http://www.w3.org/2000/svg`. A naive `url\([^)]*\)` regex truncates these, and a naive scan for `http://` or `//` flags them as remote. The generator's remaining-remote scan (E5) and the tests' url extraction (B2, B3, B4 blanking, B5) must tokenize `url()` with quoted strings in mind and classify by the value's prefix (`data:`, scheme, `//`, relative). Otherwise B2 or E5 fail falsely, or B4 compares mangled text. Put one shared extractor in the test file, or have the tests consume an exported helper only if it is not the code under test for that assertion.
+
+2. The DSEG7 face has no `unicode-range` (26 faces, 25 ranges). The plan already resolves DSEG7 by parsing its jsDelivr URL, so this works. The implementer must not assume every primary face has a range, and E3 must apply only to gstatic-style faces.
+
+3. The release-ordering mitigation overstates its protection. The plan says the bundle "cannot leave a half-published release". release-please creates the tag and GitHub Release before `publish-npm` runs, so a bundle failure blocks npm publish and the asset upload but leaves a GitHub Release with no npm version and no assets. `npm run build` already has the same risk, so this is not a regression. The real protection is catching font-URL drift before merge. The plan already notes that `npm test` is not in PR CI. The operator may want `npm run build:offline` added to the reusable docs build (cheap, no network beyond npm ci) so CSS font changes fail on the PR, not on release.
+
+4. The pre-mortem's top risk (the zip renders wrong offline although tests pass) is left to a manual operator check. See the innovation item below for a way to make that check trivial.
+
+Radical innovation (advisory, not applied): ship a generated `specimen.html` in the zip root. It links `nerv.css` and `nerv.js` relatively and, for every `@font-face` the generator resolved, renders a line in that family, weight, and style using sample characters drawn from the face's own `unicode-range` (for example the first code points of each subset, including the Shippori kana/CJK slices, DSEG7 digits, and VT323). The generator already has every face, file, and range in hand, so this is roughly 30 lines of templating. No images, all `.nerv-` classes, AGPL like the rest. It turns the manual offline QA into "unzip, turn off network, open specimen.html". It gives consumers a working usage example, and it could later feed an automated headless `document.fonts.check()` smoke test if the project ever adds a browser runner. Cost: one more generated entry, which B5 and B7 already cover generically (manifest hash and no orphans), plus one line in the README section.

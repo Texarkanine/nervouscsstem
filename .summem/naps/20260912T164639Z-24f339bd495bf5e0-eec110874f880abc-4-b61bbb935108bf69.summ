@@ -1,0 +1,1 @@
+First npm publish needs operator bootstrap before OIDC (release-please.yaml); test shipped product, not our CI unless brittle. dist gitignored: skip RP-branch amend jobs. main/initialdev unrelated roots, joined by merge.

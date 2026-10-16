@@ -18,16 +18,17 @@ Pure-CSS design system with minimal vanilla JS orchestration. SCSS (Dart Sass) i
 - `npm run watch` — file watcher for development
 - `nerv.js` is vanilla JS — copied to `dist/` without compilation
 - `dist/` is gitignored. CI builds it before `npm publish` and before attaching `dist/nerv.css` / `dist/nerv.js` to the GitHub Release. Release automation is `.github/workflows/release-please.yaml` (npm trusted publisher matches that filename; GitHub environment `npmjs.org`).
+- `npm run build:offline` — builds `dist/nervouscsstem-offline.zip`, a GitHub Release asset that never enters the npm tarball, via `scripts/build-offline-bundle.mjs`. Font bytes come only from exact-pinned `@fontsource*` devDependencies: each face maps by `unicode-range` equality, and a gstatic `/vNN/` must equal the package's `metadata.json` `version`, else the build fails. `fflate` writes the zip with a fixed local-field mtime so bytes are reproducible. Re-pinning rules: `docs/service-manual.md` "Offline bundle fonts". Built by the release job before `npm publish` and by the PR docs build.
 - Docs site: `npm run docs:serve` / `docs:build` (both compile `dist/` first). PR builds use local mode; the `publish-pages` job on `release-please.yaml` uses CDN mode after `publish-npm`.
 
 ## Testing Process
 
 Visual verification against reference HTML pages in `ref/`. Each page (`ref-foundation.html` through `ref-alert-cascade.html`) tests a cumulative subset of the design system's layers.
 
-Automated checks via Node.js built-in test runner (`node --test`) in `test/`. Stylelint enforces `.nerv-` prefix convention and is configured in `.stylelintrc.json`. Test and lint commands are defined in `package.json`. The npm tarball must contain `dist/nerv.css` and `dist/nerv.js` from `dist/` and not other dist artifacts; that contract is `test/publish-contract.test.mjs`. The docs local-vs-CDN load path and PyPI-only `uv.lock` hosts are `test/docs-assets.test.mjs`. Skill identity, version lockstep, no LFS in the skill, and `skills/` excluded from the npm pack are `test/skill-contract.test.mjs`.
+Automated checks via Node.js built-in test runner (`node --test`) in `test/`. Stylelint enforces `.nerv-` prefix convention and is configured in `.stylelintrc.json`. Test and lint commands are defined in `package.json`. The npm tarball must contain `dist/nerv.css` and `dist/nerv.js` from `dist/` and not other dist artifacts; that contract is `test/publish-contract.test.mjs`. The docs local-vs-CDN load path and PyPI-only `uv.lock` hosts are `test/docs-assets.test.mjs`. Skill identity, version lockstep, no LFS in the skill, and `skills/` excluded from the npm pack are `test/skill-contract.test.mjs`. What the offline zip ships (no remote fetch, local URLs resolve, CSS unchanged except URLs, manifest hashes, OFL texts and notices, reproducible bytes) and the generator's refusal cases are `test/offline-bundle.test.mjs`.
 
 ## Design System
 
-**Font stack**: Shippori Mincho B1 (display), Barlow Condensed (HUD), Antonio (cartouche), IBM Plex Mono (monospace), DSEG7 Classic (seven-segment), VT323 (DOS/BIOS boot screen). All OFL-licensed, loaded via CDN by default. `NERV Mixed` (Barlow Condensed + Shippori, unicode-range) handles general JP/EN HUD text; `NERV Cartouche` (Antonio + Shippori, unicode-range) handles cartouche-specific text.
+**Font stack**: Shippori Mincho B1 (display), Barlow Condensed (HUD), Antonio (cartouche), IBM Plex Mono (monospace), DSEG7 Classic (seven-segment), VT323 (DOS/BIOS boot screen). All OFL-licensed, loaded via CDN by default; the offline zip bundles them locally. `NERV Mixed` (Barlow Condensed + Shippori, unicode-range) handles general JP/EN HUD text; `NERV Cartouche` (Antonio + Shippori, unicode-range) handles cartouche-specific text.
 
 **Key constraints**: No image files, no `<canvas>`, no WebGL. All `.nerv-` prefixed selectors. `prefers-reduced-motion` and `prefers-contrast` respected.

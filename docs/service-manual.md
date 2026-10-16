@@ -43,3 +43,24 @@ After clone: `git lfs install` once per machine, `git lfs pull` if the stills ar
 Material pages must not call `NERV.init()`. That method injects viewport-fixed scanlines on `body` and runs every sub-initializer against the document. Islands opt in with `data-nerv-init`; `docs-init.js` calls the matching `NERV.init*(island)` on that element only. Standalone swatch boards may call `NERV.init()` — they are a NERV viewport.
 
 That rule is authoring, not catalog copy. User-facing pages teach `NERV.init()` vs scoped `init*(container)`. Do not explain Material, `docs-init.js`, or `data-nerv-init` in catalog prose. Live demo markup may still carry `data-nerv-init` so this site can initialize fragments.
+
+## Offline bundle fonts
+
+`npm run build:offline` writes `dist/nervouscsstem-offline.zip`, the GitHub Release asset for self-hosters with no network. [`scripts/build-offline-bundle.mjs`](https://github.com/Texarkanine/nervouscsstem/blob/main/scripts/build-offline-bundle.mjs) reads the compiled `dist/nerv.css` and swaps each remote font URL for a file from an exact-pinned `@fontsource*` devDependency. It picks the file whose fontsource `unicode.json` subset equals the face's `unicode-range`. jsDelivr fontsource URLs (DSEG7) name their file and version directly. `NERV Mixed` and `NERV Cartouche` reuse the Barlow and Antonio files for the same URL.
+
+Antonio is the variable font on Google Fonts, so one file serving both 400 and 700 is correct. Its package is `@fontsource-variable/antonio`, not `@fontsource/antonio`.
+
+The bundle build fails, naming the URL, when `src/_typography.scss` does any of these:
+
+- moves a Google Fonts URL to a new version (the `/vNN/` segment no longer equals the pinned package's `metadata.json` `version`)
+- changes a `unicode-range`
+- changes the DSEG7 jsDelivr version
+- adds a face in a family without a `FONT_FAMILIES` row
+
+PR CI builds the bundle, so this shows up before merge. To fix it:
+
+- Bump the matching `@fontsource*` pin to a version built from the same Google Fonts version, or add a row to `FONT_FAMILIES` for a new family, with the verbatim copyright line from its upstream OFL.txt.
+- For DSEG7, keep the version in the CSS URL and the devDependency pin identical.
+- Do not commit gstatic font hashes or font files to the repo.
+
+The fontsource Plex `LICENSE` omits `Reserved Font Name "Plex"`. The zip's generated `README.md` and `manifest.json` carry the upstream copyright line that states it.

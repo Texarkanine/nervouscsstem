@@ -1,0 +1,1 @@
+Offline bundle fails on gstatic /vNN/ != fontsource metadata.json version; re-pin fontsource when _typography.scss moves a Google Fonts version

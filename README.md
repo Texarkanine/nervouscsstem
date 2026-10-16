@@ -26,6 +26,17 @@ Replace `<version>` with a published tag (for example `0.1.0`):
 
 Those URLs are [jsDelivr’s npm CDN](https://www.jsdelivr.com/documentation#id-npm). This package does not run its own file host.
 
+## Offline bundle
+
+`nerv.css` loads its fonts from Google Fonts and jsDelivr. For a machine that cannot reach them, each [GitHub Release](https://github.com/Texarkanine/nervouscsstem/releases) has `nervouscsstem-offline.zip` ([latest](https://github.com/Texarkanine/nervouscsstem/releases/latest/download/nervouscsstem-offline.zip)). It holds `nerv.css` rewritten to load bundled fonts from `fonts/`, `nerv.js`, and the font files. Unzip it next to your page:
+
+```html
+<link rel="stylesheet" href="nervouscsstem-offline/nerv.css">
+<script src="nervouscsstem-offline/nerv.js"></script>
+```
+
+The CSS and JS are AGPL-3.0; the fonts stay under the SIL Open Font License 1.1. The zip carries both licenses, every font's copyright notice, and a `manifest.json` with the font package versions and file hashes. To build it from a checkout: `npm ci && npm run build:offline` (writes `dist/nervouscsstem-offline.zip`).
+
 ## Agent skill
 
 ```bash
