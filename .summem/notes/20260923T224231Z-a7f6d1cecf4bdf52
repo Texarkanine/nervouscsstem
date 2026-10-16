@@ -1,0 +1,1 @@
+PR screenshots live on orphan branch pr-assets under pr-<N>/ (plain git, no LFS), embedded via raw.githubusercontent.com URLs; never commit them to feature branches or docs/img. Create it from a fresh git init, not a partial clone

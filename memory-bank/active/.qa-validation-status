@@ -1,0 +1,15 @@
+PASS
+Task: sine-wave-graph (rework: point labels)
+Reviewed: 25d3b49..5624e21 (fix 4aa86fb), against the prior QA FAIL on df4f3df
+Checks rerun by QA: npm test 399/399; npm run docs:build (strict) green; npm run lint 10 errors, all pre-existing (Antonio quotes, radar custom-property spacing, zero units).
+
+Resolved:
+- Wide-label limit is now documented in the docs Spec and the _wave-graph.scss header. The wording ("pins to the left edge and is cut off on the right") matches the code: the x clamp's minimum is calc(-1 * var(--nerv-wave-point-x)), the box's left edge, and CSS clamp() lets the minimum win when max < min. The Spec also tells script authors to keep live values short.
+- Example and fixture aria-labels now name their labels (alert SYNC; ref sync, vertical, and critical graphs). The vertical fixture no longer says "plotted points".
+
+Advisory (non-blocking):
+- The rule comment above .nerv-wave-point-label still says the label "stays inside the wave box" without the wide-label caveat. The file header, three screens up, has the caveat. This comment explains the clamp mechanism, not the public contract.
+- .nerv-wave-point-label-left repeats the clearance term (accepted in the prior QA run).
+- Acceptance criterion 4 (PR #18 body shows screenshots) is not done yet. The plan schedules it after Reflect (plan step 4.3). The assets are published and verified on pr-assets.
+
+No new code paths in the fix: docs, fixture, and a doc comment only. L1-L7 findings from the prior run still hold.

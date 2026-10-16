@@ -30,7 +30,7 @@ Two kinds of token, both on `:root`.
 
 ## Glow colors
 
-Most named colors also generate modifier classes: `.nerv-glow-cyan`, `.nerv-text-cyan`, `.nerv-divider-cyan`, `.nerv-list-cyan`, and the same `{name}` on stripes, tables, forms, cartouches, reticles, grid marks, and gradient from/to. Those names are **amber, amber-dark, orange, red, red-deep, green, cyan, blue, steel**.
+Most named colors also generate modifier classes: `.nerv-glow-cyan`, `.nerv-text-cyan`, `.nerv-divider-cyan`, `.nerv-list-cyan`, and the same `{name}` on stripes, tables, forms, cartouches, reticles, grid marks, wave graphs, and gradient from/to. Those names are **amber, amber-dark, orange, red, red-deep, green, cyan, blue, steel**.
 
 **Void** and **white** exist as `--nerv-void` / `--nerv-white` but do not get those classes — no phosphor bloom on black or paper white.
 

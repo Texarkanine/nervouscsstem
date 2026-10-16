@@ -443,6 +443,40 @@
     </div>
   </div>
 
+  <!-- Wave graph: sync waves, plotted points, vertical, critical speed -->
+  <div style="margin-top: 2rem; text-align: center;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: rgba(var(--nerv-steel-rgb), 0.4); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">
+      .nerv-wave-graph — Sync waves, plotted &amp; labeled points
+    </div>
+    <div style="display: flex; gap: 1.5rem; justify-content: center; align-items: flex-start; flex-wrap: wrap; padding: 0 2rem;">
+      <div style="text-align: center;">
+        <div class="nerv-wave-graph nerv-grid-marks nerv-reticle-bottom" role="img" aria-label="Four sync waves with points labeled EVA-02 and EVA-01" style="width: 400px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15); --nerv-wave-wavelength: 1; --nerv-wave-frequency: 0.15;">
+          <div class="nerv-wave nerv-wave-red"><span class="nerv-wave-point" style="--nerv-wave-point-at: 0.25;"><span class="nerv-wave-point-label nerv-type-hud">EVA-02</span></span></div>
+          <div class="nerv-wave nerv-wave-red" style="--nerv-wave-phase: 0.07;"></div>
+          <div class="nerv-wave nerv-wave-blue" style="--nerv-wave-phase: 0.5;"><span class="nerv-wave-point" style="--nerv-wave-point-at: 0.75;"><span class="nerv-wave-point-label nerv-wave-point-label-left nerv-type-hud">EVA-01</span></span></div>
+          <div class="nerv-wave nerv-wave-blue" style="--nerv-wave-phase: 0.57;"></div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">phase offsets 0 / 0.07 / 0.5 / 0.57</div>
+      </div>
+      <div style="text-align: center;">
+        <div class="nerv-wave-graph nerv-wave-graph-vertical" role="img" aria-label="Two vertical traces with points labeled L-01 and R-02" style="width: 156px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15);">
+          <div class="nerv-wave nerv-wave-cyan"><span class="nerv-wave-point" style="--nerv-wave-point-at: 0.3;"><span class="nerv-wave-point-label nerv-wave-point-label-left nerv-type-hud">L-01</span></span></div>
+          <div class="nerv-wave nerv-wave-green nerv-wave-reverse" style="--nerv-wave-phase: 0.5; --nerv-wave-frequency: 0.35;"><span class="nerv-wave-point" style="--nerv-wave-point-at: 0.7;"><span class="nerv-wave-point-label nerv-type-hud">R-02</span></span></div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">.nerv-wave-graph-vertical</div>
+      </div>
+      <div style="text-align: center;" class="nerv-state-critical">
+        <div class="nerv-wave-graph nerv-grid-marks" role="img" aria-label="Sync waves at critical speed with points labeled EVA-02 and EVA-01" style="width: 400px; border: 1px solid rgba(var(--nerv-amber-rgb), 0.15); --nerv-wave-wavelength: 1; --nerv-wave-frequency: 0.15;">
+          <div class="nerv-wave"><span class="nerv-wave-point" style="--nerv-wave-point-at: 0.25;"><span class="nerv-wave-point-label nerv-type-hud">EVA-02</span></span></div>
+          <div class="nerv-wave" style="--nerv-wave-phase: 0.07;"></div>
+          <div class="nerv-wave nerv-wave-blue" style="--nerv-wave-phase: 0.5;"><span class="nerv-wave-point" style="--nerv-wave-point-at: 0.75;"><span class="nerv-wave-point-label nerv-wave-point-label-left nerv-type-hud">EVA-01</span></span></div>
+          <div class="nerv-wave nerv-wave-blue" style="--nerv-wave-phase: 0.57;"></div>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: rgba(var(--nerv-steel-rgb), 0.35); margin-top: 0.25rem;">.nerv-state-critical — 3× speed, uncolored waves follow --nerv-primary</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Grid mark variant comparison -->
   <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; padding: 0 2rem;">
     <div style="text-align: center;">
