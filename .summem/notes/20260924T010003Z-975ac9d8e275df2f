@@ -1,0 +1,1 @@
+Customizable select (appearance: base-select) rules live in one @supports block in _form.scss; fallback .nerv-select bodies are test-locked; color mirroring uses :has() outside @supports so Firefox gets it

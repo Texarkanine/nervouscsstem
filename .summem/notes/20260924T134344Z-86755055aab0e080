@@ -1,0 +1,1 @@
+PR screenshots on pr-assets: GitHub's image proxy caches by URL, so re-published same-name images need a ?v=N query in the PR body

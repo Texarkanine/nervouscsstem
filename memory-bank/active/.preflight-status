@@ -1,0 +1,13 @@
+PASS WITH ADVISORY
+
+TDD encoding: Step 1 (the only executable unit) stubs tests, writes F1–F3 red, then writes the SCSS. Steps 2–4 are fixture/docs/screenshots, which owe no tests. No change-detectors scheduled, so nothing was struck or swapped.
+
+Conventions: the new rule stays inside the existing `@supports (appearance: base-select)` block and the contrast override is nested in the block's own `prefers-contrast` media rule, as the systemPatterns Progressive Enhancement contract requires. The contrast border fits "contrast mode increases border widths, less glow". Opaque `--nerv-bg` gap fill meets the no-transparency rule. `.nerv-` scoping holds.
+
+Correctness: base picker rule is at `src/_form.scss` ~189 with equal specificity (0,1,1). The frameless rule must go after it, which F2 enforces. The contrast base rule sets only `border-width`, so the plan is right to use the full `border` shorthand for frameless. Contrast mode already sets `clip-path: none` on options, so the hex/arrow corner concern does not arise there.
+
+Dependencies: none unaccounted. B3/B4/B5 regressions are listed. `docs/boards/forms.html` stays out of scope (boards may drift, per the earlier decision).
+
+Advisory (non-blocking): the plan leaves `.nerv-select-frameless` out of the shared accessibility lists at the end of the partial. That matches the contract, so just confirm it during build.
+
+Advisory (radical idea): make frameless the automatic default for colored selects with `.nerv-select:has(option[class*='nerv-option-'])::picker(select)`, inside `@supports`, and keep `.nerv-select-framed` as the opt-back-in class. That covers the reviewer's "in every example" complaint with zero markup, and plain selects stay framed by construction. Cost: a pseudo-element after a `:has()` compound needs a Chromium check, plus an inverse modifier. The operator decides whether this is worth a re-plan.

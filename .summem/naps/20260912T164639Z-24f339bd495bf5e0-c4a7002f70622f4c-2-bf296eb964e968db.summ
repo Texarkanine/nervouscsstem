@@ -1,0 +1,1 @@
+First npm publish needs the package on the registry before OIDC: operator bootstraps, then attaches trusted publisher to release-please.yaml. Test what ships to consumers; do not TDD our own CI unless brittle or critical.

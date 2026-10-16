@@ -47,3 +47,7 @@ Instances discovered: M5 (drop-shadow not border, source-order cascade, backgrou
 
 - **Token-driven durations** — Every animation whose speed a consumer might want to tune gets its own `--nerv-*-duration` token (e.g., `--nerv-flicker-duration`, `--nerv-glitch-duration`). Durations use `calc(var(--nerv-*-duration) * N / var(--nerv-animation-speed))` so the global speed multiplier and per-effect tokens compose.
 - **Stagger via `--nerv-stagger-index`** — Grouped animated elements use `animation-delay: calc(var(--nerv-stagger-index, 0) * Xs)`. `:nth-child()` rules set the index automatically; consumers or `nerv.js` can override per-element for finer control.
+
+## Progressive Enhancement
+
+Platform features that only some browsers ship (e.g. customizable select, `appearance: base-select`) go inside one `@supports (…)` block per component, after the component's baseline rules. The baseline rules stay unchanged: a test locks their compiled bodies, and another asserts that every feature-specific token (`::picker(`, `:open`, …) appears only inside the block. Rules that need only a widely shipped feature (`:has()`) may live outside so the fallback path benefits too. Nested `prefers-reduced-motion` / `prefers-contrast` rules for enhanced parts go inside the same block. Do not edit the shared accessibility lists at the end of the partial.
